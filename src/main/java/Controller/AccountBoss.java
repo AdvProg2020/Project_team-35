@@ -76,10 +76,10 @@ public class AccountBoss {
 
 
     }
-    public static void startDeleteAccount(String username) {
+    public void startDeleteAccount(String username) {
 
     }
-    public static void startLogin(String username, String password) {
+    public void startLogin(String username, String password) {
 
     }
     public static void startEditPersonalField(String username, String fieldName, String newValue) {
