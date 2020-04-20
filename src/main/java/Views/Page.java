@@ -1,18 +1,27 @@
 package Views;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class Page {
     protected String name;
-    private HashMap<String , Page> subPages;
-    private  Page parentPage;
+    protected String command;
+    protected HashMap<String , Page> subPages;
+    protected   Page parentPage;
     protected User user;
     protected static Scanner scanner;
     public Page(String name, Page parentPage) {
         this.name = name;
         subPages = new HashMap<String, Page>();
         this.parentPage = parentPage;
+    }
+
+    public static Scanner getScanner() {
+        return scanner;
     }
 
     public static void setScanner(Scanner scanner) {
@@ -23,20 +32,28 @@ public abstract class Page {
         this.subPages = subPages;
     }
     private static boolean checkLoginOfUser(User user){
-        //if (user.isUserLogin())
-          //  return true;
+
         return false;
     }
-    public void execute(){
+    public void execute(String command){
             show();
             Page nextPage = null;
-            String command = scanner.nextLine();
+            command = scanner.nextLine();
         for (String s : subPages.keySet()) {
             if (command.equals(s)){
-                nextPage = getPageOfSubPage(command);
+                nextPage = getPageOfSubPage(s);
             }
         }
-        nextPage.execute();
+        if (command.equalsIgnoreCase("back") && parentPage != null){
+            nextPage = parentPage;
+        }
+        else if (command.equalsIgnoreCase("exit") && parentPage==null){
+            return;
+        }
+        else if (nextPage==null){
+            //exception
+        }
+        nextPage.execute(command);
 
     }
     private Page getPageOfSubPage(String command){
@@ -47,14 +64,29 @@ public abstract class Page {
         return null;
     }
     public void show(){
-        for (int i = 0; i < subPages.size(); i++) {
-            System.out.println(subPages.keySet());
+        System.out.println(this.name);
+        for (String s : subPages.keySet()) {
+            System.out.println(s);
         }
         if (parentPage!=null){
-
+            System.out.println("back");
         }
         else {
-
+            System.out.println("exit");
         }
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
+    protected static Matcher getMatcher(String input , String regex){
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher;
+    }
+
+    public String getCommand() {
+        return command;
     }
 }

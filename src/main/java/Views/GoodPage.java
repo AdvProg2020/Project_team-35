@@ -16,8 +16,8 @@ public class GoodPage extends Page {
             }
 
             @Override
-            public void execute() {
-                super.execute();
+            public void execute(String command) {
+                super.execute(command);
             }
 
             @Override
@@ -34,8 +34,8 @@ public class GoodPage extends Page {
             }
 
             @Override
-            public void execute() {
-                super.execute();
+            public void execute(String command) {
+                super.execute(command);
             }
 
             @Override
@@ -52,8 +52,8 @@ public class GoodPage extends Page {
             }
 
             @Override
-            public void execute() {
-                super.execute();
+            public void execute(String command) {
+                super.execute(command);
             }
 
             @Override
@@ -70,8 +70,8 @@ public class GoodPage extends Page {
             }
 
             @Override
-            public void execute() {
-                super.execute();
+            public void execute(String command) {
+                super.execute(command);
             }
 
             @Override
@@ -87,8 +87,8 @@ public class GoodPage extends Page {
     }
 
     @Override
-    public void execute() {
-        super.execute();
+    public void execute(String command) {
+        super.execute(command);
     }
 
     @Override

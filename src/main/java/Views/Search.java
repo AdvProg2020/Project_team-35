@@ -15,7 +15,7 @@ public class Search extends Page {
     }
 
     @Override
-    public void execute() {
-        super.execute();
+    public void execute(String command) {
+        super.execute(command);
     }
 }

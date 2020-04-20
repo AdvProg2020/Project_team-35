@@ -16,8 +16,8 @@ public class ProductsPage extends Page {
             }
 
             @Override
-            public void execute() {
-                super.execute();
+            public void execute(String command) {
+                super.execute(command);
             }
 
             @Override
@@ -38,10 +38,9 @@ public class ProductsPage extends Page {
             }
 
             @Override
-            public void execute() {
-                super.execute();
+            public void execute(String command) {
+                super.execute(command);
             }
-
             @Override
             public void show() {
                 super.show();
@@ -60,8 +59,8 @@ public class ProductsPage extends Page {
             }
 
             @Override
-            public void execute() {
-                super.execute();
+            public void execute(String command) {
+                super.execute(command);
             }
 
             @Override
@@ -78,8 +77,8 @@ public class ProductsPage extends Page {
             }
 
             @Override
-            public void execute() {
-                super.execute();
+            public void execute(String command) {
+                super.execute(command);
             }
 
             @Override
@@ -96,8 +95,8 @@ public class ProductsPage extends Page {
             }
 
             @Override
-            public void execute() {
-                super.execute();
+            public void execute(String command) {
+                super.execute(command);
             }
 
             @Override
@@ -113,7 +112,7 @@ public class ProductsPage extends Page {
     }
 
     @Override
-    public void execute() {
-        super.execute();
+    public void execute(String command) {
+        super.execute(command);
     }
 }

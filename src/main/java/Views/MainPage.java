@@ -8,13 +8,12 @@ public class MainPage extends Page {
 
     public MainPage() {
         super("Main Menu", null);
-        HashMap<String , Page> subPages = new HashMap<String, Page>();
         subPages.put("1", new RegisteringPanel("Registering Panel",this));
         subPages.put("product",new ProductsPage("Product Page" , this));
         subPages.put("offs" , new Offs("Offs Page" , this));
         Random n = new Random();
         n.nextInt();
-        user = new User(n);
+
     }
 
     @Override
@@ -23,8 +22,8 @@ public class MainPage extends Page {
     }
 
     @Override
-    public void execute() {
-        super.execute();
+    public void execute(String command) {
+        super.execute(command);
     }
 
 }

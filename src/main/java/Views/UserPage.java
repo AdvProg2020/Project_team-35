@@ -19,7 +19,7 @@ public class UserPage extends Page {
     }
 
     @Override
-    public void execute() {
-        //commands and back
+    public void execute(String command) {
+        super.execute(command);
     }
 }
