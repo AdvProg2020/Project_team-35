@@ -3,13 +3,12 @@ package Views;
 import Controller.AccountBoss;
 import Controller.MoreThanOneManagerException;
 import Controller.RepeatedUserName;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
-import static Controller.AccountBoss.*;
+import static Controller.AccountBoss.firstStepOfRegistering;
+import static Controller.AccountBoss.makeAccount;
 
 public class RegisteringPanel extends Page {
     private AccountBoss accountBoss;
@@ -31,7 +30,7 @@ public class RegisteringPanel extends Page {
 
             @Override
             public void execute() {
-                changeStatusOfUser(user);
+
                 //commands and back executes
             }
 
@@ -41,6 +40,11 @@ public class RegisteringPanel extends Page {
             }
         };
     }
+
+    /**
+     * for getting all personal info except username and make account and back to main page.
+     * @return
+     */
    private Page registerSecondPage(){
         return new Page("second page Of registering" , this) {
             @Override
@@ -52,6 +56,7 @@ public class RegisteringPanel extends Page {
                     allPersonalInfo.put(s,command);
                 }
                 System.out.println("successfully registered");
+                makeAccount(allPersonalInfo);
                 MainPage mainPage = new MainPage();
                 mainPage.execute();
 
@@ -64,10 +69,18 @@ public class RegisteringPanel extends Page {
                 subPages.put("family" , this);
                 subPages.put("email address",this);
                 subPages.put("phone number",this);
+                if (allPersonalInfo.values().contains("seller")){
+                    subPages.put("company name" , this);
+                }
 
             }
         };
    }
+
+    /**
+     * this is first step of register and get username and type and check validity.
+     * @return
+     */
     private Page RegisterUser(){
         return new Page("Register" , this) {
 
@@ -103,9 +116,7 @@ public class RegisteringPanel extends Page {
 
         };
     }
-    private void changeStatusOfUser(User user){
-       // user.setUserLogin(true);
-    }
+
     @Override
     public void show() {
         super.show();
@@ -123,9 +134,11 @@ public class RegisteringPanel extends Page {
        else if (command.equals("login")){
 
        }else if (command.equals("back")){
-
+                nextPage = parentPage;
        }
        nextPage.execute();
 
     }
+
+
 }

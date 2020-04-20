@@ -4,13 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Customer extends Account {
-    public static ArrayList<Customer> allCustomers;
+    public static ArrayList<Customer> allCustomers = new ArrayList<Customer>();
     public ArrayList<DiscountCode> discountCodes;
     private double money;
     public ArrayList<BuyLog> buyLogs;
     public HashMap<Product, Integer> cart;
     public static int newOrderNumber;
 
+    /**
+     * a constructor for customer is equal to accounts but it has some lists new.
+     * @param username
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phoneNumber
+     * @param password
+     */
     public Customer(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
         super(username, firstName, lastName, email, phoneNumber, password);
         money =0.0;

@@ -12,6 +12,15 @@ public abstract class Account {
     private String phoneNumber;
     private String password;
 
+    /**
+     * account constructor
+     * @param username
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phoneNumber
+     * @param password
+     */
     public Account(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
         this.username = username;
         this.firstName = firstName;

@@ -4,13 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Seller extends Account {
-    public static ArrayList<Seller> allSellers;
+    public static ArrayList<Seller> allSellers = new ArrayList<Seller>();
     private ArrayList<Off> sellerOffs;
     private ArrayList<SellLog> sellLogs;
     private String companyName;
     private double money;
     private ArrayList<Product> salableProducts;
 
+    /**
+     * a constructor for seller
+     * @param username
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phoneNumber
+     * @param password
+     * @param companyName
+     */
     public Seller(String username, String firstName, String lastName, String email, String phoneNumber, String password, String companyName) {
         super(username, firstName, lastName, email, phoneNumber, password);
         this.companyName = companyName;
