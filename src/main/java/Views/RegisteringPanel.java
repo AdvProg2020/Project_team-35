@@ -1,7 +1,5 @@
 package Views;
 
-import Model.User;
-
 import java.util.HashMap;
 
 public class RegisteringPanel extends Page {
@@ -48,7 +46,7 @@ public class RegisteringPanel extends Page {
         };
     }
     private void changeStatusOfUser(User user){
-        user.setUserLogin(true);
+       // user.setUserLogin(true);
     }
     @Override
     public void show() {

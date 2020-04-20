@@ -1,7 +1,5 @@
 package Views;
 
-import Model.User;
-
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -25,8 +23,8 @@ public abstract class Page {
         this.subPages = subPages;
     }
     private static boolean checkLoginOfUser(User user){
-        if (user.isUserLogin())
-            return true;
+        //if (user.isUserLogin())
+          //  return true;
         return false;
     }
     public void execute(){
