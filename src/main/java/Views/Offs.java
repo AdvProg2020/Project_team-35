@@ -11,7 +11,7 @@ public class Offs extends Page{
     private Page showProduct(){
         return new Page("show product" , this) {
             @Override
-            public void setSubPages(HashMap<Integer, Page> subPages) {
+            public void setSubPages(HashMap<String, Page> subPages) {
                 super.setSubPages(subPages);
             }
 
