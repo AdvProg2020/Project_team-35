@@ -1,27 +1,18 @@
 package Views;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
-
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public abstract class Page {
     protected String name;
-    protected String command;
     protected HashMap<String , Page> subPages;
-    protected   Page parentPage;
+    private  Page parentPage;
     protected User user;
     protected static Scanner scanner;
     public Page(String name, Page parentPage) {
         this.name = name;
         subPages = new HashMap<String, Page>();
         this.parentPage = parentPage;
-    }
-
-    public static Scanner getScanner() {
-        return scanner;
     }
 
     public static void setScanner(Scanner scanner) {
@@ -32,29 +23,31 @@ public abstract class Page {
         this.subPages = subPages;
     }
     private static boolean checkLoginOfUser(User user){
-
+        //if (user.isUserLogin())
+          //  return true;
         return false;
     }
-    public void execute(String command){
+    public void execute(){
             show();
             Page nextPage = null;
-            command = scanner.nextLine();
+            String command = scanner.nextLine();
         for (String s : subPages.keySet()) {
             if (command.equals(s)){
-                nextPage = getPageOfSubPage(s);
+                nextPage = getPageOfSubPage(command);
             }
         }
-        if (command.equalsIgnoreCase("back") && parentPage != null){
-            nextPage = parentPage;
+        if (command.equals("back") && parentPage!=null){
+         nextPage = parentPage;
         }
-        else if (command.equalsIgnoreCase("exit") && parentPage==null){
+        else if (command.equals("exit") && parentPage==null){
             return;
         }
-        else if (nextPage==null){
-            //exception
+        try {
+            nextPage.execute();
+        }catch (Exception e){
+            System.err.println("invalid command");
+            this.execute();
         }
-        nextPage.execute(command);
-
     }
     private Page getPageOfSubPage(String command){
         for (String s : subPages.keySet()) {
@@ -64,29 +57,16 @@ public abstract class Page {
         return null;
     }
     public void show(){
-        System.out.println(this.name);
+        int i =1;
         for (String s : subPages.keySet()) {
-            System.out.println(s);
+            System.out.println(i+"."+s);
+            i+=1;
         }
         if (parentPage!=null){
-            System.out.println("back");
+            System.out.println((subPages.keySet().size()+1)+".back");
         }
         else {
-            System.out.println("exit");
+            System.out.println((subPages.keySet().size()+1)+".exit");
         }
-    }
-
-    public void setCommand(String command) {
-        this.command = command;
-    }
-
-    protected static Matcher getMatcher(String input , String regex){
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
-        return matcher;
-    }
-
-    public String getCommand() {
-        return command;
     }
 }

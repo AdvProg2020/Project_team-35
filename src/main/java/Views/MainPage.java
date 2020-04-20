@@ -8,12 +8,12 @@ public class MainPage extends Page {
 
     public MainPage() {
         super("Main Menu", null);
-        subPages.put("1", new RegisteringPanel("Registering Panel",this));
-        subPages.put("product",new ProductsPage("Product Page" , this));
-        subPages.put("offs" , new Offs("Offs Page" , this));
+        HashMap<String , Page> subPages = new HashMap<String, Page>();
+        this.subPages.put("Register Or Login", new RegisteringPanel("Registering Panel",this));
+        this.subPages.put("product",new ProductsPage("Product Page" , this));
+        this.subPages.put("offs" , new Offs("Offs Page" , this));
         Random n = new Random();
         n.nextInt();
-
     }
 
     @Override
@@ -22,8 +22,8 @@ public class MainPage extends Page {
     }
 
     @Override
-    public void execute(String command) {
-        super.execute(command);
+    public void execute() {
+        super.execute();
     }
 
 }
