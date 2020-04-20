@@ -11,6 +11,15 @@ public class Seller extends Account {
     private double money;
     private ArrayList<Product> salableProducts;
 
+    public Seller(String username, String firstName, String lastName, String email, String phoneNumber, String password, String companyName) {
+        super(username, firstName, lastName, email, phoneNumber, password);
+        this.companyName = companyName;
+        sellerOffs = new ArrayList<Off>();
+        sellLogs = new ArrayList<SellLog>();
+        money = 0.0;
+        salableProducts = new ArrayList<Product>();
+        allSellers.add(this);
+    }
 
     public HashMap<Product, Integer> getSalesHistory() {
         return null;

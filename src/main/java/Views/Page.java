@@ -2,11 +2,13 @@ package Views;
 
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class Page {
     protected String name;
     protected HashMap<String , Page> subPages;
-    private  Page parentPage;
+    protected   Page parentPage;
     protected User user;
     protected static Scanner scanner;
     public Page(String name, Page parentPage) {
@@ -28,6 +30,7 @@ public abstract class Page {
         return false;
     }
     public void execute(){
+        System.out.println(this.name);
             show();
             Page nextPage = null;
             String command = scanner.nextLine();
@@ -49,6 +52,11 @@ public abstract class Page {
             this.execute();
         }
     }
+
+    public static Scanner getScanner() {
+        return scanner;
+    }
+
     private Page getPageOfSubPage(String command){
         for (String s : subPages.keySet()) {
             if (s.equals(command))
@@ -68,5 +76,10 @@ public abstract class Page {
         else {
             System.out.println((subPages.keySet().size()+1)+".exit");
         }
+    }
+    protected static Matcher getMatcher(String input , String regex){
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher;
     }
 }

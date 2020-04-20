@@ -11,6 +11,15 @@ public class Customer extends Account {
     public HashMap<Product, Integer> cart;
     public static int newOrderNumber;
 
+    public Customer(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
+        super(username, firstName, lastName, email, phoneNumber, password);
+        money =0.0;
+        allCustomers.add(this);
+        discountCodes = new ArrayList<DiscountCode>();
+        buyLogs = new ArrayList<BuyLog>();
+        newOrderNumber+=1;
+    }
+
     public boolean isThereProductWithIdInCart(int id) {
         return true;
     }
