@@ -39,8 +39,14 @@ public class Manager extends Account {
 
     }
     @Override
-    public void getPersonalInfo() {
-        this.toString();
+    public String getPersonalInfo() {
+        String toReturn = "Type: Manager\n" +
+                "Username: %s\n" +
+                "Name: %s\n" +
+                "Email: %s\n" +
+                "PhoneNumber: %s\n";
+        toReturn = String.format(toReturn, this.getUsername(), this.getFirstName() + this.getLastName() + this.getEmail() + this.getPhoneNumber());
+        return toReturn;
     }
     @Override
     public void editPersonalField(String field) {

@@ -50,11 +50,22 @@ public class Seller extends Account {
 
     }
     @Override
-    public void getPersonalInfo() {
-        this.toString();
+    public String getPersonalInfo() {
+        String toReturn = "Type: Seller\n" +
+                "Username: %s\n" +
+                "Name: %s\n" +
+                "Email: %s\n" +
+                "PhoneNumber: %s\n" +
+                "Company: %s\n";
+        toReturn = String.format(toReturn, this.getUsername(), this.getFirstName() + this.getLastName() + this.getEmail() + this.getPhoneNumber(), this.getCompanyName());
+        return toReturn;
     }
     @Override
     public void editPersonalField(String field) {
 
+    }
+
+    public String getCompanyName() {
+        return companyName;
     }
 }

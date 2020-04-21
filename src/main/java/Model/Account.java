@@ -85,10 +85,33 @@ public abstract class Account {
         return true;
     }
     public abstract void deleteAccount();
-    public abstract void getPersonalInfo();
+    public abstract String getPersonalInfo();
     public abstract void editPersonalField(String field);
     public static int whatTypeIsOnline() {
         return 0;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
