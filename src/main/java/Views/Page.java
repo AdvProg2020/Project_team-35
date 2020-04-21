@@ -65,8 +65,10 @@ public abstract class Page {
         return null;
     }
     public void show(){
-        for (int i = 0; i < subPages.size(); i++) {
-            System.out.println(subPages.keySet());
+        int i =1;
+        for (String s : subPages.keySet()) {
+            System.out.println(i+"."+s);
+            i+=1;
         }
         if (parentPage!=null){
             System.out.println((subPages.keySet().size()+1)+".back");

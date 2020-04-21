@@ -16,8 +16,8 @@ public class SellerPage extends Page {
             }
 
             @Override
-            public void execute(String command) {
-                super.execute(command);
+            public void execute() {
+                super.execute();
             }
 
             @Override
@@ -34,8 +34,8 @@ public class SellerPage extends Page {
             }
 
             @Override
-            public void execute(String command) {
-                super.execute(command);
+            public void execute() {
+                super.execute();
             }
 
             @Override
@@ -52,8 +52,8 @@ public class SellerPage extends Page {
             }
 
             @Override
-            public void execute(String command) {
-                super.execute(command);
+            public void execute() {
+                super.execute();
             }
 
             @Override
@@ -73,8 +73,8 @@ public class SellerPage extends Page {
             }
 
             @Override
-            public void execute(String command) {
-                super.execute(command);
+            public void execute() {
+                super.execute();
             }
 
             @Override
@@ -91,8 +91,8 @@ public class SellerPage extends Page {
             }
 
             @Override
-            public void execute(String command) {
-                super.execute(command);
+            public void execute() {
+                super.execute();
             }
 
             @Override
@@ -109,8 +109,8 @@ public class SellerPage extends Page {
             }
 
             @Override
-            public void execute(String command) {
-                super.execute(command);
+            public void execute() {
+                super.execute();
             }
 
             @Override
@@ -127,8 +127,8 @@ public class SellerPage extends Page {
             }
 
             @Override
-            public void execute(String command) {
-                super.execute(command);
+            public void execute() {
+                super.execute();
             }
 
 
@@ -149,8 +149,8 @@ public class SellerPage extends Page {
             }
 
             @Override
-            public void execute(String command) {
-                super.execute(command);
+            public void execute() {
+                super.execute();
             }
 
             @Override
@@ -165,7 +165,7 @@ public class SellerPage extends Page {
     }
 
     @Override
-    public void execute(String command) {
-        super.execute(command);
+    public void execute() {
+        super.execute();
     }
 }

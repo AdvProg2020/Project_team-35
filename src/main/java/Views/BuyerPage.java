@@ -17,8 +17,8 @@ public class BuyerPage extends Page {
             }
 
             @Override
-            public void execute(String command) {
-                super.execute(command);
+            public void execute() {
+                super.execute();
             }
 
             @Override
@@ -40,8 +40,8 @@ public class BuyerPage extends Page {
             }
 
             @Override
-            public void execute(String command) {
-                super.execute(command);
+            public void execute() {
+                super.execute();
             }
 
             @Override
@@ -59,8 +59,8 @@ public class BuyerPage extends Page {
             }
 
             @Override
-            public void execute(String command) {
-                super.execute(command);
+            public void execute( ) {
+                super.execute();
             }
 
             @Override
@@ -77,8 +77,8 @@ public class BuyerPage extends Page {
             }
 
             @Override
-            public void execute(String command) {
-                super.execute(command);
+            public void execute( ) {
+                super.execute();
             }
 
             @Override
@@ -95,8 +95,8 @@ public class BuyerPage extends Page {
           }
 
           @Override
-          public void execute(String command) {
-              super.execute(command);
+          public void execute( ) {
+              super.execute();
           }
 
           @Override
@@ -113,8 +113,8 @@ public class BuyerPage extends Page {
             }
 
             @Override
-            public void execute(String command) {
-                super.execute(command);
+            public void execute( ) {
+                super.execute();
             }
 
             @Override
@@ -129,7 +129,7 @@ public class BuyerPage extends Page {
     }
 
     @Override
-    public void execute(String command) {
-        super.execute(command);
+    public void execute( ) {
+        super.execute();
     }
 }
