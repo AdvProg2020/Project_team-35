@@ -100,9 +100,19 @@ public class RegisteringPanel extends Page {
             public void execute() {
                 setSubPages(subPages);
                 for (String s : subPages.keySet()) {
-                    System.out.println(s+":");
-                    String command = scanner.nextLine();
-                    allPersonalInfo.put(s,command);
+                    while (true) {
+
+                        System.out.println(s + ":");
+                        String command = scanner.nextLine();
+                        if (checkFormatOfPersonalInformation(s , command)) {
+                            allPersonalInfo.put(s, command);
+                            break;
+                        }
+                        else {
+                            System.err.println("invalid format of data");
+                            continue;
+                        }
+                    }
                 }
                 System.out.println("successfully registered");
                 makeAccount(allPersonalInfo);
@@ -189,5 +199,29 @@ public class RegisteringPanel extends Page {
 
     }
 
+    /**
+     * this method check email address and phone number be in a true form.
+     * @param type
+     * @param input
+     * @return
+     */
+    private static boolean checkFormatOfPersonalInformation(String type , String input){
+
+        if (type.equals("email address")){
+            Matcher matcher = getMatcher(input,"(\\w+)@(\\w+)");
+            if (matcher.matches()){
+                return true;
+            }
+            return false;
+        }
+        else if (type.equals("phone number")){
+            Matcher matcher = getMatcher(input , "\\d+");
+            if (matcher.matches()){
+                return true;
+            }
+            return false;
+        }
+        return true;
+}
 
 }

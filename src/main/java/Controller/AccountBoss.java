@@ -89,6 +89,13 @@ public class AccountBoss {
             throw new ExistenceOfUserWithUsername("we don't have a user with this username");
         }
     }
+
+    /**
+     * check is password correct or not.
+     * @param username
+     * @param password
+     * @throws PasswordValidity
+     */
     public static void checkPasswordValidity(  String username , String password) throws PasswordValidity {
         if (!Account.getAccountWithUsername(username).validatePassword(password)){
             throw new PasswordValidity("this password is invalid");
