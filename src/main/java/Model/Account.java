@@ -5,13 +5,16 @@ import java.util.List;
 
 public abstract class Account {
     public static ArrayList<Account> allAccounts = new ArrayList<Account>();
+    private static ArrayList<Account> allLoggedAccounts = new ArrayList<>();
     private String username;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
     private String password;
-
+    private static Account onlineAccount;
+    private static boolean isThereOnlineUser;
+    protected boolean isThisAccountLogged;
     /**
      * account constructor
      * @param username
@@ -31,12 +34,29 @@ public abstract class Account {
         allAccounts.add(this);
     }
 
-    private static Account onlineAccount;
-    private static boolean isThereOnlineUser;
+
+    public static ArrayList<Account> getAllLoggedAccounts() {
+        return allLoggedAccounts;
+    }
+
+    public static void setAllLoggedAccounts(ArrayList<Account> allLoggedAccounts) {
+        Account.allLoggedAccounts = allLoggedAccounts;
+    }
+
     public static int getTypeOfAccount(Account account) {
         return 0;
     }
+
+    /**
+     * this method is updated
+     * @param username
+     * @return
+     */
     public static Account getAccountWithUsername(String username) {
+        for (Account account : allAccounts) {
+            if (account.username.equals(username))
+                return account;
+        }
         return null;
     }
 
@@ -52,6 +72,15 @@ public abstract class Account {
         }
         return false;
     }
+
+    public boolean isThisAccountLogged() {
+        return isThisAccountLogged;
+    }
+
+    public void setThisAccountLogged(boolean thisAccountLogged) {
+        isThisAccountLogged = thisAccountLogged;
+    }
+
     public boolean validatePassword(String userPassword) {
         return true;
     }

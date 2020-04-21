@@ -1,5 +1,7 @@
 package Views;
 
+import Model.Account;
+
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -10,6 +12,7 @@ public abstract class Page {
     protected HashMap<String , Page> subPages;
     protected   Page parentPage;
     protected User user;
+    protected Account account;
     protected static Scanner scanner;
     public Page(String name, Page parentPage) {
         this.name = name;

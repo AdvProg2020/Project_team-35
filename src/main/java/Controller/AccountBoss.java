@@ -79,8 +79,31 @@ public class AccountBoss {
     public void startDeleteAccount(String username) {
 
     }
-    public void startLogin(String username, String password) {
 
+    /**
+     * this is for checking validity of username. we should have an account with this username.
+     * @param username
+     */
+    public static void checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername {
+        if (!Account.isThereAccountWithUserName(username)){
+            throw new ExistenceOfUserWithUsername("we don't have a user with this username");
+        }
+    }
+    public static void checkPasswordValidity(  String username , String password) throws PasswordValidity {
+        if (!Account.getAccountWithUsername(username).validatePassword(password)){
+            throw new PasswordValidity("this password is invalid");
+        }
+    }
+
+    /**
+     * this set an account situation to login and add it to logged accounts list.
+     * @param username
+     * @param password
+     */
+    public static void startLogin(String username, String password) {
+            Account account = Account.getAccountWithUsername(username);
+            account.setThisAccountLogged(true);
+            Account.getAllLoggedAccounts().add(account);
     }
     public static void startEditPersonalField(String username, String fieldName, String newValue) {
 

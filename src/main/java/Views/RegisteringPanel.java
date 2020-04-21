@@ -1,8 +1,7 @@
 package Views;
 
-import Controller.AccountBoss;
-import Controller.MoreThanOneManagerException;
-import Controller.RepeatedUserName;
+import Controller.*;
+import Model.Account;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -12,6 +11,7 @@ import static Controller.AccountBoss.makeAccount;
 
 public class RegisteringPanel extends Page {
     private AccountBoss accountBoss;
+    private static HashMap<String , String> usernameAndPassword = new HashMap<>();
     private static HashMap<String , String> allPersonalInfo = new HashMap<String, String>();
     public RegisteringPanel(String name, Page parentPage) {
         super(name, parentPage);
@@ -20,24 +20,73 @@ public class RegisteringPanel extends Page {
         subPages.put("login" , this);
 
     }
-    private Page loginUser(){
-        return new Page("Login" , this) {
+    private Page login(){
+        return new Page("login" , this) {
             @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-            //commands and back
+            public void execute() {
+                AccountBoss.startLogin(usernameAndPassword.get("username") , usernameAndPassword.get("password"));
+                System.out.println("login successfully");
+                account = Account.getAccountWithUsername(usernameAndPassword.get("username"));
+                MainPage mainPage = new MainPage();
+                mainPage.execute();
+
             }
-            // sout hello world :)
+        };
+    }
+    private Page loginGetPassword(){
+        return new Page("get password for login" , this) {
+            @Override
+            public void execute() {
+                System.out.println("password:");
+                String command = scanner.nextLine();
+                String regex = "(\\S+)";
+                Matcher matcher = getMatcher(command , regex);
+                matcher.matches();
+                if (command.matches(regex)){
+                    try {
+                        String username = usernameAndPassword.get("username");
+                        AccountBoss.checkPasswordValidity(username , matcher.group(1));
+                        usernameAndPassword.put("password" , matcher.group(1));
+                        login().execute();
+                    }catch (PasswordValidity e){
+                        System.out.println(e.getMessage());
+                        this.execute();
+                    }
+                }
+                else {
+                    System.err.println("invalid command");
+                    this.execute();
+                }
+            }
+        };
+    }
+    private Page loginGetUsername(){
+        return new Page("Login" , this) {
+
 
             @Override
             public void execute() {
-
-                //commands and back executes
+                System.out.println("username:");
+                String command = scanner.nextLine();
+                String regex = "login (\\w+)";
+                Matcher matcher = getMatcher(command,regex);
+                matcher.matches();
+                if (command.matches(regex)){
+                    try {
+                        AccountBoss.checkUsernameExistenceInLogin(matcher.group(1));
+                        usernameAndPassword.put("username" , matcher.group(1));
+                        loginGetPassword().execute();
+                    }catch (ExistenceOfUserWithUsername e){
+                        System.out.println(e.getMessage());
+                        this.execute();
+                    }
+                }
+                else {
+                    System.err.println("invalid command");
+                    this.execute();
+                }
             }
 
-            @Override
-            public void show() {
-                super.show();
-            }
         };
     }
 
@@ -101,10 +150,9 @@ public class RegisteringPanel extends Page {
                        allPersonalInfo.put("username" , matcher.group(2));
                        registerSecondPage().execute();
 
-                   }catch (MoreThanOneManagerException e){
+                   }catch (MoreThanOneManagerException | RepeatedUserName e){
                        System.out.println(e.getMessage());
-                   }catch (RepeatedUserName e){
-                       System.out.println(e.getMessage());
+                       this.execute();
                    }
 
                }
@@ -132,6 +180,7 @@ public class RegisteringPanel extends Page {
             nextPage = RegisterUser();
        }
        else if (command.equals("login")){
+           nextPage = loginGetUsername();
 
        }else if (command.equals("back")){
                 nextPage = parentPage;
