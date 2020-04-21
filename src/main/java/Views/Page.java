@@ -8,7 +8,7 @@ public abstract class Page {
     private HashMap<String , Page> subPages;
     private  Page parentPage;
     protected User user;
-    private static Scanner scanner;
+    protected static Scanner scanner;
     public Page(String name, Page parentPage) {
         this.name = name;
         subPages = new HashMap<String, Page>();
