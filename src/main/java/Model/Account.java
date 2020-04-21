@@ -34,6 +34,21 @@ public abstract class Account {
         allAccounts.add(this);
     }
 
+    /**
+     * this is added i think we need it.
+     * @return
+     */
+    public static Account getOnlineAccount() {
+        return onlineAccount;
+    }
+
+    /**
+     * this is add for access of change online account.
+     * @param onlineAccount
+     */
+    public static void setOnlineAccount(Account onlineAccount) {
+        Account.onlineAccount = onlineAccount;
+    }
 
     public static ArrayList<Account> getAllLoggedAccounts() {
         return allLoggedAccounts;
@@ -87,8 +102,13 @@ public abstract class Account {
     public abstract void deleteAccount();
     public abstract String getPersonalInfo();
     public abstract void editPersonalField(String field);
+
+    /**
+     * this is updated
+     * @return
+     */
     public static int whatTypeIsOnline() {
-        return 0;
+        return Account.getTypeOfAccount(onlineAccount);
     }
 
     public String getUsername() {

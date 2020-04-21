@@ -111,6 +111,7 @@ public class AccountBoss {
             Account account = Account.getAccountWithUsername(username);
             account.setThisAccountLogged(true);
             Account.getAllLoggedAccounts().add(account);
+            Account.setOnlineAccount(account);
     }
     public static void startEditPersonalField(String username, String fieldName, String newValue) {
 
