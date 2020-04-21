@@ -1,9 +1,9 @@
 package Controller;
 
-import Model.Account;
-import Model.Customer;
-import Model.Manager;
-import Model.Seller;
+import Model.*;
+import Views.MainPage;
+import Views.RegisteringPanel;
+import sun.applet.Main;
 
 import java.util.HashMap;
 
@@ -29,6 +29,7 @@ public class AccountBoss {
      * @param allPersonalInfo
      */
     public static void makeAccount(HashMap<String , String> allPersonalInfo ){
+       StringBuilder request = new StringBuilder();
         String type = null;
         String email = null;
         String phone = null;
@@ -43,31 +44,50 @@ public class AccountBoss {
             }
             if (s.equals("username")){
                 username = allPersonalInfo.get(s);
+                request.append(s+":"+username+"\n");
             }
             if (s.equals("password")){
                 password = allPersonalInfo.get(s);
+                request.append(s+":"+username+"\n");
+
             }
             if (s.equals("name")){
                 name = allPersonalInfo.get(s);
+                request.append(s+":"+username+"\n");
+
             }
             if (s.equals("family")){
                 family = allPersonalInfo.get(s);
+                request.append(s+":"+username+"\n");
+
             }
             if (s.equals("email address")){
                 email = allPersonalInfo.get(s);
+                request.append(s+":"+username+"\n");
+
             }
             if (s.equals("phone number")){
                 phone = allPersonalInfo.get(s);
+                request.append(s+":"+username+"\n");
+
             }
             if (s.equals("company name")){
                 company = allPersonalInfo.get(s);
+                request.append(s+":"+username+"\n");
             }
         }
         if (type.equals("manager")) {
             Manager manager = new Manager(username,name,family,email,phone ,password);
         }
         if (type.equals("seller")) {
-            Seller seller = new Seller(username , name , family , email ,phone , password , company);
+            SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(request);
+            try {
+                sellerRegisterRequest.execute();
+            } catch (RequestProblemNotExistManager requestProblemNotExistManager) {
+                System.out.println(requestProblemNotExistManager.getMessage());
+                MainPage mainPage = new MainPage();
+                mainPage.execute();
+            }
         }
         if (type.equals("customer")) {
             Customer customer = new Customer(username ,name , family , email , phone , password);

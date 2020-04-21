@@ -27,8 +27,11 @@ public class RegisteringPanel extends Page {
                 AccountBoss.startLogin(usernameAndPassword.get("username") , usernameAndPassword.get("password"));
                 System.out.println("login successfully");
                 account = Account.getAccountWithUsername(usernameAndPassword.get("username"));
-                MainPage mainPage = new MainPage();
-                mainPage.execute();
+                if (parentPage.parentPage.name.equals("Main Menu")) {
+                    MainPage mainPage = new MainPage();
+                    mainPage.execute();
+                }
+                ///this need code to complete it is possible we have a parent except main page.
 
             }
         };
@@ -39,6 +42,9 @@ public class RegisteringPanel extends Page {
             public void execute() {
                 System.out.println("password:");
                 String command = scanner.nextLine();
+                if (command.equals("back")){
+                    parentPage.execute();
+                }
                 String regex = "(\\S+)";
                 Matcher matcher = getMatcher(command , regex);
                 matcher.matches();
@@ -66,8 +72,11 @@ public class RegisteringPanel extends Page {
 
             @Override
             public void execute() {
-                System.out.println("username:");
+                System.out.println("print command:");
                 String command = scanner.nextLine();
+                 if (command.equals("back")){
+                    parentPage.execute();
+                }
                 String regex = "login (\\w+)";
                 Matcher matcher = getMatcher(command,regex);
                 matcher.matches();
@@ -95,6 +104,7 @@ public class RegisteringPanel extends Page {
      * @return
      */
    private Page registerSecondPage(){
+
         return new Page("second page Of registering" , this) {
             @Override
             public void execute() {
@@ -104,6 +114,9 @@ public class RegisteringPanel extends Page {
 
                         System.out.println(s + ":");
                         String command = scanner.nextLine();
+                         if (command.equals("back")){
+                            parentPage.execute();
+                        }
                         if (checkFormatOfPersonalInformation(s , command)) {
                             allPersonalInfo.put(s, command);
                             break;
@@ -146,13 +159,12 @@ public class RegisteringPanel extends Page {
 
             @Override
             public void execute() {
+                System.out.println("print command:");
                 Page nextPage = null;
                String command = scanner.nextLine();
                String regex  = "create account (manager|customer|seller) (\\w+)";
                 Matcher matcher = getMatcher(command , "create account (manager|customer|seller) (\\w+)");
-                if (matcher.matches()){
-
-                }
+               matcher.matches();
                if (command.matches(regex)){
                    try {
                        firstStepOfRegistering(matcher.group(1),matcher.group(2));
@@ -165,6 +177,9 @@ public class RegisteringPanel extends Page {
                        this.execute();
                    }
 
+               }
+               else if (command.equals("back")){
+                   parentPage.execute();
                }
                else {
                    System.err.println("invalid command");

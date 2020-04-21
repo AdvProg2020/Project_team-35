@@ -27,11 +27,7 @@ public abstract class Page {
     public void setSubPages(HashMap<String, Page> subPages) {
         this.subPages = subPages;
     }
-    private static boolean checkLoginOfUser(User user){
-        //if (user.isUserLogin())
-          //  return true;
-        return false;
-    }
+
     public void execute(){
         System.out.println(this.name);
             show();

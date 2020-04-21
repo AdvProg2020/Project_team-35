@@ -12,7 +12,7 @@ public class EditProductRequest extends Request {
     private int newInventory;
     public HashMap<String, String> newSpecialAttributes;
 
-    public String getDetails() {
+    public StringBuilder getDetails() {
         return null;
     }
     public void execute() {

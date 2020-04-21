@@ -9,7 +9,7 @@ public class EditOffRequest extends Request {
     private double newOffPercent;
     private ProductAndOffStatus newOffStatus;
 
-    public String getDetails() {
+    public StringBuilder getDetails() {
         return null;
     }
     public void execute() {
