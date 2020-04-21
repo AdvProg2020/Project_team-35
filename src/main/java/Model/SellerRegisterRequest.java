@@ -1,16 +1,10 @@
 package Model;
 
 public class SellerRegisterRequest extends Request {
-    private StringBuilder requester;
 
-    /**
-     * added
-     * @param requester
-     */
-    public SellerRegisterRequest(StringBuilder requester) {
-        super(requester);
+    public SellerRegisterRequest(StringBuilder request, RequestTypes requestTypes) {
+        super(request, requestTypes);
     }
-
 
     public void execute() throws RequestProblemNotExistManager {
         if (!Manager.isThereAnyManager()){
@@ -25,6 +19,6 @@ public class SellerRegisterRequest extends Request {
      * @return
      */
     public StringBuilder getDetails() {
-        return requester;
+        return request;
     }
 }

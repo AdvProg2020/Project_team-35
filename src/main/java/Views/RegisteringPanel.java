@@ -2,6 +2,7 @@ package Views;
 
 import Controller.*;
 import Model.Account;
+import Model.RequestProblemNotExistManager;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -127,8 +128,15 @@ public class RegisteringPanel extends Page {
                         }
                     }
                 }
-                System.out.println("successfully registered");
-                makeAccount(allPersonalInfo);
+
+                try {
+                    makeAccount(allPersonalInfo);
+                    System.out.println("successfully registered");
+                } catch (RequestProblemNotExistManager requestProblemNotExistManager) {
+                    System.out.println(requestProblemNotExistManager.getMessage());
+                    MainPage mainPage = new MainPage();
+                    mainPage.execute();
+                }
                 MainPage mainPage = new MainPage();
                 mainPage.execute();
 

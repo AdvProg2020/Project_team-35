@@ -28,7 +28,7 @@ public class AccountBoss {
      * this method is for new account with different rules and extract data from hashmap allPersonalInfo.
      * @param allPersonalInfo
      */
-    public static void makeAccount(HashMap<String , String> allPersonalInfo ){
+    public static void makeAccount(HashMap<String , String> allPersonalInfo ) throws RequestProblemNotExistManager{
        StringBuilder request = new StringBuilder();
         String type = null;
         String email = null;
@@ -80,14 +80,8 @@ public class AccountBoss {
             Manager manager = new Manager(username,name,family,email,phone ,password);
         }
         if (type.equals("seller")) {
-            SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(request);
-            try {
-                sellerRegisterRequest.execute();
-            } catch (RequestProblemNotExistManager requestProblemNotExistManager) {
-                System.out.println(requestProblemNotExistManager.getMessage());
-                MainPage mainPage = new MainPage();
-                mainPage.execute();
-            }
+            SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(request,RequestTypes.SELLER_REGISTER);
+          sellerRegisterRequest.execute();
         }
         if (type.equals("customer")) {
             Customer customer = new Customer(username ,name , family , email , phone , password);

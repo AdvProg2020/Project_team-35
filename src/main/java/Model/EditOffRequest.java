@@ -9,6 +9,10 @@ public class EditOffRequest extends Request {
     private double newOffPercent;
     private ProductAndOffStatus newOffStatus;
 
+    public EditOffRequest(StringBuilder request, RequestTypes requestTypes) {
+        super(request, requestTypes);
+    }
+
     public StringBuilder getDetails() {
         return null;
     }

@@ -12,6 +12,10 @@ public class EditProductRequest extends Request {
     private int newInventory;
     public HashMap<String, String> newSpecialAttributes;
 
+    public EditProductRequest(StringBuilder request, RequestTypes requestTypes) {
+        super(request, requestTypes);
+    }
+
     public StringBuilder getDetails() {
         return null;
     }
