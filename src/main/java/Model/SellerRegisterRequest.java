@@ -6,12 +6,8 @@ public class SellerRegisterRequest extends Request {
         super(request, requestTypes);
     }
 
-    public void execute() throws RequestProblemNotExistManager {
-        if (!Manager.isThereAnyManager()){
-            throw new RequestProblemNotExistManager("we don't have a manager yet please wait for a manager");
-        }
+    public void execute()  {
         Manager.newRequests.add(this) ;
-
     }
 
     /**

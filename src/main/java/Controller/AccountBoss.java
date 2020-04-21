@@ -15,9 +15,12 @@ public class AccountBoss {
      * @throws MoreThanOneManagerException
      * @throws RepeatedUserName
      */
-    public static void firstStepOfRegistering(String type , String username) throws MoreThanOneManagerException, RepeatedUserName {
+    public static void firstStepOfRegistering(String type , String username) throws MoreThanOneManagerException, RepeatedUserName, RequestProblemNotExistManager {
         if (Manager.isThereAnyManager() && type.equals("manager")){
             throw new MoreThanOneManagerException("just one manager could register\nplease talk to manager for adding you");
+        }
+        if (!Manager.isThereAnyManager() && type.equals("seller")){
+            throw new RequestProblemNotExistManager("you should wait because we don't have manager");
         }
         else if (Account.isThereAccountWithUserName(username)){
             throw new RepeatedUserName("a user exists with this username");
@@ -28,7 +31,7 @@ public class AccountBoss {
      * this method is for new account with different rules and extract data from hashmap allPersonalInfo.
      * @param allPersonalInfo
      */
-    public static void makeAccount(HashMap<String , String> allPersonalInfo ) throws RequestProblemNotExistManager{
+    public static void makeAccount(HashMap<String , String> allPersonalInfo ) {
        StringBuilder request = new StringBuilder();
         String type = null;
         String email = null;

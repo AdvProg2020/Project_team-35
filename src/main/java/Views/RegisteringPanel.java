@@ -129,15 +129,11 @@ public class RegisteringPanel extends Page {
                     }
                 }
 
-                try {
+
                     makeAccount(allPersonalInfo);
                     System.out.println("successfully registered");
-                } catch (RequestProblemNotExistManager requestProblemNotExistManager) {
-                    System.out.println(requestProblemNotExistManager.getMessage());
                     MainPage mainPage = new MainPage();
                     mainPage.execute();
-                }
-                MainPage mainPage = new MainPage();
                 mainPage.execute();
 
             }
@@ -180,8 +176,8 @@ public class RegisteringPanel extends Page {
                        allPersonalInfo.put("username" , matcher.group(2));
                        registerSecondPage().execute();
 
-                   }catch (MoreThanOneManagerException | RepeatedUserName e){
-                       System.out.println(e.getMessage());
+                   }catch (MoreThanOneManagerException | RepeatedUserName | RequestProblemNotExistManager e){
+                       System.err.println(e.getMessage());
                        this.execute();
                    }
 
