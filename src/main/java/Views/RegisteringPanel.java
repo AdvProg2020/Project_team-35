@@ -14,6 +14,7 @@ public class RegisteringPanel extends Page {
             public void setSubPages(HashMap<String, Page> subPages) {
             //commands and back
             }
+            // sout hello world :)
 
             @Override
             public void execute() {
