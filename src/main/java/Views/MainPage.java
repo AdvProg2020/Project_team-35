@@ -9,7 +9,7 @@ public class MainPage extends Page {
     public MainPage() {
         super("Main Menu", null);
         HashMap<String , Page> subPages = new HashMap<String, Page>();
-        this.subPages.put("Register Or Login", new RegisteringPanel("Registering Panel",this));
+        this.subPages.put("register or login", new RegisteringPanel("Registering Panel",this));
         this.subPages.put("product",new ProductsPage("Product Page" , this));
         this.subPages.put("offs" , new Offs("Offs Page" , this));
         this.subPages.put("search",new Search("Search Page" , this));

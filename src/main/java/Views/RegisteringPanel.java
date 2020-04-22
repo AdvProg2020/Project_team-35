@@ -18,7 +18,7 @@ public class RegisteringPanel extends Page {
     public RegisteringPanel(String name, Page parentPage) {
         super(name, parentPage);
 
-        subPages.put("Register", this);
+        subPages.put("register", this);
         subPages.put("login", this);
 
     }
@@ -161,7 +161,7 @@ public class RegisteringPanel extends Page {
      * @return
      */
     private Page RegisterUser() {
-        return new Page("Register", this) {
+        return new Page("register", this) {
 
 
             @Override
@@ -206,7 +206,7 @@ public class RegisteringPanel extends Page {
         show();
         Page nextPage = null;
         String command = scanner.nextLine();
-        if (command.equals("Register")) {
+        if (command.equals("register")) {
             nextPage = RegisterUser();
         } else if (command.equals("login")) {
             nextPage = loginGetUsername();
