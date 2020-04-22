@@ -38,10 +38,10 @@ public abstract class Page {
                 nextPage = getPageOfSubPage(command);
             }
         }
-        if (command.equals("back") && parentPage!=null){
+        if (command.equals("back") && parentPage != null){
          nextPage = parentPage;
         }
-        else if (command.equals("exit") && parentPage==null){
+        else if (command.equals("exit") && parentPage == null){
             return;
         }
         try {
