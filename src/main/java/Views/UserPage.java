@@ -6,10 +6,9 @@ public class UserPage extends Page {
     public UserPage(String name, Page parentPage) {
         super(name, parentPage);
         HashMap<String , Page> subPages = new HashMap<String, Page>();
-        subPages.put("view personal info" , this);
-        subPages.put("view personal info" , this);
-        subPages.put("view personal info" , this);
-        subPages.put("products", this);
+       this.subPages.put("view personal info" , this);
+
+        this.subPages.put("products", this);
 
     }
 
@@ -20,6 +19,7 @@ public class UserPage extends Page {
 
     @Override
     public void execute() {
-        super.execute();
+        String command = scanner.nextLine();
+
     }
 }

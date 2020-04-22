@@ -14,6 +14,7 @@ public class MainPage extends Page {
         this.subPages.put("offs" , new Offs("Offs Page" , this));
         this.subPages.put("search",new Search("Search Page" , this));
         this.subPages.put("cart" , new CartPage("Cart Page",this));
+        this.subPages.put("user page" , new UserPage("user page",this));
         Random n = new Random();
         n.nextInt();
     }
