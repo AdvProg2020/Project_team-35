@@ -89,8 +89,8 @@ public class RegisteringPanel extends Page {
                         AccountBoss.checkUsernameExistenceInLogin(matcher.group(1));
                         usernameAndPassword.put("username" , matcher.group(1));
                         loginGetPassword().execute();
-                    }catch (ExistenceOfUserWithUsername e){
-                        System.out.println(e.getMessage());
+                    }catch (ExistenceOfUserWithUsername | LoginWithoutLogout e){
+                        System.err.println(e.getMessage());
                         this.execute();
                     }
                 }

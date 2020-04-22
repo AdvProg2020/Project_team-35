@@ -99,9 +99,13 @@ public class AccountBoss {
 
     /**
      * this is for checking validity of username. we should have an account with this username.
+     * in first part if we have two online users it has problem.
      * @param username
      */
-    public static void checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername {
+    public static void checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername, LoginWithoutLogout {
+       if (Account.isIsThereOnlineUser()){
+           throw new LoginWithoutLogout("first you should logout");
+       }
         if (!Account.isThereAccountWithUserName(username)){
             throw new ExistenceOfUserWithUsername("we don't have a user with this username");
         }

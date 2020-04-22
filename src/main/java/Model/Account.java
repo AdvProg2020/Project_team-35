@@ -34,6 +34,14 @@ public abstract class Account {
         allAccounts.add(this);
     }
 
+    public static boolean isIsThereOnlineUser() {
+        return isThereOnlineUser;
+    }
+
+    public static void setIsThereOnlineUser(boolean isThereOnlineUser) {
+        Account.isThereOnlineUser = isThereOnlineUser;
+    }
+
     /**
      * this is added i think we need it.
      * @return
