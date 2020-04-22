@@ -83,8 +83,9 @@ public class AccountBoss {
             Manager manager = new Manager(username,name,family,email,phone ,password);
         }
         if (type.equals("seller")) {
-            SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(request,RequestTypes.SELLER_REGISTER);
-          sellerRegisterRequest.execute();
+            Seller requester = new Seller(username, name, family, email, phone, password, company);
+            SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(request,RequestTypes.SELLER_REGISTER, requester);
+            Manager.newRequests.add(sellerRegisterRequest);
         }
         if (type.equals("customer")) {
             Customer customer = new Customer(username ,name , family , email , phone , password);

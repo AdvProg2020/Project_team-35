@@ -28,7 +28,6 @@ public class Seller extends Account {
         sellLogs = new ArrayList<SellLog>();
         money = 0.0;
         salableProducts = new ArrayList<Product>();
-        allSellers.add(this);
     }
 
     public HashMap<Product, Integer> getSalesHistory() {
