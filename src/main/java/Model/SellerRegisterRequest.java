@@ -9,6 +9,7 @@ public class SellerRegisterRequest extends Request {
     private Seller requester;
 
     public void execute()  {
+        Seller.allSellers.add(requester);
     }
 
     /**
