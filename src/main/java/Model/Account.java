@@ -96,8 +96,15 @@ public abstract class Account {
         isThisAccountLogged = thisAccountLogged;
     }
 
+    /**
+     * updated for login
+     * @param userPassword
+     * @return
+     */
     public boolean validatePassword(String userPassword) {
-        return true;
+        if (userPassword.equals(password))
+            return true;
+        return false;
     }
     public abstract void deleteAccount();
     public abstract String getPersonalInfo();

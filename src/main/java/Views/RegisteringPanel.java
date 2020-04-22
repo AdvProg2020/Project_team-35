@@ -19,6 +19,9 @@ public class RegisteringPanel extends Page {
 
         subPages.put("Register" , this);
         subPages.put("login" , this);
+        subPages.put("offs",this);
+        subPages.put("products",this);
+        subPages.put("search",this);
 
     }
     private Page login(){
@@ -133,7 +136,6 @@ public class RegisteringPanel extends Page {
                     makeAccount(allPersonalInfo);
                     System.out.println("successfully registered");
                     MainPage mainPage = new MainPage();
-                    mainPage.execute();
                 mainPage.execute();
 
             }
