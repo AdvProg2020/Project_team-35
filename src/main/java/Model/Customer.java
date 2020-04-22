@@ -9,7 +9,7 @@ public class Customer extends Account {
     private double money;
     public ArrayList<BuyLog> buyLogs;
     public HashMap<Product, Integer> cart;
-    public static int newOrderNumber;
+    public static int newOrderNumber = 0;
 
     /**
      * a constructor for customer is equal to accounts but it has some lists new.
@@ -22,11 +22,10 @@ public class Customer extends Account {
      */
     public Customer(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
         super(username, firstName, lastName, email, phoneNumber, password);
-        money =0.0;
         allCustomers.add(this);
         discountCodes = new ArrayList<DiscountCode>();
         buyLogs = new ArrayList<BuyLog>();
-        newOrderNumber+=1;
+        cart = new HashMap<>();
     }
 
     public boolean isThereProductWithIdInCart(int id) {
@@ -69,8 +68,14 @@ public class Customer extends Account {
 
     }
     @Override
-    public void getPersonalInfo() {
-        this.toString();
+    public String getPersonalInfo() {
+        String toReturn = "Type: Customer\n" +
+                "Username: %s\n" +
+                "Name: %s\n" +
+                "Email: %s\n" +
+                "PhoneNumber: %s\n";
+        toReturn = String.format(toReturn, this.getUsername(), this.getFirstName() + this.getLastName() + this.getEmail() + this.getPhoneNumber());
+        return toReturn;
     }
     @Override
     public void editPersonalField(String field) {
