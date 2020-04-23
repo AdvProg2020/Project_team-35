@@ -11,7 +11,6 @@ public abstract class Page {
     protected String name;
     protected HashMap<String , Page> subPages;
     protected   Page parentPage;
-    protected User user;
     protected Account account;
     protected static Scanner scanner;
     public Page(String name, Page parentPage) {
@@ -41,7 +40,7 @@ public abstract class Page {
         if (command.equals("back") && parentPage!=null){
          nextPage = parentPage;
         }
-        else if (command.equals("exit") && parentPage==null){
+         if (command.equals("exit") ){
             return;
         }
         try {

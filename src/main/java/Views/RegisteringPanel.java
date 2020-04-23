@@ -11,7 +11,6 @@ import static Controller.AccountBoss.firstStepOfRegistering;
 import static Controller.AccountBoss.makeAccount;
 
 public class RegisteringPanel extends Page {
-    private AccountBoss accountBoss;
     private static HashMap<String, String> usernameAndPassword = new HashMap<>();
     private static HashMap<String, String> allPersonalInfo = new HashMap<String, String>();
 
@@ -92,7 +91,7 @@ public class RegisteringPanel extends Page {
                         AccountBoss.checkUsernameExistenceInLogin(matcher.group(1));
                         usernameAndPassword.put("username", matcher.group(1));
                         loginGetPassword().execute();
-                    } catch (ExistenceOfUserWithUsername e) {
+                    } catch (ExistenceOfUserWithUsername | LoginWithoutLogout e) {
                         System.out.println(e.getMessage());
                         this.execute();
                     }
