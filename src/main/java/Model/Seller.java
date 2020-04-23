@@ -67,4 +67,8 @@ public class Seller extends Account {
     public String getCompanyName() {
         return companyName;
     }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 }

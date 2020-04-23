@@ -131,7 +131,26 @@ public class AccountBoss {
             Account.getAllLoggedAccounts().add(account);
             Account.setOnlineAccount(account);
     }
-    public static void startEditPersonalField(String username, String fieldName, String newValue) {
+    public static void startEditPersonalField(String fieldName, String newValue) throws NotValidFieldException {
+        if (fieldName.equalsIgnoreCase("firstName")) {
+            Account.getOnlineAccount().setFirstName(newValue);
+        } else if (fieldName.equalsIgnoreCase("lastName")) {
+            Account.getOnlineAccount().setLastName(newValue);
+        } else if (fieldName.equalsIgnoreCase("email")) {
+            Account.getOnlineAccount().setEmail(newValue);
+        } else if (fieldName.equalsIgnoreCase("phoneNumber")) {
+            Account.getOnlineAccount().setPhoneNumber(newValue);
+        } else if (fieldName.equalsIgnoreCase("password")) {
+            Account.getOnlineAccount().setPassword(newValue);
+        } else if (fieldName.equalsIgnoreCase("companyName")) {
+            if (Account.getOnlineAccount() instanceof Seller) {
+                ((Seller) Account.getOnlineAccount()).setCompanyName(newValue);
+            }
+            else throw new NotValidFieldException("valid : username.lastName.email.password.phoneNumber.company(for sellers)\n");
+        }
+        else {
+            throw new NotValidFieldException("valid : username.lastName.email.password.phoneNumber.company(for sellers)\n");
+        }
 
     }
 
