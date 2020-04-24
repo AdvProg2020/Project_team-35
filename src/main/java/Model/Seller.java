@@ -22,7 +22,7 @@ public class Seller extends Account {
      * @param companyName
      */
     public Seller(String username, String firstName, String lastName, String email, String phoneNumber, String password, String companyName) {
-        super(username, firstName, lastName, email, phoneNumber, password);
+        super(username, firstName, lastName, email, phoneNumber, password,3);
         this.companyName = companyName;
         sellerOffs = new ArrayList<Off>();
         sellLogs = new ArrayList<SellLog>();
@@ -64,6 +64,10 @@ public class Seller extends Account {
 
     }
 
+    /**
+     * update this method.
+     * @return
+     */
     public String getCompanyName() {
         return companyName;
     }

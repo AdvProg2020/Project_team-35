@@ -16,7 +16,7 @@ public class Manager extends Account {
      * @param password
      */
     public Manager(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
-        super(username, firstName, lastName, email, phoneNumber, password);
+        super(username, firstName, lastName, email, phoneNumber, password,1);
         newRequests = new ArrayList<Request>();
         allManagers.add(this);
     }

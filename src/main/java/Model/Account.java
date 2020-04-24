@@ -15,6 +15,7 @@ public abstract class Account {
     private static Account onlineAccount;
     private static boolean isThereOnlineUser;
     protected boolean isThisAccountLogged;
+    protected int typeOfAccount;
     /**
      * account constructor
      * @param username
@@ -24,13 +25,14 @@ public abstract class Account {
      * @param phoneNumber
      * @param password
      */
-    public Account(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
+    public Account(String username, String firstName, String lastName, String email, String phoneNumber, String password , int typeOfAccount) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.typeOfAccount = typeOfAccount;
         allAccounts.add(this);
     }
 
@@ -67,7 +69,7 @@ public abstract class Account {
     }
 
     public static int getTypeOfAccount(Account account) {
-        return 0;
+        return account.typeOfAccount;
     }
 
     /**

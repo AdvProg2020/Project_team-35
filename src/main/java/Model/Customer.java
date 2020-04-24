@@ -21,7 +21,7 @@ public class Customer extends Account {
      * @param password
      */
     public Customer(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
-        super(username, firstName, lastName, email, phoneNumber, password);
+        super(username, firstName, lastName, email, phoneNumber, password,2);
         allCustomers.add(this);
         discountCodes = new ArrayList<DiscountCode>();
         buyLogs = new ArrayList<BuyLog>();

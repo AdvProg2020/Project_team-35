@@ -46,7 +46,7 @@ public abstract class Page {
         try {
             nextPage.execute();
         }catch (Exception e){
-            e.printStackTrace();
+            System.err.println("invalid command");
             this.execute();
         }
     }
