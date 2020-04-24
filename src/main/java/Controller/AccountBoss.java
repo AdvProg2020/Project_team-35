@@ -153,6 +153,17 @@ public class AccountBoss {
             account.setIsThereOnlineUser(true);
             Account.setOnlineAccount(account);
     }
+    public static void editPersonalInfoGetFieldName(String fieldName) throws UserNameChange, FieldDoesNotExist {
+        if (fieldName.equalsIgnoreCase("username")){
+            throw new UserNameChange("you can't change your username");
+        }
+        if (!(fieldName.equalsIgnoreCase("firstName")|| fieldName.equalsIgnoreCase("lastName") || fieldName.equalsIgnoreCase("password") || fieldName.equalsIgnoreCase("email") || fieldName.equalsIgnoreCase("phoneNumber") || fieldName.equalsIgnoreCase("companyName"))){
+            throw new FieldDoesNotExist("this field is valid");
+        }
+        if ( !(Account.getOnlineAccount() instanceof Seller) &&fieldName.equalsIgnoreCase("companyName")){
+            throw new FieldDoesNotExist("this field is not available for you with this role");
+        }
+    }
     public static void startEditPersonalField(String fieldName, String newValue) throws NotValidFieldException {
         if (fieldName.equalsIgnoreCase("firstName")) {
             Account.getOnlineAccount().setFirstName(newValue);

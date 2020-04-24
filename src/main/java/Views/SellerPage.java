@@ -31,7 +31,7 @@ public class SellerPage extends Page {
                 if (command.matches(regex)){
                     fieldName = "";
                     try {
-                        SellerBoss.editPersonalInfoGetFieldName(matcher.group(1));
+                        AccountBoss.editPersonalInfoGetFieldName(matcher.group(1));
                         fieldName = matcher.group(1);
                     } catch (UserNameChange | FieldDoesNotExist e) {
                         System.err.println(e.getMessage());
