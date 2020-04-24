@@ -1,9 +1,6 @@
 package Controller;
 
 import Model.*;
-import Views.MainPage;
-import Views.RegisteringPanel;
-import sun.applet.Main;
 
 import java.util.HashMap;
 
