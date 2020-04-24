@@ -49,7 +49,7 @@ public abstract class Account {
      * @return
      */
     public static Account getOnlineAccount() {
-        return onlineAccount;
+        return Account.onlineAccount;
     }
 
     /**

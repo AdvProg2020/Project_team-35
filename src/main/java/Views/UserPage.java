@@ -1,6 +1,7 @@
 package Views;
 
 
+import Controller.AccountBoss;
 import Model.Account;
 
 import java.util.HashMap;
@@ -27,12 +28,14 @@ public class UserPage extends Page {
                     RegisteringPanel registeringPanel = new RegisteringPanel("RegisteringPanel", this);
                     registeringPanel.execute();
                 } else {
+                    account = Account.getOnlineAccount();
+                    System.out.println( AccountBoss.showPersonalInfoInUserPage(account));
                     setSubPages(subPages);
                     show();
                     Page nextPage = null;
                     String command = scanner.nextLine();
                     if (command.equalsIgnoreCase("user account")) {
-                        account = Account.getOnlineAccount();
+
                         if (Account.getTypeOfAccount(account) == 1) {
                             ManagerPage managerPage = new ManagerPage("manager", this);
                             nextPage = managerPage;

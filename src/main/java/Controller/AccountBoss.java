@@ -97,7 +97,21 @@ public class AccountBoss {
     public void startDeleteAccount(String username) {
 
     }
-
+    public static String showPersonalInfoInUserPage(Account account){
+        if (Account.getTypeOfAccount(account)==1){
+            Manager manager = (Manager) account;
+            return manager.getPersonalInfo();
+        }
+        else if (Account.getTypeOfAccount(account)==2){
+            Customer customer = (Customer) account;
+           return customer.getPersonalInfo();
+        }
+        else if (Account.getTypeOfAccount(account)==3){
+            Seller seller = (Seller) account;
+            return seller.getPersonalInfo();
+        }
+        return null;
+    }
     /**
      * this is for checking validity of username. we should have an account with this username.
      * in first part if we have two online users it has problem.

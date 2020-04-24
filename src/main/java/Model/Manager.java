@@ -32,20 +32,24 @@ public class Manager extends Account {
     }
     @Override
     public String toString() {
-        return null;
+        return super.toString();
     }
     @Override
     public void deleteAccount() {
 
     }
+
+    /**
+     * this format is true
+     * @return
+     */
     @Override
     public String getPersonalInfo() {
         String toReturn = "Type: Manager\n" +
-                "Username: %s\n" +
-                "Name: %s\n" +
-                "Email: %s\n" +
-                "PhoneNumber: %s\n";
-        toReturn = String.format(toReturn, this.getUsername(), this.getFirstName() + this.getLastName() + this.getEmail() + this.getPhoneNumber());
+                "Username: "+getUsername()+"\n" +
+                "Name: "+getFirstName()+"\n" +
+                "Email: "+getEmail()+"\n" +
+                "PhoneNumber: "+getPhoneNumber()+"\n";
         return toReturn;
     }
     @Override
