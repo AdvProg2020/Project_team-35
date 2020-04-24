@@ -14,6 +14,8 @@ public class SellerPage extends Page {
         subPages.put("view company information" , this);
         subPages.put("view sales history" , this);
         subPages.put("view credit" , this);
+        subPages.put("show categories" , this);
+        subPages.put("manage products" , this);
 
     }
 
@@ -144,6 +146,19 @@ public class SellerPage extends Page {
             }
         };
     }
+    private Page viewCategory(){
+        return new Page("category view" , this) {
+            @Override
+            public void execute() {
+                System.out.println("categories:");
+                for (String category : SellerBoss.showCategories()) {
+                    System.out.println(category);
+                }
+                // i have doubt in here
+                parentPage.execute();
+            }
+        };
+    }
     @Override
     public void show() {
         super.show();
@@ -161,6 +176,8 @@ public class SellerPage extends Page {
             nextPage = viewSalesHistory();
         }else if (command.equalsIgnoreCase("view credit")){
             nextPage = viewCredit();
+        }else if (command.equalsIgnoreCase("show categories")){
+                nextPage = viewCategory();
         }
         try {
             nextPage.execute();

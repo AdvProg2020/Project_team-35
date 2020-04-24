@@ -98,9 +98,6 @@ public abstract class Account {
         return false;
     }
 
-    public boolean isThisAccountLogged() {
-        return isThisAccountLogged;
-    }
 
     public void setThisAccountLogged(boolean thisAccountLogged) {
         isThisAccountLogged = thisAccountLogged;
@@ -119,10 +116,7 @@ public abstract class Account {
     public abstract void deleteAccount();
     public abstract String getPersonalInfo();
 
-    /**
-     * this is updated
-     * @return
-     */
+
     public static int whatTypeIsOnline() {
         return Account.getTypeOfAccount(onlineAccount);
     }

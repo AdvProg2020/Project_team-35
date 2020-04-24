@@ -20,4 +20,8 @@ public class Category {
     public void editCategory(String name, ArrayList<String> newSpecialAttributes) {
 
     }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
 }

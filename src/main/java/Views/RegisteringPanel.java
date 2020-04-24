@@ -142,7 +142,13 @@ public class RegisteringPanel extends Page {
 
                     makeAccount(allPersonalInfo);
                     System.out.println("successfully registered");
-                   loginGetUsername().execute();
+                    if (parentPage.parentPage.name.equalsIgnoreCase("UserPage")){
+                        System.out.println("login:");
+                       loginGetUsername().execute();
+                    }
+                    else {
+                        parentPage.parentPage.execute();
+                    }
 
             }
 
