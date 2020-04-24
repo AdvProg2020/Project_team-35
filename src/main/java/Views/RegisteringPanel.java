@@ -11,7 +11,6 @@ import static Controller.AccountBoss.firstStepOfRegistering;
 import static Controller.AccountBoss.makeAccount;
 
 public class RegisteringPanel extends Page {
-    private AccountBoss accountBoss;
     private static HashMap<String, String> usernameAndPassword = new HashMap<>();
     private static HashMap<String, String> allPersonalInfo = new HashMap<String, String>();
 
@@ -26,6 +25,10 @@ public class RegisteringPanel extends Page {
 
     }
 
+    /**
+     * this method is completed
+     * @return
+     */
     private Page login() {
         return new Page("login", this) {
             @Override
@@ -37,7 +40,9 @@ public class RegisteringPanel extends Page {
                     MainPage mainPage = new MainPage();
                     mainPage.execute();
                 }
-                ///this need code to complete it is possible we have a parent except main page.
+                else {
+                    parentPage.parentPage.execute();
+                }
 
             }
         };
@@ -83,22 +88,23 @@ public class RegisteringPanel extends Page {
                 String command = scanner.nextLine();
                 if (command.equals("back")) {
                     parentPage.execute();
-                }
-                String regex = "login (\\w+)";
-                Matcher matcher = getMatcher(command, regex);
-                matcher.matches();
-                if (command.matches(regex)) {
-                    try {
-                        AccountBoss.checkUsernameExistenceInLogin(matcher.group(1));
-                        usernameAndPassword.put("username", matcher.group(1));
-                        loginGetPassword().execute();
-                    } catch (ExistenceOfUserWithUsername e) {
-                        System.out.println(e.getMessage());
+                } else {
+                    String regex = "login (\\w+)";
+                    Matcher matcher = getMatcher(command, regex);
+                    matcher.matches();
+                    if (command.matches(regex)) {
+                        try {
+                            AccountBoss.checkUsernameExistenceInLogin(matcher.group(1));
+                            usernameAndPassword.put("username", matcher.group(1));
+                            loginGetPassword().execute();
+                        } catch (ExistenceOfUserWithUsername | LoginWithoutLogout e) {
+                            System.out.println(e.getMessage());
+                            this.execute();
+                        }
+                    } else {
+                        System.err.println("invalid command");
                         this.execute();
                     }
-                } else {
-                    System.err.println("invalid command");
-                    this.execute();
                 }
             }
 
@@ -136,8 +142,13 @@ public class RegisteringPanel extends Page {
 
                     makeAccount(allPersonalInfo);
                     System.out.println("successfully registered");
-                    MainPage mainPage = new MainPage();
-                mainPage.execute();
+                    if (parentPage.parentPage.name.equalsIgnoreCase("UserPage")){
+                        System.out.println("login:");
+                       loginGetUsername().execute();
+                    }
+                    else {
+                        parentPage.parentPage.execute();
+                    }
 
             }
 
@@ -202,7 +213,6 @@ public class RegisteringPanel extends Page {
 
     @Override
     public void execute() {
-        System.out.println(this.name);
         show();
         Page nextPage = null;
         String command = scanner.nextLine();
@@ -218,22 +228,6 @@ public class RegisteringPanel extends Page {
 
     }
 
-    /**
-     * this method check email address and phone number be in a true form.
-     * @param type
-     * @param input
-     * @return
-     */
-    private static boolean checkFormatOfPersonalInformation(String type, String input) {
 
-        if (type.equals("email address")) {
-            Matcher matcher = getMatcher(input, "^(\\w+)@(\\w+).(\\w+)$");
-            return matcher.matches();
-        } else if (type.equals("phone number")) {
-            Matcher matcher = getMatcher(input, "\\d+");
-            return matcher.matches();
-        }
-        return true;
-    }
 
 }

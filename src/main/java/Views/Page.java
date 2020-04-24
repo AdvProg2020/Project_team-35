@@ -1,5 +1,7 @@
 package Views;
 
+import Controller.AccountBoss;
+import Controller.NotValidFieldException;
 import Model.Account;
 
 import java.util.HashMap;
@@ -9,9 +11,9 @@ import java.util.regex.Pattern;
 
 public abstract class Page {
     protected String name;
+
     protected HashMap<String , Page> subPages;
     protected   Page parentPage;
-    protected User user;
     protected Account account;
     protected static Scanner scanner;
     public Page(String name, Page parentPage) {
@@ -29,7 +31,7 @@ public abstract class Page {
     }
 
     public void execute(){
-        System.out.println(this.name);
+
             show();
             Page nextPage = null;
             String command = scanner.nextLine();
@@ -38,16 +40,16 @@ public abstract class Page {
                 nextPage = getPageOfSubPage(command);
             }
         }
-        if (command.equals("back") && parentPage != null){
+        if (command.equals("back") && parentPage!=null){
          nextPage = parentPage;
         }
-        else if (command.equals("exit") && parentPage == null){
+         if (command.equals("exit") ){
             return;
         }
         try {
             nextPage.execute();
         }catch (Exception e){
-            e.printStackTrace();
+            System.err.println("invalid command");
             this.execute();
         }
     }
@@ -64,6 +66,7 @@ public abstract class Page {
         return null;
     }
     public void show(){
+        System.out.println(name);
         int i =1;
         for (String s : subPages.keySet()) {
             System.out.println(i+"."+s);
@@ -81,4 +84,22 @@ public abstract class Page {
         Matcher matcher = pattern.matcher(input);
         return matcher;
     }
+    /**
+     * this method check email address and phone number be in a true form.
+     * @param type
+     * @param input
+     * @return
+     */
+    protected static boolean checkFormatOfPersonalInformation(String type, String input) {
+
+        if (type.equals("email address")) {
+            Matcher matcher = getMatcher(input, "^(\\w+)@(\\w+).(\\w+)$");
+            return matcher.matches();
+        } else if (type.equals("phone number")) {
+            Matcher matcher = getMatcher(input, "\\d+");
+            return matcher.matches();
+        }
+        return true;
+    }
+
 }

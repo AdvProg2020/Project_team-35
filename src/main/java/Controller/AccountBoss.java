@@ -94,7 +94,24 @@ public class AccountBoss {
     public void startDeleteAccount(String username) {
 
     }
-
+    public static String showPersonalInfoInUserPage(Account account){
+        if (Account.getTypeOfAccount(account)==1){
+            Manager manager = (Manager) account;
+            return manager.getPersonalInfo();
+        }
+        else if (Account.getTypeOfAccount(account)==2){
+            Customer customer = (Customer) account;
+           return customer.getPersonalInfo();
+        }
+        else if (Account.getTypeOfAccount(account)==3){
+            Seller seller = (Seller) account;
+            return seller.getPersonalInfo();
+        }
+        return null;
+    }
+    public static String showCompanyInfo(Seller seller){
+        return seller.getCompanyName();
+    }
     /**
      * this is for checking validity of username. we should have an account with this username.
      * in first part if we have two online users it has problem.
@@ -130,8 +147,10 @@ public class AccountBoss {
             Account account = Account.getAccountWithUsername(username);
             account.setThisAccountLogged(true);
             Account.getAllLoggedAccounts().add(account);
+            account.setIsThereOnlineUser(true);
             Account.setOnlineAccount(account);
     }
+
     public static void startEditPersonalField(String fieldName, String newValue) throws NotValidFieldException {
         if (fieldName.equalsIgnoreCase("firstName")) {
             Account.getOnlineAccount().setFirstName(newValue);

@@ -26,7 +26,7 @@ public class Manager extends Account {
      * @return
      */
     public static boolean isThereAnyManager() {
-        if (allManagers.size() > 0)
+        if (allManagers.size()>0)
             return true;
         return false;
     }
