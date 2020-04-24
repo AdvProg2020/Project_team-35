@@ -19,11 +19,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22a8972d-0158-477b-901a-9c04baa7ad15" name="Default Changelist" comment="add edit personal info get field name part.(first step of editing)">
+    <list default="true" id="22a8972d-0158-477b-901a-9c04baa7ad15" name="Default Changelist" comment="add field type checker method to AccountBoss.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/AccountBoss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/AccountBoss.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/SellerBoss.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Views/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/Page.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Views/RegisteringPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/RegisteringPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Views/SellerPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/SellerPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Views/Shower.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +110,8 @@
       <workItem from="1587657909365" duration="3389000" />
       <workItem from="1587669946505" duration="9208000" />
       <workItem from="1587706656532" duration="10339000" />
-      <workItem from="1587735481311" duration="786000" />
+      <workItem from="1587735481311" duration="841000" />
+      <workItem from="1587743415730" duration="792000" />
     </task>
     <task id="LOCAL-00001" summary="add maven project and java files">
       <created>1587386984402</created>
@@ -181,7 +183,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587717026571</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="add field type checker method to AccountBoss.">
+      <created>1587736308185</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1587736308186</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,7 +220,8 @@
     <MESSAGE value="add view info to view&#10;Manager.getPersonalInfo is correct should change this method in all rules" />
     <MESSAGE value="add company info show process" />
     <MESSAGE value="add edit personal info get field name part.(first step of editing)" />
-    <option name="LAST_COMMIT_MESSAGE" value="add edit personal info get field name part.(first step of editing)" />
+    <MESSAGE value="add field type checker method to AccountBoss." />
+    <option name="LAST_COMMIT_MESSAGE" value="add field type checker method to AccountBoss." />
   </component>
   <component name="WindowStateProjectService">
     <state x="404" y="0" width="617" height="680" key="#Main" timestamp="1587565144070">
@@ -223,10 +233,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="71" key="#Notifications/0.0.1536.824@0.0.1536.824" timestamp="1587479036693" />
-    <state x="478" y="83" key="#com.intellij.ide.util.MemberChooser" timestamp="1587716325691">
+    <state x="478" y="83" key="#com.intellij.ide.util.MemberChooser" timestamp="1587743761942">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="478" y="83" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1587716325691" />
+    <state x="478" y="83" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1587743761942" />
     <state x="574" y="113" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1587565873065" />
     <state x="618" y="306" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1587503037188">
       <screen x="0" y="0" width="1536" height="834" />

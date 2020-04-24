@@ -2,11 +2,10 @@ package Views;
 
 import Controller.AccountBoss;
 import Controller.FieldDoesNotExist;
-import Controller.SellerBoss;
+import Controller.NotValidFieldException;
 import Controller.UserNameChange;
 import Model.Account;
 import Model.Seller;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -17,7 +16,31 @@ public class SellerPage extends Page {
     public SellerPage(String name, Page parentPage) {
         super(name, parentPage);
         subPages.put("view company information" , this);
+        subPages.put("edit",this);
 
+    }
+
+    private Page editPersonalInfoGetChange(){
+        return new Page("edit field",this) {
+            @Override
+            public void execute() {
+                String command = scanner.nextLine();
+                if (checkFormatOfPersonalInformation(fieldName , command)){
+                    fieldChange = command;
+                    try {
+                        AccountBoss.startEditPersonalField(fieldName , fieldChange);
+                    } catch (NotValidFieldException e) {
+                        System.err.println(e.getMessage());
+                        this.execute();
+                    }
+                }
+                else {
+                    System.err.println("invalid format");
+                    this.execute();
+                }
+
+            }
+        };
     }
     private Page editPersonalInfoGetFieldName(){
         return new Page("edit" , this) {
@@ -29,14 +52,7 @@ public class SellerPage extends Page {
                 Matcher matcher = getMatcher(command,regex);
                 matcher.matches();
                 if (command.matches(regex)){
-                    fieldName = "";
-                    try {
-                        AccountBoss.editPersonalInfoGetFieldName(matcher.group(1));
                         fieldName = matcher.group(1);
-                    } catch (UserNameChange | FieldDoesNotExist e) {
-                        System.err.println(e.getMessage());
-                        this.execute();
-                    }
                 }
                 else {
                     System.err.println("invalid command");

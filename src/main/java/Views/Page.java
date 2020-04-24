@@ -80,4 +80,21 @@ public abstract class Page {
         Matcher matcher = pattern.matcher(input);
         return matcher;
     }
+    /**
+     * this method check email address and phone number be in a true form.
+     * @param type
+     * @param input
+     * @return
+     */
+    protected static boolean checkFormatOfPersonalInformation(String type, String input) {
+
+        if (type.equals("email address")) {
+            Matcher matcher = getMatcher(input, "^(\\w+)@(\\w+).(\\w+)$");
+            return matcher.matches();
+        } else if (type.equals("phone number")) {
+            Matcher matcher = getMatcher(input, "\\d+");
+            return matcher.matches();
+        }
+        return true;
+    }
 }
