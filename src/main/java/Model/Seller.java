@@ -72,7 +72,7 @@ public class Seller extends Account {
         return money;
     }
 
-    public void setMoney(double money) {
-        this.money = money;
+    public ArrayList<SellLog> getSellLogs() {
+        return sellLogs;
     }
 }

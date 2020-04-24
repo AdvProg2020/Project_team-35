@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.Category;
+import Model.Product;
+import Model.SellLog;
 import Model.Seller;
 
 import java.util.ArrayList;
@@ -16,7 +18,13 @@ public class SellerBoss {
         }
         return categories;
     }
-    public static ArrayList<String> showHistoryOfSales(){
-        return null;
+    public static ArrayList<String> showHistoryOfSales(Seller seller){
+        ArrayList<String> sales = new ArrayList<>();
+        for (SellLog log : seller.getSellLogs()) {
+            for (Product soldProduct : log.getSoldProducts()) {
+                sales.add(soldProduct.getName());
+            }
+        }
+        return sales;
     }
 }

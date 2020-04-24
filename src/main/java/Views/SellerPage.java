@@ -31,11 +31,20 @@ public class SellerPage extends Page {
             }
         };
     }
+
+    /**
+     * it give online account to show history method of controller and get back a list of products name which seller had sold and go back to seller page.
+     * @return
+     */
     private Page viewSalesHistory(){
         return new Page("view sales history" , this) {
             @Override
             public void execute() {
-
+                System.out.println("sales history : ");
+                for (String sale : SellerBoss.showHistoryOfSales((Seller) Account.getOnlineAccount())) {
+                    System.out.println(sale);
+                }
+                parentPage.execute();
             }
 
         };
