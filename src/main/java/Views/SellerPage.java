@@ -1,22 +1,19 @@
 package Views;
 
 import Controller.AccountBoss;
-import Controller.FieldDoesNotExist;
-import Controller.NotValidFieldException;
-import Controller.UserNameChange;
+import Controller.SellerBoss;
 import Model.Account;
 import Model.Seller;
 
 import java.util.HashMap;
-import java.util.regex.Matcher;
 
 public class SellerPage extends Page {
-    private static String fieldName;
-    private static String fieldChange;
+
     public SellerPage(String name, Page parentPage) {
         super(name, parentPage);
         subPages.put("view company information" , this);
-        subPages.put("edit",this);
+        subPages.put("view sales history" , this);
+        subPages.put("view credit" , this);
 
     }
 
@@ -35,19 +32,10 @@ public class SellerPage extends Page {
     private Page viewSalesHistory(){
         return new Page("view sales history" , this) {
             @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                super.setSubPages(subPages);
-            }
-
-            @Override
             public void execute() {
-                super.execute();
+
             }
 
-            @Override
-            public void show() {
-                super.show();
-            }
         };
     }
     private Page manageProducts(){
@@ -147,6 +135,15 @@ public class SellerPage extends Page {
             }
         };
     }
+    private Page viewCredit(){
+        return new Page("credit show" , this) {
+            @Override
+            public void execute() {
+                System.out.println(SellerBoss.sellerCredit((Seller) Account.getOnlineAccount()));
+                parentPage.execute();
+            }
+        };
+    }
     @Override
     public void show() {
         super.show();
@@ -160,7 +157,10 @@ public class SellerPage extends Page {
         if (command.equalsIgnoreCase("view company information")){
             nextPage = viewCompanyInformation();
         }
-        else if (command.equalsIgnoreCase("edit personal info")){
+        else if (command.equalsIgnoreCase("view sales history")){
+            nextPage = viewSalesHistory();
+        }else if (command.equalsIgnoreCase("view credit")){
+            nextPage = viewCredit();
         }
         try {
             nextPage.execute();
