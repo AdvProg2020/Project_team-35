@@ -1,46 +1,26 @@
 package Views;
 
+import Controller.AccountBoss;
+import Model.Account;
+import Model.Seller;
+
+import java.io.StringReader;
 import java.util.HashMap;
 
 public class SellerPage extends Page {
     public SellerPage(String name, Page parentPage) {
         super(name, parentPage);
-        HashMap<String , Page> subPages = new HashMap<String, Page>();
+        subPages.put("view company information" , this);
 
     }
-    private Page viewPersonalInfo(){
-        return new Page("view personal info" , this) {
-            @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("edit" , this);
-            }
 
-            @Override
-            public void execute() {
-                super.execute();
-            }
-
-            @Override
-            public void show() {
-                super.show();
-            }
-        };
-    }
     private Page viewCompanyInformation(){
         return new Page("view company information" , this) {
             @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                super.setSubPages(subPages);
-            }
-
-            @Override
             public void execute() {
-                super.execute();
-            }
-
-            @Override
-            public void show() {
-                super.show();
+                System.out.println("company information :");
+                System.out.println( AccountBoss.showCompanyInfo((Seller) Account.getOnlineAccount()));
+                parentPage.execute();
             }
         };
     }
@@ -166,6 +146,17 @@ public class SellerPage extends Page {
 
     @Override
     public void execute() {
-        super.execute();
+        show();
+        String command = scanner.nextLine();
+        Page nextPage = null;
+        if (command.equalsIgnoreCase("view company info")){
+            nextPage = viewCompanyInformation();
+        }
+        try {
+            nextPage.execute();
+        }catch (Exception e){
+            System.err.println("invalid command");
+            this.execute();
+        }
     }
 }

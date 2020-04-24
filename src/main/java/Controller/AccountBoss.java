@@ -112,6 +112,9 @@ public class AccountBoss {
         }
         return null;
     }
+    public static String showCompanyInfo(Seller seller){
+        return seller.getCompanyName();
+    }
     /**
      * this is for checking validity of username. we should have an account with this username.
      * in first part if we have two online users it has problem.
