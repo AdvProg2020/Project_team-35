@@ -20,47 +20,7 @@ public class SellerPage extends Page {
 
     }
 
-    private Page editPersonalInfoGetChange(){
-        return new Page("edit field",this) {
-            @Override
-            public void execute() {
-                String command = scanner.nextLine();
-                if (checkFormatOfPersonalInformation(fieldName , command)){
-                    fieldChange = command;
-                    try {
-                        AccountBoss.startEditPersonalField(fieldName , fieldChange);
-                    } catch (NotValidFieldException e) {
-                        System.err.println(e.getMessage());
-                        this.execute();
-                    }
-                }
-                else {
-                    System.err.println("invalid format");
-                    this.execute();
-                }
 
-            }
-        };
-    }
-    private Page editPersonalInfoGetFieldName(){
-        return new Page("edit" , this) {
-            @Override
-            public void execute() {
-                System.out.println("enter your command:");
-                String command = scanner.nextLine();
-                String regex = "^edit (\\w+)$";
-                Matcher matcher = getMatcher(command,regex);
-                matcher.matches();
-                if (command.matches(regex)){
-                        fieldName = matcher.group(1);
-                }
-                else {
-                    System.err.println("invalid command");
-                    this.execute();
-                }
-            }
-        };
-    }
 
     private Page viewCompanyInformation(){
         return new Page("view company information" , this) {
@@ -201,7 +161,6 @@ public class SellerPage extends Page {
             nextPage = viewCompanyInformation();
         }
         else if (command.equalsIgnoreCase("edit personal info")){
-            nextPage = editPersonalInfoGetFieldName();
         }
         try {
             nextPage.execute();

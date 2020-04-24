@@ -1,5 +1,7 @@
 package Views;
 
+import Controller.AccountBoss;
+import Controller.NotValidFieldException;
 import Model.Account;
 
 import java.util.HashMap;
@@ -9,6 +11,7 @@ import java.util.regex.Pattern;
 
 public abstract class Page {
     protected String name;
+
     protected HashMap<String , Page> subPages;
     protected   Page parentPage;
     protected Account account;
@@ -28,7 +31,7 @@ public abstract class Page {
     }
 
     public void execute(){
-        System.out.println(this.name);
+
             show();
             Page nextPage = null;
             String command = scanner.nextLine();
@@ -63,6 +66,7 @@ public abstract class Page {
         return null;
     }
     public void show(){
+        System.out.println(name);
         int i =1;
         for (String s : subPages.keySet()) {
             System.out.println(i+"."+s);
@@ -97,4 +101,5 @@ public abstract class Page {
         }
         return true;
     }
+
 }

@@ -207,7 +207,6 @@ public class RegisteringPanel extends Page {
 
     @Override
     public void execute() {
-        System.out.println(this.name);
         show();
         Page nextPage = null;
         String command = scanner.nextLine();
