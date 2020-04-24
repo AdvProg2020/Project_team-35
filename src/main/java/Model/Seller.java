@@ -40,10 +40,7 @@ public class Seller extends Account {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return null;
-    }
+
     @Override
     public void deleteAccount() {
 
@@ -51,16 +48,16 @@ public class Seller extends Account {
     @Override
     public String getPersonalInfo() {
         String toReturn = "Type: Seller\n" +
-                "Username: %s\n" +
-                "Name: %s\n" +
-                "Email: %s\n" +
-                "PhoneNumber: %s\n" +
-                "Company: %s\n";
-        toReturn = String.format(toReturn, this.getUsername(), this.getFirstName() + this.getLastName() + this.getEmail() + this.getPhoneNumber(), this.getCompanyName());
+                "Username: "+getUsername()+"\n" +
+                "Name: "+getFirstName()+"\n" +
+                "Last Name: "+getLastName()+"\n"+
+                "Email: "+getEmail()+"\n" +
+                "PhoneNumber: "+getPhoneNumber()+"\n"+
+                "Company: "+getCompanyName();
         return toReturn;
     }
     @Override
-    public void editPersonalField(String field) {
+    public void editPersonalField(String field ,String changes) {
 
     }
 

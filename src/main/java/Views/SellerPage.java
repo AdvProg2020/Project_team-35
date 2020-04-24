@@ -1,17 +1,49 @@
 package Views;
 
 import Controller.AccountBoss;
+import Controller.FieldDoesNotExist;
+import Controller.SellerBoss;
+import Controller.UserNameChange;
 import Model.Account;
 import Model.Seller;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
-import java.io.StringReader;
 import java.util.HashMap;
+import java.util.regex.Matcher;
 
 public class SellerPage extends Page {
+    private static String fieldName;
+    private static String fieldChange;
     public SellerPage(String name, Page parentPage) {
         super(name, parentPage);
         subPages.put("view company information" , this);
 
+    }
+    private Page editPersonalInfoGetFieldName(){
+        return new Page("edit" , this) {
+            @Override
+            public void execute() {
+                System.out.println("enter your command:");
+                String command = scanner.nextLine();
+                String regex = "^edit (\\w+)$";
+                Matcher matcher = getMatcher(command,regex);
+                matcher.matches();
+                if (command.matches(regex)){
+                    fieldName = "";
+                    try {
+                        SellerBoss.editPersonalInfoGetFieldName(matcher.group(1));
+                        fieldName = matcher.group(1);
+                    } catch (UserNameChange | FieldDoesNotExist e) {
+                        System.err.println(e.getMessage());
+                        this.execute();
+                    }
+                }
+                else {
+                    System.err.println("invalid command");
+                    this.execute();
+                }
+            }
+        };
     }
 
     private Page viewCompanyInformation(){
@@ -149,8 +181,11 @@ public class SellerPage extends Page {
         show();
         String command = scanner.nextLine();
         Page nextPage = null;
-        if (command.equalsIgnoreCase("view company info")){
+        if (command.equalsIgnoreCase("view company information")){
             nextPage = viewCompanyInformation();
+        }
+        else if (command.equalsIgnoreCase("edit personal info")){
+            nextPage = editPersonalInfoGetFieldName();
         }
         try {
             nextPage.execute();
