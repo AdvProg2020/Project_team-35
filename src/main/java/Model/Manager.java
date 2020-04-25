@@ -16,7 +16,7 @@ public class Manager extends Account {
      * @param password
      */
     public Manager(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
-        super(username, firstName, lastName, email, phoneNumber, password);
+        super(username, firstName, lastName, email, phoneNumber, password,1);
         newRequests = new ArrayList<Request>();
         allManagers.add(this);
     }
@@ -48,9 +48,6 @@ public class Manager extends Account {
         toReturn = String.format(toReturn, this.getUsername(), this.getFirstName() + this.getLastName() + this.getEmail() + this.getPhoneNumber());
         return toReturn;
     }
-    @Override
-    public void editPersonalField(String field) {
 
-    }
 
 }
