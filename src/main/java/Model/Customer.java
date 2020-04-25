@@ -77,8 +77,5 @@ public class Customer extends Account {
         toReturn = String.format(toReturn, this.getUsername(), this.getFirstName() + this.getLastName() + this.getEmail() + this.getPhoneNumber());
         return toReturn;
     }
-    @Override
-    public void editPersonalField(String field) {
 
-    }
 }

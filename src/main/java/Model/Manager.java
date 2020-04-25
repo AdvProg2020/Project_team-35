@@ -52,9 +52,6 @@ public class Manager extends Account {
                 "PhoneNumber: "+getPhoneNumber()+"\n";
         return toReturn;
     }
-    @Override
-    public void editPersonalField(String field) {
 
-    }
 
 }

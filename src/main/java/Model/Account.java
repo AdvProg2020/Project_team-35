@@ -118,7 +118,6 @@ public abstract class Account {
     }
     public abstract void deleteAccount();
     public abstract String getPersonalInfo();
-    public abstract void editPersonalField(String field , String changes);
 
     /**
      * this is updated
