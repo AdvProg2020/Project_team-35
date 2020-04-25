@@ -177,7 +177,7 @@ public class RegisteringPanel extends Page {
 
             @Override
             public void execute() {
-                System.out.println("print command:");
+                System.out.println("type command:");
                 Page nextPage = null;
                 String command = scanner.nextLine();
                 String regex = "create account (manager|customer|seller) (\\w+)";
