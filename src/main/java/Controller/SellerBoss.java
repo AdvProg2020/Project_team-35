@@ -27,4 +27,9 @@ public class SellerBoss {
         }
         return sales;
     }
+    public static String showProduct(String id){
+        int productId = Integer.parseInt(id);
+      Product product =   Product.getProductWithId(productId);
+      return product.toString();
+    }
 }

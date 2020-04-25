@@ -6,6 +6,7 @@ import Model.Account;
 import Model.Seller;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
 
 public class SellerPage extends Page {
 
@@ -16,6 +17,8 @@ public class SellerPage extends Page {
         subPages.put("view credit" , this);
         subPages.put("show categories" , this);
         subPages.put("manage products" , this);
+        subPages.put("add product" , this);
+
 
     }
 
@@ -49,45 +52,7 @@ public class SellerPage extends Page {
 
         };
     }
-    private Page manageProducts(){
-        return new Page("manage products" , this) {
-            @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("view",this);
-                subPages.put("view buyers" , this);
-                subPages.put("edit" , this);
 
-            }
-
-            @Override
-            public void execute() {
-                super.execute();
-            }
-
-            @Override
-            public void show() {
-                super.show();
-            }
-        };
-    }
-    private Page addProduct(){
-        return new Page("add product" , this) {
-            @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                super.setSubPages(subPages);
-            }
-
-            @Override
-            public void execute() {
-                super.execute();
-            }
-
-            @Override
-            public void show() {
-                super.show();
-            }
-        };
-    }
     private Page removeProduct(){
         return new Page("remove product" , this) {
             @Override
@@ -168,6 +133,60 @@ public class SellerPage extends Page {
             }
         };
     }
+    private Page viewProduct(){
+        return new Page("view product" , this) {
+            @Override
+            public void execute() {
+
+            }
+        };
+    }
+    private Page manageProducts(){
+        return new Page("manage products",this) {
+            @Override
+            public void setSubPages(HashMap<String, Page> subPages) {
+                subPages.put("product",this);
+                subPages.put("buyers" , this);
+                subPages.put("edit",this);
+            }
+
+            @Override
+            public void execute() {
+                setSubPages(subPages);
+                show();
+                System.out.println("enter command :");
+                String command = scanner.nextLine();
+                Page nextPage = null;
+                String regex = "^view (\\d+)$";
+                Matcher matcher = getMatcher(command,regex);
+                if (command.matches(regex)){
+                    SellerBoss.showProduct(matcher.group(1));
+                    nextPage = parentPage;
+                }
+                regex = "^view buyers (\\d+)$";
+                if (command.matches(regex)){
+
+                }
+                regex = "^edit (\\d+)$";
+                if (command.matches(regex)){
+
+                }
+            }
+        };
+    }
+    private Page addProduct(){
+        return new Page("add product" , this) {
+            @Override
+            public void setSubPages(HashMap<String, Page> subPages) {
+
+            }
+
+            @Override
+            public void execute() {
+
+            }
+        };
+    }
     @Override
     public void show() {
         super.show();
@@ -187,6 +206,10 @@ public class SellerPage extends Page {
             nextPage = viewCredit();
         }else if (command.equalsIgnoreCase("show categories")){
                 nextPage = viewCategory();
+        }else if (command.equalsIgnoreCase("manage products")){
+                nextPage = manageProducts();
+        }else if (command.equalsIgnoreCase("add product")){
+
         }
         try {
             nextPage.execute();

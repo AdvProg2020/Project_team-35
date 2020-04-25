@@ -5,4 +5,5 @@ public class Comment {
     private CommentStatus commentStatus;
     private String commentText;
     private Customer commenter;
+
 }
