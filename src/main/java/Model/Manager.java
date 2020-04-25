@@ -8,6 +8,7 @@ public class Manager extends Account {
 
     /**
      * a constructor for manager
+     *
      * @param username
      * @param firstName
      * @param lastName
@@ -16,22 +17,25 @@ public class Manager extends Account {
      * @param password
      */
     public Manager(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
-        super(username, firstName, lastName, email, phoneNumber, password,1);
+        super(username, firstName, lastName, email, phoneNumber, password, 1);
         newRequests = new ArrayList<Request>();
         allManagers.add(this);
     }
 
     /**
      * this method is updated
+     *
      * @return
      */
     public static boolean isThereAnyManager() {
         return allManagers.size() > 0;
     }
+
     @Override
     public String toString() {
-        return null;
+        return super.toString();
     }
+
     @Override
     public void deleteAccount() {
 
@@ -50,6 +54,4 @@ public class Manager extends Account {
                 "Email: " + getEmail() + "\n" +
                 "PhoneNumber: " + getPhoneNumber() + "\n";
     }
-
-
 }
