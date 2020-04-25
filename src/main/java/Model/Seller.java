@@ -47,18 +47,13 @@ public class Seller extends Account {
     }
     @Override
     public String getPersonalInfo() {
-        String toReturn = "Type: Seller\n" +
+        return "Type: Seller\n" +
                 "Username: "+getUsername()+"\n" +
                 "Name: "+getFirstName()+"\n" +
                 "Last Name: "+getLastName()+"\n"+
                 "Email: "+getEmail()+"\n" +
                 "PhoneNumber: "+getPhoneNumber()+"\n"+
                 "Company: "+getCompanyName();
-        return toReturn;
-    }
-    @Override
-    public void editPersonalField(String field ,String changes) {
-
     }
 
     /**
