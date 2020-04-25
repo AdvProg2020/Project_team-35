@@ -28,7 +28,7 @@ public class UserPage extends Page {
                 subPages.put("main page" , this);
                 subPages.put("edit personal info" , this);
             }
-// testing
+
             @Override
             public void execute() {
                  {
