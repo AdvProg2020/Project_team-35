@@ -41,4 +41,16 @@ public class SellerBoss {
         }
         AddProductRequest addProductRequest = new AddProductRequest(request,RequestTypes.ADD_PRODUCT,seller);
     }
+    public static ArrayList<String> showBuyers(String id , Seller seller) throws ThisIsNotYours {
+        int iD = Integer.parseInt(id);
+        Product product = Product.getProductWithId(iD);
+        if (!product.getSeller().equals(seller)){
+            throw new ThisIsNotYours("this product belongs to another seller");
+        }
+        ArrayList<String> buyers = new ArrayList<>();
+        for (Customer customer : product.getWhoBoughtThisGood()) {
+            buyers.add(customer.getUsername());
+        }
+        return buyers;
+    }
 }

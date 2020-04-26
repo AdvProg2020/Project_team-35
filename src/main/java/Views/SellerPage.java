@@ -2,6 +2,7 @@ package Views;
 
 import Controller.AccountBoss;
 import Controller.SellerBoss;
+import Controller.ThisIsNotYours;
 import Model.Account;
 import Model.Category;
 import Model.Seller;
@@ -20,6 +21,7 @@ private HashMap<String , String> ProductInfo;
         subPages.put("show categories" , this);
         subPages.put("manage products" , this);
         subPages.put("add product" , this);
+        subPages.put("view buyers of product",this);
 
 
     }
@@ -227,6 +229,35 @@ private HashMap<String , String> ProductInfo;
             }
         };
     }
+    private Page viewBuyersOfProduct(){
+        return new Page("buyer show" , this) {
+            @Override
+            public void execute() {
+                Page nextPage = null;
+                System.out.println(name);
+                System.out.println("enter command:");
+                String command = scanner.nextLine();
+                String regex = "view buyers (\\d+)";
+                Matcher matcher = getMatcher(command , regex);
+                if (command.matches(regex)){
+                    try {
+                        for (String buyer : SellerBoss.showBuyers(matcher.group(1) , (Seller) Account.getOnlineAccount())) {
+                            System.out.println(buyer);
+                        }
+                        nextPage = parentPage;
+                    } catch (ThisIsNotYours thisIsNotYours) {
+                        thisIsNotYours.printStackTrace();
+                        nextPage = this;
+                    }
+                }
+                else {
+                    System.err.println("invalid command");
+                    nextPage = this;
+                }
+                nextPage.execute();
+            }
+        };
+    }
     @Override
     public void show() {
         super.show();
@@ -249,7 +280,9 @@ private HashMap<String , String> ProductInfo;
         }else if (command.equalsIgnoreCase("manage products")){
                 nextPage = manageProducts();
         }else if (command.equalsIgnoreCase("add product")){
-
+                nextPage = addProduct();
+        }else if (command.equalsIgnoreCase("view buyers of product")){
+                nextPage = viewBuyersOfProduct();
         }
         try {
             nextPage.execute();

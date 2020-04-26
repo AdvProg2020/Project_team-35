@@ -18,6 +18,7 @@ public class Product {
     private ArrayList<Rate> ratesList;
     private HashMap<String, String> specialAttributes;
     private Product onlineProduct;
+    private ArrayList<Customer> whoBoughtThisGood;
     //when the page of product is open.
 
 
@@ -39,6 +40,11 @@ public class Product {
     public static void rateProduct(int productId, int rate) {
 
     }
+
+    public ArrayList<Customer> getWhoBoughtThisGood() {
+        return whoBoughtThisGood;
+    }
+
     public static boolean isThereProductWithId(String id) {
         for (Product product : allProducts) {
             if (product.productId == Integer.parseInt(id))
@@ -103,6 +109,10 @@ public class Product {
         }
 
         return productInfo;
+    }
+
+    public Seller getSeller() {
+        return seller;
     }
 
     public String getName() {
