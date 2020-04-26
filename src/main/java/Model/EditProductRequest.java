@@ -12,8 +12,15 @@ public class EditProductRequest extends Request {
     private int newInventory;
     public HashMap<String, String> newSpecialAttributes;
 
-    public EditProductRequest(StringBuilder request, RequestTypes requestTypes) {
-        super(request, requestTypes);
+    public EditProductRequest(StringBuilder request, RequestTypes requestTypes, Account requester, Product toEdit, ProductAndOffStatus newProductStatus, String newName, String newCompany, double newPrice, int newInventory, HashMap<String, String> newSpecialAttributes) {
+        super(request, requestTypes, requester);
+        this.toEdit = toEdit;
+        this.newProductStatus = newProductStatus;
+        this.newName = newName;
+        this.newCompany = newCompany;
+        this.newPrice = newPrice;
+        this.newInventory = newInventory;
+        this.newSpecialAttributes = newSpecialAttributes;
     }
 
     public StringBuilder getDetails() {

@@ -1,9 +1,6 @@
 package Views;
 
-import Controller.AccountBoss;
-import Controller.SellerBoss;
-import Controller.SoldProductsCanNotHaveChange;
-import Controller.ThisIsNotYours;
+import Controller.*;
 import Model.Account;
 import Model.Category;
 import Model.Seller;
@@ -129,6 +126,38 @@ private HashMap<String , String> ProductInfo;
             }
         };
     }
+    private Page editProduct(){
+        return new Page("edit product", this) {
+            @Override
+            public void execute() {
+                System.out.println(name);
+                System.out.println("enter command:");
+                String command = scanner.nextLine();
+                String regex = "^edit (\\d+)$";
+                Matcher matcher = getMatcher(command,regex);
+                HashMap<String , String> allEditions = new HashMap<>();
+                if (command.matches(regex)){
+                    String type;
+                    String change;
+                    do {
+                         type = scanner.next();
+                         change = scanner.next();
+                         allEditions.put(type,change);
+                    }while (!(type.equalsIgnoreCase("end") && change.equalsIgnoreCase("editing")));
+                    try {
+                        SellerBoss.editProduct(allEditions , matcher.group(1),(Seller)Account.getOnlineAccount());
+                    } catch (ThisIsNotYours | SoldProductsCanNotHaveChange thisIsNotYours) {
+                        thisIsNotYours.printStackTrace();
+                    } catch (ThisAttributeIsNotForThisProduct thisAttributeIsNotForThisProduct) {
+                        System.err.println(thisAttributeIsNotForThisProduct.getMessage());
+                    }
+                }
+                else {
+
+                }
+            }
+        };
+    }
     private Page manageProducts() {
         return new Page("manage products", this) {
             @Override
@@ -228,7 +257,7 @@ private HashMap<String , String> ProductInfo;
                 System.out.println(name);
                 System.out.println("enter command:");
                 String command = scanner.nextLine();
-                String regex = "view buyers (\\d+)";
+                String regex = "^view buyers (\\d+)$";
                 Matcher matcher = getMatcher(command , regex);
                 if (command.matches(regex)){
                     try {

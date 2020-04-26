@@ -122,4 +122,8 @@ public class Product {
         allProducts.remove(product);
         product.getSeller().getSalableProducts().remove(product);
     }
+
+    public HashMap<String, String> getSpecialAttributes() {
+        return specialAttributes;
+    }
 }

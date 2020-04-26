@@ -75,4 +75,43 @@ public class SellerBoss {
             Product.deleteProduct(product);
         }
     }
+    public static void editProduct(HashMap<String , String> allChanges , String id , Seller seller) throws ThisIsNotYours, SoldProductsCanNotHaveChange, ThisAttributeIsNotForThisProduct {
+        int iD = Integer.parseInt(id);
+        Product product = Product.getProductWithId(iD);
+        if (product==null){
+            throw new NullPointerException();
+        }else if (!product.getSeller().equals(seller)){
+            throw new ThisIsNotYours("this is not yours");
+        }else if (!seller.getSalableProducts().contains(product)){
+            throw new SoldProductsCanNotHaveChange("you almost sold this one");
+        }else {
+            if (!product.getSpecialAttributes().containsKey(allChanges.keySet())){
+                throw new ThisAttributeIsNotForThisProduct("invalid attribute which does not exist in this category.");
+            }
+            else {
+                StringBuilder request = new StringBuilder();
+                ///////////*************************************/****************88//////////////////////////////
+                request.append("edit product request");
+                String name = null;
+                String company = null;
+                String price =  null;
+                String inventory = null;
+                if (allChanges.keySet().contains("name")){
+
+                }if (allChanges.keySet().contains("price")){
+
+                }if (allChanges.keySet().contains("inventory")){
+
+                }if (allChanges.keySet().contains("company")){
+
+                }
+                HashMap<String , String> newChange = new HashMap<>();
+                for (String s : allChanges.keySet())
+                    if (!(s.equalsIgnoreCase("name") || s.equalsIgnoreCase("price") || s.equalsIgnoreCase("inventory") || s.equalsIgnoreCase("company"))) {
+                        newChange.put(s, allChanges.get(s));
+                    }
+                EditProductRequest editProductRequest = new EditProductRequest(request,RequestTypes.EDIT_PRODUCT,seller,product ,ProductAndOffStatus.FOREDIT,name,company,Double.parseDouble(price),Integer.parseInt(inventory),newChange);
+            }
+        }
+    }
 }
