@@ -2,6 +2,7 @@ package Views;
 
 import Controller.AccountBoss;
 import Controller.SellerBoss;
+import Controller.SoldProductsCanNotHaveChange;
 import Controller.ThisIsNotYours;
 import Model.Account;
 import Model.Category;
@@ -22,6 +23,7 @@ private HashMap<String , String> ProductInfo;
         subPages.put("manage products" , this);
         subPages.put("add product" , this);
         subPages.put("view buyers of product",this);
+        subPages.put("remove product" , this);
 
 
     }
@@ -57,24 +59,6 @@ private HashMap<String , String> ProductInfo;
         };
     }
 
-    private Page removeProduct(){
-        return new Page("remove product" , this) {
-            @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                super.setSubPages(subPages);
-            }
-
-            @Override
-            public void execute() {
-                super.execute();
-            }
-
-            @Override
-            public void show() {
-                super.show();
-            }
-        };
-    }
     private Page showCategories(){
         return new Page("show categories" , this) {
             @Override
@@ -145,13 +129,13 @@ private HashMap<String , String> ProductInfo;
             }
         };
     }
-    private Page manageProducts(){
-        return new Page("manage products",this) {
+    private Page manageProducts() {
+        return new Page("manage products", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("product",this);
-                subPages.put("buyers" , this);
-                subPages.put("edit",this);
+                subPages.put("product", this);
+                subPages.put("buyers", this);
+                subPages.put("edit", this);
             }
 
             @Override
@@ -162,20 +146,27 @@ private HashMap<String , String> ProductInfo;
                 String command = scanner.nextLine();
                 Page nextPage = null;
                 String regex = "^view (\\d+)$";
-                Matcher matcher = getMatcher(command,regex);
-                if (command.matches(regex)){
+                Matcher matcher = getMatcher(command, regex);
+                if (command.matches(regex)) {
                     SellerBoss.showProduct(matcher.group(1));
                     nextPage = parentPage;
                 }
                 regex = "^view buyers (\\d+)$";
-                if (command.matches(regex)){
-
+                if (command.matches(regex)) {
+                    nextPage = viewBuyersOfProduct();
                 }
                 regex = "^edit (\\d+)$";
-                if (command.matches(regex)){
+                if (command.matches(regex)) {
 
                 }
+                try {
+                    nextPage.execute();
+                } catch (Exception e) {
+                    System.err.println("invalid command");
+                    this.execute();
+                }
             }
+
         };
     }
     private Page addProduct(){
@@ -258,6 +249,30 @@ private HashMap<String , String> ProductInfo;
             }
         };
     }
+    private Page removeProduct(){
+        return new Page("remove" , this) {
+            @Override
+            public void execute() {
+                String command = scanner.nextLine();
+                String regex = "^remove (\\d+)$";
+                Matcher matcher = getMatcher(command,regex);
+                if (command.matches(regex)){
+                    try {
+                        SellerBoss.removeProduct(matcher.group(1),(Seller) Account.getOnlineAccount());
+                    } catch (ThisIsNotYours | SoldProductsCanNotHaveChange thisIsNotYours) {
+                       System.err.println(thisIsNotYours.getMessage());
+                       this.execute();
+                    }
+                }
+                else if (command.matches("back")){
+                    parentPage.execute();
+                }else {
+                    System.err.println("invalid command");
+                    this.execute();
+                }
+            }
+        };
+    }
     @Override
     public void show() {
         super.show();
@@ -281,8 +296,9 @@ private HashMap<String , String> ProductInfo;
                 nextPage = manageProducts();
         }else if (command.equalsIgnoreCase("add product")){
                 nextPage = addProduct();
-        }else if (command.equalsIgnoreCase("view buyers of product")){
-                nextPage = viewBuyersOfProduct();
+        }
+        else if (command.equalsIgnoreCase("remove product")){
+                nextPage = removeProduct();
         }
         try {
             nextPage.execute();

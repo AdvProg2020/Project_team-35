@@ -118,4 +118,8 @@ public class Product {
     public String getName() {
         return name;
     }
+    public static void deleteProduct(Product product){
+        allProducts.remove(product);
+        product.getSeller().getSalableProducts().remove(product);
+    }
 }

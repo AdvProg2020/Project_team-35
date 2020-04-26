@@ -53,4 +53,26 @@ public class SellerBoss {
         }
         return buyers;
     }
+
+    /**
+     * it is more complete than add product i should check these two exceptions again
+     * @param id
+     * @param seller
+     * @throws ThisIsNotYours
+     * @throws SoldProductsCanNotHaveChange
+     */
+    public static void removeProduct(String id , Seller seller) throws ThisIsNotYours, SoldProductsCanNotHaveChange {
+        int iD = Integer.parseInt(id);
+        Product product = Product.getProductWithId(iD);
+        if (product==null){
+            throw new NullPointerException();
+        }else if (!product.getSeller().equals(seller)){
+            throw new ThisIsNotYours("this is not yours");
+        }else if (!seller.getSalableProducts().contains(product)){
+            throw new SoldProductsCanNotHaveChange("you almost sold this one");
+        }
+        else {
+            Product.deleteProduct(product);
+        }
+    }
 }

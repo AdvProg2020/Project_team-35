@@ -75,4 +75,8 @@ public class Seller extends Account {
     public ArrayList<SellLog> getSellLogs() {
         return sellLogs;
     }
+
+    public ArrayList<Product> getSalableProducts() {
+        return salableProducts;
+    }
 }
