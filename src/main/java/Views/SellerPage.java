@@ -3,13 +3,15 @@ package Views;
 import Controller.AccountBoss;
 import Controller.SellerBoss;
 import Model.Account;
+import Model.Category;
 import Model.Seller;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.regex.Matcher;
 
 public class SellerPage extends Page {
-
+private HashMap<String , String> ProductInfo;
     public SellerPage(String name, Page parentPage) {
         super(name, parentPage);
         subPages.put("view company information" , this);
@@ -178,12 +180,50 @@ public class SellerPage extends Page {
         return new Page("add product" , this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
+                subPages.put("name" , this);
+                subPages.put("price",this);
+                subPages.put("inventory",this);
+                subPages.put("company" , this);
+                subPages.put("seller" , this);
+                subPages.put("category" , this);
+                subPages.put("attributes" , this);
 
             }
 
             @Override
             public void execute() {
+                HashMap<String , String> specialAttributes = new HashMap<>();
+                Category category = null;
+                ProductInfo = new HashMap<>();
+                    setSubPages(subPages);
+                for (String s : subPages.keySet()) {
+                    while (true){
+                        System.out.println(s+" : \n");
 
+                        if (!s.equalsIgnoreCase("attributes")) {
+                            String command = scanner.nextLine();
+                            if (s.equalsIgnoreCase("category")){
+                                category = Category.getCategoryByName(command);
+                                if (category == null) {
+                                    System.err.println("we don't have a category with this name");
+                                    continue;
+                                }
+                            }
+                            ProductInfo.put(s, command);
+                            break;
+                        }
+                        else {
+                            for (String attribute : Objects.requireNonNull(category).getSpecialAttributes()) {
+                                System.out.println(attribute+ " : ");
+                                String command2 = scanner.nextLine();
+                                specialAttributes.put(attribute , command2);
+                            }
+                            break;
+                        }
+
+                    }
+                    SellerBoss.addRequestProduct(ProductInfo.get("name"),ProductInfo.get("price"),ProductInfo.get("inventory"),specialAttributes , ProductInfo.get("company"),category,(Seller) Account.getOnlineAccount());
+                }
             }
         };
     }

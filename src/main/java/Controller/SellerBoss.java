@@ -1,11 +1,9 @@
 package Controller;
 
-import Model.Category;
-import Model.Product;
-import Model.SellLog;
-import Model.Seller;
+import Model.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SellerBoss {
     public static double sellerCredit(Seller seller){
@@ -31,5 +29,16 @@ public class SellerBoss {
         int productId = Integer.parseInt(id);
       Product product =   Product.getProductWithId(productId);
       return product.toString();
+    }
+    public static void addRequestProduct(String name , String price , String inventory , HashMap<String , String > attributes , String company , Category category , Seller seller){
+    double productPrice = Double.parseDouble(price);
+    int number = Integer.parseInt(inventory);
+    StringBuilder request = new StringBuilder();
+    request.append("name:"+name+"\n"+"price:"+price+"\n"+"inventory:"+inventory+"\n");
+    request.append("company:"+company+"\n"+"category:"+category.getCategoryName()+"\n");
+        for (String s : attributes.keySet()) {
+            request.append(s+":"+attributes.get(s)+"\n");
+        }
+        AddProductRequest addProductRequest = new AddProductRequest(request,RequestTypes.ADD_PRODUCT,seller);
     }
 }

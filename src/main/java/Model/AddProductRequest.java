@@ -3,8 +3,8 @@ package Model;
 public class AddProductRequest extends Request {
     private Product product;
 
-    public AddProductRequest(StringBuilder request, RequestTypes requestTypes) {
-        super(request, requestTypes);
+    public AddProductRequest(StringBuilder request, RequestTypes requestTypes, Account requester) {
+        super(request, requestTypes, requester);
     }
 
     public StringBuilder getDetails() {

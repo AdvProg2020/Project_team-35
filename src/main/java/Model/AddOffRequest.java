@@ -3,8 +3,9 @@ package Model;
 public class AddOffRequest extends Request {
     private Off off;
 
-    public AddOffRequest(StringBuilder request, RequestTypes requestTypes) {
-        super(request, requestTypes);
+    public AddOffRequest(StringBuilder request, RequestTypes requestTypes, Account requester, Off off) {
+        super(request, requestTypes, requester);
+        this.off = off;
     }
 
     public StringBuilder getDetails() {

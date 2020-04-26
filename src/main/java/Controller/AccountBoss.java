@@ -51,32 +51,32 @@ public class AccountBoss {
             }
             if (s.equals("password")){
                 password = allPersonalInfo.get(s);
-                request.append(s+":"+username+"\n");
+                request.append(s+":"+password+"\n");
 
             }
             if (s.equals("name")){
                 name = allPersonalInfo.get(s);
-                request.append(s+":"+username+"\n");
+                request.append(s+":"+name+"\n");
 
             }
             if (s.equals("family")){
                 family = allPersonalInfo.get(s);
-                request.append(s+":"+username+"\n");
+                request.append(s+":"+family+"\n");
 
             }
             if (s.equals("email address")){
                 email = allPersonalInfo.get(s);
-                request.append(s+":"+username+"\n");
+                request.append(s+":"+email+"\n");
 
             }
             if (s.equals("phone number")){
                 phone = allPersonalInfo.get(s);
-                request.append(s+":"+username+"\n");
+                request.append(s+":"+phone+"\n");
 
             }
             if (s.equals("company name")){
                 company = allPersonalInfo.get(s);
-                request.append(s+":"+username+"\n");
+                request.append(s+":"+company+"\n");
             }
         }
         if (type.equals("manager")) {

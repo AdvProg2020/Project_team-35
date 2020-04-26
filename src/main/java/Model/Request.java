@@ -3,9 +3,11 @@ package Model;
 public abstract class Request {
     protected RequestTypes requestTypes;
     protected StringBuilder request;
-    public Request(StringBuilder request , RequestTypes requestTypes) {
+    protected Account requester;
+    public Request(StringBuilder request , RequestTypes requestTypes , Account requester) {
         this.request = request;
         this.requestTypes = requestTypes;
+        this.requester = requester;
     }
 
     public RequestTypes getRequestTypes() {

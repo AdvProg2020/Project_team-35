@@ -7,7 +7,14 @@ public class Category {
     public static ArrayList<Category> allCategories;
     private String categoryName;
     public ArrayList<Product> categoryProducts;
-    public List<String> specialAttributes;
+    public ArrayList<String> specialAttributes;
+
+    public Category(String categoryName, ArrayList<String> specialAttributes) {
+        this.categoryName = categoryName;
+        this.specialAttributes = specialAttributes;
+        categoryProducts = new ArrayList<>();
+    }
+
     public static boolean isThereCategoryWithName(String name) {
         return true;
     }
@@ -20,8 +27,18 @@ public class Category {
     public void editCategory(String name, ArrayList<String> newSpecialAttributes) {
 
     }
-
+    public static Category getCategoryByName(String name){
+        for (Category category : allCategories) {
+            if (category.getCategoryName().equalsIgnoreCase(name))
+                return category;
+        }
+        return null;
+    }
     public String getCategoryName() {
         return categoryName;
+    }
+
+    public ArrayList<String> getSpecialAttributes() {
+        return specialAttributes;
     }
 }

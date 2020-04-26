@@ -3,8 +3,7 @@ package Model;
 public class SellerRegisterRequest extends Request {
 
     public SellerRegisterRequest(StringBuilder request, RequestTypes requestTypes, Seller requester) {
-        super(request, requestTypes);
-        this.requester = requester;
+        super(request, requestTypes,requester);
     }
     private Seller requester;
 
