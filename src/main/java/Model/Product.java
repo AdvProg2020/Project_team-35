@@ -12,7 +12,7 @@ public class Product {
     private String company;
     private double price;
     private Seller seller;
-    private int inventory;
+    private  int inventory;
     private Category category;
     private ArrayList<Comment> commentsList;
     private ArrayList<Rate> ratesList;
@@ -20,20 +20,31 @@ public class Product {
     private Product onlineProduct;
     //when the page of product is open.
 
-    public Product(String name, String company, double price, Seller seller, Category category, HashMap<String, String> specialAttributes) {
+
+    public Product(String name, String company, double price, Seller seller, int inventory, Category category, HashMap<String, String> specialAttributes) {
         this.name = name;
         this.company = company;
         this.price = price;
         this.seller = seller;
+        this.inventory = inventory;
         this.category = category;
         this.specialAttributes = specialAttributes;
+        productNumber+=1;
+        productId = productNumber;
+        commentsList = new ArrayList<>();
+        ratesList = new ArrayList<>();
+        productStatus = ProductAndOffStatus.CONFIRMED;
     }
 
     public static void rateProduct(int productId, int rate) {
 
     }
-    public static boolean isThereProductWithId(String Id) {
-        return true;
+    public static boolean isThereProductWithId(String id) {
+        for (Product product : allProducts) {
+            if (product.productId == Integer.parseInt(id))
+                return true;
+        }
+        return false;
     }
 
     /**
@@ -64,18 +75,34 @@ public class Product {
 
     }
 
+    public int getProductId() {
+        return productId;
+    }
+
     @Override
     public String toString() {
-        return "Product{" +
-                "productId=" + productId +
-                ", productStatus=" + productStatus.name() +
-                ", name='" + name + '\'' +
-                ", company='" + company + '\'' +
-                ", price=" + price +
-                ", seller=" + seller.getFirstName()+" "+seller.getLastName()+
-                ", inventory=" + inventory +
-                ", category=" + category.getCategoryName() +
-                '}';
+        String productInfo = null;
+        productInfo = "name : "+name+"\n"
+                +"company name : "+company+"\n"
+                +"price : "+price+"\n"
+                +"seller : \n"+seller.getPersonalInfo()+"\n"
+                +"inventory : "+inventory+"\n"
+                +"category : "+category.getCategoryName()+"\n"
+                +"product id : "+productId+"\n";
+        productInfo += "special Attributes : \n";
+        for (String s : specialAttributes.keySet()) {
+            productInfo = productInfo + s+" : "+specialAttributes.get(s)+"\n";
+        }
+        productInfo+= "comment List : \n";
+        for (Comment comment : commentsList) {
+            productInfo+= comment.getCommentInfo();
+        }
+        productInfo+= "rate list : \n";
+        for (Rate rate : ratesList) {
+            productInfo+= rate.getRateInfo();
+        }
+
+        return productInfo;
     }
 
     public String getName() {
