@@ -26,9 +26,7 @@ public class Manager extends Account {
      * @return
      */
     public static boolean isThereAnyManager() {
-        if (allManagers.size()>0)
-            return true;
-        return false;
+        return allManagers.size() > 0;
     }
     @Override
     public String toString() {
@@ -38,15 +36,19 @@ public class Manager extends Account {
     public void deleteAccount() {
 
     }
+
+    /**
+     * this format is true
+     *
+     * @return
+     */
     @Override
     public String getPersonalInfo() {
-        String toReturn = "Type: Manager\n" +
-                "Username: %s\n" +
-                "Name: %s\n" +
-                "Email: %s\n" +
-                "PhoneNumber: %s\n";
-        toReturn = String.format(toReturn, this.getUsername(), this.getFirstName() + this.getLastName() + this.getEmail() + this.getPhoneNumber());
-        return toReturn;
+        return "Type: Manager\n" +
+                "Username: " + getUsername() + "\n" +
+                "Name: " + getFirstName() + "\n" +
+                "Email: " + getEmail() + "\n" +
+                "PhoneNumber: " + getPhoneNumber() + "\n";
     }
 
 
