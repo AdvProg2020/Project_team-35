@@ -5,7 +5,6 @@ import java.util.HashMap;
 public class ProductsPage extends Page {
     public ProductsPage(String name, Page parentPage) {
         super(name, parentPage);
-        HashMap<String , Page> subPages = new HashMap<String, Page>();
 
     }
     private Page viewCategories(){

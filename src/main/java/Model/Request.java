@@ -1,21 +1,19 @@
 package Model;
 
 public abstract class Request {
-    protected RequestTypes requestTypes;
-    protected StringBuilder request;
-    public Request(StringBuilder request , RequestTypes requestTypes) {
-        this.request = request;
-        this.requestTypes = requestTypes;
+    public Request() {
+        requestIdNumber++;
+        requestId = requestIdNumber;
     }
 
-    public RequestTypes getRequestTypes() {
-        return requestTypes;
-    }
+    protected boolean isDone;
+    private int requestId;
+    public static int requestIdNumber;
+    public abstract String getDetails();
+    public abstract String getRequestInfo();
+    public abstract void execute();
 
-    public void setRequestTypes(RequestTypes requestTypes) {
-        this.requestTypes = requestTypes;
+    public int getRequestId() {
+        return requestId;
     }
-
-    public abstract StringBuilder getDetails();
-    public abstract void execute() throws RequestProblemNotExistManager;
 }

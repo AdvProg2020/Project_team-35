@@ -3,14 +3,17 @@ package Model;
 public class AddProductRequest extends Request {
     private Product product;
 
-    public AddProductRequest(StringBuilder request, RequestTypes requestTypes) {
-        super(request, requestTypes);
+    public AddProductRequest() {
+        super();
     }
 
-    public StringBuilder getDetails() {
+    public String getDetails() {
         return null;
     }
     public void execute() {
 
+    }
+    public String getRequestInfo() {
+        return null;
     }
 }

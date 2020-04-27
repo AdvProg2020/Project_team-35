@@ -15,6 +15,7 @@ public abstract class Account {
     private static Account onlineAccount;
     private static boolean isThereOnlineUser;
     protected boolean isThisAccountLogged;
+    protected int typeOfAccount;
     /**
      * account constructor
      * @param username
@@ -24,14 +25,23 @@ public abstract class Account {
      * @param phoneNumber
      * @param password
      */
-    public Account(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
+    public Account(String username, String firstName, String lastName, String email, String phoneNumber, String password , int typeOfAccount) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.typeOfAccount = typeOfAccount;
         allAccounts.add(this);
+    }
+
+    public static boolean isIsThereOnlineUser() {
+        return isThereOnlineUser;
+    }
+
+    public static void setIsThereOnlineUser(boolean isThereOnlineUser) {
+        Account.isThereOnlineUser = isThereOnlineUser;
     }
 
     /**
@@ -39,7 +49,7 @@ public abstract class Account {
      * @return
      */
     public static Account getOnlineAccount() {
-        return onlineAccount;
+        return Account.onlineAccount;
     }
 
     /**
@@ -59,7 +69,7 @@ public abstract class Account {
     }
 
     public static int getTypeOfAccount(Account account) {
-        return 0;
+        return account.typeOfAccount;
     }
 
     /**
@@ -88,25 +98,25 @@ public abstract class Account {
         return false;
     }
 
-    public boolean isThisAccountLogged() {
-        return isThisAccountLogged;
-    }
 
     public void setThisAccountLogged(boolean thisAccountLogged) {
         isThisAccountLogged = thisAccountLogged;
     }
 
+    /**
+     * updated for login
+     * @param userPassword
+     * @return
+     */
     public boolean validatePassword(String userPassword) {
-        return true;
+        if (userPassword.equals(password))
+            return true;
+        return false;
     }
     public abstract void deleteAccount();
     public abstract String getPersonalInfo();
-    public abstract void editPersonalField(String field);
 
-    /**
-     * this is updated
-     * @return
-     */
+
     public static int whatTypeIsOnline() {
         return Account.getTypeOfAccount(onlineAccount);
     }
@@ -133,5 +143,25 @@ public abstract class Account {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -44,37 +44,35 @@ public class AccountBoss {
             }
             else if (s.equals("username")){
                 username = allPersonalInfo.get(s);
-                request.append(s + ":" + username + "\n");
 
             }
             else if (s.equals("password")){
                 password = allPersonalInfo.get(s);
-                request.append(s + ":" + username + "\n");
+
 
             }
             else if (s.equals("name")){
                 name = allPersonalInfo.get(s);
-                request.append(s + ":" + username + "\n");
 
             }
             else if (s.equals("family")){
                 family = allPersonalInfo.get(s);
-                request.append(s + ":" + username + "\n");
+
 
             }
             else if (s.equals("email address")){
                 email = allPersonalInfo.get(s);
-                request.append(s + ":" + username + "\n");
+
 
             }
             else if (s.equals("phone number")){
                 phone = allPersonalInfo.get(s);
-                request.append(s + ":" + username + "\n");
+
 
             }
             else if (s.equals("company name")){
                 company = allPersonalInfo.get(s);
-                request.append(s + ":" + username + "\n");
+
             }
         }
         if (type.equals("manager")) {
@@ -82,8 +80,11 @@ public class AccountBoss {
         }
         if (type.equals("seller")) {
             Seller requester = new Seller(username, name, family, email, phone, password, company);
-            SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(request, RequestTypes.SELLER_REGISTER, requester);
+            SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(requester);
+
             Manager.newRequests.add(sellerRegisterRequest);
+            //*******************************
+            Seller seller = new Seller(username,name,family , email,phone , password , company);
         }
         if (type.equals("customer")) {
             Customer customer = new Customer(username, name, family, email, phone, password);
@@ -95,12 +96,33 @@ public class AccountBoss {
     public void startDeleteAccount(String username) {
 
     }
-
+    public static String showPersonalInfoInUserPage(Account account){
+        if (Account.getTypeOfAccount(account)==1){
+            Manager manager = (Manager) account;
+            return manager.getPersonalInfo();
+        }
+        else if (Account.getTypeOfAccount(account)==2){
+            Customer customer = (Customer) account;
+           return customer.getPersonalInfo();
+        }
+        else if (Account.getTypeOfAccount(account)==3){
+            Seller seller = (Seller) account;
+            return seller.getPersonalInfo();
+        }
+        return null;
+    }
+    public static String showCompanyInfo(Seller seller){
+        return seller.getCompanyName();
+    }
     /**
-     * this is for checking the validity of username. there should be an account with this username.
+     * this is for checking validity of username. we should have an account with this username.
+     * in first part if we have two online users it has problem.
      * @param username
      */
-    public static void checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername {
+    public static void checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername, LoginWithoutLogout {
+       if (Account.isIsThereOnlineUser()){
+           throw new LoginWithoutLogout("first you should logout");
+       }
         if (!Account.isThereAccountWithUserName(username)){
             throw new ExistenceOfUserWithUsername("this username doesn't exist.");
         }
@@ -127,9 +149,30 @@ public class AccountBoss {
             Account account = Account.getAccountWithUsername(username);
             account.setThisAccountLogged(true);
             Account.getAllLoggedAccounts().add(account);
+            account.setIsThereOnlineUser(true);
             Account.setOnlineAccount(account);
     }
-    public static void startEditPersonalField(String username, String fieldName, String newValue) {
+
+    public static void startEditPersonalField(String fieldName, String newValue) throws NotValidFieldException {
+        if (fieldName.equalsIgnoreCase("firstName")) {
+            Account.getOnlineAccount().setFirstName(newValue);
+        } else if (fieldName.equalsIgnoreCase("lastName")) {
+            Account.getOnlineAccount().setLastName(newValue);
+        } else if (fieldName.equalsIgnoreCase("email")) {
+            Account.getOnlineAccount().setEmail(newValue);
+        } else if (fieldName.equalsIgnoreCase("phoneNumber")) {
+            Account.getOnlineAccount().setPhoneNumber(newValue);
+        } else if (fieldName.equalsIgnoreCase("password")) {
+            Account.getOnlineAccount().setPassword(newValue);
+        } else if (fieldName.equalsIgnoreCase("companyName")) {
+            if (Account.getOnlineAccount() instanceof Seller) {
+                ((Seller) Account.getOnlineAccount()).setCompanyName(newValue);
+            }
+            else throw new NotValidFieldException("valid : username.lastName.email.password.phoneNumber.company(for sellers)\n");
+        }
+        else {
+            throw new NotValidFieldException("valid : username.lastName.email.password.phoneNumber.company(for sellers)\n");
+        }
 
     }
 

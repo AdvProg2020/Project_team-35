@@ -1,21 +1,29 @@
 package Views;
 
+import Controller.ManagerBoss;
+import Controller.NotValidRequestIdException;
+import Model.Manager;
+import Model.Request;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.regex.Matcher;
 
 public class ManagerPage extends Page {
     public ManagerPage(String name, Page parentPage) {
         super(name, parentPage);
-        HashMap<String , Page> subCommands = new HashMap<String, Page>();
+        subPages.put("manage requests", this);
 
     }
-    private Page manageUsers(){
-        return new Page("manage users",this) {
+
+    private Page manageUsers() {
+        return new Page("manage users", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("view" , this);
-                subPages.put("change type" , this);
-                subPages.put("delete user" , this);
-                subPages.put("create manager profile" , this);
+                subPages.put("view", this);
+                subPages.put("delete user", this);
+                subPages.put("create manager profile", this);
             }
 
             @Override
@@ -29,11 +37,12 @@ public class ManagerPage extends Page {
             }
         };
     }
-    private Page manageAllProducts(){
-        return new Page("manage all products" , this) {
+
+    private Page manageAllProducts() {
+        return new Page("manage all products", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("remove" , this);
+                subPages.put("remove", this);
             }
 
             @Override
@@ -47,8 +56,9 @@ public class ManagerPage extends Page {
             }
         };
     }
-    private Page createDiscountCode(){
-        return new Page("create discount code" , this) {
+
+    private Page createDiscountCode() {
+        return new Page("create discount code", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
                 super.setSubPages(subPages);
@@ -65,13 +75,14 @@ public class ManagerPage extends Page {
             }
         };
     }
-        private Page viewDiscountCodes(){
-        return new Page("view discount codes" , this) {
+
+    private Page viewDiscountCodes() {
+        return new Page("view discount codes", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
                 subPages.put("view discount codes", this);
-                subPages.put("edit discount code" , this);
-                subPages.put("remove discount code" , this);
+                subPages.put("edit discount code", this);
+                subPages.put("remove discount code", this);
             }
 
             @Override
@@ -84,19 +95,69 @@ public class ManagerPage extends Page {
                 super.show();
             }
         };
-        }
-        private Page manageRequests(){
-        return new Page("manage requests",this) {
+    }
+
+    private Page manageRequests() {
+        return new Page("manage requests", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("details" , this);
-                subPages.put("accept",this);
-                subPages.put("decline" , this);
+
             }
 
             @Override
             public void execute() {
-                super.execute();
+                ArrayList<Request>  newRequests = Manager.getNewRequests();
+                ArrayList<Request>  checkedRequests = Manager.getCheckedRequests();
+                System.out.println("New Requests :");
+                for (Request newRequest : newRequests) {
+                    System.out.println(newRequest.getRequestInfo());
+                }
+                System.out.println("Checked Requests :");
+                for (Request checkedRequest : checkedRequests) {
+                    System.out.println(checkedRequest.getRequestInfo());
+                }
+                System.out.println("Enter Command : (-help for help)");
+                String command = scanner.nextLine();
+                if (command.equalsIgnoreCase("-help")) {
+                    System.out.println("Accept/Decline/details [RID]");
+                }
+                else if (command.startsWith("accept") || command.startsWith("decline") || command.startsWith("details")) {
+                    Matcher matcher = getMatcher(command, "^(accept|decline|details)\\s+(\\d+)$");
+                    if (matcher.matches()) {
+                        int requestId = Integer.parseInt(matcher.group(2));
+                        if (command.startsWith("accept")) {
+                            try {
+                                ManagerBoss.acceptRequestWithId(requestId);
+                            } catch (NotValidRequestIdException e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        else if (command.startsWith("decline")) {
+                            try {
+                                ManagerBoss.declineRequestWithId(requestId);
+                            } catch (NotValidRequestIdException e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        else if (command.startsWith("details")) {
+                            try {
+                                System.out.println("\n" + ManagerBoss.getDetailsOfRequestWithId(requestId) + "\n");
+                            } catch (NotValidRequestIdException e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid Command");
+                    }
+                }
+                else if (command.equalsIgnoreCase("back")) {
+                    parentPage.execute();
+                }
+                else {
+                    System.err.println("Invalid Command");
+                }
+                this.execute();
             }
 
             @Override
@@ -104,15 +165,15 @@ public class ManagerPage extends Page {
                 super.show();
             }
         };
-        }
-        private Page manageCategories(){
-        return new Page("manage categories",this) {
+    }
+
+    private Page manageCategories() {
+        return new Page("manage categories", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("edit",this);
-                subPages.put("add",this);
-                subPages.put("remove" , this);
-
+                subPages.put("edit", this);
+                subPages.put("add", this);
+                subPages.put("remove", this);
             }
 
             @Override
@@ -125,9 +186,10 @@ public class ManagerPage extends Page {
                 super.show();
             }
         };
-        }
-    private Page newEdit(){
-        return new Page("edit manager data" , this) {
+    }
+
+    private Page newEdit() {
+        return new Page("edit manager data", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
                 //commands and back
@@ -141,7 +203,7 @@ public class ManagerPage extends Page {
             @Override
             public void show() {
 //commands and back
-}
+            }
         };
     }
 
@@ -152,6 +214,19 @@ public class ManagerPage extends Page {
 
     @Override
     public void execute() {
-        super.execute();
+        show();
+        Page nextPage = null;
+        String command = scanner.nextLine();
+        if (command.equalsIgnoreCase("manage requests")) {
+            nextPage = manageRequests();
+        }
+        else if (command.equalsIgnoreCase("back")){
+            nextPage = parentPage;
+        }
+        else {
+            System.err.println("Invalid Command");
+            this.execute();
+        }
+        nextPage.execute();
     }
 }
