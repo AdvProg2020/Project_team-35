@@ -5,6 +5,8 @@ import Model.Request;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.regex.Matcher;
 
 public class ManagerPage extends Page {
     public ManagerPage(String name, Page parentPage) {
@@ -97,9 +99,7 @@ public class ManagerPage extends Page {
         return new Page("manage requests", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("details [PID]", this);
-                subPages.put("accept [PID]", this);
-                subPages.put("decline [PID]", this);
+
             }
 
             @Override
@@ -114,7 +114,30 @@ public class ManagerPage extends Page {
                 for (Request checkedRequest : checkedRequests) {
                     System.out.println(checkedRequest.getRequestInfo());
                 }
-                show();
+                System.out.println("Enter Command : (-help for help)");
+                String command = scanner.nextLine();
+                if (command.equalsIgnoreCase("-help")) {
+                    System.out.println("Accept/Decline/details [RID]");
+                }
+                else if (command.startsWith("accept") || command.startsWith("decline")) {
+                    Matcher matcher = getMatcher(command, "^(accept|decline)\\s+(\\d+)$");
+                    if (matcher.matches()) {
+                        int requestId = Integer.parseInt(matcher.group(2));
+                        if (command.startsWith("accept")) {
+
+                        }
+                        else {
+
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid Command");
+                    }
+                }
+                else if (command.equalsIgnoreCase("back")) {
+                    parentPage.execute();
+                }
+                this.execute();
             }
 
             @Override

@@ -6,7 +6,7 @@ public abstract class Request {
         requestId = requestIdNumber;
     }
 
-
+    protected boolean isDone;
     private int requestId;
     public static int requestIdNumber;
     public abstract String getDetails();

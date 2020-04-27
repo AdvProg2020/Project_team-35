@@ -14,6 +14,7 @@ public class SellerRegisterRequest extends Request {
 
     public void execute()  {
         Seller.allSellers.add(requester);
+        this.isDone = true;
     }
 
     /**
@@ -21,6 +22,7 @@ public class SellerRegisterRequest extends Request {
      * @return
      */
     public String getDetails() {
-        return null;
+        return "\nSeller Register Request : \nRequestId: " + this.getRequestId() + this.requester.getPersonalInfo();
+
     }
 }
