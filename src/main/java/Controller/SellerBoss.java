@@ -2,10 +2,14 @@ package Controller;
 
 import Model.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class SellerBoss {
+    private static Date dateOfNow;
     public static double sellerCredit(Seller seller){
         return seller.getMoney();
     }
@@ -25,9 +29,15 @@ public class SellerBoss {
         }
         return sales;
     }
-    public static String showProduct(String id){
+    public static String showProduct(String id , Seller seller) throws ThisIsNotYours {
         int productId = Integer.parseInt(id);
       Product product =   Product.getProductWithId(productId);
+      if (product==null){
+          throw new ThisIsNotYours("we don't have this one.");
+      }
+      if (!seller.equals(product.getSeller())){
+          throw new ThisIsNotYours("this is not yours");
+      }
       return product.toString();
     }
     public static void addRequestProduct(String name , String price , String inventory , HashMap<String , String > attributes , String company , Category category , Seller seller){
@@ -113,5 +123,63 @@ public class SellerBoss {
                // EditProductRequest editProductRequest = new EditProductRequest(request,RequestTypes.EDIT_PRODUCT,seller,product ,ProductAndOffStatus.FOREDIT,name,company,Double.parseDouble(price),Integer.parseInt(inventory),newChange);
             }
         }
+    }
+    public static ArrayList<String> showOffs(Seller seller){
+        ArrayList<String> offs = new ArrayList<>();
+        for (Off off : seller.getSellerOffs()) {
+            offs.add(String.valueOf(off.getOffId()));
+        }
+        return offs;
+    }
+    public static String viewOff(Seller seller , String id) throws ThisIsNotYours {
+        Off off = Off.getOffById(Integer.parseInt(id));
+        if (off==null){
+            throw new ThisIsNotYours("this does not exist");
+        }
+        if (!seller.getSellerOffs().contains(off)){
+            throw new ThisIsNotYours("this is not for you.");
+        }
+        return off.showOff();
+    }
+    public static void editOff(Seller seller , Off off , HashMap<String , String> changes) throws ItIsNotCorrect, ParseException, TimeLimit {
+     String date = null;
+     double maximum = 0.0;
+     double percent = 0;
+     String format = null;
+        for (String s : changes.keySet()) {
+            if (s.equalsIgnoreCase("finalDate")){
+                dateOfNow = new Date();
+                    date = changes.get(s);
+                    Date date1 = new SimpleDateFormat("dd//MM/yyyy").parse(date);
+                    if (date1.before(dateOfNow)){
+                        throw new TimeLimit("this time is passed");
+                    }
+                    off.setFinalDate(date);
+
+            } else if (s.equalsIgnoreCase("maximumAmountOfOff")) {
+                maximum = Double.parseDouble(changes.get(s));
+                off.setMaximumAmountOfOff(maximum);
+            } else if (s.equalsIgnoreCase("offPercent")) {
+percent = Double.parseDouble(changes.get(s));
+off.setOffPercent(percent);
+            }else if (s.equalsIgnoreCase("offStatus")){
+                if (off.getOffStatus().equals(ProductAndOffStatus.CONFIRMED)){
+                    throw new ItIsNotCorrect("this can't be done");
+                }
+format = changes.get(s);
+ProductAndOffStatus productAndOffStatus = null;
+if (format.equalsIgnoreCase("FOREDIT")){
+productAndOffStatus = ProductAndOffStatus.FOREDIT;
+} else if (format.equalsIgnoreCase("CONFIRMED")) {
+    productAndOffStatus = ProductAndOffStatus.CONFIRMED;
+
+}else if (format.equalsIgnoreCase("FORMAKE")){
+    productAndOffStatus = ProductAndOffStatus.FORMAKE;
+}
+off.setOffStatus(productAndOffStatus);
+            }
+        }
+
+
     }
 }

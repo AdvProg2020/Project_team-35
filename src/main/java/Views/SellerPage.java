@@ -3,14 +3,17 @@ package Views;
 import Controller.*;
 import Model.Account;
 import Model.Category;
+import Model.Off;
 import Model.Seller;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.regex.Matcher;
 
 public class SellerPage extends Page {
-private HashMap<String , String> ProductInfo;
+private HashMap<String , String> productInfo;
+private HashMap<String , String> offInfoChanges;
     public SellerPage(String name, Page parentPage) {
         super(name, parentPage);
         subPages.put("view company information" , this);
@@ -21,6 +24,8 @@ private HashMap<String , String> ProductInfo;
         subPages.put("add product" , this);
         subPages.put("view buyers of product",this);
         subPages.put("remove product" , this);
+        subPages.put("view offs" , this);
+
 
 
     }
@@ -55,26 +60,52 @@ private HashMap<String , String> ProductInfo;
 
         };
     }
-
-    private Page showCategories(){
-        return new Page("show categories" , this) {
-            @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                super.setSubPages(subPages);
-            }
-
+    private Page editOff(){
+        return new Page("edit off" , this) {
             @Override
             public void execute() {
-                super.execute();
-            }
+                String command = scanner.nextLine();
+                Page nextPage = null;
+                String regex = "^edit (\\d+)$";
+                Matcher matcher = getMatcher(command, regex);
+                if (command.matches(regex)) {
+                    Off off = Off.getOffById(Integer.parseInt(matcher.group(1)));
+                    Seller seller = (Seller) Account.getOnlineAccount();
+                    if (off == null) {
+
+                    } else if (seller.getSellerOffs().contains(off)) {
+
+                    } else {
+                        String change = new String();
+                        String type = new String();
+                        offInfoChanges = new HashMap<>();
+                        do {
+                            type = scanner.nextLine();
+                            change = scanner.nextLine();
+                            offInfoChanges.put(type, change);
+                        } while (!(type.equalsIgnoreCase("end") && change.equalsIgnoreCase("edit")));
+                        try {
+                            SellerBoss.editOff((Seller) Account.getOnlineAccount(), off, offInfoChanges);
+                        } catch (ItIsNotCorrect | ParseException | TimeLimit itIsNotCorrect) {
+                            System.out.println(itIsNotCorrect.getMessage());
+                            nextPage = this;
+                        }
+                        nextPage = this;
+                    }
+                    }else if (command.equalsIgnoreCase("back")) {
+                        nextPage = parentPage;
+                    } else {
+                        System.err.println("invalid command");
+                        nextPage = this;
+                    }
+                    nextPage.execute();
 
 
-            @Override
-            public void show() {
-                super.show();
             }
         };
     }
+
+
     private Page viewOffs(){
         return new Page("view offs" , this) {
             @Override
@@ -87,12 +118,33 @@ private HashMap<String , String> ProductInfo;
 
             @Override
             public void execute() {
-                super.execute();
-            }
+                for (String off : SellerBoss.showOffs((Seller) Account.getOnlineAccount())) {
+                    System.out.println(off);
+                }
+                System.out.println("enter your command:");
+                String command = scanner.nextLine();
+                Page nextPage = null;
+                String regex = "^view off (\\d+)$";
+                Matcher matcher = getMatcher(command,regex);
+                if (command.matches(regex)){
+                    try {
+                        System.out.println(SellerBoss.viewOff((Seller)Account.getOnlineAccount(),matcher.group(1)));
+                    } catch (ThisIsNotYours thisIsNotYours) {
+                        System.out.println(thisIsNotYours.getMessage());
+                        nextPage = parentPage;
+                    }
+                    nextPage = parentPage;
+                }else if (command.equalsIgnoreCase("edit off")){
+                    nextPage = editOff();
+                }else if (command.equalsIgnoreCase("add off")){
 
-            @Override
-            public void show() {
-                super.show();
+                }else if (command.equalsIgnoreCase("back")){
+                    nextPage = parentPage;
+                }else {
+                    System.err.println("invalid command");
+                    nextPage = this;
+                }
+                nextPage.execute();
             }
         };
     }
@@ -118,14 +170,7 @@ private HashMap<String , String> ProductInfo;
             }
         };
     }
-    private Page viewProduct(){
-        return new Page("view product" , this) {
-            @Override
-            public void execute() {
 
-            }
-        };
-    }
     private Page editProduct(){
         return new Page("edit product", this) {
             @Override
@@ -164,7 +209,7 @@ private HashMap<String , String> ProductInfo;
             public void setSubPages(HashMap<String, Page> subPages) {
                 subPages.put("product", this);
                 subPages.put("buyers", this);
-                subPages.put("edit", this);
+                subPages.put("edit product", this);
             }
 
             @Override
@@ -177,16 +222,34 @@ private HashMap<String , String> ProductInfo;
                 String regex = "^view (\\d+)$";
                 Matcher matcher = getMatcher(command, regex);
                 if (command.matches(regex)) {
-                    SellerBoss.showProduct(matcher.group(1));
-                    nextPage = parentPage;
+                    try {
+                        System.out.println(SellerBoss.showProduct(matcher.group(1),(Seller)Account.getOnlineAccount()));
+                        nextPage = parentPage;
+                    } catch (ThisIsNotYours thisIsNotYours) {
+                        System.err.println(thisIsNotYours.getMessage());
+                        nextPage = parentPage;
+
+                    }
                 }
                 regex = "^view buyers (\\d+)$";
                 if (command.matches(regex)) {
-                    nextPage = viewBuyersOfProduct();
+                    try {
+                        for (String buyer : SellerBoss.showBuyers(matcher.group(1), (Seller) Account.getOnlineAccount())) {
+                            System.out.println(buyer);
+                        }
+                    } catch (ThisIsNotYours thisIsNotYours) {
+                        System.out.println(thisIsNotYours.getMessage());
+                        nextPage = parentPage;
+                    }
+                    nextPage = parentPage;
                 }
-                regex = "^edit (\\d+)$";
+                regex = "^edit product$";
                 if (command.matches(regex)) {
-
+                    nextPage = editProduct();
+                }
+                regex = "^back$";
+                if (command.matches(regex)){
+                    nextPage = parentPage;
                 }
                 try {
                     nextPage.execute();
@@ -216,7 +279,7 @@ private HashMap<String , String> ProductInfo;
             public void execute() {
                 HashMap<String , String> specialAttributes = new HashMap<>();
                 Category category = null;
-                ProductInfo = new HashMap<>();
+                productInfo = new HashMap<>();
                     setSubPages(subPages);
                 for (String s : subPages.keySet()) {
                     while (true){
@@ -231,7 +294,7 @@ private HashMap<String , String> ProductInfo;
                                     continue;
                                 }
                             }
-                            ProductInfo.put(s, command);
+                            productInfo.put(s, command);
                             break;
                         }
                         else {
@@ -244,7 +307,7 @@ private HashMap<String , String> ProductInfo;
                         }
 
                     }
-                    SellerBoss.addRequestProduct(ProductInfo.get("name"),ProductInfo.get("price"),ProductInfo.get("inventory"),specialAttributes , ProductInfo.get("company"),category,(Seller) Account.getOnlineAccount());
+                    SellerBoss.addRequestProduct(productInfo.get("name"),productInfo.get("price"),productInfo.get("inventory"),specialAttributes , productInfo.get("company"),category,(Seller) Account.getOnlineAccount());
                 }
             }
         };
@@ -328,6 +391,8 @@ private HashMap<String , String> ProductInfo;
         }
         else if (command.equalsIgnoreCase("remove product")){
                 nextPage = removeProduct();
+        }else if (command.equalsIgnoreCase("view offs")){
+            nextPage = viewOffs();
         }
         try {
             nextPage.execute();

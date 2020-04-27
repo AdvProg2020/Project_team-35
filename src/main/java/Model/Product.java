@@ -126,4 +126,16 @@ public class Product {
     public HashMap<String, String> getSpecialAttributes() {
         return specialAttributes;
     }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getInventory() {
+        return inventory;
+    }
 }
