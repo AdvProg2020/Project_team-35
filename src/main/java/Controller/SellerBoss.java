@@ -39,7 +39,7 @@ public class SellerBoss {
         for (String s : attributes.keySet()) {
             request.append(s+":"+attributes.get(s)+"\n");
         }
-        AddProductRequest addProductRequest = new AddProductRequest(request,RequestTypes.ADD_PRODUCT,seller);
+      //  AddProductRequest addProductRequest = new AddProductRequest(request,RequestTypes.ADD_PRODUCT,seller);
     }
     public static ArrayList<String> showBuyers(String id , Seller seller) throws ThisIsNotYours {
         int iD = Integer.parseInt(id);
@@ -110,7 +110,7 @@ public class SellerBoss {
                     if (!(s.equalsIgnoreCase("name") || s.equalsIgnoreCase("price") || s.equalsIgnoreCase("inventory") || s.equalsIgnoreCase("company"))) {
                         newChange.put(s, allChanges.get(s));
                     }
-                EditProductRequest editProductRequest = new EditProductRequest(request,RequestTypes.EDIT_PRODUCT,seller,product ,ProductAndOffStatus.FOREDIT,name,company,Double.parseDouble(price),Integer.parseInt(inventory),newChange);
+               // EditProductRequest editProductRequest = new EditProductRequest(request,RequestTypes.EDIT_PRODUCT,seller,product ,ProductAndOffStatus.FOREDIT,name,company,Double.parseDouble(price),Integer.parseInt(inventory),newChange);
             }
         }
     }
