@@ -2,7 +2,6 @@ package Views;
 
 import Controller.*;
 import Model.Account;
-import Model.RequestProblemNotExistManager;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;

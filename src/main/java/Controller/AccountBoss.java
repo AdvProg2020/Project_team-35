@@ -47,36 +47,29 @@ public class AccountBoss {
             }
             if (s.equals("username")){
                 username = allPersonalInfo.get(s);
-                request.append(s+":"+username+"\n");
             }
             if (s.equals("password")){
                 password = allPersonalInfo.get(s);
-                request.append(s+":"+username+"\n");
 
             }
             if (s.equals("name")){
                 name = allPersonalInfo.get(s);
-                request.append(s+":"+username+"\n");
 
             }
             if (s.equals("family")){
                 family = allPersonalInfo.get(s);
-                request.append(s+":"+username+"\n");
 
             }
             if (s.equals("email address")){
                 email = allPersonalInfo.get(s);
-                request.append(s+":"+username+"\n");
 
             }
             if (s.equals("phone number")){
                 phone = allPersonalInfo.get(s);
-                request.append(s+":"+username+"\n");
 
             }
             if (s.equals("company name")){
                 company = allPersonalInfo.get(s);
-                request.append(s+":"+username+"\n");
             }
         }
         if (type.equals("manager")) {
@@ -84,7 +77,7 @@ public class AccountBoss {
         }
         if (type.equals("seller")) {
             Seller requester = new Seller(username, name, family, email, phone, password, company);
-            SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(request,RequestTypes.SELLER_REGISTER, requester);
+            SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(requester);
             Manager.newRequests.add(sellerRegisterRequest);
             //*******************************
             Seller seller = new Seller(username,name,family , email,phone , password , company);

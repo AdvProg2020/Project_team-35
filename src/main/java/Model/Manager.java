@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Manager extends Account {
     public static ArrayList<Manager> allManagers = new ArrayList<Manager>();
     public static ArrayList<Request> newRequests;
+    public static ArrayList<Request> checkedRequests;
 
     /**
      * a constructor for manager
@@ -19,6 +20,7 @@ public class Manager extends Account {
     public Manager(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
         super(username, firstName, lastName, email, phoneNumber, password, 1);
         newRequests = new ArrayList<Request>();
+        checkedRequests = new ArrayList<>();
         allManagers.add(this);
     }
 

@@ -2,8 +2,8 @@ package Model;
 
 public class SellerRegisterRequest extends Request {
 
-    public SellerRegisterRequest(StringBuilder request, RequestTypes requestTypes, Seller requester) {
-        super(request, requestTypes);
+    public SellerRegisterRequest(Seller requester) {
+        super();
         this.requester = requester;
     }
     private Seller requester;
@@ -16,7 +16,7 @@ public class SellerRegisterRequest extends Request {
      * updated
      * @return
      */
-    public StringBuilder getDetails() {
-        return request;
+    public String getDetails() {
+        return null;
     }
 }
