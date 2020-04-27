@@ -22,7 +22,7 @@ public class Seller extends Account {
      * @param companyName
      */
     public Seller(String username, String firstName, String lastName, String email, String phoneNumber, String password, String companyName) {
-        super(username, firstName, lastName, email, phoneNumber, password,3);
+        super(username, firstName, lastName, email, phoneNumber, password);
         this.companyName = companyName;
         sellerOffs = new ArrayList<Off>();
         sellLogs = new ArrayList<SellLog>();
@@ -40,43 +40,31 @@ public class Seller extends Account {
         return true;
     }
 
-
+    @Override
+    public String toString() {
+        return null;
+    }
     @Override
     public void deleteAccount() {
 
     }
     @Override
     public String getPersonalInfo() {
-        return "Type: Seller\n" +
-                "Username: "+getUsername()+"\n" +
-                "Name: "+getFirstName()+"\n" +
-                "Last Name: "+getLastName()+"\n"+
-                "Email: "+getEmail()+"\n" +
-                "PhoneNumber: "+getPhoneNumber()+"\n"+
-                "Company: "+getCompanyName();
+        String toReturn = "Type: Seller\n" +
+                "Username: %s\n" +
+                "Name: %s\n" +
+                "Email: %s\n" +
+                "PhoneNumber: %s\n" +
+                "Company: %s\n";
+        toReturn = String.format(toReturn, this.getUsername(), this.getFirstName() + this.getLastName() + this.getEmail() + this.getPhoneNumber(), this.getCompanyName());
+        return toReturn;
+    }
+    @Override
+    public void editPersonalField(String field) {
+
     }
 
-    /**
-     * update this method.
-     * @return
-     */
     public String getCompanyName() {
         return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public double getMoney() {
-        return money;
-    }
-
-    public ArrayList<SellLog> getSellLogs() {
-        return sellLogs;
-    }
-
-    public ArrayList<Product> getSalableProducts() {
-        return salableProducts;
     }
 }

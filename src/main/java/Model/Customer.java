@@ -13,7 +13,6 @@ public class Customer extends Account {
 
     /**
      * a constructor for customer is equal to accounts but it has some lists new.
-     *
      * @param username
      * @param firstName
      * @param lastName
@@ -22,7 +21,7 @@ public class Customer extends Account {
      * @param password
      */
     public Customer(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
-        super(username, firstName, lastName, email, phoneNumber, password, 2);
+        super(username, firstName, lastName, email, phoneNumber, password);
         allCustomers.add(this);
         discountCodes = new ArrayList<DiscountCode>();
         buyLogs = new ArrayList<BuyLog>();
@@ -32,39 +31,30 @@ public class Customer extends Account {
     public boolean isThereProductWithIdInCart(int id) {
         return true;
     }
-
     public double getTotalPriceOFCart() {
         return 0;
     }
-
     public String getListOfOrders() {
-        return null;
+      return null;
     }
-
     public String getOrderWithId(int id) {
         return null;
     }
-
     public HashMap<Product, Integer> getListOFProductsAtCart() {
         return cart;
     }
-
     public boolean isThereOrderWithId(int id) {
         return true;
     }
-
     public boolean hasHeBoughtProductWithId(int productId) {
         return true;
     }
-
     public void increaseProductAtCart(Product toIncrease) {
 
     }
-
     public void decreaseProductAtCart(Product toIncrease) {
 
     }
-
     public double getCartTotalPrice() {
         return 0;
     }
@@ -73,18 +63,22 @@ public class Customer extends Account {
     public String toString() {
         return null;
     }
-
     @Override
     public void deleteAccount() {
 
     }
-
     @Override
     public String getPersonalInfo() {
-        return "Type: Customer\n" +
-                "Username: " + this.getUsername() + "\n" +
-                "Name: " + this.getFirstName() + " " + this.getLastName() + "\n" +
-                "Email: " + this.getEmail() + "\n" +
-                "PhoneNumber: " + this.getPhoneNumber() + "\n";
+        String toReturn = "Type: Customer\n" +
+                "Username: %s\n" +
+                "Name: %s\n" +
+                "Email: %s\n" +
+                "PhoneNumber: %s\n";
+        toReturn = String.format(toReturn, this.getUsername(), this.getFirstName() + this.getLastName() + this.getEmail() + this.getPhoneNumber());
+        return toReturn;
+    }
+    @Override
+    public void editPersonalField(String field) {
+
     }
 }

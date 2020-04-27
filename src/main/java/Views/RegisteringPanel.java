@@ -2,6 +2,7 @@ package Views;
 
 import Controller.*;
 import Model.Account;
+import Model.RequestProblemNotExistManager;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -10,24 +11,18 @@ import static Controller.AccountBoss.firstStepOfRegistering;
 import static Controller.AccountBoss.makeAccount;
 
 public class RegisteringPanel extends Page {
+    private AccountBoss accountBoss;
     private static HashMap<String, String> usernameAndPassword = new HashMap<>();
     private static HashMap<String, String> allPersonalInfo = new HashMap<String, String>();
 
     public RegisteringPanel(String name, Page parentPage) {
         super(name, parentPage);
 
-        subPages.put("register" , this);
-        subPages.put("login" , this);
-        subPages.put("offs",this);
-        subPages.put("products",this);
-        subPages.put("search",this);
+        subPages.put("register", this);
+        subPages.put("login", this);
 
     }
 
-    /**
-     * this method is completed
-     * @return
-     */
     private Page login() {
         return new Page("login", this) {
             @Override
@@ -39,9 +34,7 @@ public class RegisteringPanel extends Page {
                     MainPage mainPage = new MainPage();
                     mainPage.execute();
                 }
-                else {
-                    parentPage.parentPage.execute();
-                }
+                ///this need code to complete it is possible we have a parent except main page.
 
             }
         };
@@ -87,23 +80,22 @@ public class RegisteringPanel extends Page {
                 String command = scanner.nextLine();
                 if (command.equals("back")) {
                     parentPage.execute();
-                } else {
-                    String regex = "login (\\w+)";
-                    Matcher matcher = getMatcher(command, regex);
-                    matcher.matches();
-                    if (command.matches(regex)) {
-                        try {
-                            AccountBoss.checkUsernameExistenceInLogin(matcher.group(1));
-                            usernameAndPassword.put("username", matcher.group(1));
-                            loginGetPassword().execute();
-                        } catch (ExistenceOfUserWithUsername | LoginWithoutLogout e) {
-                            System.out.println(e.getMessage());
-                            this.execute();
-                        }
-                    } else {
-                        System.err.println("invalid command");
+                }
+                String regex = "login (\\w+)";
+                Matcher matcher = getMatcher(command, regex);
+                matcher.matches();
+                if (command.matches(regex)) {
+                    try {
+                        AccountBoss.checkUsernameExistenceInLogin(matcher.group(1));
+                        usernameAndPassword.put("username", matcher.group(1));
+                        loginGetPassword().execute();
+                    } catch (ExistenceOfUserWithUsername e) {
+                        System.out.println(e.getMessage());
                         this.execute();
                     }
+                } else {
+                    System.err.println("invalid command");
+                    this.execute();
                 }
             }
 
@@ -112,6 +104,7 @@ public class RegisteringPanel extends Page {
 
     /**
      * for getting all personal info except username and make account and back to main page.
+     *
      * @return
      */
     private Page registerSecondPage() {
@@ -139,15 +132,11 @@ public class RegisteringPanel extends Page {
                 }
 
 
-                    makeAccount(allPersonalInfo);
-                    System.out.println("successfully registered");
-                    if (parentPage.parentPage.name.equalsIgnoreCase("UserPage")){
-                        System.out.println("login:");
-                       loginGetUsername().execute();
-                    }
-                    else {
-                        parentPage.parentPage.execute();
-                    }
+                makeAccount(allPersonalInfo);
+                System.out.println("successfully registered");
+                MainPage mainPage = new MainPage();
+                mainPage.execute();
+                mainPage.execute();
 
             }
 
@@ -168,6 +157,7 @@ public class RegisteringPanel extends Page {
 
     /**
      * this is first step of register and get username and type and check validity.
+     *
      * @return
      */
     private Page RegisterUser() {
@@ -212,6 +202,7 @@ public class RegisteringPanel extends Page {
 
     @Override
     public void execute() {
+        System.out.println(this.name);
         show();
         Page nextPage = null;
         String command = scanner.nextLine();
@@ -227,6 +218,23 @@ public class RegisteringPanel extends Page {
 
     }
 
+    /**
+     * this method check email address and phone number be in a true form.
+     *
+     * @param type
+     * @param input
+     * @return
+     */
+    private static boolean checkFormatOfPersonalInformation(String type, String input) {
 
+        if (type.equals("email address")) {
+            Matcher matcher = getMatcher(input, "^(\\w+)@(\\w+).(\\w+)$");
+            return matcher.matches();
+        } else if (type.equals("phone number")) {
+            Matcher matcher = getMatcher(input, "\\d+");
+            return matcher.matches();
+        }
+        return true;
+    }
 
 }
