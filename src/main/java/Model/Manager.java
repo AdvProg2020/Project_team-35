@@ -5,11 +5,9 @@ import java.util.ArrayList;
 public class Manager extends Account {
     public static ArrayList<Manager> allManagers = new ArrayList<Manager>();
     public static ArrayList<Request> newRequests;
-    public static ArrayList<Request> checkedRequests;
 
     /**
      * a constructor for manager
-     *
      * @param username
      * @param firstName
      * @param lastName
@@ -18,74 +16,41 @@ public class Manager extends Account {
      * @param password
      */
     public Manager(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
-        super(username, firstName, lastName, email, phoneNumber, password, 1);
+        super(username, firstName, lastName, email, phoneNumber, password);
         newRequests = new ArrayList<Request>();
-        checkedRequests = new ArrayList<>();
         allManagers.add(this);
-    }
-
-    public static ArrayList<Request> getNewRequests() {
-        return newRequests;
-    }
-
-    public static ArrayList<Request> getCheckedRequests() {
-        return checkedRequests;
     }
 
     /**
      * this method is updated
-     *
      * @return
      */
-
-
     public static boolean isThereAnyManager() {
-        return allManagers.size() > 0;
+        if (allManagers.size()>0)
+            return true;
+        return false;
     }
-
     @Override
     public String toString() {
-        return super.toString();
+        return null;
     }
-
     @Override
     public void deleteAccount() {
 
     }
-    public static Request getNewRequestWithId(int id) {
-        for (Request newRequest : newRequests) {
-            if (newRequest.getRequestId() == id) {
-                return newRequest;
-            }
-        }
-        return null;
-    }
-    public static Request getCheckedRequestWithId(int id) {
-        for (Request checkedRequest : checkedRequests) {
-            if (checkedRequest.getRequestId() == id) {
-                return checkedRequest;
-            }
-        }
-        return null;
-    }
-
-    public static boolean isThereNewRequestWithId(int requestId) {
-        return getNewRequestWithId(requestId) != null;
-    }
-    public static boolean isThereCheckedRequestWithId(int requestId) {
-        return getCheckedRequestWithId(requestId) != null;
-    }
-    /**
-     * this format is true
-     *
-     * @return
-     */
     @Override
     public String getPersonalInfo() {
-        return "Type: Manager\n" +
-                "Username: " + getUsername() + "\n" +
-                "Name: " + getFirstName() + "\n" +
-                "Email: " + getEmail() + "\n" +
-                "PhoneNumber: " + getPhoneNumber() + "\n";
+        String toReturn = "Type: Manager\n" +
+                "Username: %s\n" +
+                "Name: %s\n" +
+                "Email: %s\n" +
+                "PhoneNumber: %s\n";
+        toReturn = String.format(toReturn, this.getUsername(), this.getFirstName() + this.getLastName() + this.getEmail() + this.getPhoneNumber());
+        return toReturn;
     }
+    @Override
+    public void editPersonalField(String field) {
+
+    }
+
 }

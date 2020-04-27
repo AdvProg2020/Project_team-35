@@ -9,14 +9,11 @@ public class EditOffRequest extends Request {
     private double newOffPercent;
     private ProductAndOffStatus newOffStatus;
 
-    public EditOffRequest() {
-        super();
+    public EditOffRequest(StringBuilder request, RequestTypes requestTypes) {
+        super(request, requestTypes);
     }
 
-    public String getDetails() {
-        return null;
-    }
-    public String getRequestInfo() {
+    public StringBuilder getDetails() {
         return null;
     }
     public void execute() {
