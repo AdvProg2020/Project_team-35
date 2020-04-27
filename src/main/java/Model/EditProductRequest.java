@@ -22,4 +22,7 @@ public class EditProductRequest extends Request {
     public void execute() {
 
     }
+    public String getRequestInfo() {
+        return null;
+    }
 }

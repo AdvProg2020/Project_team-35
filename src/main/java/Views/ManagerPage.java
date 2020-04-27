@@ -1,5 +1,9 @@
 package Views;
 
+import Model.Manager;
+import Model.Request;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ManagerPage extends Page {
@@ -93,13 +97,24 @@ public class ManagerPage extends Page {
         return new Page("manage requests", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("details", this);
-
+                subPages.put("details [PID]", this);
+                subPages.put("accept [PID]", this);
+                subPages.put("decline [PID]", this);
             }
 
             @Override
             public void execute() {
-                super.execute();
+                ArrayList<Request>  newRequests = Manager.getNewRequests();
+                ArrayList<Request>  checkedRequests = Manager.getCheckedRequests();
+                System.out.println("New Requests :");
+                for (Request newRequest : newRequests) {
+                    System.out.println(newRequest.getRequestInfo());
+                }
+                System.out.println("Checked Requests :");
+                for (Request checkedRequest : checkedRequests) {
+                    System.out.println(checkedRequest.getRequestInfo());
+                }
+                show();
             }
 
             @Override

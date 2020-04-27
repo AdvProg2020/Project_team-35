@@ -13,4 +13,7 @@ public class AddOffRequest extends Request {
     public void execute() {
 
     }
+    public String getRequestInfo() {
+        return null;
+    }
 }

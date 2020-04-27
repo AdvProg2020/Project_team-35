@@ -16,6 +16,9 @@ public class EditOffRequest extends Request {
     public String getDetails() {
         return null;
     }
+    public String getRequestInfo() {
+        return null;
+    }
     public void execute() {
 
     }

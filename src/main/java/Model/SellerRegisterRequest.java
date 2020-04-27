@@ -8,6 +8,10 @@ public class SellerRegisterRequest extends Request {
     }
     private Seller requester;
 
+    public String getRequestInfo () {
+        return "  Seller Register Request --- UserName: " + requester.getUsername() + " --- RQId: " + this.getRequestId();
+    }
+
     public void execute()  {
         Seller.allSellers.add(requester);
     }

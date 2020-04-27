@@ -13,4 +13,7 @@ public class AddProductRequest extends Request {
     public void execute() {
 
     }
+    public String getRequestInfo() {
+        return null;
+    }
 }

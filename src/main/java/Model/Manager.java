@@ -24,11 +24,21 @@ public class Manager extends Account {
         allManagers.add(this);
     }
 
+    public static ArrayList<Request> getNewRequests() {
+        return newRequests;
+    }
+
+    public static ArrayList<Request> getCheckedRequests() {
+        return checkedRequests;
+    }
+
     /**
      * this method is updated
      *
      * @return
      */
+
+
     public static boolean isThereAnyManager() {
         return allManagers.size() > 0;
     }
