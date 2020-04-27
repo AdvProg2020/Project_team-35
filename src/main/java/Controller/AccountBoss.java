@@ -1,29 +1,26 @@
 package Controller;
 
 import Model.*;
-import Views.MainPage;
-import Views.RegisteringPanel;
-import sun.applet.Main;
 
 import java.util.HashMap;
 
 public class AccountBoss {
     /**
-     * this is for check just one manager should register and repeated usernames can't register.
+     * this is for checking that just one manager should register and repeated usernames can't register.
      * @param type
      * @param username
      * @throws MoreThanOneManagerException
      * @throws RepeatedUserName
      */
-    public static void firstStepOfRegistering(String type , String username) throws MoreThanOneManagerException, RepeatedUserName, RequestProblemNotExistManager {
+    public static void firstStepOfRegistering(String type, String username) throws MoreThanOneManagerException, RepeatedUserName, RequestProblemNotExistManager {
         if (Manager.isThereAnyManager() && type.equals("manager")){
-            throw new MoreThanOneManagerException("just one manager could register\nplease talk to manager for adding you");
+            throw new MoreThanOneManagerException("only one manager could register\nplease send a request to manager for adding you");
         }
         if (!Manager.isThereAnyManager() && type.equals("seller")){
-            throw new RequestProblemNotExistManager("you should wait because we don't have manager");
+            throw new RequestProblemNotExistManager("you should wait because there isn't any manager yet.");
         }
         else if (Account.isThereAccountWithUserName(username)){
-            throw new RepeatedUserName("a user exists with this username");
+            throw new RepeatedUserName("this username already exists.");
         }
 
     }
@@ -31,7 +28,7 @@ public class AccountBoss {
      * this method is for new account with different rules and extract data from hashmap allPersonalInfo.
      * @param allPersonalInfo
      */
-    public static void makeAccount(HashMap<String , String> allPersonalInfo ) {
+    public static void makeAccount(HashMap<String, String> allPersonalInfo ) {
        StringBuilder request = new StringBuilder();
         String type = null;
         String email = null;
@@ -45,45 +42,52 @@ public class AccountBoss {
             if (s.equals("type")){
                 type = allPersonalInfo.get(s);
             }
-            if (s.equals("username")){
+            else if (s.equals("username")){
                 username = allPersonalInfo.get(s);
-            }
-            if (s.equals("password")){
-                password = allPersonalInfo.get(s);
 
             }
-            if (s.equals("name")){
+            else if (s.equals("password")){
+                password = allPersonalInfo.get(s);
+
+
+            }
+            else if (s.equals("name")){
                 name = allPersonalInfo.get(s);
 
             }
-            if (s.equals("family")){
+            else if (s.equals("family")){
                 family = allPersonalInfo.get(s);
 
+
             }
-            if (s.equals("email address")){
+            else if (s.equals("email address")){
                 email = allPersonalInfo.get(s);
 
-            }
-            if (s.equals("phone number")){
-                phone = allPersonalInfo.get(s);
 
             }
-            if (s.equals("company name")){
+            else if (s.equals("phone number")){
+                phone = allPersonalInfo.get(s);
+
+
+            }
+            else if (s.equals("company name")){
                 company = allPersonalInfo.get(s);
+
             }
         }
         if (type.equals("manager")) {
-            Manager manager = new Manager(username,name,family,email,phone ,password);
+            Manager manager = new Manager(username, name, family, email, phone, password);
         }
         if (type.equals("seller")) {
             Seller requester = new Seller(username, name, family, email, phone, password, company);
             SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(requester);
+
             Manager.newRequests.add(sellerRegisterRequest);
             //*******************************
             Seller seller = new Seller(username,name,family , email,phone , password , company);
         }
         if (type.equals("customer")) {
-            Customer customer = new Customer(username ,name , family , email , phone , password);
+            Customer customer = new Customer(username, name, family, email, phone, password);
         }
 
 
@@ -120,7 +124,7 @@ public class AccountBoss {
            throw new LoginWithoutLogout("first you should logout");
        }
         if (!Account.isThereAccountWithUserName(username)){
-            throw new ExistenceOfUserWithUsername("we don't have a user with this username");
+            throw new ExistenceOfUserWithUsername("this username doesn't exist.");
         }
     }
 
@@ -130,7 +134,7 @@ public class AccountBoss {
      * @param password
      * @throws PasswordValidity
      */
-    public static void checkPasswordValidity(  String username , String password) throws PasswordValidity {
+    public static void checkPasswordValidity(  String username, String password) throws PasswordValidity {
         if (!Account.getAccountWithUsername(username).validatePassword(password)){
             throw new PasswordValidity("this password is invalid");
         }

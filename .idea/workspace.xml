@@ -63,7 +63,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AP Project Phase 1" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -311,6 +311,7 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="404" y="0" width="617" height="680" key="#Main/0.0.1280.680@0.0.1280.680" timestamp="1587565144070" />
+
     <state x="485" y="75" key="#Main/0.0.1536.834@0.0.1536.834" timestamp="1587503217993" />
     <state x="361" y="71" key="#Notifications" timestamp="1587479036693">
       <screen x="0" y="0" width="1536" height="824" />
