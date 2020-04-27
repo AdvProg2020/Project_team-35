@@ -86,6 +86,7 @@ private HashMap<String , String> offInfoChanges;
                         } while (!(type.equalsIgnoreCase("end") && change.equalsIgnoreCase("edit")));
                         try {
                             SellerBoss.editOff((Seller) Account.getOnlineAccount(), off, offInfoChanges);
+                            System.out.println("edit successfully");
                         } catch (ItIsNotCorrect | ParseException | TimeLimit itIsNotCorrect) {
                             System.out.println(itIsNotCorrect.getMessage());
                             nextPage = this;

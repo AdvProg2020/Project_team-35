@@ -143,31 +143,28 @@ public class SellerBoss {
     }
     public static void editOff(Seller seller , Off off , HashMap<String , String> changes) throws ItIsNotCorrect, ParseException, TimeLimit {
      String date = null;
-     double maximum = 0.0;
-     double percent = 0;
-     String format = null;
+     double maximum = -1.0;
+     double percent = -1.0;
+        Date date1  = null;
+        ProductAndOffStatus productAndOffStatus = null;
+        String format = null;
         for (String s : changes.keySet()) {
             if (s.equalsIgnoreCase("finalDate")){
                 dateOfNow = new Date();
                     date = changes.get(s);
-                    Date date1 = new SimpleDateFormat("dd//MM/yyyy").parse(date);
+                     date1 = new SimpleDateFormat("dd//MM/yyyy").parse(date);
                     if (date1.before(dateOfNow)){
                         throw new TimeLimit("this time is passed");
                     }
-                    off.setFinalDate(date);
-
             } else if (s.equalsIgnoreCase("maximumAmountOfOff")) {
                 maximum = Double.parseDouble(changes.get(s));
-                off.setMaximumAmountOfOff(maximum);
             } else if (s.equalsIgnoreCase("offPercent")) {
 percent = Double.parseDouble(changes.get(s));
-off.setOffPercent(percent);
             }else if (s.equalsIgnoreCase("offStatus")){
                 if (off.getOffStatus().equals(ProductAndOffStatus.CONFIRMED)){
                     throw new ItIsNotCorrect("this can't be done");
                 }
 format = changes.get(s);
-ProductAndOffStatus productAndOffStatus = null;
 if (format.equalsIgnoreCase("FOREDIT")){
 productAndOffStatus = ProductAndOffStatus.FOREDIT;
 } else if (format.equalsIgnoreCase("CONFIRMED")) {
@@ -176,9 +173,9 @@ productAndOffStatus = ProductAndOffStatus.FOREDIT;
 }else if (format.equalsIgnoreCase("FORMAKE")){
     productAndOffStatus = ProductAndOffStatus.FORMAKE;
 }
-off.setOffStatus(productAndOffStatus);
             }
         }
+        EditOffRequest editOffRequest = new EditOffRequest(seller,off,maximum,percent,productAndOffStatus,date1);
 
 
     }

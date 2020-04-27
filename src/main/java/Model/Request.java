@@ -1,9 +1,11 @@
 package Model;
 
 public abstract class Request {
-    public Request() {
+    protected Seller seller;
+    public Request(Seller seller) {
         requestIdNumber++;
         requestId = requestIdNumber;
+        this.seller = seller;
     }
 
     protected boolean isDone;
