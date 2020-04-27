@@ -22,7 +22,7 @@ public class SellerRegisterRequest extends Request {
      * @return
      */
     public String getDetails() {
-        return "\nSeller Register Request : \nRequestId: " + this.getRequestId() + this.requester.getPersonalInfo();
+        return "Seller Register Request : \nRequestId: " + this.getRequestId() + "\n" + this.requester.getPersonalInfo();
 
     }
 }

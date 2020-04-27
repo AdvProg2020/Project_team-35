@@ -52,7 +52,29 @@ public class Manager extends Account {
     public void deleteAccount() {
 
     }
+    public static Request getNewRequestWithId(int id) {
+        for (Request newRequest : newRequests) {
+            if (newRequest.getRequestId() == id) {
+                return newRequest;
+            }
+        }
+        return null;
+    }
+    public static Request getCheckedRequestWithId(int id) {
+        for (Request checkedRequest : checkedRequests) {
+            if (checkedRequest.getRequestId() == id) {
+                return checkedRequest;
+            }
+        }
+        return null;
+    }
 
+    public static boolean isThereNewRequestWithId(int requestId) {
+        return getNewRequestWithId(requestId) != null;
+    }
+    public static boolean isThereCheckedRequestWithId(int requestId) {
+        return getCheckedRequestWithId(requestId) != null;
+    }
     /**
      * this format is true
      *

@@ -1,5 +1,7 @@
 package Views;
 
+import Controller.ManagerBoss;
+import Controller.NotValidRequestIdException;
 import Model.Manager;
 import Model.Request;
 
@@ -119,15 +121,30 @@ public class ManagerPage extends Page {
                 if (command.equalsIgnoreCase("-help")) {
                     System.out.println("Accept/Decline/details [RID]");
                 }
-                else if (command.startsWith("accept") || command.startsWith("decline")) {
-                    Matcher matcher = getMatcher(command, "^(accept|decline)\\s+(\\d+)$");
+                else if (command.startsWith("accept") || command.startsWith("decline") || command.startsWith("details")) {
+                    Matcher matcher = getMatcher(command, "^(accept|decline|details)\\s+(\\d+)$");
                     if (matcher.matches()) {
                         int requestId = Integer.parseInt(matcher.group(2));
                         if (command.startsWith("accept")) {
-
+                            try {
+                                ManagerBoss.acceptRequestWithId(requestId);
+                            } catch (NotValidRequestIdException e) {
+                                System.out.println(e.getMessage());
+                            }
                         }
-                        else {
-
+                        else if (command.startsWith("decline")) {
+                            try {
+                                ManagerBoss.declineRequestWithId(requestId);
+                            } catch (NotValidRequestIdException e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        else if (command.startsWith("details")) {
+                            try {
+                                System.out.println("\n" + ManagerBoss.getDetailsOfRequestWithId(requestId) + "\n");
+                            } catch (NotValidRequestIdException e) {
+                                System.out.println(e.getMessage());
+                            }
                         }
                     }
                     else {
@@ -136,6 +153,9 @@ public class ManagerPage extends Page {
                 }
                 else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
+                }
+                else {
+                    System.err.println("Invalid Command");
                 }
                 this.execute();
             }
@@ -154,7 +174,6 @@ public class ManagerPage extends Page {
                 subPages.put("edit", this);
                 subPages.put("add", this);
                 subPages.put("remove", this);
-
             }
 
             @Override
@@ -204,8 +223,10 @@ public class ManagerPage extends Page {
         else if (command.equalsIgnoreCase("back")){
             nextPage = parentPage;
         }
-
+        else {
+            System.err.println("Invalid Command");
+            this.execute();
+        }
         nextPage.execute();
-
     }
 }
