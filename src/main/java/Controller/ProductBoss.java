@@ -1,5 +1,9 @@
 package Controller;
 
+import Model.Product;
+import Views.GoodPage;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProductBoss {
@@ -19,5 +23,11 @@ public class ProductBoss {
 
     }
 
+
+    public static GoodPage goToGoodPage(int id){
+        Product product = Product.getProductWithId(id);
+        GoodPage goodPage =    GoodPage.getGoodPage(product);
+        return goodPage;
+    }
 
 }
