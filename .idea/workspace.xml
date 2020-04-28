@@ -19,12 +19,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22a8972d-0158-477b-901a-9c04baa7ad15" name="Default Changelist" comment="usable commit">
+    <list default="true" id="22a8972d-0158-477b-901a-9c04baa7ad15" name="Default Changelist" comment="complete edit off">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/AccountBoss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/AccountBoss.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controller/SellerBoss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/SellerBoss.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/AddOffRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/AddOffRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/AddProductRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/AddProductRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/EditProductRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/EditProductRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/SellerRegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/SellerRegisterRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Views/RegisteringPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/RegisteringPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Views/SellerPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/SellerPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +44,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -63,6 +65,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="full.screen.before.presentation.mode" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../AP Project Phase 1" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -73,7 +76,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.jsonOptions" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -94,6 +97,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SellerBossTest.salam" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="SellerBossTest" />
+      <option name="METHOD_NAME" value="salam" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SellerBossTest.sellerCreditTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project" />
       <option name="PACKAGE_NAME" value="" />
@@ -108,6 +121,7 @@
       <list>
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.SellerBossTest.sellerCreditTest" />
+        <item itemvalue="JUnit.SellerBossTest.salam" />
         <item itemvalue="JUnit.SellerBossTest" />
       </list>
     </recent_temporary>
@@ -139,7 +153,11 @@
       <workItem from="1587743415730" duration="7236000" />
       <workItem from="1587803456103" duration="2280000" />
       <workItem from="1587805820674" duration="5201000" />
-      <workItem from="1587817616759" duration="1151000" />
+      <workItem from="1587817616759" duration="1477000" />
+      <workItem from="1587880531265" duration="11112000" />
+      <workItem from="1587991088472" duration="1345000" />
+      <workItem from="1587993553500" duration="8119000" />
+      <workItem from="1588064245627" duration="1141000" />
     </task>
     <task id="LOCAL-00001" summary="add maven project and java files">
       <created>1587386984402</created>
@@ -267,7 +285,70 @@
       <option name="project" value="LOCAL" />
       <updated>1587808423129</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="add constructor to Product.">
+      <created>1587819026129</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1587819026130</updated>
+    </task>
+    <task id="LOCAL-00020" summary="complete Product View method (to string) in models">
+      <created>1587881951708</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1587881951708</updated>
+    </task>
+    <task id="LOCAL-00021" summary="first step of add product.">
+      <created>1587887068425</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1587887068425</updated>
+    </task>
+    <task id="LOCAL-00022" summary="add viewBuyersOfProduct and add showBuyers to SellerPage and SellerBoss">
+      <created>1587888086234</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1587888086234</updated>
+    </task>
+    <task id="LOCAL-00023" summary="add remove Product">
+      <created>1587889509649</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1587889509649</updated>
+    </task>
+    <task id="LOCAL-00024" summary="add edit Product request">
+      <created>1587891489826</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1587891489826</updated>
+    </task>
+    <task id="LOCAL-00025" summary="every thing is ok">
+      <created>1587993954615</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1587993954616</updated>
+    </task>
+    <task id="LOCAL-00026" summary="add edit offs and view all offs from SellerPage.">
+      <created>1587999964752</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1587999964752</updated>
+    </task>
+    <task id="LOCAL-00027" summary="complete edit off">
+      <created>1588001146758</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1588001146758</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -287,8 +368,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add mysql dependency in pom.xml" />
-    <MESSAGE value="add develop branch" />
     <MESSAGE value="add maven project and java files" />
     <MESSAGE value="rewrite access level for scanner in Page class" />
     <MESSAGE value="add getPersonalMethod for all three types&#10;correct Customer constructor" />
@@ -304,14 +383,23 @@
     <MESSAGE value="this is complete user page" />
     <MESSAGE value="add view sales history to SellerPage.java." />
     <MESSAGE value="usable commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="usable commit" />
+    <MESSAGE value="add constructor to Product." />
+    <MESSAGE value="complete Product View method (to string) in models" />
+    <MESSAGE value="first step of add product." />
+    <MESSAGE value="add show buyers of a Product." />
+    <MESSAGE value="add viewBuyersOfProduct and add showBuyers to SellerPage and SellerBoss" />
+    <MESSAGE value="add remove Product" />
+    <MESSAGE value="add edit Product request" />
+    <MESSAGE value="every thing is ok" />
+    <MESSAGE value="add edit offs and view all offs from SellerPage." />
+    <MESSAGE value="complete edit off" />
+    <option name="LAST_COMMIT_MESSAGE" value="complete edit off" />
   </component>
   <component name="WindowStateProjectService">
     <state x="404" y="0" width="617" height="680" key="#Main" timestamp="1587565144070">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="404" y="0" width="617" height="680" key="#Main/0.0.1280.680@0.0.1280.680" timestamp="1587565144070" />
-
     <state x="485" y="75" key="#Main/0.0.1536.834@0.0.1536.834" timestamp="1587503217993" />
     <state x="361" y="71" key="#Notifications" timestamp="1587479036693">
       <screen x="0" y="0" width="1536" height="824" />
@@ -321,10 +409,18 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="121" y="0" key="#Project_Structure/0.0.1280.680@0.0.1280.680" timestamp="1587803548937" />
-    <state x="478" y="49" key="#com.intellij.ide.util.MemberChooser" timestamp="1587818720915">
+    <state x="93" y="93" width="1095" height="495" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1587882504891">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="478" y="49" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1587818720915" />
+    <state x="93" y="93" width="1095" height="495" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1280.680@0.0.1280.680" timestamp="1587882504891" />
+    <state x="707" y="42" key="#com.intellij.ide.util.MemberChooser" timestamp="1588064445398">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="259" y="0" key="#com.intellij.ide.util.MemberChooser.inPresentationMode" timestamp="1587998035336">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="259" y="0" key="#com.intellij.ide.util.MemberChooser.inPresentationMode/0.0.1280.680@0.0.1280.680" timestamp="1587998035336" />
+    <state x="707" y="42" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1588064445398" />
     <state x="574" y="113" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1587565873065" />
     <state x="618" y="306" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1587503037188">
       <screen x="0" y="0" width="1536" height="834" />
@@ -354,34 +450,50 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="235" height="442" key="Diff.GoToChangePopup/0.0.1280.680@0.0.1280.680" timestamp="1587808341312" />
-    <state x="93" y="93" width="1095" height="495" key="DiffContextDialog" timestamp="1587808496441">
+    <state x="93" y="93" width="1095" height="495" key="DiffContextDialog" timestamp="1587992582753">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="93" y="93" width="1095" height="495" key="DiffContextDialog/0.0.1280.680@0.0.1280.680" timestamp="1587808496441" />
+    <state x="93" y="93" width="1095" height="495" key="DiffContextDialog/0.0.1280.680@0.0.1280.680" timestamp="1587992582753" />
     <state x="458" y="138" key="FileChooserDialogImpl" timestamp="1587807560696">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="458" y="138" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1587807560696" />
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1587392620904" />
-    <state width="1237" height="163" key="GridCell.Tab.0.bottom" timestamp="1587811026873">
+    <state width="1237" height="183" key="GridCell.Tab.0.bottom" timestamp="1588064773998">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1587811026873" />
+    <state width="1237" height="183" key="GridCell.Tab.0.bottom.inPresentationMode" timestamp="1587997176308">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="183" key="GridCell.Tab.0.bottom.inPresentationMode/0.0.1280.680@0.0.1280.680" timestamp="1587997176308" />
+    <state width="1237" height="183" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1588064773998" />
     <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1587567094406" />
-    <state width="1237" height="163" key="GridCell.Tab.0.center" timestamp="1587811026872">
+    <state width="1237" height="183" key="GridCell.Tab.0.center" timestamp="1588064773997">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1587811026872" />
+    <state width="1237" height="183" key="GridCell.Tab.0.center.inPresentationMode" timestamp="1587997176307">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="183" key="GridCell.Tab.0.center.inPresentationMode/0.0.1280.680@0.0.1280.680" timestamp="1587997176307" />
+    <state width="1237" height="183" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1588064773997" />
     <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1587567094405" />
-    <state width="1237" height="163" key="GridCell.Tab.0.left" timestamp="1587811026872">
+    <state width="1237" height="183" key="GridCell.Tab.0.left" timestamp="1588064773996">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1587811026872" />
+    <state width="1237" height="183" key="GridCell.Tab.0.left.inPresentationMode" timestamp="1587997176307">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="183" key="GridCell.Tab.0.left.inPresentationMode/0.0.1280.680@0.0.1280.680" timestamp="1587997176307" />
+    <state width="1237" height="183" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1588064773996" />
     <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1587567094405" />
-    <state width="1237" height="163" key="GridCell.Tab.0.right" timestamp="1587811026872">
+    <state width="1237" height="183" key="GridCell.Tab.0.right" timestamp="1588064773997">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1587811026872" />
+    <state width="1237" height="183" key="GridCell.Tab.0.right.inPresentationMode" timestamp="1587997176308">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="183" key="GridCell.Tab.0.right.inPresentationMode/0.0.1280.680@0.0.1280.680" timestamp="1587997176308" />
+    <state width="1237" height="183" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1588064773997" />
     <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1587567094406" />
     <state width="1493" height="214" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1587503337467" />
     <state width="1237" height="204" key="GridCell.Tab.1.bottom" timestamp="1587750732227">
@@ -412,31 +524,45 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="530" y="209" width="386" height="263" key="MultipleFileMergeDialog/0.0.1280.680@0.0.1280.680" timestamp="1587805649747" />
-    <state x="277" y="55" key="SettingsEditor" timestamp="1587490385288">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1587490385288" />
-    <state x="301" y="120" key="Vcs.Push.Dialog.v2" timestamp="1587808451551">
+    <state x="231" y="0" key="SettingsEditor" timestamp="1588064315832">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="301" y="120" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1587808451551" />
+    <state x="231" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1588064315832" />
+    <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1587490385288" />
+    <state x="301" y="120" key="Vcs.Push.Dialog.v2" timestamp="1587999987522">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="301" y="120" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1587999987522" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1587566134427" />
     <state x="450" y="75" key="VcsDiffUtil.ChangesDialog" timestamp="1587808399852">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="450" y="75" key="VcsDiffUtil.ChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1587808399852" />
+    <state x="93" y="93" width="1095" height="495" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1587993929218">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="93" y="93" width="1095" height="495" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1280.680@0.0.1280.680" timestamp="1587993929218" />
+    <state x="93" y="93" width="1095" height="495" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1587993929218">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="93" y="93" width="1095" height="495" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.0.1280.680@0.0.1280.680" timestamp="1587993929218" />
     <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1587578704067">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1587578704067" />
-    <state x="397" y="168" key="git4idea.merge.GitPullDialog" timestamp="1587817625349">
+    <state x="397" y="168" key="git4idea.merge.GitPullDialog" timestamp="1587999972959">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="397" y="168" key="git4idea.merge.GitPullDialog/0.0.1280.680@0.0.1280.680" timestamp="1587817625349" />
+    <state x="397" y="168" key="git4idea.merge.GitPullDialog/0.0.1280.680@0.0.1280.680" timestamp="1587999972959" />
     <state x="476" y="204" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1587578711739" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1587490450143">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="91" y="2" key="new project wizard" timestamp="1587996498862">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
+    <state x="91" y="2" key="new project wizard/0.0.1280.680@0.0.1280.680" timestamp="1587996498862" />
+    <state x="354" y="154" key="run.anything.popup" timestamp="1587998533107">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="354" y="154" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1587998533107" />
     <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1587490450143" />
   </component>
 </project>

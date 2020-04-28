@@ -198,8 +198,12 @@ private HashMap<String , String> offInfoChanges;
                         System.err.println(thisAttributeIsNotForThisProduct.getMessage());
                     }
                 }
+                else if (command.equalsIgnoreCase("back")){
+                    parentPage.execute();
+                }
                 else {
-
+                    System.err.println("invalid command");
+                    this.execute();
                 }
             }
         };

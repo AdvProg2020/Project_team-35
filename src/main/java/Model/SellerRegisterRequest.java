@@ -2,18 +2,17 @@ package Model;
 
 public class SellerRegisterRequest extends Request {
 
-    public SellerRegisterRequest(Seller requester) {
-        super();
-        this.requester = requester;
+
+    public SellerRegisterRequest(Seller seller) {
+        super(seller);
     }
-    private Seller requester;
 
     public String getRequestInfo () {
-        return "  Seller Register Request --- UserName: " + requester.getUsername() + " --- RQId: " + this.getRequestId();
+        return "  Seller Register Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
     }
 
     public void execute()  {
-        Seller.allSellers.add(requester);
+        Seller.allSellers.add(seller);
         this.isDone = true;
     }
 
@@ -22,7 +21,7 @@ public class SellerRegisterRequest extends Request {
      * @return
      */
     public String getDetails() {
-        return "Seller Register Request : \nRequestId: " + this.getRequestId() + "\n" + this.requester.getPersonalInfo();
+        return "Seller Register Request : \nRequestId: " + this.getRequestId() + "\n" + this.seller.getPersonalInfo();
 
     }
 }

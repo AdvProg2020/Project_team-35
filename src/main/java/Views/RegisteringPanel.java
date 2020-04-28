@@ -222,6 +222,8 @@ public class RegisteringPanel extends Page {
 
         } else if (command.equals("back")) {
             nextPage = parentPage;
+        }else {
+            nextPage = this;
         }
         nextPage.execute();
 

@@ -3,8 +3,9 @@ package Model;
 public class AddProductRequest extends Request {
     private Product product;
 
-    public AddProductRequest() {
-        super();
+    public AddProductRequest(Seller seller, Product product) {
+        super(seller);
+        this.product = product;
     }
 
     public String getDetails() {
