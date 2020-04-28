@@ -95,5 +95,9 @@ public class Customer extends Account {
     public static ArrayList<Customer> getAllCustomers() {
         return allCustomers;
     }
+
+    public double getMoney() {
+        return money;
+    }
 }
 
