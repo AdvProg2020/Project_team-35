@@ -1,5 +1,6 @@
 package Views;
 
+import Controller.CantRemoveYourAccountException;
 import Controller.ManagerBoss;
 import Controller.NotValidRequestIdException;
 import Controller.NotValidUserNameException;
@@ -58,7 +59,18 @@ public class ManagerPage extends Page {
                     }
                 }
                 else if(command.startsWith("delete user")) {
-
+                    Matcher matcher = getMatcher(command, "^delete user (\\w+)$");
+                    if (matcher.matches()) {
+                        String username = matcher.group(1);
+                        try {
+                            ManagerBoss.deleteAccountWithUsername(username);
+                        } catch (NotValidUserNameException | CantRemoveYourAccountException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid Command");
+                    }
                 }
                 else if (command.equalsIgnoreCase("create manager profile")) {
 

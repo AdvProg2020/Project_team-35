@@ -179,4 +179,8 @@ public abstract class Account {
         }
         return null;
     }
+
+    public static ArrayList<Account> getAllAccounts() {
+        return allAccounts;
+    }
 }
