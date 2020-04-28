@@ -115,6 +115,7 @@ public abstract class Account {
     }
     public abstract void deleteAccount();
     public abstract String getPersonalInfo();
+    public abstract String getShortInfo();
 
 
     public static int whatTypeIsOnline() {
@@ -163,5 +164,9 @@ public abstract class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public static ArrayList<Account> getAllAccounts() {
+        return allAccounts;
     }
 }

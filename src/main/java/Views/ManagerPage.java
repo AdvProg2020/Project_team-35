@@ -14,6 +14,7 @@ public class ManagerPage extends Page {
     public ManagerPage(String name, Page parentPage) {
         super(name, parentPage);
         subPages.put("manage requests", this);
+        subPages.put("manage users", this);
 
     }
 
@@ -28,7 +29,7 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
-                super.execute();
+                //
             }
 
             @Override
@@ -222,6 +223,9 @@ public class ManagerPage extends Page {
         }
         else if (command.equalsIgnoreCase("back")){
             nextPage = parentPage;
+        }
+        else if (command.equalsIgnoreCase("manage users")) {
+            nextPage = manageUsers();
         }
         else {
             System.err.println("Invalid Command");

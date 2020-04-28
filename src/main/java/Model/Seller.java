@@ -83,4 +83,8 @@ public class Seller extends Account {
     public ArrayList<Off> getSellerOffs() {
         return sellerOffs;
     }
+    @Override
+    public String getShortInfo() {
+        return "UserName : " + this.getUsername() + "  ---  " + "Type : Seller";
+    }
 }
