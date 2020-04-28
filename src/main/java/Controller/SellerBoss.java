@@ -111,6 +111,8 @@ public class SellerBoss {
                 String company = null;
                 double price = -1.0;
                 int inventory = -1;
+                ProductAndOffStatus productAndOffStatus = null;
+                String status = null;
                 if (allChanges.keySet().contains("name")) {
                         name = allChanges.get("name");
                 }
@@ -123,12 +125,21 @@ public class SellerBoss {
                 if (allChanges.keySet().contains("company")) {
                         company = allChanges.get("company");
                 }
+                if (allChanges.keySet().contains("ProductStatus")){
+                    if (status.equalsIgnoreCase("CONFIRMED")){
+                                throw new ThisIsNotYours("this is not for you");
+                    }else if (status.equalsIgnoreCase("FOREDIT")){
+                                productAndOffStatus = ProductAndOffStatus.FOREDIT;
+                    }else if (status.equalsIgnoreCase("FORMAKE")){
+                                productAndOffStatus = ProductAndOffStatus.FORMAKE;
+                    }
+                }
                 HashMap<String, String> newChange = new HashMap<>();
                 for (String s : allChanges.keySet())
                     if (!(s.equalsIgnoreCase("name") || s.equalsIgnoreCase("price") || s.equalsIgnoreCase("inventory") || s.equalsIgnoreCase("company"))) {
                         newChange.put(s, allChanges.get(s));
                     }
-                EditProductRequest editProductRequest = new EditProductRequest();
+                EditProductRequest editProductRequest = new EditProductRequest(seller,product,productAndOffStatus,name,company,price,inventory,newChange);
             }
         }
     }
