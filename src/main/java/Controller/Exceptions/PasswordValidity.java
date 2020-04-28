@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Exceptions;
 
 public class PasswordValidity extends Exception {
     public PasswordValidity(String message) {

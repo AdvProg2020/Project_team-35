@@ -1,5 +1,8 @@
 package Controller;
 
+import Controller.Exceptions.CantRemoveYourAccountException;
+import Controller.Exceptions.NotValidRequestIdException;
+import Controller.Exceptions.NotValidUserNameException;
 import Model.*;
 
 import java.util.ArrayList;

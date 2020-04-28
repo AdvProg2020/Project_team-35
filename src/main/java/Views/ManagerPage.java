@@ -1,16 +1,15 @@
 package Views;
 
-import Controller.CantRemoveYourAccountException;
+import Controller.Exceptions.CantRemoveYourAccountException;
 import Controller.ManagerBoss;
-import Controller.NotValidRequestIdException;
-import Controller.NotValidUserNameException;
+import Controller.Exceptions.NotValidRequestIdException;
+import Controller.Exceptions.NotValidUserNameException;
 import Model.Account;
 import Model.Manager;
 import Model.Request;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ManagerPage extends Page {

@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Exceptions.*;
 import Model.*;
 
 import java.text.ParseException;
@@ -167,16 +168,22 @@ public class SellerBoss {
         String date = null;
         double maximum = -1.0;
         double percent = -1.0;
-        Date date1 = null;
+        Date date1 = new SimpleDateFormat("dd//MM//yyyy").parse(off.getFinalDate());
+        Date date2 = new SimpleDateFormat("dd//MM//yyyy").parse(off.getStartDate());
         ProductAndOffStatus productAndOffStatus = null;
         String format = null;
         for (String s : changes.keySet()) {
+            if (s.equalsIgnoreCase("startDate")){
+                date2  = new SimpleDateFormat("dd//MM//yyyy").parse(changes.get(s));
+            }
             if (s.equalsIgnoreCase("finalDate")) {
                 dateOfNow = new Date();
                 date = changes.get(s);
                 date1 = new SimpleDateFormat("dd//MM/yyyy").parse(date);
                 if (date1.before(dateOfNow)) {
                     throw new TimeLimit("this time is passed");
+                }else if (date1.before(date2)){
+                    throw new TimeLimit("finalize is sooner starting");
                 }
             } else if (s.equalsIgnoreCase("maximumAmountOfOff")) {
                 maximum = Double.parseDouble(changes.get(s));
@@ -200,5 +207,23 @@ public class SellerBoss {
         EditOffRequest editOffRequest = new EditOffRequest(seller, off, maximum, percent, productAndOffStatus, date1);
 
 
+    }
+    public static void addOff(ArrayList<Integer> id  , Seller seller  , String startDate , String finalDate,double percent , double max) throws ParseException, ThisIsNotYours, TimeLimit, InvalidNumber {
+           Date start = new SimpleDateFormat("dd//MM//yyyy").parse(startDate);
+           Date finalDates = new SimpleDateFormat("dd//MM//yyyy").parse(finalDate);
+           if (start.after(finalDates)){
+               throw new TimeLimit("this time is wrong");
+           }
+           if (percent<0 || max <0){
+               throw new InvalidNumber("you can't give negative");
+           }
+           ArrayList<Product> allProducts = new ArrayList<>();
+        for (Integer integer : id) {
+            if (!seller.getSalableProducts().contains(Product.getProductWithId(integer))){
+                throw new ThisIsNotYours("this is not yours");
+            }
+            allProducts.add(Product.getProductWithId(integer));
+        }
+            AddOffRequest addOffRequest = new AddOffRequest(seller,start,finalDates,percent,max,allProducts);
     }
 }

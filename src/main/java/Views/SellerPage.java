@@ -1,12 +1,14 @@
 package Views;
 
 import Controller.*;
+import Controller.Exceptions.*;
 import Model.Account;
 import Model.Category;
 import Model.Off;
 import Model.Seller;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -71,11 +73,7 @@ private HashMap<String , String> offInfoChanges;
                 if (command.matches(regex)) {
                     Off off = Off.getOffById(Integer.parseInt(matcher.group(1)));
                     Seller seller = (Seller) Account.getOnlineAccount();
-                    if (off == null) {
-
-                    } else if (seller.getSellerOffs().contains(off)) {
-
-                    } else {
+                    {
                         String change = new String();
                         String type = new String();
                         offInfoChanges = new HashMap<>();
@@ -106,6 +104,42 @@ private HashMap<String , String> offInfoChanges;
         };
     }
 
+    private Page addOff(){
+        return new Page("add off",this) {
+            @Override
+            public void execute() {
+                System.out.println("enter data of off:");
+                System.out.println("start date:");
+                String startDate = scanner.nextLine();
+                System.out.println("final Date:");
+                String finalDate = scanner.nextLine();
+                System.out.println("percent:");
+                double percent = scanner.nextDouble();
+                System.out.println("maximum:");
+                double max = scanner.nextDouble();
+                System.out.println("products:");
+                ArrayList<Integer> id = new ArrayList<>();
+                String command = null;
+                while (true){
+                    command = scanner.nextLine();
+                    if (command.equalsIgnoreCase("end add product")){
+                        break;
+                    }
+                    else {
+                        id.add(Integer.parseInt(command));
+                    }
+                }
+                try {
+                    SellerBoss.addOff(id,(Seller)Account.getOnlineAccount(),startDate,finalDate,percent,max);
+                    System.out.println("your request successfully send to manager");
+                    parentPage.execute();
+                } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber e) {
+                    System.err.println(e.getMessage());
+                    this.execute();
+                }
+            }
+        };
+    }
 
     private Page viewOffs(){
         return new Page("view offs" , this) {

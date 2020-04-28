@@ -2,7 +2,7 @@ package Views;
 
 
 import Controller.AccountBoss;
-import Controller.NotValidFieldException;
+import Controller.Exceptions.NotValidFieldException;
 import Model.Account;
 import Model.Customer;
 import Model.Manager;

@@ -10,10 +10,19 @@ public class Off {
     private static int offIdNumber;
     private int offId;
     private String finalDate;
+    private String startDate;
     private ArrayList<Product> includedProducts;
     private double maximumAmountOfOff;
     private double offPercent;
     private ProductAndOffStatus offStatus;
+
+    public Off(String finalDate, String startDate, ArrayList<Product> includedProducts, double maximumAmountOfOff, double offPercent) {
+        this.finalDate = finalDate;
+        this.startDate = startDate;
+        this.includedProducts = includedProducts;
+        this.maximumAmountOfOff = maximumAmountOfOff;
+        this.offPercent = offPercent;
+    }
 
     public int getOffId() {
         return offId;
@@ -70,4 +79,11 @@ public class Off {
         return offStatus;
     }
 
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
 }

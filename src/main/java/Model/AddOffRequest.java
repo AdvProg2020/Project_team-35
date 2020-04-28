@@ -1,11 +1,22 @@
 package Model;
 
-public class AddOffRequest extends Request {
-    private Off off;
+import java.util.ArrayList;
+import java.util.Date;
 
-    public AddOffRequest(Seller seller, Off off) {
+public class AddOffRequest extends Request {
+    private Date newStartDate;
+    private Date newFinalDate;
+    private double percent;
+    private double max;
+    private ArrayList<Product> products;
+
+    public AddOffRequest(Seller seller, Date newStartDate, Date newFinalDate, double percent, double max, ArrayList<Product> products) {
         super(seller);
-        this.off = off;
+        this.newStartDate = newStartDate;
+        this.newFinalDate = newFinalDate;
+        this.percent = percent;
+        this.max = max;
+        this.products = products;
     }
 
     public String getDetails() {

@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Exceptions;
 
 public class RepeatedUserName  extends Exception{
     public RepeatedUserName(String message) {

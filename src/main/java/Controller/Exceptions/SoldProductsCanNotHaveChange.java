@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Exceptions;
 
 public class SoldProductsCanNotHaveChange extends Exception {
     public SoldProductsCanNotHaveChange(String message) {

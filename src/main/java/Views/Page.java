@@ -1,7 +1,5 @@
 package Views;
 
-import Controller.AccountBoss;
-import Controller.NotValidFieldException;
 import Model.Account;
 
 import java.util.HashMap;
