@@ -91,4 +91,9 @@ public class Customer extends Account {
     public String getShortInfo() {
         return "UserName : " + this.getUsername() + " --- " + "Type : Customer";
     }
+
+    public static ArrayList<Customer> getAllCustomers() {
+        return allCustomers;
+    }
 }
+

@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.ManagerBoss;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,7 +168,15 @@ public abstract class Account {
         this.password = password;
     }
 
-    public static ArrayList<Account> getAllAccounts() {
-        return allAccounts;
+    public static boolean isThereActiveAccountWithUserName(String username) {
+        return ManagerBoss.getAllActiveUsers().contains(Account.getActiveAccountWithUserName(username));
+    }
+    public static Account getActiveAccountWithUserName(String username) {
+        for (Account activeUser : ManagerBoss.getAllActiveUsers()) {
+            if (activeUser.getUsername().equals(username)) {
+                return activeUser;
+            }
+        }
+        return null;
     }
 }

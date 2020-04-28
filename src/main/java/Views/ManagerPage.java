@@ -2,6 +2,8 @@ package Views;
 
 import Controller.ManagerBoss;
 import Controller.NotValidRequestIdException;
+import Controller.NotValidUserNameException;
+import Model.Account;
 import Model.Manager;
 import Model.Request;
 
@@ -29,7 +31,42 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
-                //
+                ArrayList<Account> allActiveUsers = ManagerBoss.getAllActiveUsers();
+                for (Account activeUser : allActiveUsers) {
+                    System.out.println(activeUser.getShortInfo());
+                }
+                System.out.println("Enter Command : (-help for help)");
+                String command = scanner.nextLine();
+                if(command.equalsIgnoreCase("-help")) {
+                    System.out.println("view/delete user [username] ---- create manager profile");
+                }
+                else if (command.equalsIgnoreCase("back")) {
+                    parentPage.execute();
+                }
+                else if (command.startsWith("view")) {
+                    Matcher matcher = getMatcher(command, "^view (\\w+)$");
+                    if (matcher.matches()) {
+                        String username = matcher.group(1);
+                        try {
+                            System.out.println(ManagerBoss.getDetailsOfAccountWithUserName(username));
+                        } catch (NotValidUserNameException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid Command");
+                    }
+                }
+                else if(command.startsWith("delete user")) {
+
+                }
+                else if (command.equalsIgnoreCase("create manager profile")) {
+
+                }
+                else {
+                    System.err.println("Invalid Command");
+                }
+                this.execute();
             }
 
             @Override
