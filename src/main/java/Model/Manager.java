@@ -88,4 +88,13 @@ public class Manager extends Account {
                 "Email: " + getEmail() + "\n" +
                 "PhoneNumber: " + getPhoneNumber() + "\n";
     }
+
+    @Override
+    public String getShortInfo() {
+        return "UserName : " + this.getUsername() + "  ---  " + "Type : Manager";
+    }
+
+    public static ArrayList<Manager> getAllManagers() {
+        return allManagers;
+    }
 }

@@ -87,4 +87,13 @@ public class Customer extends Account {
                 "Email: " + this.getEmail() + "\n" +
                 "PhoneNumber: " + this.getPhoneNumber() + "\n";
     }
+    @Override
+    public String getShortInfo() {
+        return "UserName : " + this.getUsername() + " --- " + "Type : Customer";
+    }
+
+    public static ArrayList<Customer> getAllCustomers() {
+        return allCustomers;
+    }
 }
+
