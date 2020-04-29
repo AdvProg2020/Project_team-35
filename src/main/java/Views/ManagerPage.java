@@ -1,12 +1,11 @@
 package Views;
 
 import Controller.Exceptions.CantRemoveYourAccountException;
+import Controller.Exceptions.RepeatedCategoryNameException;
 import Controller.ManagerBoss;
 import Controller.Exceptions.NotValidRequestIdException;
 import Controller.Exceptions.NotValidUserNameException;
-import Model.Account;
-import Model.Manager;
-import Model.Request;
+import Model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +16,7 @@ public class ManagerPage extends Page {
         super(name, parentPage);
         subPages.put("manage requests", this);
         subPages.put("manage users", this);
+        subPages.put("manage categories" , this);
 
     }
 
@@ -220,14 +220,49 @@ public class ManagerPage extends Page {
         return new Page("manage categories", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("edit", this);
-                subPages.put("add", this);
-                subPages.put("remove", this);
             }
 
             @Override
             public void execute() {
-                super.execute();
+                ArrayList<Category> allCategories = new ArrayList<>();
+                allCategories = Category.getAllCategories();
+                //dont hand 2 above lines :)
+                System.out.println("All Categories Are : ");
+                for (Category category : allCategories) {
+                    System.out.println(category.getShortInfo());
+                }
+                System.out.println("Enter Command : (-help for help)");
+                String command = scanner.nextLine();
+                if (command.equalsIgnoreCase("-help")) {
+                    System.out.println("add/edit/remove [categoryName]");
+                }
+                else if (command.equalsIgnoreCase("back")) {
+                    parentPage.execute();
+                }
+                else {
+                    Matcher matcher = getMatcher(command, "^(add|remove|edit)\\s+(\\w+)$");
+                    if (matcher.matches()) {
+                        String categoryName = matcher.group(2);
+                        if (command.startsWith("add")) {
+                            ArrayList<String> specialAttributes = categorySpecialAttributesScanner();
+                            try {
+                                ManagerBoss.addNewCategory(categoryName, specialAttributes);
+                            } catch (RepeatedCategoryNameException e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        else if (command.startsWith("remove")) {
+
+                        }
+                        else if (command.startsWith("edit")) {
+
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid Command.");
+                    }
+                }
+                this.execute();
             }
 
             @Override
@@ -235,6 +270,19 @@ public class ManagerPage extends Page {
                 super.show();
             }
         };
+    }
+
+    private static ArrayList<String> categorySpecialAttributesScanner() {
+        System.out.println("Enter every feature in a line. for end enter -end");
+        ArrayList<String> specialAttributes = new ArrayList<>();
+        while (true) {
+            String feature = scanner.nextLine();
+            if (feature.equalsIgnoreCase("-end")) {
+                break;
+            }
+            specialAttributes.add(feature);
+        }
+        return specialAttributes;
     }
 
     private Page newEdit() {
@@ -274,6 +322,9 @@ public class ManagerPage extends Page {
         }
         else if (command.equalsIgnoreCase("manage users")) {
             nextPage = manageUsers();
+        }
+        else if(command.equalsIgnoreCase("manage categories")) {
+            nextPage = manageCategories();
         }
         else {
             System.err.println("Invalid Command");

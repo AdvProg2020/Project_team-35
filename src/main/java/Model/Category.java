@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Category {
-    public static ArrayList<Category> allCategories;
+    public static ArrayList<Category> allCategories = new ArrayList<>();
     private String categoryName;
     public ArrayList<Product> categoryProducts;
     public ArrayList<String> specialAttributes;
@@ -15,9 +15,6 @@ public class Category {
         categoryProducts = new ArrayList<>();
     }
 
-    public static boolean isThereCategoryWithName(String name) {
-        return true;
-    }
     public static void deleteCategoryAndSubProducts(String categoryName) {
 
     }
@@ -34,11 +31,22 @@ public class Category {
         }
         return null;
     }
+    public static boolean isThereCategoryWithName(String categoryName) {
+        return getCategoryByName(categoryName) != null;
+    }
     public String getCategoryName() {
         return categoryName;
     }
 
     public ArrayList<String> getSpecialAttributes() {
         return specialAttributes;
+    }
+
+    public static ArrayList<Category> getAllCategories() {
+        return allCategories;
+    }
+
+    public String getShortInfo() {
+        return "CategoryName : " + this.getCategoryName() + " --- " + "ProductsNumber : " + this.categoryProducts.size();
     }
 }
