@@ -30,11 +30,19 @@ public class Customer extends Account {
     }
 
     public boolean isThereProductWithIdInCart(int id) {
-        return true;
+        for (Product product : cart.keySet()) {
+            if (product.getProductId() == id)
+                return true;
+        }
+        return false;
     }
 
     public double getTotalPriceOFCart() {
-        return 0;
+        double totalPrice = 0.0;
+        for (Product product : cart.keySet()) {
+            totalPrice += product.getPrice() * cart.get(product);
+        }
+        return totalPrice;
     }
 
     public String getListOfOrders() {
