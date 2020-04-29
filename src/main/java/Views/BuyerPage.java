@@ -73,18 +73,8 @@ public class BuyerPage extends Page {
     private Page viewDiscountCodes(){
       return new Page("view discount codes"  , this) {
           @Override
-          public void setSubPages(HashMap<String, Page> subPages) {
-              super.setSubPages(subPages);
-          }
+          public void execute() {
 
-          @Override
-          public void execute( ) {
-              super.execute();
-          }
-
-          @Override
-          public void show() {
-              super.show();
           }
       }  ;
     }
