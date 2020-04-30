@@ -1,11 +1,11 @@
 package Views;
 
 import Controller.Exceptions.CantRemoveYourAccountException;
+import Controller.Exceptions.RepeatedCategoryNameException;
 import Controller.ManagerBoss;
 import Controller.Exceptions.NotValidRequestIdException;
 import Controller.Exceptions.NotValidUserNameException;
 import Model.*;
-import com.google.protobuf.RpcUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
