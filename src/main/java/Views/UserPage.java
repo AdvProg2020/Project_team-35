@@ -19,6 +19,7 @@ public class UserPage extends Page {
        subPages.put("view personal info" , this);
        subPages.put("products", this);
        subPages.put("user account",this);
+        subPages.put("logout",this);
 
     }
     private Page  viewPersonalInfo(){
@@ -90,6 +91,10 @@ public class UserPage extends Page {
                     }else if (Account.getOnlineAccount() instanceof Seller){
                         nextPage = new SellerPage("seller page" , this);
                     }
+            }else if (command.equalsIgnoreCase("logout")){
+                nextPage = new MainPage();
+                AccountBoss.logout(Account.getOnlineAccount());
+                System.out.println("logout successfully");
             }
             else if (command.equals("back")) {
                 nextPage = parentPage;

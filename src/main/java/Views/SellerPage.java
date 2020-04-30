@@ -327,7 +327,6 @@ private HashMap<String , String> offInfoChanges;
                 subPages.add("price");
                 subPages.add("inventory");
                 subPages.add("category");
-                subPages.add("category");
                 subPages.add("company");
                 subPages.add("attributes");
                 Page nextPage = null;
@@ -377,6 +376,7 @@ private HashMap<String , String> offInfoChanges;
                 }
                 if (category != null) {
                     SellerBoss.addRequestProduct(productInfo.get("name"), productInfo.get("price"), productInfo.get("inventory"), specialAttributes, productInfo.get("company"), category, (Seller) Account.getOnlineAccount());
+                    System.out.println("we send request for manager");
                     parentPage.execute();
                 }
                 else {
