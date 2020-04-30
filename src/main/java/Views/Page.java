@@ -63,7 +63,7 @@ public abstract class Page {
         }
         return null;
     }
-    public void show(){
+    public boolean show(){
         System.out.println(name);
         int i =1;
         for (String s : subPages.keySet()) {
@@ -76,6 +76,7 @@ public abstract class Page {
         else {
             System.out.println((subPages.keySet().size()+1)+".exit");
         }
+        return true;
     }
     protected static Matcher getMatcher(String input , String regex){
         Pattern pattern = Pattern.compile(regex);

@@ -20,8 +20,8 @@ public class Offs extends Page{
                 super.execute();
             }
             @Override
-            public void show() {
-                super.show();
+            public boolean show() {
+                return super.show();
             }
         };
     }

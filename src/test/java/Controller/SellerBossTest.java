@@ -1,3 +1,5 @@
+package Controller;
+
 import Controller.SellerBoss;
 import Model.Seller;
 import org.junit.Assert;

@@ -66,7 +66,24 @@ public class ProductsPage extends Page {
 
             @Override
             public void execute() {
-                super.execute();
+                show();
+                String command = scanner.nextLine();
+                Page nextPage = null;
+                if (command.equalsIgnoreCase("show available filters")){
+
+                }else if (command.equalsIgnoreCase("filter")){
+
+                }else if (command.equalsIgnoreCase("current filters")){
+
+                }else if (command.equalsIgnoreCase("disable filter")){
+
+                }else if (command.equalsIgnoreCase("back")){
+                    nextPage = parentPage;
+                }else if (command.equalsIgnoreCase("help")){
+
+                }else {
+
+                }
             }
             @Override
             public void show() {

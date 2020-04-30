@@ -1,6 +1,5 @@
 package Views;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -21,8 +20,8 @@ public class MainPage extends Page {
     }
 
     @Override
-    public void show() {
-        super.show();
+    public boolean show() {
+       return super.show();
     }
 
     @Override
