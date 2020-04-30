@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class DiscountCode {
     public static ArrayList<DiscountCode> allDiscountCodes;
-    private int discountCodeId;
+    private String id;
     private String finalDate;
     private double discountPercent;
     private double maximumAvailableDiscount;
@@ -16,16 +16,24 @@ public class DiscountCode {
     public void editDiscountCode(double discountPercent, double maximumAvailableDiscount, int availableUseFrequent, ArrayList<Customer> includedCustomers) {
 
     }
-    public boolean canHeUseDiscountCode(Customer customer) {
+    public boolean canUseDiscountCode(Customer customer) {
         return true;
     }
     public static void removeDiscountCode() {
 
     }
     public static boolean isThereDiscountCodeWithId(String id) {
-        return true;
+        for (DiscountCode discountCode : allDiscountCodes) {
+            if (discountCode.id.equals(id))
+                return true;
+        }
+        return false;
     }
     public DiscountCode getDiscountCodeWithId(String id) {
+        for (DiscountCode discountCode : allDiscountCodes) {
+            if (discountCode.id.equals(id))
+                return discountCode;
+        }
         return null;
     }
     public static void deleteDiscountCode () {

@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Project" />
         <module name="Final_Important_APProject" />
+        <module name="Project Phase 1" />
       </profile>
     </annotationProcessing>
   </component>

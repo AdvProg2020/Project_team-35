@@ -3,6 +3,7 @@ package Controller;
 import Controller.Exceptions.CantRemoveYourAccountException;
 import Controller.Exceptions.NotValidRequestIdException;
 import Controller.Exceptions.NotValidUserNameException;
+import Controller.Exceptions.RepeatedCategoryNameException;
 import Model.*;
 
 import java.util.ArrayList;
@@ -82,6 +83,17 @@ public class ManagerBoss {
         }
         else {
             throw new NotValidUserNameException("This username does'nt exist or has'nt accepted already.");
+        }
+    }
+
+    public static int addNewCategory (String categoryName, ArrayList<String> specialAttributes) throws RepeatedCategoryNameException {
+        if (Category.isThereCategoryWithName(categoryName)) {
+            throw new RepeatedCategoryNameException("This name is repeated. Use another.");
+        }
+        else {
+            Category category = new Category(categoryName, specialAttributes);
+            Category.allCategories.add(category);
+            return 0;
         }
     }
 }
