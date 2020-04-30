@@ -15,9 +15,6 @@ public class Category {
         categoryProducts = new ArrayList<>();
     }
 
-    public static boolean isThereCategoryWithName(String name) {
-        return true;
-    }
     public static void deleteCategoryAndSubProducts(String categoryName) {
 
     }
@@ -33,6 +30,9 @@ public class Category {
                 return category;
         }
         return null;
+    }
+    public static boolean isThereCategoryWithName(String categoryName) {
+        return getCategoryByName(categoryName) != null;
     }
     public String getCategoryName() {
         return categoryName;

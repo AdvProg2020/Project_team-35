@@ -85,5 +85,14 @@ public class ManagerBoss {
         }
     }
 
-
+    public static int addNewCategory (String categoryName, ArrayList<String> specialAttributes) throws RepeatedCategoryNameException {
+        if (Category.isThereCategoryWithName(categoryName)) {
+            throw new RepeatedCategoryNameException("This name is repeated. Use another.");
+        }
+        else {
+            Category category = new Category(categoryName, specialAttributes);
+            Category.allCategories.add(category);
+            return 0;
+        }
+    }
 }

@@ -4,10 +4,7 @@ import Controller.Exceptions.CantRemoveYourAccountException;
 import Controller.ManagerBoss;
 import Controller.Exceptions.NotValidRequestIdException;
 import Controller.Exceptions.NotValidUserNameException;
-import Model.Account;
-import Model.Category;
-import Model.Manager;
-import Model.Request;
+import Model.*;
 import com.google.protobuf.RpcUtil;
 
 import java.util.ArrayList;
@@ -247,7 +244,12 @@ public class ManagerPage extends Page {
                 if (matcher.matches()) {
                     String categoryName = matcher.group(2);
                     if (command.startsWith("add")) {
-
+                        ArrayList<String> specialAttributes = categorySpecialAttributesScanner();
+                        try {
+                            ManagerBoss.addNewCategory(categoryName, specialAttributes);
+                        } catch (RepeatedCategoryNameException e) {
+                            System.out.println(e.getMessage());
+                        }
                     }
                     else if (command.startsWith("remove")) {
 
@@ -267,6 +269,19 @@ public class ManagerPage extends Page {
                 super.show();
             }
         };
+    }
+
+    private static ArrayList<String> categorySpecialAttributesScanner() {
+        System.out.println("Enter every feature in a line. for end enter -end");
+        ArrayList<String> specialAttributes = new ArrayList<>();
+        while (true) {
+            String feature = scanner.nextLine();
+            if (feature.equalsIgnoreCase("-end")) {
+                break;
+            }
+            specialAttributes.add(feature);
+        }
+        return specialAttributes;
     }
 
     private Page newEdit() {
