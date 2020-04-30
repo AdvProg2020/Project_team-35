@@ -5,8 +5,10 @@ import Controller.ManagerBoss;
 import Controller.Exceptions.NotValidRequestIdException;
 import Controller.Exceptions.NotValidUserNameException;
 import Model.Account;
+import Model.Category;
 import Model.Manager;
 import Model.Request;
+import com.google.protobuf.RpcUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +19,7 @@ public class ManagerPage extends Page {
         super(name, parentPage);
         subPages.put("manage requests", this);
         subPages.put("manage users", this);
+        subPages.put("manage categories" , this);
 
     }
 
@@ -227,7 +230,36 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
-                super.execute();
+                ArrayList<Category> allCategories = Category.getAllCategories();
+                System.out.println("All Categories Are : ");
+                for (Category category : allCategories) {
+                    System.out.println(category.getShortInfo());
+                }
+                System.out.println("Enter Command : (-help for help)");
+                String command = scanner.nextLine();
+                if (command.equalsIgnoreCase("-help")) {
+                    System.out.println("add/edit/remove [categoryName]");
+                }
+                else if (command.equalsIgnoreCase("back")) {
+                    parentPage.execute();
+                }
+                Matcher matcher = getMatcher(command, "^(add|remove|edit)\\d+(\\w+)$");
+                if (matcher.matches()) {
+                    String categoryName = matcher.group(2);
+                    if (command.startsWith("add")) {
+
+                    }
+                    else if (command.startsWith("remove")) {
+
+                    }
+                    else if (command.startsWith("edit")) {
+
+                    }
+                }
+                else {
+                    System.err.println("Invalid Command.");
+                }
+
             }
 
             @Override
@@ -274,6 +306,9 @@ public class ManagerPage extends Page {
         }
         else if (command.equalsIgnoreCase("manage users")) {
             nextPage = manageUsers();
+        }
+        else if(command.equalsIgnoreCase("manage categories")) {
+            nextPage = manageCategories();
         }
         else {
             System.err.println("Invalid Command");

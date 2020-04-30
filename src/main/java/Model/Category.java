@@ -41,4 +41,12 @@ public class Category {
     public ArrayList<String> getSpecialAttributes() {
         return specialAttributes;
     }
+
+    public static ArrayList<Category> getAllCategories() {
+        return allCategories;
+    }
+
+    public String getShortInfo() {
+        return "CategoryName : " + this.getCategoryName() + " --- " + "ProductsNumber : " + this.categoryProducts.size();
+    }
 }
