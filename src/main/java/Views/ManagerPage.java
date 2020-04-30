@@ -220,14 +220,13 @@ public class ManagerPage extends Page {
         return new Page("manage categories", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("edit", this);
-                subPages.put("add", this);
-                subPages.put("remove", this);
             }
 
             @Override
             public void execute() {
-                ArrayList<Category> allCategories = Category.getAllCategories();
+                ArrayList<Category> allCategories = new ArrayList<>();
+                allCategories = Category.getAllCategories();
+                //dont hand 2 above lines :)
                 System.out.println("All Categories Are : ");
                 for (Category category : allCategories) {
                     System.out.println(category.getShortInfo());
@@ -240,28 +239,30 @@ public class ManagerPage extends Page {
                 else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
                 }
-                Matcher matcher = getMatcher(command, "^(add|remove|edit)\\d+(\\w+)$");
-                if (matcher.matches()) {
-                    String categoryName = matcher.group(2);
-                    if (command.startsWith("add")) {
-                        ArrayList<String> specialAttributes = categorySpecialAttributesScanner();
-                        try {
-                            ManagerBoss.addNewCategory(categoryName, specialAttributes);
-                        } catch (RepeatedCategoryNameException e) {
-                            System.out.println(e.getMessage());
+                else {
+                    Matcher matcher = getMatcher(command, "^(add|remove|edit)\\s+(\\w+)$");
+                    if (matcher.matches()) {
+                        String categoryName = matcher.group(2);
+                        if (command.startsWith("add")) {
+                            ArrayList<String> specialAttributes = categorySpecialAttributesScanner();
+                            try {
+                                ManagerBoss.addNewCategory(categoryName, specialAttributes);
+                            } catch (RepeatedCategoryNameException e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        else if (command.startsWith("remove")) {
+
+                        }
+                        else if (command.startsWith("edit")) {
+
                         }
                     }
-                    else if (command.startsWith("remove")) {
-
-                    }
-                    else if (command.startsWith("edit")) {
-
+                    else {
+                        System.err.println("Invalid Command.");
                     }
                 }
-                else {
-                    System.err.println("Invalid Command.");
-                }
-
+                this.execute();
             }
 
             @Override

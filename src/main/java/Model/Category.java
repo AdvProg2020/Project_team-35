@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Category {
-    public static ArrayList<Category> allCategories;
+    public static ArrayList<Category> allCategories = new ArrayList<>();
     private String categoryName;
     public ArrayList<Product> categoryProducts;
     public ArrayList<String> specialAttributes;
