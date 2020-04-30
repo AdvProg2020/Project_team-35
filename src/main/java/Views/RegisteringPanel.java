@@ -207,8 +207,9 @@ public class RegisteringPanel extends Page {
     }
 
     @Override
-    public void show() {
+    public boolean show() {
         super.show();
+        return false;
     }
 
     @Override

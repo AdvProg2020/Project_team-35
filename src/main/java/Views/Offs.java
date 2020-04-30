@@ -27,8 +27,8 @@ public class Offs extends Page{
     }
 
     @Override
-    public void show() {
-        super.show();
+    public boolean show() {
+      return   super.show();
     }
 
     @Override

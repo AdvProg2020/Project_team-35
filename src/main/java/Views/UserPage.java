@@ -63,8 +63,9 @@ public class UserPage extends Page {
     }
 
     @Override
-    public void show() {
+    public boolean show() {
         super.show();
+        return false;
     }
 
     @Override

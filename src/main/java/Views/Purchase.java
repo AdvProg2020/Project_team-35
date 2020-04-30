@@ -20,8 +20,9 @@ public class Purchase extends Page{
             }
 
             @Override
-            public void show() {
+            public boolean show() {
                 super.show();
+                return false;
             }
         };
     }
@@ -38,8 +39,9 @@ public class Purchase extends Page{
             }
 
             @Override
-            public void show() {
+            public boolean show() {
                 super.show();
+                return false;
             }
         };
     }
@@ -57,14 +59,16 @@ public class Purchase extends Page{
             }
 
             @Override
-            public void show() {
+            public boolean show() {
                 super.show();
+                return false;
             }
         };
     }
     @Override
-    public void show() {
+    public boolean show() {
         super.show();
+        return false;
     }
 
     @Override

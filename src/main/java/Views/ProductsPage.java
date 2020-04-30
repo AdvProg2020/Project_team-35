@@ -2,7 +2,6 @@ package Views;
 
 import Controller.ProductBoss;
 import Controller.SellerBoss;
-import Model.Product;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -86,8 +85,8 @@ public class ProductsPage extends Page {
                 }
             }
             @Override
-            public void show() {
-                super.show();
+            public boolean show() {
+              return   super.show();
             }
         };
     }
@@ -108,8 +107,8 @@ public class ProductsPage extends Page {
             }
 
             @Override
-            public void show() {
-                super.show();
+            public boolean show() {
+              return   super.show();
             }
         };
     }
@@ -126,8 +125,9 @@ public class ProductsPage extends Page {
             }
 
             @Override
-            public void show() {
-                super.show();
+            public boolean show() {
+              return   super.show();
+
             }
         };
     }
@@ -144,15 +144,15 @@ public class ProductsPage extends Page {
             }
 
             @Override
-            public void show() {
-                super.show();
+            public boolean show() {
+             return    super.show();
             }
         };
     }
 
     @Override
-    public void show() {
-        super.show();
+    public boolean show() {
+       return super.show();
     }
 
     @Override

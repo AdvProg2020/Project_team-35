@@ -81,8 +81,9 @@ public class ManagerPage extends Page {
             }
 
             @Override
-            public void show() {
+            public boolean show() {
                 super.show();
+                return false;
             }
         };
     }
@@ -100,8 +101,9 @@ public class ManagerPage extends Page {
             }
 
             @Override
-            public void show() {
+            public boolean show() {
                 super.show();
+                return false;
             }
         };
     }
@@ -119,8 +121,9 @@ public class ManagerPage extends Page {
             }
 
             @Override
-            public void show() {
+            public boolean show() {
                 super.show();
+                return false;
             }
         };
     }
@@ -140,8 +143,9 @@ public class ManagerPage extends Page {
             }
 
             @Override
-            public void show() {
+            public boolean show() {
                 super.show();
+                return false;
             }
         };
     }
@@ -210,8 +214,9 @@ public class ManagerPage extends Page {
             }
 
             @Override
-            public void show() {
+            public boolean show() {
                 super.show();
+                return false;
             }
         };
     }
@@ -266,8 +271,9 @@ public class ManagerPage extends Page {
             }
 
             @Override
-            public void show() {
+            public boolean show() {
                 super.show();
+                return false;
             }
         };
     }
@@ -298,15 +304,17 @@ public class ManagerPage extends Page {
             }
 
             @Override
-            public void show() {
+            public boolean show() {
 //commands and back
+                return false;
             }
         };
     }
 
     @Override
-    public void show() {
+    public boolean show() {
         super.show();
+        return false;
     }
 
     @Override
