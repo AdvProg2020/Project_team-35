@@ -53,7 +53,8 @@ public class Seller extends Account {
                 "Last Name: "+getLastName()+"\n"+
                 "Email: "+getEmail()+"\n" +
                 "PhoneNumber: "+getPhoneNumber()+"\n"+
-                "Company: "+getCompanyName();
+                "Company: "+getCompanyName()+"\n"+
+                "password: "+getPassword()+"\n";
     }
 
     /**

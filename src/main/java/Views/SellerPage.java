@@ -2,10 +2,7 @@ package Views;
 
 import Controller.*;
 import Controller.Exceptions.*;
-import Model.Account;
-import Model.Category;
-import Model.Off;
-import Model.Seller;
+import Model.*;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -253,6 +250,12 @@ private HashMap<String , String> offInfoChanges;
 
             @Override
             public void execute() {
+                Seller seller = (Seller) Account.getOnlineAccount();
+                int i = 1;
+                for (Product product : seller.getSalableProducts()) {
+                    System.out.println(i+")"+product.getName());
+                    i+=1;
+                }
                 setSubPages(subPages);
                 show();
                 System.out.println("enter command :");
@@ -304,29 +307,45 @@ private HashMap<String , String> offInfoChanges;
         return new Page("add product" , this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("name" , this);
-                subPages.put("price",this);
-                subPages.put("inventory",this);
-                subPages.put("company" , this);
-                subPages.put("seller" , this);
-                subPages.put("category" , this);
-                subPages.put("attributes" , this);
+                System.out.println(name);
+                this.subPages.put("name" , this);
+                this.subPages.put("price",this);
+                this.subPages.put("category" , this);
+               this.subPages.put("inventory",this);
+                this.subPages.put("company" , this);
+                this.subPages.put("seller" , this);
+                this.subPages.put("attributes" , this);
 
             }
 
             @Override
             public void execute() {
-                HashMap<String , String> specialAttributes = new HashMap<>();
+                HashMap<String, String> specialAttributes = new HashMap<>();
                 Category category = null;
+                ArrayList<String> subPages = new ArrayList<>();
+                subPages.add("name");
+                subPages.add("price");
+                subPages.add("inventory");
+                subPages.add("category");
+                subPages.add("category");
+                subPages.add("company");
+                subPages.add("attributes");
+                Page nextPage = null;
                 productInfo = new HashMap<>();
-                    setSubPages(subPages);
-                for (String s : subPages.keySet()) {
-                    while (true){
-                        System.out.println(s+" : \n");
-
+           S1 :     for (String s : subPages) {
+                    while (true) {
+                        if (s.equalsIgnoreCase("seller")) {
+                            productInfo.put(s, Account.getOnlineAccount().getUsername());
+                            break;
+                        }
+                        System.out.println(s + " : ");
                         if (!s.equalsIgnoreCase("attributes")) {
                             String command = scanner.nextLine();
-                            if (s.equalsIgnoreCase("category")){
+                            if (command.equalsIgnoreCase("back")){
+                                nextPage = parentPage;
+                                break S1;
+                            }
+                            if (s.equalsIgnoreCase("category")) {
                                 category = Category.getCategoryByName(command);
                                 if (category == null) {
                                     System.err.println("we don't have a category with this name");
@@ -335,18 +354,34 @@ private HashMap<String , String> offInfoChanges;
                             }
                             productInfo.put(s, command);
                             break;
-                        }
-                        else {
-                            for (String attribute : Objects.requireNonNull(category).getSpecialAttributes()) {
-                                System.out.println(attribute+ " : ");
-                                String command2 = scanner.nextLine();
-                                specialAttributes.put(attribute , command2);
+                        } else {
+                            if (category == null) {
+                                System.err.println("we don't have this category.");
+                                break S1;
+
+                            } else {
+                                for (String attribute : category.getSpecialAttributes()) {
+                                    System.out.println(attribute + " : ");
+                                    String command2 = scanner.nextLine();
+                                    if (command2.equalsIgnoreCase("back")){
+                                        nextPage = parentPage;
+                                        break S1;
+                                    }
+                                    specialAttributes.put(attribute, command2);
+                                }
+                                break;
                             }
-                            break;
                         }
 
                     }
-                    SellerBoss.addRequestProduct(productInfo.get("name"),productInfo.get("price"),productInfo.get("inventory"),specialAttributes , productInfo.get("company"),category,(Seller) Account.getOnlineAccount());
+                }
+                if (category != null) {
+                    SellerBoss.addRequestProduct(productInfo.get("name"), productInfo.get("price"), productInfo.get("inventory"), specialAttributes, productInfo.get("company"), category, (Seller) Account.getOnlineAccount());
+                    parentPage.execute();
+                }
+                else {
+                    System.err.println("you should give data again");
+                    this.execute();
                 }
             }
         };

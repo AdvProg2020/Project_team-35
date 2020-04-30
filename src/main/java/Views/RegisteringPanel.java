@@ -22,6 +22,7 @@ public class RegisteringPanel extends Page {
         subPages.put("offs",this);
         subPages.put("products",this);
         subPages.put("search",this);
+        subPages.put("logout",this);
 
     }
 
@@ -222,6 +223,10 @@ public class RegisteringPanel extends Page {
         } else if (command.equals("login")) {
             nextPage = loginGetUsername();
 
+        }else if (command.equalsIgnoreCase("logout")){
+            nextPage = new MainPage();
+            AccountBoss.logout(Account.getOnlineAccount());
+            System.out.println("logout successfully");
         } else if (command.equals("back")) {
             nextPage = parentPage;
         }else {

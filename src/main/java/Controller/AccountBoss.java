@@ -176,4 +176,9 @@ public class AccountBoss {
         }
 
     }
+
+    public static void logout(Account account){
+        Account.setIsThereOnlineUser(false);
+        Account.setOnlineAccount(null);
+    }
 }
