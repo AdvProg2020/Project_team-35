@@ -1,10 +1,7 @@
 package Views;
 
-import Controller.Exceptions.CantRemoveYourAccountException;
-import Controller.Exceptions.RepeatedCategoryNameException;
+import Controller.Exceptions.*;
 import Controller.ManagerBoss;
-import Controller.Exceptions.NotValidRequestIdException;
-import Controller.Exceptions.NotValidUserNameException;
 import Model.*;
 
 import java.util.ArrayList;
@@ -257,7 +254,11 @@ public class ManagerPage extends Page {
                             }
                         }
                         else if (command.startsWith("remove")) {
-
+                            try {
+                                int result = ManagerBoss.startDeleteCategoryWithName(categoryName);
+                            } catch (ThereIsNotCategoryWithNameException e) {
+                                System.out.println(e.getMessage());
+                            }
                         }
                         else if (command.startsWith("edit")) {
 
