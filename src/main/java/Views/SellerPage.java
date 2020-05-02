@@ -21,7 +21,6 @@ private HashMap<String , String> offInfoChanges;
         subPages.put("show categories" , viewCategory());
         subPages.put("manage products" , manageProducts());
         subPages.put("add product" , addProduct());
-        subPages.put("view buyers of product",viewBuyersOfProduct());
         subPages.put("remove product" , removeProduct());
         subPages.put("view offs" , viewOffs());
 
@@ -105,34 +104,44 @@ private HashMap<String , String> offInfoChanges;
         return new Page("add off",this) {
             @Override
             public void execute() {
-                System.out.println("enter data of off:");
-                System.out.println("start date:");
-                String startDate = scanner.nextLine();
-                System.out.println("final Date:");
-                String finalDate = scanner.nextLine();
-                System.out.println("percent:");
-                double percent = scanner.nextDouble();
-                System.out.println("maximum:");
-                double max = scanner.nextDouble();
-                System.out.println("products:");
-                ArrayList<Integer> id = new ArrayList<>();
-                String command = null;
-                while (true){
-                    command = scanner.nextLine();
-                    if (command.equalsIgnoreCase("end add product")){
-                        break;
-                    }
-                    else {
-                        id.add(Integer.parseInt(command));
-                    }
-                }
-                try {
-                    SellerBoss.addOff(id,(Seller)Account.getOnlineAccount(),startDate,finalDate,percent,max);
-                    System.out.println("your request successfully send to manager");
+                System.out.println("do you want to back?(yes|no)");
+                String decision = scanner.nextLine();
+                if (decision.equalsIgnoreCase("yes")) {
                     parentPage.execute();
-                } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber e) {
-                    System.err.println(e.getMessage());
-                    this.execute();
+                } else if (decision.equalsIgnoreCase("no")) {
+                    System.out.println("enter data of off:");
+                    System.out.println("start date:");
+                    String startDate = scanner.nextLine();
+                    System.out.println("final Date:");
+                    String finalDate = scanner.nextLine();
+                    System.out.println("percent:");
+                    String percent = scanner.nextLine();
+                    System.out.println("maximum:");
+                    String max = scanner.nextLine();
+                    System.out.println("products:");
+                    ArrayList<Integer> id = new ArrayList<>();
+                    String command = null;
+                    while (true) {
+                        command = scanner.nextLine();
+                        if (command.equalsIgnoreCase("end add product")) {
+                            break;
+                        } else {
+                            if (command.matches("\\d+")) {
+                                id.add(Integer.parseInt(command));
+                            }
+                        }
+                    }
+                    try {
+                        SellerBoss.addOff(id, (Seller) Account.getOnlineAccount(), startDate, finalDate, Double.parseDouble(percent), Double.parseDouble(max));
+                        System.out.println("your request successfully send to manager");
+                        parentPage.execute();
+                    } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber e) {
+                        System.err.println(e.getMessage());
+                        this.execute();
+                    }
+                }else {
+                    System.err.println("invalid command");
+                    parentPage.execute();
                 }
             }
         };
@@ -142,14 +151,31 @@ private HashMap<String , String> offInfoChanges;
         return new Page("view offs" , this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("view",this);
-                subPages.put("edit",this);
-                subPages.put("add off",this);
+                subPages.put("view", new Page("view off",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
+                subPages.put("edit", new Page("edit off",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
+                subPages.put("add off", new Page("add off" , this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
 
             }
 
             @Override
             public void execute() {
+                setSubPages(subPages);
+                show();
                 for (String off : SellerBoss.showOffs((Seller) Account.getOnlineAccount())) {
                     System.out.println(off);
                 }
@@ -169,7 +195,7 @@ private HashMap<String , String> offInfoChanges;
                 }else if (command.equalsIgnoreCase("edit off")){
                     nextPage = editOff();
                 }else if (command.equalsIgnoreCase("add off")){
-
+                        nextPage = addOff();
                 }else if (command.equalsIgnoreCase("back")){
                     nextPage = parentPage;
                 }else {
@@ -190,7 +216,7 @@ private HashMap<String , String> offInfoChanges;
         };
     }
     private Page viewCategory(){
-        return new Page("category view" , this) {
+        return new Page("view categories" , this) {
             @Override
             public void execute() {
                 System.out.println("categories:");
@@ -243,9 +269,19 @@ private HashMap<String , String> offInfoChanges;
         return new Page("manage products", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("product", this);
-                subPages.put("buyers", this);
-                subPages.put("edit product", this);
+                subPages.put("product", new Page("view page" , this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
+                subPages.put("buyers", new Page("view buyers",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
+                subPages.put("edit product", editProduct());
             }
 
             @Override
@@ -386,37 +422,9 @@ private HashMap<String , String> offInfoChanges;
             }
         };
     }
-    private Page viewBuyersOfProduct(){
-        return new Page("buyer show" , this) {
-            @Override
-            public void execute() {
-                Page nextPage = null;
-                System.out.println(name);
-                System.out.println("enter command:");
-                String command = scanner.nextLine();
-                String regex = "^view buyers (\\d+)$";
-                Matcher matcher = getMatcher(command , regex);
-                if (command.matches(regex)){
-                    try {
-                        for (String buyer : SellerBoss.showBuyers(matcher.group(1) , (Seller) Account.getOnlineAccount())) {
-                            System.out.println(buyer);
-                        }
-                        nextPage = parentPage;
-                    } catch (ThisIsNotYours thisIsNotYours) {
-                        thisIsNotYours.printStackTrace();
-                        nextPage = this;
-                    }
-                }
-                else {
-                    System.err.println("invalid command");
-                    nextPage = this;
-                }
-                nextPage.execute();
-            }
-        };
-    }
+
     private Page removeProduct(){
-        return new Page("remove" , this) {
+        return new Page("remove product" , this) {
             @Override
             public void execute() {
                 String command = scanner.nextLine();
@@ -450,26 +458,24 @@ private HashMap<String , String> offInfoChanges;
         show();
         String command = scanner.nextLine();
         Page nextPage = null;
-        if (command.equalsIgnoreCase("view company information")){
+        if (command.equalsIgnoreCase("5")){
             nextPage = viewCompanyInformation();
         }
-        else if (command.equalsIgnoreCase("view sales history")){
+        else if (command.equalsIgnoreCase("6")){
             nextPage = viewSalesHistory();
-        }else if (command.equalsIgnoreCase("view credit")){
+        }else if (command.equalsIgnoreCase("2")){
             nextPage = viewCredit();
-        }else if (command.equalsIgnoreCase("show categories")){
+        }else if (command.equalsIgnoreCase("1")){
                 nextPage = viewCategory();
-        }else if (command.equalsIgnoreCase("manage products")){
+        }else if (command.equalsIgnoreCase("3")){
                 nextPage = manageProducts();
-        }else if (command.equalsIgnoreCase("add product")){
+        }else if (command.equalsIgnoreCase("4")){
                 nextPage = addProduct();
         }
-        else if (command.equalsIgnoreCase("remove product")){
+        else if (command.equalsIgnoreCase("7")){
                 nextPage = removeProduct();
-        }else if (command.equalsIgnoreCase("view offs")){
+        }else if (command.equalsIgnoreCase("8")){
             nextPage = viewOffs();
-        }else if (command.equalsIgnoreCase("add off")){
-            nextPage = addOff();
         }
         try {
             nextPage.execute();
