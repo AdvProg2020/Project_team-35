@@ -1,9 +1,6 @@
 package Controller;
 
-import Controller.Exceptions.CantRemoveYourAccountException;
-import Controller.Exceptions.NotValidRequestIdException;
-import Controller.Exceptions.NotValidUserNameException;
-import Controller.Exceptions.RepeatedCategoryNameException;
+import Controller.Exceptions.*;
 import Model.*;
 
 import java.util.ArrayList;
@@ -94,6 +91,47 @@ public class ManagerBoss {
             Category category = new Category(categoryName, specialAttributes);
             Category.allCategories.add(category);
             return 0;
+        }
+    }
+
+    public static int startDeleteCategoryWithName(String categoryName) throws ThereIsNotCategoryWithNameException {
+        if (Category.isThereCategoryWithName(categoryName)) {
+            Category toDelete = Category.getCategoryByName(categoryName);
+            Category.getAllCategories().remove(toDelete);
+            deleteProductsOfCategoryAtProductClass(toDelete);
+            deleteProductsOfCategoryAtSellerClass(toDelete);
+            return 0;
+        }
+        else {
+            throw new ThereIsNotCategoryWithNameException("There isn't any category with requested name.");
+        }
+    }
+
+    private static void deleteProductsOfCategoryAtProductClass(Category toDelete) {
+        int size = Product.getAllProducts().size();
+        for(int i = 0; i < size; i++){
+            Product product = Product.getAllProducts().get(i);
+            if (product.getCategory().equals(toDelete)) {
+                Product.getAllProducts().remove(product);
+                i--;
+                size--;
+            }
+        }
+    }
+
+    private static void deleteProductsOfCategoryAtSellerClass(Category toDelete) {
+        int sellersNumber = Seller.getAllSellers().size();
+        for (int sellerNumber = 0; sellerNumber < sellersNumber; sellerNumber++) {
+            Seller seller = Seller.getAllSellers().get(sellerNumber);
+            int sellerProductsNumber = seller.getSalableProducts().size();
+            for (int sellerProductNumber = 0; sellerProductNumber < sellerProductsNumber; sellerProductNumber++) {
+                Product product = seller.getSalableProducts().get(sellerProductNumber);
+                if (product.getCategory().equals(toDelete)) {
+                    seller.getSalableProducts().remove(product);
+                    sellerProductNumber--;
+                    sellerProductsNumber--;
+                }
+            }
         }
     }
 }

@@ -138,4 +138,12 @@ public class Product {
     public int getInventory() {
         return inventory;
     }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public static ArrayList<Product> getAllProducts() {
+        return allProducts;
+    }
 }
