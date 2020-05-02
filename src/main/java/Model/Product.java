@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Product {
-    public static ArrayList<Product> allProducts;
+    public static ArrayList<Product> allProducts = new ArrayList<>();
     private int productId;
     private static int productNumber;
     private ProductAndOffStatus productStatus;

@@ -256,7 +256,7 @@ public class ManagerPage extends Page {
                         else if (command.startsWith("remove")) {
                             try {
                                 int result = ManagerBoss.startDeleteCategoryWithName(categoryName);
-                            } catch (ThereIsNotCategoryWithNameException e) {
+                            } catch (ThereIsNotCategoryWithNameException | NullPointerException e) {
                                 System.out.println(e.getMessage());
                             }
                         }
