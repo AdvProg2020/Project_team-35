@@ -49,4 +49,8 @@ public class Category {
     public String getShortInfo() {
         return "CategoryName : " + this.getCategoryName() + " --- " + "ProductsNumber : " + this.categoryProducts.size();
     }
+
+    public ArrayList<Product> getCategoryProducts() {
+        return categoryProducts;
+    }
 }

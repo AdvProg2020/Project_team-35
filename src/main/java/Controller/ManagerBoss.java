@@ -83,6 +83,22 @@ public class ManagerBoss {
         }
     }
 
+
+
+    public static void removeProductWithId(int productId) throws ThereISNotProductWithIdException {
+        if (Product.isThereProductWithId(productId)) {
+            Product toRemove = Product.getProductWithId(productId);
+            Category category = toRemove.getCategory();
+            category.getCategoryProducts().remove(toRemove);
+            Seller seller = toRemove.getSeller();
+            seller.getSalableProducts().remove(toRemove);
+            Product.getAllProducts().remove(toRemove);
+        }
+        else {
+            throw new ThereISNotProductWithIdException("There isn't product with requested id.");
+        }
+    }
+
     public static int addNewCategory (String categoryName, ArrayList<String> specialAttributes) throws RepeatedCategoryNameException {
         if (Category.isThereCategoryWithName(categoryName)) {
             throw new RepeatedCategoryNameException("This name is repeated. Use another.");

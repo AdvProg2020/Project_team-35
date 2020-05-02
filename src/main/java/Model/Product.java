@@ -45,9 +45,9 @@ public class Product {
         return whoBoughtThisGood;
     }
 
-    public static boolean isThereProductWithId(String id) {
+    public static boolean isThereProductWithId(int id) {
         for (Product product : allProducts) {
-            if (product.productId == Integer.parseInt(id))
+            if (product.productId == id)
                 return true;
         }
         return false;

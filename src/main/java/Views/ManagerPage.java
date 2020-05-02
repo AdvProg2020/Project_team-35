@@ -14,6 +14,7 @@ public class ManagerPage extends Page {
         subPages.put("manage requests", this);
         subPages.put("manage users", this);
         subPages.put("manage categories" , this);
+        subPages.put("manage all products", this);
 
     }
 
@@ -89,12 +90,33 @@ public class ManagerPage extends Page {
         return new Page("manage all products", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("remove", this);
+
             }
 
             @Override
             public void execute() {
-                super.execute();
+                System.out.println("Enter Your Command : (-help for help)");
+                String command = scanner.nextLine();
+                if (command.equalsIgnoreCase("-help")) {
+                    System.out.println("\nRemove [PID]\n");
+                }
+                else if (command.equalsIgnoreCase("back")) {
+                    parentPage.execute();
+                }
+                else {
+                    Matcher matcher = getMatcher(command, "^remove (\\d+)$");
+                    if (matcher.matches()) {
+                        try {
+                            ManagerBoss.removeProductWithId(Integer.parseInt(matcher.group(1)));
+                        } catch (ThereISNotProductWithIdException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid Command.");
+                    }
+                }
+                this.execute();
             }
 
             @Override
@@ -334,6 +356,9 @@ public class ManagerPage extends Page {
         }
         else if(command.equalsIgnoreCase("manage categories")) {
             nextPage = manageCategories();
+        }
+        else if (command.equalsIgnoreCase("manage all products")) {
+            nextPage = manageAllProducts();
         }
         else {
             System.err.println("Invalid Command");
