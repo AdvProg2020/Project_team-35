@@ -38,10 +38,10 @@ public abstract class Page {
                 nextPage = getPageOfSubPage(command);
             }
         }
-        if (command.equals("back") && parentPage!=null){
+        if (command.equals(String.valueOf(subPages.size()+1)) && parentPage!=null){
          nextPage = parentPage;
         }
-         if (command.equals("exit") ){
+         if (command.equals(String.valueOf(subPages.size()+1)) ){
             return;
         }
         try {
@@ -67,7 +67,7 @@ public abstract class Page {
         System.out.println(name);
         int i =1;
         for (String s : subPages.keySet()) {
-            System.out.println(i+"."+s);
+            System.out.println(i+"."+subPages.get(s).name);
             i+=1;
         }
         if (parentPage!=null){

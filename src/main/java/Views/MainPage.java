@@ -9,12 +9,12 @@ public class MainPage extends Page {
     public MainPage() {
         super("Main Menu", null);
         HashMap<String , Page> subPages = new HashMap<String, Page>();
-        this.subPages.put("register or login", new RegisteringPanel("Registering Panel",this));
-        this.subPages.put("products",new ProductsPage("Product Page" , this));
-        this.subPages.put("offs" , new Offs("Offs Page" , this));
-        this.subPages.put("search",new Search("Search Page" , this));
+        this.subPages.put("4", new RegisteringPanel("Registering Panel",this));
+        this.subPages.put("6",new ProductsPage("Product Page" , this));
+        this.subPages.put("1" , new Offs("Offs Page" , this));
+        this.subPages.put("2",new Search("Search Page" , this));
         this.subPages.put("cart" , new CartPage("Cart Page",this));
-        this.subPages.put("user page" , new UserPage("UserPage",this));
+        this.subPages.put("3" , new UserPage("UserPage",this));
         Random n = new Random();
         n.nextInt();
     }

@@ -1,13 +1,13 @@
 package Views;
 
-import Controller.*;
+import Controller.AccountBoss;
 import Controller.Exceptions.*;
+import Controller.SellerBoss;
 import Model.*;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.regex.Matcher;
 
 public class SellerPage extends Page {
@@ -15,15 +15,15 @@ private HashMap<String , String> productInfo;
 private HashMap<String , String> offInfoChanges;
     public SellerPage(String name, Page parentPage) {
         super(name, parentPage);
-        subPages.put("view company information" , this);
-        subPages.put("view sales history" , this);
-        subPages.put("view credit" , this);
-        subPages.put("show categories" , this);
-        subPages.put("manage products" , this);
-        subPages.put("add product" , this);
-        subPages.put("view buyers of product",this);
-        subPages.put("remove product" , this);
-        subPages.put("view offs" , this);
+        subPages.put("view company information" , viewCompanyInformation());
+        subPages.put("view sales history" , viewSalesHistory());
+        subPages.put("view credit" , viewCredit());
+        subPages.put("show categories" , viewCategory());
+        subPages.put("manage products" , manageProducts());
+        subPages.put("add product" , addProduct());
+        subPages.put("view buyers of product",viewBuyersOfProduct());
+        subPages.put("remove product" , removeProduct());
+        subPages.put("view offs" , viewOffs());
 
 
 
@@ -468,6 +468,8 @@ private HashMap<String , String> offInfoChanges;
                 nextPage = removeProduct();
         }else if (command.equalsIgnoreCase("view offs")){
             nextPage = viewOffs();
+        }else if (command.equalsIgnoreCase("add off")){
+            nextPage = addOff();
         }
         try {
             nextPage.execute();

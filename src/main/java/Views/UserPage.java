@@ -16,18 +16,38 @@ public class UserPage extends Page {
     private String fieldChange;
     public UserPage(String name, Page parentPage) {
         super(name, parentPage);
-       subPages.put("view personal info" , this);
+       subPages.put("view personal info" , viewPersonalInfo());
        subPages.put("products", this);
-       subPages.put("user account",this);
-        subPages.put("logout",this);
+       subPages.put("user account", new Page("user account",this) {
+           @Override
+           public void execute() {
+               super.execute();
+           }
+       });
+        subPages.put("logout", new Page("logout",this) {
+            @Override
+            public void execute() {
+                super.execute();
+            }
+        });
 
     }
     private Page  viewPersonalInfo(){
         return new Page("view personal info" , this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("main page" , this);
-                subPages.put("edit personal info" , this);
+                subPages.put("main page", new Page("main page",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
+                subPages.put("edit personal info", new Page("edit personal info",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
             }
 
             @Override
@@ -39,16 +59,16 @@ public class UserPage extends Page {
                     show();
                     Page nextPage = null;
                     String command = scanner.nextLine();
-                   if (command.equalsIgnoreCase("edit")){
+                   if (command.equalsIgnoreCase("1")){
                        nextPage = editPersonalInfoGetFieldName();
                    }
-                   else if (command.equalsIgnoreCase("back")){
+                   else if (command.equals(String.valueOf(subPages.size()+1))){
                        nextPage = parentPage;
                    }
                     try {
                         nextPage.execute();
                     } catch (Exception e) {
-                        if (command.equalsIgnoreCase("main page")) {
+                        if (command.equalsIgnoreCase("2")) {
                             MainPage mainPage = new MainPage();
                             mainPage.execute();
                         } else {
@@ -79,11 +99,11 @@ public class UserPage extends Page {
             show();
             String command = scanner.nextLine();
             Page nextPage = null;
-            if (command.equals("view personal info")) {
+            if (command.equals("3")) {
                 nextPage = viewPersonalInfo();
             } else if (command.equals("products")) {
 
-            }else if (command.equalsIgnoreCase("user account")){
+            }else if (command.equalsIgnoreCase("1")){
                     if (Account.getOnlineAccount() instanceof Manager){
                         nextPage = new ManagerPage("manager page",this);
                     }else if (Account.getOnlineAccount() instanceof Customer){
@@ -91,12 +111,12 @@ public class UserPage extends Page {
                     }else if (Account.getOnlineAccount() instanceof Seller){
                         nextPage = new SellerPage("seller page" , this);
                     }
-            }else if (command.equalsIgnoreCase("logout")){
+            }else if (command.equalsIgnoreCase("2")){
                 nextPage = new MainPage();
                 AccountBoss.logout(Account.getOnlineAccount());
                 System.out.println("logout successfully");
             }
-            else if (command.equals("back")) {
+            else if (command.equals(String.valueOf(subPages.size()+1))) {
                 nextPage = parentPage;
             }
             try {
