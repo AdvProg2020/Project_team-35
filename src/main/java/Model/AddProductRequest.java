@@ -1,20 +1,36 @@
 package Model;
 
-public class AddProductRequest extends Request {
-    private Product product;
+import java.util.HashMap;
 
-    public AddProductRequest(Seller seller, Product product) {
+public class AddProductRequest extends Request {
+    private String name;
+    private String company;
+    private int inventory;
+    private double price;
+    private Category category;
+    private HashMap<String,String> specials;
+
+    public AddProductRequest(Seller seller, String name, String company, int inventory, double price, Category category, HashMap<String, String> specials) {
         super(seller);
-        this.product = product;
+        this.name = name;
+        this.company = company;
+        this.inventory = inventory;
+        this.price = price;
+        this.category = category;
+        this.specials = specials;
     }
 
     public String getDetails() {
-        return null;
-    }
-    public void execute() {
+        return "ADD PRODUCT Request : \nRequestId: " + this.getRequestId() + "\n" + this.seller.getPersonalInfo();
 
     }
+    public void execute() {
+        this.isDone = true;
+        Product product = new Product(name,company,price,seller,inventory,category,specials);
+        product.setProductStatus(ProductAndOffStatus.CONFIRMED);
+    }
     public String getRequestInfo() {
-        return null;
+        return "  ADD PRODUCT Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
+
     }
 }

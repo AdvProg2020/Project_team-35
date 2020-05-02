@@ -6,22 +6,25 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Off {
-    public static ArrayList<Off> allActiveOffs;
+    public static ArrayList<Off> allActiveOffs = new ArrayList<>();
     private static int offIdNumber;
     private int offId;
-    private String finalDate;
-    private String startDate;
+    private Date finalDate;
+    private Date startDate;
     private ArrayList<Product> includedProducts;
     private double maximumAmountOfOff;
     private double offPercent;
     private ProductAndOffStatus offStatus;
 
-    public Off(String finalDate, String startDate, ArrayList<Product> includedProducts, double maximumAmountOfOff, double offPercent) {
+    public Off(Date finalDate, Date startDate, ArrayList<Product> includedProducts, double maximumAmountOfOff, double offPercent) {
         this.finalDate = finalDate;
         this.startDate = startDate;
         this.includedProducts = includedProducts;
         this.maximumAmountOfOff = maximumAmountOfOff;
         this.offPercent = offPercent;
+        allActiveOffs.add(this);
+        offId = offIdNumber;
+        offIdNumber+=1;
     }
 
     public int getOffId() {
@@ -47,7 +50,7 @@ public class Off {
         return show.toString();
     }
 
-    public void setFinalDate(String finalDate) {
+    public void setFinalDate(Date finalDate) {
         this.finalDate = finalDate;
     }
 
@@ -63,7 +66,7 @@ public class Off {
         this.offStatus = offStatus;
     }
 
-    public String getFinalDate() {
+    public Date getFinalDate() {
         return finalDate;
     }
 
@@ -79,11 +82,11 @@ public class Off {
         return offStatus;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 }

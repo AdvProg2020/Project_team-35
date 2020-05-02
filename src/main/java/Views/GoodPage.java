@@ -11,6 +11,7 @@ public class GoodPage extends Page {
     public GoodPage(String name, Page parentPage, Product product) {
         super(name, parentPage);
         this.product = product;
+        System.out.println(product.getName());
     }
     public static GoodPage getGoodPage(Product product){
         for (GoodPage goodsPage : allGoodsPages) {

@@ -9,11 +9,11 @@ import java.util.regex.Matcher;
 public class ProductsPage extends Page {
     public ProductsPage(String name, Page parentPage) {
         super(name, parentPage);
-        subPages.put("view categories",this);
-        subPages.put("filtering",this);
-        subPages.put("sorting",this);
-        subPages.put("show products",this);
-        subPages.put("product page",this);
+        subPages.put("view categories",viewCategories());
+        subPages.put("filtering",filtering());
+        subPages.put("sorting",sorting());
+        subPages.put("show products",showProduct());
+        subPages.put("product page",enterToProductPage());
 
     }
     private Page viewCategories(){
@@ -112,25 +112,6 @@ public class ProductsPage extends Page {
             }
         };
     }
-    private Page showProducts(){
-        return new Page("show products" , this) {
-            @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                super.setSubPages(subPages);
-            }
-
-            @Override
-            public void execute() {
-                super.execute();
-            }
-
-            @Override
-            public boolean show() {
-              return   super.show();
-
-            }
-        };
-    }
     private Page showProduct(){
         return new Page("show product" , this) {
             @Override
@@ -157,25 +138,32 @@ public class ProductsPage extends Page {
 
     @Override
     public void execute() {
+        setSubPages(subPages);
+        show();
         String command = scanner.nextLine();
         Page nextPage = null;
-        if (command.equalsIgnoreCase("view categories")){
+        if (command.equalsIgnoreCase("2")){
                 nextPage = viewCategories();
-        }else if (command.equalsIgnoreCase("filtering")){
+        }else if (command.equalsIgnoreCase("4")){
+            nextPage = filtering();
 
-        }else if (command.equalsIgnoreCase("sorting")){
+        }else if (command.equalsIgnoreCase("1")){
+            nextPage = sorting();
 
-        }else if (command.equalsIgnoreCase("show products")){
+        }else if (command.equalsIgnoreCase("3")){
+            nextPage = showProduct();
 
-        }else if (command.equalsIgnoreCase("product page")){
+        }else if (command.equalsIgnoreCase("5")){
                 nextPage = enterToProductPage();
-        }else if (command.equalsIgnoreCase("back")){
+        }else if (command.equals(String.valueOf(subPages.size()+1))){
             nextPage = parentPage;
         }else if (command.equalsIgnoreCase("help")){
 
         }
         else {
-
+            System.err.println("invalid command");
+            nextPage = this;
         }
+        nextPage.execute();
     }
 }

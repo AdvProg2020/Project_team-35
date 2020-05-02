@@ -1,6 +1,8 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class Category {
@@ -52,5 +54,17 @@ public class Category {
 
     public ArrayList<Product> getCategoryProducts() {
         return categoryProducts;
+    }
+    public boolean isThisAttributesForThisCategory(HashMap<String,String> attributes){
+        ArrayList<String> attri = new ArrayList<>();
+        for (String s : attributes.keySet()) {
+            attri.add(s);
+        }
+        Collections.sort(attri);
+        Collections.sort(specialAttributes);
+        if (attri.equals(specialAttributes)){
+            return true;
+        }
+        return false;
     }
 }

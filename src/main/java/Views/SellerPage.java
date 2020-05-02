@@ -79,7 +79,12 @@ private HashMap<String , String> offInfoChanges;
                             offInfoChanges.put(type, change);
                         } while (!(type.equalsIgnoreCase("end") && change.equalsIgnoreCase("edit")));
                         try {
-                            SellerBoss.editOff((Seller) Account.getOnlineAccount(), off, offInfoChanges);
+                            try {
+                                SellerBoss.editOff((Seller) Account.getOnlineAccount(), off, offInfoChanges);
+                            } catch (InputStringExceptNumber inputStringExceptNumber) {
+                                System.err.println(inputStringExceptNumber.getMessage());
+                                nextPage = this;
+                            }
                             System.out.println("edit successfully");
                         } catch (ItIsNotCorrect | ParseException | TimeLimit itIsNotCorrect) {
                             System.out.println(itIsNotCorrect.getMessage());
@@ -126,16 +131,16 @@ private HashMap<String , String> offInfoChanges;
                         if (command.equalsIgnoreCase("end add product")) {
                             break;
                         } else {
-                            if (command.matches("\\d+")) {
+                            if (command.matches("^\\d+$")) {
                                 id.add(Integer.parseInt(command));
                             }
                         }
                     }
                     try {
-                        SellerBoss.addOff(id, (Seller) Account.getOnlineAccount(), startDate, finalDate, Double.parseDouble(percent), Double.parseDouble(max));
+                        SellerBoss.addOff(id, (Seller) Account.getOnlineAccount(), startDate, finalDate, (percent), (max));
                         System.out.println("your request successfully send to manager");
                         parentPage.execute();
-                    } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber e) {
+                    } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber | InputStringExceptNumber e) {
                         System.err.println(e.getMessage());
                         this.execute();
                     }
@@ -240,19 +245,22 @@ private HashMap<String , String> offInfoChanges;
                 Matcher matcher = getMatcher(command,regex);
                 HashMap<String , String> allEditions = new HashMap<>();
                 if (command.matches(regex)){
+                    System.out.println("enter data:(end edit|back|help)");
                     String type;
                     String change;
                     do {
                          type = scanner.next();
                          change = scanner.next();
                          allEditions.put(type,change);
-                    }while (!(type.equalsIgnoreCase("end") && change.equalsIgnoreCase("editing")));
+                    }while (!(type.equalsIgnoreCase("end") && change.equalsIgnoreCase("edit")));
                     try {
-                        SellerBoss.editProduct(allEditions , matcher.group(1),(Seller)Account.getOnlineAccount());
-                    } catch (ThisIsNotYours | SoldProductsCanNotHaveChange thisIsNotYours) {
-                        thisIsNotYours.printStackTrace();
-                    } catch (ThisAttributeIsNotForThisProduct thisAttributeIsNotForThisProduct) {
-                        System.err.println(thisAttributeIsNotForThisProduct.getMessage());
+                        try {
+                            SellerBoss.editProduct(allEditions , matcher.group(1),(Seller)Account.getOnlineAccount());
+                        } catch (NoMatchBetweenCategoryAndAttributes thisIsNotYours) {
+                            System.err.println(thisIsNotYours.getMessage());
+                        }
+                    } catch (ThisIsNotYours | SoldProductsCanNotHaveChange | ThisAttributeIsNotForThisProduct thisIsNotYours) {
+                        System.err.println(thisIsNotYours.getMessage());
                     }
                 }
                 else if (command.equalsIgnoreCase("back")){

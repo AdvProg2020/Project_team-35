@@ -34,7 +34,8 @@ public class Product {
         productId = productNumber;
         commentsList = new ArrayList<>();
         ratesList = new ArrayList<>();
-        productStatus = ProductAndOffStatus.CONFIRMED;
+        allProducts.add(this);
+        seller.getSalableProducts().add(this);
     }
 
     public static void rateProduct(int productId, int rate) {
@@ -68,9 +69,7 @@ public class Product {
     private void updateProductAverageRate(int productId) {
 
     }
-    public void editProduct(String newName, String newCompany, double newPrice, int inventory, HashMap<String, String> newSpecialAttributes) {
 
-    }
 
 
 
@@ -145,5 +144,33 @@ public class Product {
 
     public static ArrayList<Product> getAllProducts() {
         return allProducts;
+    }
+
+    public void setProductStatus(ProductAndOffStatus productStatus) {
+        this.productStatus = productStatus;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setInventory(int inventory) {
+        this.inventory = inventory;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setSpecialAttributes(HashMap<String, String> specialAttributes) {
+        this.specialAttributes = specialAttributes;
     }
 }

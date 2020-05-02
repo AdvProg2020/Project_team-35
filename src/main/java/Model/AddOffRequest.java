@@ -20,12 +20,15 @@ public class AddOffRequest extends Request {
     }
 
     public String getDetails() {
-        return null;
-    }
-    public void execute() {
+        return "ADD OFF Request : \nRequestId: " + this.getRequestId() + "\n" + this.seller.getPersonalInfo();
 
     }
+    public void execute() {
+        this.isDone = true;
+        Off off = new Off(newFinalDate,newStartDate,products,max,percent);
+        off.setOffStatus(ProductAndOffStatus.CONFIRMED);
+    }
     public String getRequestInfo() {
-        return null;
+        return "  ADD OFF Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
     }
 }

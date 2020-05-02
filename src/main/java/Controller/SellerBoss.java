@@ -93,7 +93,7 @@ public class SellerBoss {
         }
     }
 
-    public static void editProduct(HashMap<String, String> allChanges, String id, Seller seller) throws ThisIsNotYours, SoldProductsCanNotHaveChange, ThisAttributeIsNotForThisProduct {
+    public static void editProduct(HashMap<String, String> allChanges, String id, Seller seller) throws ThisIsNotYours, SoldProductsCanNotHaveChange, ThisAttributeIsNotForThisProduct, NoMatchBetweenCategoryAndAttributes {
         int iD = Integer.parseInt(id);
         Product product = Product.getProductWithId(iD);
         if (product == null) {
@@ -112,10 +112,13 @@ public class SellerBoss {
                 String company = null;
                 double price = -1.0;
                 int inventory = -1;
-                ProductAndOffStatus productAndOffStatus = null;
+                Category category = null;
                 String status = null;
                 if (allChanges.keySet().contains("name")) {
                         name = allChanges.get("name");
+                }
+                if (allChanges.keySet().contains("category")){
+                    category = Category.getCategoryByName(allChanges.get("category"));
                 }
                 if (allChanges.keySet().contains("price")) {
                         price = Double.parseDouble(allChanges.get("price"));
@@ -126,21 +129,21 @@ public class SellerBoss {
                 if (allChanges.keySet().contains("company")) {
                         company = allChanges.get("company");
                 }
-                if (allChanges.keySet().contains("ProductStatus")){
-                    if (status.equalsIgnoreCase("CONFIRMED")){
-                                throw new ThisIsNotYours("this is not for you");
-                    }else if (status.equalsIgnoreCase("FOREDIT")){
-                                productAndOffStatus = ProductAndOffStatus.FOREDIT;
-                    }else if (status.equalsIgnoreCase("FORMAKE")){
-                                productAndOffStatus = ProductAndOffStatus.FORMAKE;
-                    }
-                }
                 HashMap<String, String> newChange = new HashMap<>();
                 for (String s : allChanges.keySet())
-                    if (!(s.equalsIgnoreCase("name") || s.equalsIgnoreCase("price") || s.equalsIgnoreCase("inventory") || s.equalsIgnoreCase("company"))) {
+                    if (!(s.equalsIgnoreCase("name") || s.equalsIgnoreCase("price") || s.equalsIgnoreCase("inventory") || s.equalsIgnoreCase("company") || s.equalsIgnoreCase("category"))) {
                         newChange.put(s, allChanges.get(s));
                     }
-                EditProductRequest editProductRequest = new EditProductRequest(seller,product,productAndOffStatus,name,company,price,inventory,newChange);
+                if (category!=null){
+                    if (!category.isThisAttributesForThisCategory(newChange)){
+                        throw new NoMatchBetweenCategoryAndAttributes("these attributes can't be matched with category");
+                    }
+                }else{
+                    if (!product.getCategory().isThisAttributesForThisCategory(newChange)){
+                        throw new NoMatchBetweenCategoryAndAttributes("these attributes can't be matched with category");
+                    }
+                }
+                EditProductRequest editProductRequest = new EditProductRequest(seller,product,name,company,price,inventory,newChange,category);
             }
         }
     }
@@ -164,12 +167,12 @@ public class SellerBoss {
         return off.showOff();
     }
 
-    public static void editOff(Seller seller, Off off, HashMap<String, String> changes) throws ItIsNotCorrect, ParseException, TimeLimit {
+    public static void editOff(Seller seller, Off off, HashMap<String, String> changes) throws ItIsNotCorrect, ParseException, TimeLimit, InputStringExceptNumber {
         String date = null;
         double maximum = -1.0;
         double percent = -1.0;
-        Date date1 = new SimpleDateFormat("dd//MM//yyyy").parse(off.getFinalDate());
-        Date date2 = new SimpleDateFormat("dd//MM//yyyy").parse(off.getStartDate());
+        Date date1 = off.getFinalDate();
+        Date date2 = off.getStartDate();
         ProductAndOffStatus productAndOffStatus = null;
         String format = null;
         for (String s : changes.keySet()) {
@@ -186,34 +189,37 @@ public class SellerBoss {
                     throw new TimeLimit("finalize is sooner starting");
                 }
             } else if (s.equalsIgnoreCase("maximumAmountOfOff")) {
-                maximum = Double.parseDouble(changes.get(s));
+                if (changes.get(s).matches("^\\d+.\\d+$")) {
+                    maximum = Double.parseDouble(changes.get(s));
+                }else {
+                    throw new InputStringExceptNumber("max should be double");
+                }
             } else if (s.equalsIgnoreCase("offPercent")) {
-                percent = Double.parseDouble(changes.get(s));
-            } else if (s.equalsIgnoreCase("offStatus")) {
-                if (off.getOffStatus().equals(ProductAndOffStatus.CONFIRMED)) {
-                    throw new ItIsNotCorrect("this can't be done");
+                if (changes.get(s).matches("\\d+.\\d+")) {
+                    percent = Double.parseDouble(changes.get(s));
                 }
-                format = changes.get(s);
-                if (format.equalsIgnoreCase("FOREDIT")) {
-                    productAndOffStatus = ProductAndOffStatus.FOREDIT;
-                } else if (format.equalsIgnoreCase("CONFIRMED")) {
-                    productAndOffStatus = ProductAndOffStatus.CONFIRMED;
-
-                } else if (format.equalsIgnoreCase("FORMAKE")) {
-                    productAndOffStatus = ProductAndOffStatus.FORMAKE;
-                }
+                else
+                    throw new InputStringExceptNumber("percent should be double");
             }
         }
-        EditOffRequest editOffRequest = new EditOffRequest(seller, off, maximum, percent, productAndOffStatus, date1);
+        EditOffRequest editOffRequest = new EditOffRequest((Seller)Account.getOnlineAccount(),off,maximum,percent,date2,date1);
 
 
     }
-    public static void addOff(ArrayList<Integer> id  , Seller seller  , String startDate , String finalDate,double percent , double max) throws ParseException, ThisIsNotYours, TimeLimit, InvalidNumber {
+    public static void addOff(ArrayList<Integer> id  , Seller seller  , String startDate , String finalDate,String percents , String maxs) throws ParseException, ThisIsNotYours, TimeLimit, InvalidNumber, InputStringExceptNumber {
            Date start = new SimpleDateFormat("dd//MM//yyyy").parse(startDate);
            Date finalDates = new SimpleDateFormat("dd//MM//yyyy").parse(finalDate);
            if (start.after(finalDates)){
                throw new TimeLimit("this time is wrong");
            }
+           if (maxs.matches("^\\d+.\\d+$")){
+               throw new InputStringExceptNumber("max has mistake");
+           }
+           if (percents.matches("^\\d+.\\d+$")){
+               throw new InputStringExceptNumber("percent has mistake");
+           }
+           double max = Double.parseDouble(maxs);
+           double percent = Double.parseDouble(percents);
            if (percent<0 || max <0){
                throw new InvalidNumber("you can't give negative");
            }
