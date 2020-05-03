@@ -1,7 +1,13 @@
 package Controller.Exceptions;
 
 public class ThisIsNotYours extends Exception {
-    public ThisIsNotYours(String message) {
+    private int id;
+    public ThisIsNotYours(String message,int id) {
         super(message);
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

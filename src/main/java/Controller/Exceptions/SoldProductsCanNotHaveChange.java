@@ -1,7 +1,13 @@
 package Controller.Exceptions;
 
 public class SoldProductsCanNotHaveChange extends Exception {
-    public SoldProductsCanNotHaveChange(String message) {
+    private int id;
+    public SoldProductsCanNotHaveChange(String message,int id) {
         super(message);
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

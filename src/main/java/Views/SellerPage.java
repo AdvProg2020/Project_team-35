@@ -2,6 +2,7 @@ package Views;
 
 import Controller.AccountBoss;
 import Controller.Exceptions.*;
+import Controller.NullProduct;
 import Controller.SellerBoss;
 import Model.*;
 
@@ -440,7 +441,12 @@ private HashMap<String , String> offInfoChanges;
                 Matcher matcher = getMatcher(command,regex);
                 if (command.matches(regex)){
                     try {
-                        SellerBoss.removeProduct(matcher.group(1),(Seller) Account.getOnlineAccount());
+                        try {
+                            SellerBoss.removeProduct(matcher.group(1),(Seller) Account.getOnlineAccount(),0);
+                        } catch (NullProduct nullProduct) {
+                            System.err.println(nullProduct.getMessage());
+                            this.execute();
+                        }
                     } catch (ThisIsNotYours | SoldProductsCanNotHaveChange thisIsNotYours) {
                        System.err.println(thisIsNotYours.getMessage());
                        this.execute();

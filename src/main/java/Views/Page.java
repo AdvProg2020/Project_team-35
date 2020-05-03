@@ -20,8 +20,9 @@ public abstract class Page {
         this.parentPage = parentPage;
     }
 
-    public static void setScanner(Scanner scanner) {
+    public static boolean setScanner(Scanner scanner) {
         Page.scanner = scanner;
+        return true;
     }
 
     public void setSubPages(HashMap<String, Page> subPages) {

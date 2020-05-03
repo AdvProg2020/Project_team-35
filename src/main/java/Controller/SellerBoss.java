@@ -38,31 +38,26 @@ public class SellerBoss {
         int productId = Integer.parseInt(id);
         Product product = Product.getProductWithId(productId);
         if (product == null) {
-            throw new ThisIsNotYours("we don't have this one.");
+            throw new ThisIsNotYours("we don't have this one.",productId);
         }
         if (!seller.equals(product.getSeller())) {
-            throw new ThisIsNotYours("this is not yours");
+            throw new ThisIsNotYours("this is not yours",productId);
         }
         return product.toString();
     }
 
-    public static void addRequestProduct(String name, String price, String inventory, HashMap<String, String> attributes, String company, Category category, Seller seller) {
+    public static boolean addRequestProduct(String name, String price, String inventory, HashMap<String, String> attributes, String company, Category category, Seller seller) {
         double productPrice = Double.parseDouble(price);
         int number = Integer.parseInt(inventory);
-        StringBuilder request = new StringBuilder();
-        request.append("name:" + name + "\n" + "price:" + price + "\n" + "inventory:" + inventory + "\n");
-        request.append("company:" + company + "\n" + "category:" + category.getCategoryName() + "\n");
-        for (String s : attributes.keySet()) {
-            request.append(s + ":" + attributes.get(s) + "\n");
-        }
-        //  AddProductRequest addProductRequest = new AddProductRequest(request,RequestTypes.ADD_PRODUCT,seller);
+        AddProductRequest addProductRequest = new AddProductRequest(seller,name,company,number,productPrice,category,attributes);
+        return true;
     }
 
     public static ArrayList<String> showBuyers(String id, Seller seller) throws ThisIsNotYours {
         int iD = Integer.parseInt(id);
         Product product = Product.getProductWithId(iD);
         if (!product.getSeller().equals(seller)) {
-            throw new ThisIsNotYours("this product belongs to another seller");
+            throw new ThisIsNotYours("this product belongs to another seller",iD);
         }
         ArrayList<String> buyers = new ArrayList<>();
         for (Customer customer : product.getWhoBoughtThisGood()) {
@@ -73,23 +68,31 @@ public class SellerBoss {
 
     /**
      * it is more complete than add product i should check these two exceptions again
-     *
+     *1 for null pointer
+     * 2 for this is not yours
+     * 3 for you almost sold
+     * 4 for successfully remove
      * @param id
      * @param seller
      * @throws ThisIsNotYours
      * @throws SoldProductsCanNotHaveChange
      */
-    public static void removeProduct(String id, Seller seller) throws ThisIsNotYours, SoldProductsCanNotHaveChange {
+    public static boolean removeProduct(String id, Seller seller,int testIdentifier) throws ThisIsNotYours, SoldProductsCanNotHaveChange, NullProduct {
         int iD = Integer.parseInt(id);
         Product product = Product.getProductWithId(iD);
         if (product == null) {
-            throw new NullPointerException();
+            testIdentifier = 1;
+            throw new NullProduct("this product does not exist",1);
         } else if (!product.getSeller().equals(seller)) {
-            throw new ThisIsNotYours("this is not yours");
+            testIdentifier = 2;
+            throw new ThisIsNotYours("this is not yours",2);
         } else if (!seller.getSalableProducts().contains(product)) {
-            throw new SoldProductsCanNotHaveChange("you almost sold this one");
+            testIdentifier = 3;
+            throw new SoldProductsCanNotHaveChange("you almost sold this one",3);
         } else {
+            testIdentifier = 4;
             Product.deleteProduct(product);
+            return true;
         }
     }
 
@@ -99,9 +102,9 @@ public class SellerBoss {
         if (product == null) {
             throw new NullPointerException();
         } else if (!product.getSeller().equals(seller)) {
-            throw new ThisIsNotYours("this is not yours");
+            throw new ThisIsNotYours("this is not yours",iD);
         } else if (!seller.getSalableProducts().contains(product)) {
-            throw new SoldProductsCanNotHaveChange("you almost sold this one");
+            throw new SoldProductsCanNotHaveChange("you almost sold this one",iD);
         } else {
             if (!product.getSpecialAttributes().containsKey(allChanges.keySet())) {
                 throw new ThisAttributeIsNotForThisProduct("invalid attribute which does not exist in this category.");
@@ -159,10 +162,10 @@ public class SellerBoss {
     public static String viewOff(Seller seller, String id) throws ThisIsNotYours {
         Off off = Off.getOffById(Integer.parseInt(id));
         if (off == null) {
-            throw new ThisIsNotYours("this does not exist");
+            throw new ThisIsNotYours("this does not exist",Integer.parseInt(id));
         }
         if (!seller.getSellerOffs().contains(off)) {
-            throw new ThisIsNotYours("this is not for you.");
+            throw new ThisIsNotYours("this is not for you.",Integer.parseInt(id));
         }
         return off.showOff();
     }
@@ -226,7 +229,7 @@ public class SellerBoss {
            ArrayList<Product> allProducts = new ArrayList<>();
         for (Integer integer : id) {
             if (!seller.getSalableProducts().contains(Product.getProductWithId(integer))){
-                throw new ThisIsNotYours("this is not yours");
+                throw new ThisIsNotYours("this is not yours",integer);
             }
             allProducts.add(Product.getProductWithId(integer));
         }

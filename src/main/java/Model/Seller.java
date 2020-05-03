@@ -45,6 +45,20 @@ public class Seller extends Account {
     public void deleteAccount() {
 
     }
+
+    /**
+     * just for test
+     * @param money
+     */
+    public void setMoney(double money) {
+        this.money = money;
+    }
+
+    @Override
+    public String getUsername() {
+        return super.getUsername();
+    }
+
     @Override
     public String getPersonalInfo() {
         return "Type: Seller\n" +

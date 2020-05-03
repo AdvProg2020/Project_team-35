@@ -90,13 +90,15 @@ public class Product {
         productInfo = "name : "+name+"\n"
                 +"company name : "+company+"\n"
                 +"price : "+price+"\n"
-                +"seller : "+seller.getPersonalInfo()+"\n"
+                +"seller : "+seller.getUsername()+"\n"
                 +"inventory : "+inventory+"\n"
                 +"category : "+category.getCategoryName()+"\n"
                 +"product id : "+productId+"\n";
         productInfo += "special Attributes : \n";
-        for (String s : specialAttributes.keySet()) {
-            productInfo = productInfo + s+" : "+specialAttributes.get(s)+"\n";
+        if (specialAttributes!=null) {
+            for (String s : specialAttributes.keySet()) {
+                productInfo = productInfo + s + " : " + specialAttributes.get(s) + "\n";
+            }
         }
         productInfo+= "comment List : \n";
         for (Comment comment : commentsList) {
