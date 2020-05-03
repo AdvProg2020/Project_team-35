@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Exceptions;
 
 public class NullProduct extends Exception {
     private  int id;

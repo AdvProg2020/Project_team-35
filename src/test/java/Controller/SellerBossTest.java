@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Exceptions.NullProduct;
 import Controller.Exceptions.SoldProductsCanNotHaveChange;
 import Controller.Exceptions.ThisIsNotYours;
 import Model.Category;
@@ -10,8 +11,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static org.junit.Assert.*;
 
 public class SellerBossTest {
 private  Seller seller = new Seller("ali","reza","ghazan","ali@ali.a","2323","paass","mihan");

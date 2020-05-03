@@ -10,11 +10,10 @@ import java.util.HashMap;
 public class BuyerPage extends Page {
     public BuyerPage(String name, Page parentPage) {
         super(name, parentPage);
-        subPages.put("view personal info", this);
-        subPages.put("view cart", this);
-        subPages.put("view orders", this);
-        subPages.put("view balance", this);
-        subPages.put("view discount codes", this);
+        subPages.put("2", viewCart());
+        subPages.put("4", viewOrders());
+        subPages.put("3", viewBalance());
+        subPages.put("1", viewDiscountCodes());
 
     }
 
@@ -22,12 +21,42 @@ public class BuyerPage extends Page {
         return new Page("view cart",this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("show products" , this);
-                subPages.put("view",this);
-                subPages.put("increase" , this);
-                subPages.put("decrease",this);
-                subPages.put("show total price" , this);
-                subPages.put("purchase" , this);
+                subPages.put("show products", new Page("show product",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
+                subPages.put("view", new Page("view product",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
+                subPages.put("increase", new Page("increase inventory",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
+                subPages.put("decrease", new Page("decrease inventory",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
+                subPages.put("show total price", new Page("show total price",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
+                subPages.put("purchase", new Page("purchase",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
             }
 
             @Override
@@ -109,6 +138,7 @@ public class BuyerPage extends Page {
 
     @Override
     public void execute( ) {
+        setSubPages(subPages);
         show();
         String command = scanner.nextLine();
         Page nextPage = null;

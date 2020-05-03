@@ -2,7 +2,7 @@ package Views;
 
 import Controller.AccountBoss;
 import Controller.Exceptions.*;
-import Controller.NullProduct;
+import Controller.Exceptions.NullProduct;
 import Controller.SellerBoss;
 import Model.*;
 
