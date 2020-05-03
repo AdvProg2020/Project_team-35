@@ -8,7 +8,7 @@ public class DiscountCode {
     private String id;
     private String finalDate;
     private double discountPercent;
-    private double maximumAvailableDiscount;
+    private double maximumAvailableAmount;
     private int availableUseFrequent;
     public HashMap<Customer, Integer> includedBuyersAndUseFrequency;
     private static int discountCodeNumber;
@@ -40,4 +40,23 @@ public class DiscountCode {
 
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getFinalDate() {
+        return finalDate;
+    }
+
+    public double getDiscountPercent() {
+        return discountPercent;
+    }
+
+    public double getMaximumAvailableAmount() {
+        return maximumAvailableAmount;
+    }
+
+    public int getAvailableUseFrequent() {
+        return availableUseFrequent;
+    }
 }
