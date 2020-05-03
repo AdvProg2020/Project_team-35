@@ -491,6 +491,9 @@ private HashMap<String , String> offInfoChanges;
         }else if (command.equalsIgnoreCase("8")){
             nextPage = viewOffs();
         }
+        else if (command.equalsIgnoreCase("9")) {
+            nextPage = parentPage;
+        }
         try {
             nextPage.execute();
         }catch (Exception e){
