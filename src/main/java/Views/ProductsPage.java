@@ -2,11 +2,18 @@ package Views;
 
 import Controller.ProductBoss;
 import Controller.SellerBoss;
+import Model.Category;
+import Model.Product;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
 public class ProductsPage extends Page {
+    private String sortFields;
+    private ArrayList<Product> currentList;
+    private ArrayList<String> available;
     public ProductsPage(String name, Page parentPage) {
         super(name, parentPage);
         subPages.put("view categories",viewCategories());
@@ -94,10 +101,74 @@ public class ProductsPage extends Page {
         return new Page("sorting" , this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("show available sorts" , this);
-                subPages.put("sort" , this);
-                subPages.put("current sort" , this);
-                subPages.put("disable sort" , this);
+
+                sortFields=("reviews number");
+                subPages.put("3", new Page("show available",this) {
+                    @Override
+                    public void execute() {
+                         available = new ArrayList<>();
+                        available.add("price");
+                        available.add("name");
+                        available.add("average of rates");
+                        available.add("review numbers");
+                        available.add("seller name");
+                        available.add("company name");
+                        available.add("inventory");
+                        for (Category category : Category.allCategories) {
+                            for (String attribute : category.specialAttributes) {
+                                available.add(attribute);
+                            }
+                        }
+                        System.out.println("available sort fields :");
+                        int i = 1;
+                        for (String s : available) {
+                            System.out.println(i+"]"+"**"+s+"**");
+                            i++;
+                        }
+                        parentPage.execute();
+                    }
+                });
+                subPages.put("4", new Page("sort" , this) {
+                    @Override
+                    public void execute() {
+                        System.out.println("(back|sort)");
+                        String command = scanner.nextLine();
+                        Page nextPage = null;
+                        String regex = "sort (^\\S+$)";
+                        Matcher matcher = getMatcher(command,regex);
+                        if (command.matches(regex)){
+                            String field = matcher.group(1);
+                            if (!available.contains(field)){
+                                currentList = ProductBoss.sortProduct(field);
+                            }else {
+                                System.err.println("invalid field");
+                                nextPage = this;
+                            }
+                        }else if (command.matches("back")){
+                            nextPage = parentPage;
+                        }
+                        else {
+                            System.err.println("invalid command");
+                            nextPage = this;
+                        }
+                    }
+                });
+                subPages.put("1", new Page("current sort" , this) {
+                    @Override
+                    public void execute() {
+                        System.out.println("sort fields : ");
+                        System.out.println("---"+sortFields+"---");
+                        parentPage.execute();
+                    }
+                });
+                subPages.put("2", new Page("disable sort" , this) {
+                    @Override
+                    public void execute() {
+                        sortFields=("reviews number");
+                        System.out.println("disable successfully");
+                        parentPage.execute();
+                    }
+                });
 
             }
 

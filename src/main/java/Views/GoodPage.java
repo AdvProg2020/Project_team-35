@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 public class GoodPage extends Page {
     private Product product;
+    private int numberOfReview;
     private static ArrayList<GoodPage> allGoodsPages = new ArrayList<>();
     public GoodPage(String name, Page parentPage, Product product) {
         super(name, parentPage);

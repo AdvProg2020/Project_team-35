@@ -29,7 +29,7 @@ public abstract class Page {
     }
 
     public void execute(){
-
+            setSubPages(subPages);
             show();
             Page nextPage = null;
             String command = scanner.nextLine();
@@ -41,7 +41,7 @@ public abstract class Page {
         if (command.equals(String.valueOf(subPages.size()+1)) && parentPage!=null){
          nextPage = parentPage;
         }
-         if (command.equals(String.valueOf(subPages.size()+1)) ){
+        else if (command.equals(String.valueOf(subPages.size()+1))){
             return;
         }
         try {

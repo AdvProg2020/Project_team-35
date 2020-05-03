@@ -90,7 +90,7 @@ public class Product {
         productInfo = "name : "+name+"\n"
                 +"company name : "+company+"\n"
                 +"price : "+price+"\n"
-                +"seller : \n"+seller.getPersonalInfo()+"\n"
+                +"seller : "+seller.getPersonalInfo()+"\n"
                 +"inventory : "+inventory+"\n"
                 +"category : "+category.getCategoryName()+"\n"
                 +"product id : "+productId+"\n";
@@ -172,5 +172,11 @@ public class Product {
 
     public void setSpecialAttributes(HashMap<String, String> specialAttributes) {
         this.specialAttributes = specialAttributes;
+    }
+    public String getProductFieldForSort(String field){
+        if (field.equalsIgnoreCase("inventory")||field.equalsIgnoreCase("price")||field.equalsIgnoreCase("")){
+
+        }
+        return null;
     }
 }

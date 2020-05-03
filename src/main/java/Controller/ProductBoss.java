@@ -29,5 +29,19 @@ public class ProductBoss {
         GoodPage goodPage =    GoodPage.getGoodPage(product);
         return goodPage;
     }
+    public static ArrayList<Product> sortProduct(String field){
+        ArrayList<Product> all = new ArrayList<>();
+        all = Product.getAllProducts();
+        for (int i =0;i<all.size()-1;i++){
+            for (int j =0;j<all.size();j++){
+                String field1 = null;
+                String field2 = null;
+                    if (field.equalsIgnoreCase("price")){
+
+                    }
+            }
+        }
+        return null;
+    }
 
 }
