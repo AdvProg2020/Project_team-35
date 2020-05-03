@@ -1,5 +1,6 @@
 package Views;
 
+import Controller.ProductBoss;
 import Model.Product;
 
 import java.util.ArrayList;
@@ -12,8 +13,18 @@ public class GoodPage extends Page {
     public GoodPage(String name, Page parentPage, Product product) {
         super(name, parentPage);
         this.product = product;
-        System.out.println(product.getName());
+        subPages.put("1",digest());
+        subPages.put("2",attributes());
+        subPages.put("3",compare());
+        subPages.put("4",comments());
+
     }
+
+    /**
+     * this method is used in controller for moving from productPage to a special Products page
+     * @param product
+     * @return
+     */
     public static GoodPage getGoodPage(Product product){
         for (GoodPage goodsPage : allGoodsPages) {
             if (goodsPage.getProduct().equals(product))
@@ -34,14 +45,38 @@ public class GoodPage extends Page {
         return new Page("digest" , this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("add to cart" , this);
-                subPages.put("select seller" , this);
+                subPages.put("1", new Page("add to cart",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
+                subPages.put("2", new Page("select seller",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
 
             }
 
             @Override
             public void execute() {
-                super.execute();
+                System.out.println(ProductBoss.showSummeryOfProductDetails(product));
+                setSubPages(subPages);
+                Page nextPage = null;
+                show();
+                String command = scanner.nextLine();
+                if (command.equalsIgnoreCase("1")){
+
+                }else if (command.equalsIgnoreCase("2")){
+
+                }else if (command.equalsIgnoreCase(String.valueOf(subPages.keySet().size()+1))){
+                    nextPage = parentPage;
+                }else {
+
+                }
+                nextPage.execute();
             }
 
             @Override

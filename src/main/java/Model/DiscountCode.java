@@ -40,4 +40,7 @@ public class DiscountCode {
 
     }
 
+    public String getId() {
+        return id;
+    }
 }

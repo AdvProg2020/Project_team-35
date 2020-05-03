@@ -9,6 +9,7 @@ public class Product {
     private static int productNumber;
     private ProductAndOffStatus productStatus;
     private String name;
+    private String description;
     private String company;
     private double price;
     private Seller seller;
@@ -17,6 +18,7 @@ public class Product {
     private ArrayList<Comment> commentsList;
     private ArrayList<Rate> ratesList;
     private HashMap<String, String> specialAttributes;
+   private DiscountCode discountCode;
     private Product onlineProduct;
     private ArrayList<Customer> whoBoughtThisGood;
     //when the page of product is open.
@@ -119,6 +121,15 @@ public class Product {
     public String getName() {
         return name;
     }
+    public double getAverageOfRates(){
+        double average = 0.0;
+        int number =0;
+        for (Rate rate : ratesList) {
+            average = rate.getRate();
+            number+=1;
+        }
+        return average/number;
+    }
     public static void deleteProduct(Product product){
         allProducts.remove(product);
         product.getSeller().getSalableProducts().remove(product);
@@ -180,5 +191,17 @@ public class Product {
 
         }
         return null;
+    }
+    public String showSummeryDetailsOfProduct(){
+        String result = "description :\n"+description+"\n"+"price :\n"+price+"\n"+"discount :\n"+discountCode.getId()+"\n"+"category :\n"+category.getCategoryName()+"\n"+"seller :\n"+seller.getUsername()+"\n"+"average :\n"+getAverageOfRates();
+        return result;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -43,5 +43,8 @@ public class ProductBoss {
         }
         return null;
     }
+    public static String showSummeryOfProductDetails(Product product){
+            return product.showSummeryDetailsOfProduct();
+    }
 
 }
