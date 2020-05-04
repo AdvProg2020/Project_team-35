@@ -11,11 +11,10 @@ import java.util.regex.Matcher;
 public class ManagerPage extends Page {
     public ManagerPage(String name, Page parentPage) {
         super(name, parentPage);
-        subPages.put("manage requests", this);
-        subPages.put("manage users", this);
-        subPages.put("manage categories" , this);
-        subPages.put("manage all products", this);
-
+        subPages.put("1", manageRequests());
+        subPages.put("2", manageUsers());
+        subPages.put("3" , manageCategories());
+        subPages.put("4", manageAllProducts());
     }
 
     private Page manageUsers() {
@@ -342,22 +341,24 @@ public class ManagerPage extends Page {
 
     @Override
     public void execute() {
+
+
         show();
         Page nextPage = null;
         String command = scanner.nextLine();
-        if (command.equalsIgnoreCase("manage requests")) {
+        if (command.equalsIgnoreCase("1")) {
             nextPage = manageRequests();
         }
-        else if (command.equalsIgnoreCase("back")){
+        else if (command.equalsIgnoreCase("5")){
             nextPage = parentPage;
         }
-        else if (command.equalsIgnoreCase("manage users")) {
+        else if (command.equalsIgnoreCase("2")) {
             nextPage = manageUsers();
         }
-        else if(command.equalsIgnoreCase("manage categories")) {
+        else if(command.equalsIgnoreCase("3")) {
             nextPage = manageCategories();
         }
-        else if (command.equalsIgnoreCase("manage all products")) {
+        else if (command.equalsIgnoreCase("4")) {
             nextPage = manageAllProducts();
         }
         else {
