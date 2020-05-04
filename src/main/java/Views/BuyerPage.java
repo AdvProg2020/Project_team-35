@@ -21,10 +21,12 @@ public class BuyerPage extends Page {
         return new Page("view cart",this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("show products", new Page("show product",this) {
+                subPages.put("show products", new Page("show products",this) {
                     @Override
                     public void execute() {
-                        super.execute();
+                        for (String s : CustomerBoss.showProductsInCart((Customer) Account.getOnlineAccount())) {
+                            System.out.println(s);
+                        }
                     }
                 });
                 subPages.put("view", new Page("view product",this) {
