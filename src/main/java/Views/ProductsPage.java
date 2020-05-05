@@ -1,5 +1,6 @@
 package Views;
 
+import Controller.Exceptions.NullProduct;
 import Controller.ProductBoss;
 import Controller.SellerBoss;
 import Model.Category;
@@ -47,8 +48,13 @@ public class ProductsPage extends Page {
                 Matcher matcher = getMatcher(command,regex);
                 if (command.matches(regex)){
                     int id =Integer.parseInt( matcher.group(1) );
-                GoodPage goodPage = ProductBoss.goToGoodPage(id);
-                nextPage = goodPage;
+                    GoodPage goodPage = null;
+                    try {
+                        goodPage = ProductBoss.goToGoodPage(id);
+                    } catch (NullProduct nullProduct) {
+                        nullProduct.printStackTrace();
+                    }
+                    nextPage = goodPage;
                 }else if (command.equalsIgnoreCase("back")){
                     nextPage = parentPage;
                 }else {

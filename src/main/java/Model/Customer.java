@@ -81,9 +81,6 @@ public class Customer extends Account {
 
     }
 
-    public double getCartTotalPrice() {
-        return 0;
-    }
 
     @Override
     public String toString() {

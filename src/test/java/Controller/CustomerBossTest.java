@@ -20,4 +20,11 @@ public class CustomerBossTest extends TestCase {
         customer.setCart(cart);
         Assert.assertEquals(CustomerBoss.showProductsInCart(customer),"s\nwith id : 1\nwith number : 2\n");
     }
+    @Test
+    public void testShowTotalPrice(){
+        HashMap<Product,Integer> cart = new HashMap<>();
+        cart.put(product,2);
+        customer.setCart(cart);
+        Assert.assertEquals(46.0,CustomerBoss.showTotalCartPrice(customer),1);
+    }
 }

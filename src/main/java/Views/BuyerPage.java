@@ -67,7 +67,7 @@ public class BuyerPage extends Page {
                         if (command.matches(regex)){
                             int id = Integer.parseInt(matcher.group(1));
                             try {
-                                CustomerBoss.increaseNumber(id,(Customer)Account.getOnlineAccount());
+                                CustomerBoss.increaseNumber(id,(Customer)Account.getOnlineAccount(),1);
                                 nextPage = parentPage;
                             } catch (NullProduct | ProductIsFinished nullProduct) {
                                 nullProduct.printStackTrace();
@@ -84,13 +84,34 @@ public class BuyerPage extends Page {
                 subPages.put("6", new Page("decrease number",this) {
                     @Override
                     public void execute() {
-                        super.execute();
+                        System.out.println(name);
+                        String command = scanner.nextLine();
+                        String regex = "^decrease (\\d+)$";
+                        Page nextPage = null;
+                        Matcher matcher = getMatcher(command, regex);
+                        if (command.matches(regex)) {
+                            int id = Integer.parseInt(matcher.group(1));
+                            try {
+                                CustomerBoss.increaseNumber(id, (Customer) Account.getOnlineAccount(), -1);
+                                nextPage = parentPage;
+                            } catch (NullProduct | ProductIsFinished nullProduct) {
+                                nullProduct.printStackTrace();
+                            }
+
+                        } else if (command.equalsIgnoreCase("back")) {
+                            nextPage = parentPage;
+                        } else {
+                            System.err.println("invalid command");
+                            nextPage = this;
+                        }
                     }
-                });
+                    });
+
                 subPages.put("1", new Page("show total price",this) {
                     @Override
                     public void execute() {
-                        super.execute();
+                        System.out.println("your cart total price is = "+CustomerBoss.showTotalCartPrice((Customer) Account.getOnlineAccount()));
+                        parentPage.execute();
                     }
                 });
                 subPages.put("3", new Page("purchase",this) {
