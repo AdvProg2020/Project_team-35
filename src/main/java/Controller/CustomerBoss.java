@@ -22,4 +22,12 @@ public class CustomerBoss {
         }
         return discountCodesInformation;
     }
+
+    public static String showProductsInCart(Customer customer){
+        String result = "";
+        for (Product product : customer.getListOFProductsAtCart().keySet()) {
+            result += product.getName()+"\nwith id : "+product.getProductId()+"\nwith number : "+customer.getListOFProductsAtCart().get(product)+"\n";
+        }
+        return result;
+    }
 }

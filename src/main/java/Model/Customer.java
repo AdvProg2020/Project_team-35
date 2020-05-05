@@ -57,6 +57,14 @@ public class Customer extends Account {
         return cart;
     }
 
+    /**
+     * alireza add for test
+     * @param cart
+     */
+    public void setCart(HashMap<Product, Integer> cart) {
+        this.cart = cart;
+    }
+
     public boolean isThereOrderWithId(int id) {
         return true;
     }

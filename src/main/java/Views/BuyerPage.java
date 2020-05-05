@@ -21,37 +21,38 @@ public class BuyerPage extends Page {
         return new Page("view cart",this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("show products", new Page("show product",this) {
+                subPages.put("4", new Page("show products",this) {
+                    @Override
+                    public void execute() {
+                        System.out.println(CustomerBoss.showProductsInCart((Customer)Account.getOnlineAccount()));
+                        parentPage.execute();
+                    }
+                });
+                subPages.put("2", new Page("view product",this) {
                     @Override
                     public void execute() {
                         super.execute();
                     }
                 });
-                subPages.put("view", new Page("view product",this) {
+                subPages.put("5", new Page("increase inventory",this) {
                     @Override
                     public void execute() {
                         super.execute();
                     }
                 });
-                subPages.put("increase", new Page("increase inventory",this) {
+                subPages.put("6", new Page("decrease inventory",this) {
                     @Override
                     public void execute() {
                         super.execute();
                     }
                 });
-                subPages.put("decrease", new Page("decrease inventory",this) {
+                subPages.put("1", new Page("show total price",this) {
                     @Override
                     public void execute() {
                         super.execute();
                     }
                 });
-                subPages.put("show total price", new Page("show total price",this) {
-                    @Override
-                    public void execute() {
-                        super.execute();
-                    }
-                });
-                subPages.put("purchase", new Page("purchase",this) {
+                subPages.put("3", new Page("purchase",this) {
                     @Override
                     public void execute() {
                         super.execute();
@@ -138,23 +139,6 @@ public class BuyerPage extends Page {
 
     @Override
     public void execute( ) {
-        setSubPages(subPages);
-        show();
-        String command = scanner.nextLine();
-        Page nextPage = null;
-        if (command.equalsIgnoreCase("view cart"))
-            nextPage = viewOrders();
-        else if (command.equalsIgnoreCase("view orders"))
-            nextPage = viewOrders();
-        else if (command.equalsIgnoreCase("view balance"))
-            nextPage = viewBalance();
-        else if (command.equalsIgnoreCase("view discount codes"))
-            nextPage = viewDiscountCodes();
-        try {
-            nextPage.execute();
-        }catch (Exception e) {
-            System.out.println("invalid command");
-            this.execute();
-        }
+    super.execute();
     }
 }
