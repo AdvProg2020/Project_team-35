@@ -23,6 +23,35 @@ public class CustomerBoss {
         return discountCodesInformation;
     }
 
+    /**
+     * 2 exception if productId be invalid and if product number be 0.
+     * @param id
+     * @param customer
+     * @return
+     * @throws NullProduct
+     * @throws ProductIsFinished
+     */
+    public static boolean increaseNumber(int id,Customer customer) throws NullProduct, ProductIsFinished {
+     Product product  =   Product.getProductWithId(id);
+     if (product==null){
+         throw new NullProduct("this product does not exist",1);
+     }
+     if (product.getInventory()==0){
+         throw new ProductIsFinished(2,"not enough product");
+     }
+     if (!customer.getListOFProductsAtCart().keySet().contains(product)){
+         throw new NullProduct("you don't have this in your cart",3);
+     }
+     product.setInventory(product.getInventory()-1);
+     int number = customer.getListOFProductsAtCart().get(product);
+     customer.getListOFProductsAtCart().put(product,number+1);
+     return true;
+    }
+    /**
+     * alireza add it
+     * @param customer
+     * @return
+     */
     public static String showProductsInCart(Customer customer){
         String result = "";
         for (Product product : customer.getListOFProductsAtCart().keySet()) {

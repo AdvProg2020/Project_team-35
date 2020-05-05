@@ -2,10 +2,14 @@
 package Views;
 
 import Controller.CustomerBoss;
+import Controller.Exceptions.NullProduct;
+import Controller.Exceptions.ProductIsFinished;
+import Controller.ProductBoss;
 import Model.Account;
 import Model.Customer;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
 
 public class BuyerPage extends Page {
     public BuyerPage(String name, Page parentPage) {
@@ -24,6 +28,7 @@ public class BuyerPage extends Page {
                 subPages.put("4", new Page("show products",this) {
                     @Override
                     public void execute() {
+                        System.out.println(name);
                         System.out.println(CustomerBoss.showProductsInCart((Customer)Account.getOnlineAccount()));
                         parentPage.execute();
                     }
@@ -31,16 +36,52 @@ public class BuyerPage extends Page {
                 subPages.put("2", new Page("view product",this) {
                     @Override
                     public void execute() {
-                        super.execute();
+                        String command = scanner.nextLine();
+                        String regex = "^view product (\\d+)$";
+                        Page nextPage = null;
+                        Matcher matcher = getMatcher(command,regex);
+                        if (command.matches(regex)){
+                            int productId = Integer.parseInt(matcher.group(1));
+                            try {
+                                nextPage = ProductBoss.goToGoodPage(productId);
+                            } catch (NullProduct nullProduct) {
+                                nullProduct.printStackTrace();
+                            }
+                        }else if (command.equalsIgnoreCase("back")){
+                            nextPage = parentPage;
+                        }else {
+                            System.err.println("invalid command");
+                            nextPage = this;
+                        }
+                        nextPage.execute();
                     }
                 });
-                subPages.put("5", new Page("increase inventory",this) {
+                subPages.put("5", new Page("increase number",this) {
                     @Override
                     public void execute() {
-                        super.execute();
+                        System.out.println(name);
+                        String command = scanner.nextLine();
+                        String regex = "^increase (\\d+)$";
+                        Page nextPage = null;
+                        Matcher matcher = getMatcher(command,regex);
+                        if (command.matches(regex)){
+                            int id = Integer.parseInt(matcher.group(1));
+                            try {
+                                CustomerBoss.increaseNumber(id,(Customer)Account.getOnlineAccount());
+                                nextPage = parentPage;
+                            } catch (NullProduct | ProductIsFinished nullProduct) {
+                                nullProduct.printStackTrace();
+                            }
+
+                        }else if (command.equalsIgnoreCase("back")){
+                            nextPage = parentPage;
+                        }else {
+                            System.err.println("invalid command");
+                            nextPage = this;
+                        }
                     }
                 });
-                subPages.put("6", new Page("decrease inventory",this) {
+                subPages.put("6", new Page("decrease number",this) {
                     @Override
                     public void execute() {
                         super.execute();

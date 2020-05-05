@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Exceptions.NullProduct;
 import Model.Product;
 import Views.GoodPage;
 
@@ -24,9 +25,12 @@ public class ProductBoss {
     }
 
 
-    public static GoodPage goToGoodPage(int id){
+    public static GoodPage goToGoodPage(int id) throws NullProduct {
         Product product = Product.getProductWithId(id);
         GoodPage goodPage =    GoodPage.getGoodPage(product);
+        if (goodPage==null){
+            throw new NullProduct("this product does not exist",1);
+        }
         return goodPage;
     }
     public static ArrayList<Product> sortProduct(String field){
