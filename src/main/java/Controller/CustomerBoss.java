@@ -66,8 +66,24 @@ public class CustomerBoss {
         return result;
     }
 
+    /**
+     * alireza added it******************it need complete code**********************
+     * @param customer
+     * @return
+     */
     public static double showTotalCartPrice(Customer customer) {
             return customer.getTotalPriceOFCart();
+    }
+
+    public static boolean effectAndValidityOfDiscountCode(String id,Customer customer) throws DiscountNotExist, DiscountIsNotForYou {
+        if (!DiscountCode.isThereDiscountCodeWithId(id)){
+            throw new DiscountNotExist(1,"this id is wrong");
+        }else if (!customer.discountCodes.contains(DiscountCode.getDiscountCodeById(id))){
+            throw new DiscountIsNotForYou(2,"it is not belongs you");
+        }
+        //here we need process of decreasing money of cart by discounts.
+
+       return true;
     }
 
 }

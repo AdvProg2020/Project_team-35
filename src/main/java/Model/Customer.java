@@ -73,15 +73,6 @@ public class Customer extends Account {
         return true;
     }
 
-    public void increaseProductAtCart(Product toIncrease) {
-
-    }
-
-    public void decreaseProductAtCart(Product toIncrease) {
-
-    }
-
-
     @Override
     public String toString() {
         return null;

@@ -39,6 +39,13 @@ public class DiscountCode {
     public static void deleteDiscountCode () {
 
     }
+    public static DiscountCode getDiscountCodeById(String id){
+        for (DiscountCode discountCode : allDiscountCodes) {
+            if (discountCode.getId().equalsIgnoreCase(id))
+                return discountCode;
+        }
+        return null;
+    }
 
     public String getId() {
         return id;

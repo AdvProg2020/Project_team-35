@@ -2,6 +2,8 @@
 package Views;
 
 import Controller.CustomerBoss;
+import Controller.DiscountIsNotForYou;
+import Controller.DiscountNotExist;
 import Controller.Exceptions.NullProduct;
 import Controller.Exceptions.ProductIsFinished;
 import Controller.ProductBoss;
@@ -264,7 +266,34 @@ public class BuyerPage extends Page {
         return new Page("discount code page", this) {
             @Override
             public void execute() {
-                super.execute();
+                System.out.println(name);
+                System.out.println("do you have any discount code?(yes|No)");
+                String command = scanner.nextLine();
+                if (command.equalsIgnoreCase("yes")){
+                    while (true){
+                        command = scanner.nextLine();
+                        if (command.equalsIgnoreCase("end discount")){
+                            break;
+                        }
+                        else {
+                            try {
+                                CustomerBoss.effectAndValidityOfDiscountCode(command,(Customer)Account.getOnlineAccount());
+                                payment().execute();
+                                break;
+                            } catch (DiscountNotExist | DiscountIsNotForYou discountNotExist) {
+                                discountNotExist.printStackTrace();
+                            }
+                        }
+                    }
+                }else if (command.equalsIgnoreCase("no")){
+                    payment().execute();
+                }else if (command.equalsIgnoreCase("back")){
+                    parentPage.execute();
+                }
+                else {
+                    System.err.println("invalid command");
+                    this.execute();
+                }
             }
         };
     }
@@ -273,7 +302,7 @@ public class BuyerPage extends Page {
         return new Page("payment", this) {
             @Override
             public void execute() {
-                super.execute();
+
             }
         };
     }
