@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Category;
 import Model.Customer;
 import Model.Product;
 import Model.Seller;

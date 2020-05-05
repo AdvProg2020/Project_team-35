@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 
 public class BuyerPage extends Page {
+    private String phone = "";
+    private String address = "";
     public BuyerPage(String name, Page parentPage) {
         super(name, parentPage);
         subPages.put("2", viewCart());
@@ -21,67 +23,67 @@ public class BuyerPage extends Page {
 
     }
 
-    private Page viewCart(){
-        return new Page("view cart",this) {
+    private Page viewCart() {
+        return new Page("view cart", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("4", new Page("show products",this) {
+                subPages.put("4", new Page("show products", this) {
                     @Override
                     public void execute() {
                         System.out.println(name);
-                        System.out.println(CustomerBoss.showProductsInCart((Customer)Account.getOnlineAccount()));
+                        System.out.println(CustomerBoss.showProductsInCart((Customer) Account.getOnlineAccount()));
                         parentPage.execute();
                     }
                 });
-                subPages.put("2", new Page("view product",this) {
+                subPages.put("2", new Page("view product", this) {
                     @Override
                     public void execute() {
                         String command = scanner.nextLine();
                         String regex = "^view product (\\d+)$";
                         Page nextPage = null;
-                        Matcher matcher = getMatcher(command,regex);
-                        if (command.matches(regex)){
+                        Matcher matcher = getMatcher(command, regex);
+                        if (command.matches(regex)) {
                             int productId = Integer.parseInt(matcher.group(1));
                             try {
                                 nextPage = ProductBoss.goToGoodPage(productId);
                             } catch (NullProduct nullProduct) {
                                 nullProduct.printStackTrace();
                             }
-                        }else if (command.equalsIgnoreCase("back")){
+                        } else if (command.equalsIgnoreCase("back")) {
                             nextPage = parentPage;
-                        }else {
+                        } else {
                             System.err.println("invalid command");
                             nextPage = this;
                         }
                         nextPage.execute();
                     }
                 });
-                subPages.put("5", new Page("increase number",this) {
+                subPages.put("5", new Page("increase number", this) {
                     @Override
                     public void execute() {
                         System.out.println(name);
                         String command = scanner.nextLine();
                         String regex = "^increase (\\d+)$";
                         Page nextPage = null;
-                        Matcher matcher = getMatcher(command,regex);
-                        if (command.matches(regex)){
+                        Matcher matcher = getMatcher(command, regex);
+                        if (command.matches(regex)) {
                             int id = Integer.parseInt(matcher.group(1));
                             try {
-                                CustomerBoss.increaseNumber(id,(Customer)Account.getOnlineAccount(),1);
+                                CustomerBoss.increaseNumber(id, (Customer) Account.getOnlineAccount(), 1);
                                 nextPage = parentPage;
                             } catch (NullProduct | ProductIsFinished nullProduct) {
                                 nullProduct.printStackTrace();
                             }
 
-                        }else if (command.equalsIgnoreCase("back")){
+                        } else if (command.equalsIgnoreCase("back")) {
                             nextPage = parentPage;
-                        }else {
+                        } else {
                             System.err.println("invalid command");
                             nextPage = this;
                         }
                     }
                 });
-                subPages.put("6", new Page("decrease number",this) {
+                subPages.put("6", new Page("decrease number", this) {
                     @Override
                     public void execute() {
                         System.out.println(name);
@@ -105,19 +107,29 @@ public class BuyerPage extends Page {
                             nextPage = this;
                         }
                     }
-                    });
+                });
 
-                subPages.put("1", new Page("show total price",this) {
+                subPages.put("1", new Page("show total price", this) {
                     @Override
                     public void execute() {
-                        System.out.println("your cart total price is = "+CustomerBoss.showTotalCartPrice((Customer) Account.getOnlineAccount()));
+                        System.out.println("your cart total price is = " + CustomerBoss.showTotalCartPrice((Customer) Account.getOnlineAccount()));
                         parentPage.execute();
                     }
                 });
-                subPages.put("3", new Page("purchase",this) {
+                subPages.put("3", new Page("purchase", this) {
+                    @Override
+                    public void setSubPages(HashMap<String, Page> subPages) {
+                        subPages.put("receive", receiveInfo());
+                        subPages.put("discount", discountCodeCheck());
+                        subPages.put("payment", payment());
+                    }
+
                     @Override
                     public void execute() {
-                        super.execute();
+                        System.out.println("your path");
+                        setSubPages(subPages);
+                        show();
+                        receiveInfo().execute();
                     }
                 });
             }
@@ -134,16 +146,17 @@ public class BuyerPage extends Page {
             }
         };
     }
-    private Page viewOrders(){
-        return new Page("view orders" , this) {
+
+    private Page viewOrders() {
+        return new Page("view orders", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("show order" , this);
-                subPages.put("rate" , this);
+                subPages.put("show order", this);
+                subPages.put("rate", this);
             }
 
             @Override
-            public void execute( ) {
+            public void execute() {
                 super.execute();
             }
 
@@ -154,8 +167,9 @@ public class BuyerPage extends Page {
             }
         };
     }
-    private Page viewBalance(){
-        return new Page("view balance" , this) {
+
+    private Page viewBalance() {
+        return new Page("view balance", this) {
             @Override
             public void execute() {
                 System.out.println("balance:");
@@ -164,25 +178,27 @@ public class BuyerPage extends Page {
             }
         };
     }
-    private Page viewDiscountCodes(){
-      return new Page("view discount codes"  , this) {
-          @Override
-          public void execute() {
-              for (String discountCodeInformation : CustomerBoss.showDiscountCodes((Customer) Account.getOnlineAccount())) {
-                  System.out.println(discountCodeInformation);
-              }
-          }
-      }  ;
+
+    private Page viewDiscountCodes() {
+        return new Page("view discount codes", this) {
+            @Override
+            public void execute() {
+                for (String discountCodeInformation : CustomerBoss.showDiscountCodes((Customer) Account.getOnlineAccount())) {
+                    System.out.println(discountCodeInformation);
+                }
+            }
+        };
     }
-    private Page logout(){
-        return new Page("logout" , this) {
+
+    private Page logout() {
+        return new Page("logout", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
                 super.setSubPages(subPages);
             }
 
             @Override
-            public void execute( ) {
+            public void execute() {
                 super.execute();
             }
 
@@ -193,6 +209,75 @@ public class BuyerPage extends Page {
             }
         };
     }
+
+    private Page receiveInfo() {
+        return new Page("receive information", this) {
+            @Override
+            public void execute() {
+                String regex = "";
+                String command = "";
+                boolean heChooseBack = false;
+                Matcher matcher = null;
+                Page nextPage = null;
+               while (true){
+                   System.out.println("phone number");
+                   command = scanner.nextLine();
+                   regex = "^(\\d+)$";
+                   matcher = getMatcher(command,regex);
+                   if (command.matches(regex)){
+                       phone = matcher.group(1);
+                       break;
+                   }else if (command.equalsIgnoreCase("back")){
+                            heChooseBack = true;
+                            nextPage = parentPage;
+                            break;
+                   }else {
+                       System.err.println("invalid command");
+                   }
+               }
+               if (heChooseBack==false) {
+                   while (true) {
+                       System.out.println("address");
+                       command = scanner.nextLine();
+                       regex = "^(\\.+)$";
+                       matcher = getMatcher(command,regex);
+                       if (command.equalsIgnoreCase("back")) {
+                           heChooseBack = true;
+                           nextPage = parentPage;
+                           break;
+                       } else if (command.matches(regex)) {
+                            address = matcher.group(1);
+                            nextPage = discountCodeCheck();
+                            break;
+                       } else {
+                        System.err.println("invalid command");
+                       }
+                   }
+               }
+               //we can add post code to this place
+                nextPage.execute();
+            }
+        };
+    }
+
+    private Page discountCodeCheck() {
+        return new Page("discount code page", this) {
+            @Override
+            public void execute() {
+                super.execute();
+            }
+        };
+    }
+
+    private Page payment() {
+        return new Page("payment", this) {
+            @Override
+            public void execute() {
+                super.execute();
+            }
+        };
+    }
+
     @Override
     public boolean show() {
         super.show();
@@ -200,7 +285,7 @@ public class BuyerPage extends Page {
     }
 
     @Override
-    public void execute( ) {
-    super.execute();
+    public void execute() {
+        super.execute();
     }
 }
