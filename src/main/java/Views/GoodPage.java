@@ -1,6 +1,8 @@
 package Views;
 
 import Controller.ProductBoss;
+import Model.Account;
+import Model.Customer;
 import Model.Product;
 
 import java.util.ArrayList;
@@ -48,7 +50,25 @@ public class GoodPage extends Page {
                 subPages.put("1", new Page("add to cart",this) {
                     @Override
                     public void execute() {
-                        super.execute();
+                        //this place should change for multi user program
+                        Page nextPage = null;
+                        if (Account.getOnlineAccount()==null){
+                            System.err.println("first login");
+                                nextPage = new RegisteringPanel("registering panel",this);
+                        }else if (!(Account.getOnlineAccount() instanceof Customer)){
+                            System.err.println("this process is just for customer");
+                            nextPage = parentPage;
+                        }
+                        else if (product.getInventory()!=0){
+                            Customer customer = (Customer) Account.getOnlineAccount();
+                            customer.getListOFProductsAtCart().put(product,1);
+                            System.out.println("successfully added");
+                            nextPage = parentPage;
+                        }else{
+                            System.err.println("this product is finished");
+                            nextPage = parentPage;
+                        }
+                        nextPage.execute();
                     }
                 });
                 subPages.put("2", new Page("select seller",this) {
@@ -60,30 +80,6 @@ public class GoodPage extends Page {
 
             }
 
-            @Override
-            public void execute() {
-                System.out.println(ProductBoss.showSummeryOfProductDetails(product));
-                setSubPages(subPages);
-                Page nextPage = null;
-                show();
-                String command = scanner.nextLine();
-                if (command.equalsIgnoreCase("1")){
-
-                }else if (command.equalsIgnoreCase("2")){
-
-                }else if (command.equalsIgnoreCase(String.valueOf(subPages.keySet().size()+1))){
-                    nextPage = parentPage;
-                }else {
-
-                }
-                nextPage.execute();
-            }
-
-            @Override
-            public boolean show() {
-                super.show();
-                return false;
-            }
         };
     }
     private Page attributes(){

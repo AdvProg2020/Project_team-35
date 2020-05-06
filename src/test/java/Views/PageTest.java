@@ -1,14 +1,11 @@
 package Views;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static org.junit.Assert.*;
 
 public class PageTest {
     @Test

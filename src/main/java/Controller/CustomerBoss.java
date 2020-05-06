@@ -43,7 +43,6 @@ public class CustomerBoss {
         if (!customer.getListOFProductsAtCart().keySet().contains(product)) {
             throw new NullProduct("you don't have this in your cart", 3);
         }
-        product.setInventory(product.getInventory() - increase);
         int number = customer.getListOFProductsAtCart().get(product);
         customer.getListOFProductsAtCart().put(product, number + increase);
         if (number + increase == 0 && increase == -1) {
