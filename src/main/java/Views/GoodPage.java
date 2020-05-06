@@ -85,19 +85,13 @@ public class GoodPage extends Page {
     private Page attributes(){
         return new Page("attributes" ,  this) {
             @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                super.setSubPages(subPages);
-            }
-
-            @Override
             public void execute() {
-                super.execute();
-            }
-
-            @Override
-            public boolean show() {
-                super.show();
-                return false;
+                System.out.println(name);
+              HashMap<String,String> attributes =    ProductBoss.showAttributes(product);
+                for (String s : attributes.keySet()) {
+                    System.out.println(attributes.get(s)+":\n"+s);
+                }
+            parentPage.execute();
             }
         };
     }

@@ -47,6 +47,9 @@ public class ProductBoss {
         }
         return null;
     }
+    public static HashMap<String , String> showAttributes(Product product){
+        return product.attributeShow();
+    }
     public static String showSummeryOfProductDetails(Product product){
             return product.showSummeryDetailsOfProduct();
     }

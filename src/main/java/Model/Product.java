@@ -18,7 +18,6 @@ public class Product {
     private ArrayList<Comment> commentsList;
     private ArrayList<Rate> ratesList;
     private HashMap<String, String> specialAttributes;
-   private DiscountCode discountCode;
     private Product onlineProduct;
     private ArrayList<Customer> whoBoughtThisGood;
     //when the page of product is open.
@@ -193,8 +192,39 @@ public class Product {
         return null;
     }
     public String showSummeryDetailsOfProduct(){
-        String result = "description :\n"+description+"\n"+"price :\n"+price+"\n"+"discount :\n"+discountCode.getId()+"\n"+"category :\n"+category.getCategoryName()+"\n"+"seller :\n"+seller.getUsername()+"\n"+"average :\n"+getAverageOfRates();
+        String result = "description :\n"+description+"\n"+"price :\n"+price+"\n"+"discount :\n"+"category :\n"+category.getCategoryName()+"\n"+"seller :\n"+seller.getUsername()+"\n"+"average :\n"+getAverageOfRates();
         return result;
+    }
+
+    /**
+     * maybe it has mistake
+     * @return
+     */
+    public HashMap<String , String> attributeShow(){
+        HashMap<String , String> attributes = new HashMap<>();
+        attributes.put(String.valueOf(getProductId()),"id");
+        attributes.put(getName(),"name");
+        attributes.put(getCompany(),"company");
+        attributes.put(getSeller().getUsername(),"seller");
+        attributes.put(productStatus.name(),"status");
+        attributes.put(String.valueOf(getPrice()),"price");
+        attributes.put(String.valueOf(getInventory()),"inventory");
+        attributes.put(getCategory().getCategoryName(),"category");
+        attributes.put(getDescription(),"description");
+        for (Customer customer : getWhoBoughtThisGood()) {
+            attributes.put(customer.getUsername(),"buyer");
+        }
+        for (Rate rate : ratesList) {
+            attributes.put(rate.getRater()+":"+rate.getRate(),"rate");
+        }
+        for (Comment comment : commentsList) {
+            attributes.put(comment.getCommenter()+":"+comment.getCommentText(),"comment");
+        }
+        for (String s : getSpecialAttributes().keySet()) {
+            attributes.put(specialAttributes.get(s),s);
+        }
+        return attributes;
+
     }
 
     public String getDescription() {
