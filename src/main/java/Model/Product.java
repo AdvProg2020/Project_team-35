@@ -34,6 +34,7 @@ public class Product {
         productNumber+=1;
         productId = productNumber;
         commentsList = new ArrayList<>();
+        whoBoughtThisGood = new ArrayList<>();
         ratesList = new ArrayList<>();
         allProducts.add(this);
         seller.getSalableProducts().add(this);
@@ -211,11 +212,15 @@ public class Product {
         attributes.put(String.valueOf(getInventory()),"inventory");
         attributes.put(getCategory().getCategoryName(),"category");
         attributes.put(getDescription(),"description");
-        for (Customer customer : getWhoBoughtThisGood()) {
-            attributes.put(customer.getUsername(),"buyer");
+        if (getWhoBoughtThisGood()!=null) {
+            for (Customer customer : getWhoBoughtThisGood()) {
+                attributes.put(customer.getUsername(), "buyer");
+            }
         }
-        for (Rate rate : ratesList) {
-            attributes.put(rate.getRater()+":"+rate.getRate(),"rate");
+        if (ratesList!=null) {
+            for (Rate rate : ratesList) {
+                attributes.put(rate.getRater().getUsername() + ":" + rate.getRate(), "rate");
+            }
         }
         for (Comment comment : commentsList) {
             attributes.put(comment.getCommenter()+":"+comment.getCommentText(),"comment");
@@ -233,5 +238,29 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * just for test
+     * @param commentsList
+     */
+    public void setCommentsList(ArrayList<Comment> commentsList) {
+        this.commentsList = commentsList;
+    }
+
+    /**
+     * just for test
+     * @param ratesList
+     */
+    public void setRatesList(ArrayList<Rate> ratesList) {
+        this.ratesList = ratesList;
+    }
+
+    /**
+     * just for test
+     * @param whoBoughtThisGood
+     */
+    public void setWhoBoughtThisGood(ArrayList<Customer> whoBoughtThisGood) {
+        this.whoBoughtThisGood = whoBoughtThisGood;
     }
 }

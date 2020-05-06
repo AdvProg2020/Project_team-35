@@ -6,6 +6,13 @@ public class Rate {
     private double rate;
     private static int allRatesNumber;
     private Product product;
+
+    public Rate(Customer rater, double rate, Product product) {
+        this.rater = rater;
+        this.rate = rate;
+        this.product = product;
+    }
+
     public Customer getRater() {
         return rater;
     }
