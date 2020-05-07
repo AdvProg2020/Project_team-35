@@ -223,7 +223,7 @@ public class Product {
             }
         }
         for (Comment comment : commentsList) {
-            attributes.put(comment.getCommenter()+":"+comment.getCommentText(),"comment");
+            attributes.put(comment.getCommenter().getUsername()+":"+comment.getCommentText(),"comment");
         }
         for (String s : getSpecialAttributes().keySet()) {
             attributes.put(specialAttributes.get(s),s);
@@ -262,5 +262,16 @@ public class Product {
      */
     public void setWhoBoughtThisGood(ArrayList<Customer> whoBoughtThisGood) {
         this.whoBoughtThisGood = whoBoughtThisGood;
+    }
+
+    public ArrayList<Comment> getCommentsList() {
+        return commentsList;
+    }
+    public String showComments(){
+        String result= "";
+        for (Comment comment : getCommentsList()) {
+            result+=comment.getCommentText();
+        }
+        return result;
     }
 }

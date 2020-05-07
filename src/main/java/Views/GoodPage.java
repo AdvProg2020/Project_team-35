@@ -4,9 +4,11 @@ import Controller.ProductBoss;
 import Model.Account;
 import Model.Customer;
 import Model.Product;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
 
 public class GoodPage extends Page {
     private Product product;
@@ -98,19 +100,21 @@ public class GoodPage extends Page {
     private Page compare(){
         return new Page("compare" , this) {
             @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                super.setSubPages(subPages);
-            }
-
-            @Override
             public void execute() {
-                super.execute();
-            }
-
-            @Override
-            public boolean show() {
-                super.show();
-                return false;
+                System.out.println(name);
+                String command = scanner.nextLine();
+                String regex = "^compare (\\d+)$";
+                Matcher matcher = getMatcher(command,regex);
+                Page nextPage = null;
+                if (command.matches(regex)){
+                    nextPage = parentPage;
+                }else if (command.equalsIgnoreCase("back")){
+                    nextPage = parentPage;
+                }else {
+                    System.err.println("invalid command");
+                    nextPage = this;
+                }
+                nextPage.execute();
             }
         };
     }
@@ -118,7 +122,29 @@ public class GoodPage extends Page {
         return new Page("Comments" , this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("Add comment" , this);
+                subPages.put("Add comment", new Page("add comment",this) {
+                    @Override
+                    public void execute() {
+                        Page nextPage = null;
+                        System.out.println("Title:");
+                        String title = scanner.nextLine();
+                        if (title.equalsIgnoreCase("back")){
+                            nextPage = parentPage;
+                        }else {
+                            System.out.println("Content:");
+                            String content = scanner.nextLine();
+                            if (content.equalsIgnoreCase("back")){
+                                nextPage = this;
+                            }
+                            else {
+                                ProductBoss.makeComment(content,title,product,(Customer)Account.getOnlineAccount());
+                                System.out.println("add comment successfully");
+                                nextPage = parentPage;
+                            }
+                        }
+                        nextPage.execute();
+                    }
+                });
             }
 
             @Override
@@ -126,11 +152,6 @@ public class GoodPage extends Page {
                 super.execute();
             }
 
-            @Override
-            public boolean show() {
-                super.show();
-                return false;
-            }
         };
     }
 
