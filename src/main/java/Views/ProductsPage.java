@@ -51,6 +51,7 @@ public class ProductsPage extends Page {
                     GoodPage goodPage = null;
                     try {
                         goodPage = ProductBoss.goToGoodPage(id);
+                        System.out.println(ProductBoss.showSummeryOfProductDetails(Product.getProductWithId(id)));
                     } catch (NullProduct nullProduct) {
                         nullProduct.printStackTrace();
                     }

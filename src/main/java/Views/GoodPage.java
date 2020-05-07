@@ -4,7 +4,6 @@ import Controller.ProductBoss;
 import Model.Account;
 import Model.Customer;
 import Model.Product;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +20,25 @@ public class GoodPage extends Page {
         subPages.put("2",attributes());
         subPages.put("3",compare());
         subPages.put("4",comments());
+        subPages.put("5",showRates());
+        subPages.put("6",showComment());
 
+    }
+    private Page showComment(){
+        return new Page("show comment",this) {
+            @Override
+            public void execute() {
+                super.execute();
+            }
+        };
+    }
+    private Page showRates(){
+        return new Page("show rate",this) {
+            @Override
+            public void execute() {
+
+            }
+        };
     }
 
     /**
@@ -146,28 +163,6 @@ public class GoodPage extends Page {
                     }
                 });
             }
-
-            @Override
-            public void execute() {
-                super.execute();
-            }
-
         };
-    }
-
-    @Override
-    public boolean show() {
-        super.show();
-        return false;
-    }
-
-    @Override
-    public void execute() {
-        super.execute();
-    }
-
-    @Override
-    public void setSubPages(HashMap<String, Page> subPages) {
-        super.setSubPages(subPages);
     }
 }

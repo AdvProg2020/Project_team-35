@@ -1,6 +1,7 @@
 package Controller;
 
 import Controller.Exceptions.NullProduct;
+import Controller.Exceptions.ProductIsFinished;
 import Model.Comment;
 import Model.Customer;
 import Model.Product;
@@ -59,20 +60,35 @@ public class ProductBoss {
         return product.attributeShow();
     }
 
-    public static void compare(String id, Product product2) {
+    public static StringBuilder compare(String id, Product product2) throws ProductsCompareNotSameCategories, ProductIsFinished, NullProduct {
         Product product = Product.getProductWithId(Integer.parseInt(id));
         if (product == null) {
-
+                throw new NullProduct("null product",1);
         } else if (product.getInventory() == 0) {
-
+                throw new ProductIsFinished(2,"finished");
         }else if (!product.getCategory().equals(product2.getCategory())){
-
+                throw new ProductsCompareNotSameCategories(3,"not same category");
         }
         HashMap<String, String> a1 = product2.attributeShow();
         HashMap<String, String> a2 = product.attributeShow();
+        StringBuilder result = new StringBuilder();
+        result.append(product2.getName()+"**********"+product.getName()+"\n");
+        for (String s : a1.keySet()) {
+            for (String s1 : a2.keySet()) {
+                if (a2.get(s1).equals(a1.get(s))) {
+                    result.append(a1.get(s) + ":\n");
+                    if (s!=null && s1!=null) {
+                        result.append(s + "**********" + s1 + "\n");
+                    }else if (s==null){
+                        result.append(" "+"**********"+s1+"\n");
+                    }else if (s1==null){
+                        result.append(s+"**********"+" "+"\n");
+                    }
 
-
-
+                }
+            }
+        }
+        return result;
     }
 
 
