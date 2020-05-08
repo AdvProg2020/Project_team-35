@@ -79,7 +79,9 @@ public class ManagerPage extends Page {
                         System.out.println(repeatedUserName.getMessage());
                         this.execute();
                     }
-
+                    allPersonalInfo.put("username", username);
+                    AccountBoss.makeAccount(inputManagerData(allPersonalInfo));
+                    System.out.println("New manager account added successfully.");
                 }
                 else {
                     System.err.println("Invalid Command");
@@ -112,6 +114,20 @@ public class ManagerPage extends Page {
             }
         } while (true);
         return input;
+    }
+
+    private HashMap<String, String> inputManagerData(HashMap<String, String> personalInfo) {
+        String password = getInputInFormat("Password:", "\\w+");
+        personalInfo.put("password", password);
+        String name = getInputInFormat("Name:", "\\w+");
+        personalInfo.put("name", name);
+        String familyName = getInputInFormat("FamilyName:", "\\w+");
+        personalInfo.put("family", familyName);
+        String email = getInputInFormat("Email:", "^(\\S+)@(\\S+)\\.(\\S+)$");
+        personalInfo.put("email address", email);
+        String phoneNumber = getInputInFormat("PhoneNumber:", "^\\d+$");
+        personalInfo.put("phone number", phoneNumber);
+        return personalInfo;
     }
 
     private Page manageAllProducts() {
