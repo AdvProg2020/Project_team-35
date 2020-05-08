@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class MainPage extends Page {
-    private User user;
 
     public MainPage() {
         super("Main Menu", null);

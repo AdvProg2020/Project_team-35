@@ -17,11 +17,12 @@ public class ProductsPage extends Page {
     private ArrayList<String> available;
     public ProductsPage(String name, Page parentPage) {
         super(name, parentPage);
-        subPages.put("view categories",viewCategories());
-        subPages.put("filtering",filtering());
-        subPages.put("sorting",sorting());
-        subPages.put("show products",showProduct());
-        subPages.put("product page",enterToProductPage());
+        subPages.put("3",viewCategories());
+        subPages.put("2",filtering());
+        subPages.put("1",sorting());
+        subPages.put("4",showProduct());
+        subPages.put("5",enterToProductPage());
+        subPages.put("6",new RegisteringPanel("registering panel",this));
 
     }
     private Page viewCategories(){

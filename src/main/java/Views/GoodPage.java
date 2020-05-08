@@ -22,6 +22,7 @@ public class GoodPage extends Page {
         subPages.put("4",comments());
         subPages.put("5",showRates());
         subPages.put("6",showComment());
+        subPages.put("7",new RegisteringPanel("registering panel",this));
 
     }
     private Page showComment(){

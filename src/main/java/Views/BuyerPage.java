@@ -22,6 +22,7 @@ public class BuyerPage extends Page {
         subPages.put("4", viewOrders());
         subPages.put("3", viewBalance());
         subPages.put("1", viewDiscountCodes());
+        subPages.put("5",new RegisteringPanel("registering panel",this));
 
     }
 

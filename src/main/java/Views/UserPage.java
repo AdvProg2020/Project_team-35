@@ -18,6 +18,7 @@ public class UserPage extends Page {
         super(name, parentPage);
        subPages.put("view personal info" , viewPersonalInfo());
        subPages.put("products", this);
+       subPages.put("1",new RegisteringPanel("registering panel",this));
        subPages.put("user account", new Page("user account",this) {
            @Override
            public void execute() {

@@ -17,16 +17,17 @@ public class RegisteringPanel extends Page {
     public RegisteringPanel(String name, Page parentPage) {
         super(name, parentPage);
 
-        subPages.put("3",RegisterUser());
-        subPages.put("4" , loginGetUsername());
-        subPages.put("offs",this);
-        subPages.put("products",this);
-        subPages.put("search",this);
+        subPages.put("3", registerUser());
+        subPages.put("4", loginGetUsername());
+        subPages.put("offs", this);
+        subPages.put("products", this);
+        subPages.put("search", this);
 
     }
 
     /**
      * this method is completed
+     *
      * @return
      */
     private Page login() {
@@ -39,8 +40,7 @@ public class RegisteringPanel extends Page {
                 if (parentPage.parentPage.name.equals("Main Menu")) {
                     MainPage mainPage = new MainPage();
                     mainPage.execute();
-                }
-                else {
+                } else {
                     parentPage.parentPage.execute();
                 }
 
@@ -113,21 +113,26 @@ public class RegisteringPanel extends Page {
 
     /**
      * for getting all personal info except username and make account and back to main page.
+     *
      * @return
      */
     private Page registerSecondPage() {
 
-        return new Page("second page Of registering", this) {
+        return new Page("second page Of registering",registerUser()) {
             @Override
             public void execute() {
                 setSubPages(subPages);
-                for (String s : subPages.keySet()) {
+                Page nextPage = null;
+                boolean isItBack = false;
+              P1:  for (String s : subPages.keySet()) {
                     while (true) {
 
                         System.out.println(s + ":");
                         String command = scanner.nextLine();
                         if (command.equals("back")) {
-                            parentPage.execute();
+                            nextPage = parentPage;
+                            isItBack = true;
+                            break P1;
                         }
                         if (checkFormatOfPersonalInformation(s, command)) {
                             allPersonalInfo.put(s, command);
@@ -139,16 +144,18 @@ public class RegisteringPanel extends Page {
                     }
                 }
 
+            if (!isItBack) {
+                makeAccount(allPersonalInfo);
 
-                    makeAccount(allPersonalInfo);
-                    System.out.println("successfully registered");
-                    if (parentPage.parentPage.name.equalsIgnoreCase("UserPage")){
-                        System.out.println("login:");
-                       loginGetUsername().execute();
-                    }
-                    else {
-                        parentPage.parentPage.execute();
-                    }
+                // System.out.println("successfully registered");
+                if (parentPage.parentPage.name.equalsIgnoreCase("UserPage")) {
+                    System.out.println("login:");
+                    nextPage = loginGetUsername();
+                } else {
+                    nextPage = parentPage.parentPage;
+                }
+            }
+                nextPage.execute();
 
             }
 
@@ -169,9 +176,10 @@ public class RegisteringPanel extends Page {
 
     /**
      * this is first step of register and get username and type and check validity.
+     *
      * @return
      */
-    private Page RegisterUser() {
+    private Page registerUser() {
         return new Page("register", this) {
 
 
@@ -188,30 +196,29 @@ public class RegisteringPanel extends Page {
                         firstStepOfRegistering(matcher.group(1), matcher.group(2));
                         allPersonalInfo.put("type", matcher.group(1));
                         allPersonalInfo.put("username", matcher.group(2));
-                        registerSecondPage().execute();
+                        nextPage = registerSecondPage();
 
                     } catch (MoreThanOneManagerException | RepeatedUserName | RequestProblemNotExistManager e) {
                         System.err.println(e.getMessage());
-                        this.execute();
+                        nextPage = this;
                     }
 
                 } else if (command.equals("back")) {
-                    parentPage.execute();
-                } else {
+                    nextPage = parentPage;
+                }else if (command.equalsIgnoreCase("help")){
+                    System.out.println("create account [type of user] [username] *** back(go to "+parentPage.name+") *** help");
+                    nextPage = this;
+                }else {
                     System.err.println("invalid command");
-                    this.execute();
+                    nextPage = this;
                 }
+                nextPage.execute();
             }
 
         };
     }
 
-    @Override
-    public boolean show() {
-        super.show();
-        return false;
-    }
-
+/*
     @Override
     public void execute() {
         show();
@@ -224,13 +231,12 @@ public class RegisteringPanel extends Page {
 
         } else if (command.equals("6")) {
             nextPage = parentPage;
-        }else {
+        } else {
             nextPage = this;
         }
         nextPage.execute();
 
-    }
-
+    }*/
 
 
 }

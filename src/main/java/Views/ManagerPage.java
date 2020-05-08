@@ -15,6 +15,7 @@ public class ManagerPage extends Page {
         subPages.put("2", manageUsers());
         subPages.put("3" , manageCategories());
         subPages.put("4", manageAllProducts());
+        subPages.put("5",new RegisteringPanel("registering panel",this));
     }
 
     private Page manageUsers() {

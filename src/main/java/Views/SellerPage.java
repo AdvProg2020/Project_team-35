@@ -16,16 +16,15 @@ private HashMap<String , String> productInfo;
 private HashMap<String , String> offInfoChanges;
     public SellerPage(String name, Page parentPage) {
         super(name, parentPage);
-        subPages.put("view company information" , viewCompanyInformation());
-        subPages.put("view sales history" , viewSalesHistory());
-        subPages.put("view credit" , viewCredit());
-        subPages.put("show categories" , viewCategory());
-        subPages.put("manage products" , manageProducts());
-        subPages.put("add product" , addProduct());
-        subPages.put("remove product" , removeProduct());
-        subPages.put("view offs" , viewOffs());
-
-
+        subPages.put("2" , viewCompanyInformation());
+        subPages.put("3" , viewSalesHistory());
+        subPages.put("4" , viewCredit());
+        subPages.put("5" , viewCategory());
+        subPages.put("6" , manageProducts());
+        subPages.put("7" , addProduct());
+        subPages.put("8" , removeProduct());
+        subPages.put("9" , viewOffs());
+        subPages.put("1",new RegisteringPanel("registering panel",this));
 
     }
 
