@@ -27,6 +27,7 @@ public class AddProductRequest extends Request {
     public void execute() {
         this.isDone = true;
         Product product = new Product(name,company,price,seller,inventory,category,specials);
+        category.getCategoryProducts().add(product);
         product.setProductStatus(ProductAndOffStatus.CONFIRMED);
     }
     public String getRequestInfo() {
