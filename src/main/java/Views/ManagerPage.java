@@ -1,5 +1,6 @@
 package Views;
 
+import Controller.AccountBoss;
 import Controller.Exceptions.*;
 import Controller.ManagerBoss;
 import Model.*;
@@ -70,7 +71,18 @@ public class ManagerPage extends Page {
                     }
                 }
                 else if (command.equalsIgnoreCase("create manager profile")) {
-
+                    HashMap<String, String> allPersonalInfo = new HashMap<>();
+                    allPersonalInfo.put("type", "manager");
+                    String username = getInputInFormat("Username: ", "\\w+");
+                    try {
+                        ManagerBoss.checkNewManagerUserName(username);
+                    } catch (RepeatedUserName repeatedUserName) {
+                        System.out.println(repeatedUserName.getMessage());
+                        this.execute();
+                    }
+                    allPersonalInfo.put("username", username);
+                    AccountBoss.makeAccount(inputManagerData(allPersonalInfo));
+                    System.out.println("New manager account added successfully.");
                 }
                 else {
                     System.err.println("Invalid Command");
@@ -84,6 +96,39 @@ public class ManagerPage extends Page {
                 return false;
             }
         };
+    }
+
+
+    private String getInputInFormat(String helpText, String regex) {
+        System.out.println(helpText);
+        boolean isValid;
+        String input;
+        do {
+            input = scanner.nextLine();
+            Matcher matcher = getMatcher(input, regex);
+            isValid = matcher.matches();
+            if (!isValid) {
+                System.err.println("Invalid Format.");
+            }
+            else {
+                break;
+            }
+        } while (true);
+        return input;
+    }
+
+    private HashMap<String, String> inputManagerData(HashMap<String, String> personalInfo) {
+        String password = getInputInFormat("Password:", "\\w+");
+        personalInfo.put("password", password);
+        String name = getInputInFormat("Name:", "\\w+");
+        personalInfo.put("name", name);
+        String familyName = getInputInFormat("FamilyName:", "\\w+");
+        personalInfo.put("family", familyName);
+        String email = getInputInFormat("Email:", "^(\\S+)@(\\S+)\\.(\\S+)$");
+        personalInfo.put("email address", email);
+        String phoneNumber = getInputInFormat("PhoneNumber:", "^\\d+$");
+        personalInfo.put("phone number", phoneNumber);
+        return personalInfo;
     }
 
     private Page manageAllProducts() {
