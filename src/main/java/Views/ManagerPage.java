@@ -14,9 +14,9 @@ public class ManagerPage extends Page {
         super(name, parentPage);
         subPages.put("1", manageRequests());
         subPages.put("2", manageUsers());
-        subPages.put("3" , manageCategories());
+        subPages.put("3", manageCategories());
         subPages.put("4", manageAllProducts());
-        subPages.put("5",new RegisteringPanel("registering panel",this));
+        subPages.put("5", new RegisteringPanel("registering panel", this));
     }
 
     private Page manageUsers() {
@@ -36,13 +36,11 @@ public class ManagerPage extends Page {
                 }
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
-                if(command.equalsIgnoreCase("-help")) {
+                if (command.equalsIgnoreCase("-help")) {
                     System.out.println("view/delete user [username] ---- create manager profile");
-                }
-                else if (command.equalsIgnoreCase("back")) {
+                } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
-                }
-                else if (command.startsWith("view")) {
+                } else if (command.startsWith("view")) {
                     Matcher matcher = getMatcher(command, "^view (\\w+)$");
                     if (matcher.matches()) {
                         String username = matcher.group(1);
@@ -51,12 +49,10 @@ public class ManagerPage extends Page {
                         } catch (NotValidUserNameException e) {
                             System.out.println(e.getMessage());
                         }
-                    }
-                    else {
+                    } else {
                         System.err.println("Invalid Command");
                     }
-                }
-                else if(command.startsWith("delete user")) {
+                } else if (command.startsWith("delete user")) {
                     Matcher matcher = getMatcher(command, "^delete user (\\w+)$");
                     if (matcher.matches()) {
                         String username = matcher.group(1);
@@ -65,12 +61,10 @@ public class ManagerPage extends Page {
                         } catch (NotValidUserNameException | CantRemoveYourAccountException e) {
                             System.out.println(e.getMessage());
                         }
-                    }
-                    else {
+                    } else {
                         System.err.println("Invalid Command");
                     }
-                }
-                else if (command.equalsIgnoreCase("create manager profile")) {
+                } else if (command.equalsIgnoreCase("create manager profile")) {
                     HashMap<String, String> allPersonalInfo = new HashMap<>();
                     allPersonalInfo.put("type", "manager");
                     String username = getInputInFormat("Username: ", "\\w+");
@@ -83,8 +77,7 @@ public class ManagerPage extends Page {
                     allPersonalInfo.put("username", username);
                     AccountBoss.makeAccount(inputManagerData(allPersonalInfo));
                     System.out.println("New manager account added successfully.");
-                }
-                else {
+                } else {
                     System.err.println("Invalid Command");
                 }
                 this.execute();
@@ -109,8 +102,7 @@ public class ManagerPage extends Page {
             isValid = matcher.matches();
             if (!isValid) {
                 System.err.println("Invalid Format.");
-            }
-            else {
+            } else {
                 break;
             }
         } while (true);
@@ -144,11 +136,9 @@ public class ManagerPage extends Page {
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
                     System.out.println("\nRemove [PID]\n");
-                }
-                else if (command.equalsIgnoreCase("back")) {
+                } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
-                }
-                else {
+                } else {
                     Matcher matcher = getMatcher(command, "^remove (\\d+)$");
                     if (matcher.matches()) {
                         try {
@@ -156,8 +146,7 @@ public class ManagerPage extends Page {
                         } catch (ThereISNotProductWithIdException e) {
                             System.out.println(e.getMessage());
                         }
-                    }
-                    else {
+                    } else {
                         System.err.println("Invalid Command.");
                     }
                 }
@@ -223,8 +212,8 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
-                ArrayList<Request>  newRequests = Manager.getNewRequests();
-                ArrayList<Request>  checkedRequests = Manager.getCheckedRequests();
+                ArrayList<Request> newRequests = Manager.getNewRequests();
+                ArrayList<Request> checkedRequests = Manager.getCheckedRequests();
                 System.out.println("New Requests :");
                 for (Request newRequest : newRequests) {
                     System.out.println(newRequest.getRequestInfo());
@@ -237,8 +226,7 @@ public class ManagerPage extends Page {
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
                     System.out.println("Accept/Decline/details [RID]");
-                }
-                else if (command.startsWith("accept") || command.startsWith("decline") || command.startsWith("details")) {
+                } else if (command.startsWith("accept") || command.startsWith("decline") || command.startsWith("details")) {
                     Matcher matcher = getMatcher(command, "^(accept|decline|details)\\s+(\\d+)$");
                     if (matcher.matches()) {
                         int requestId = Integer.parseInt(matcher.group(2));
@@ -248,30 +236,25 @@ public class ManagerPage extends Page {
                             } catch (NotValidRequestIdException e) {
                                 System.out.println(e.getMessage());
                             }
-                        }
-                        else if (command.startsWith("decline")) {
+                        } else if (command.startsWith("decline")) {
                             try {
                                 ManagerBoss.declineRequestWithId(requestId);
                             } catch (NotValidRequestIdException e) {
                                 System.out.println(e.getMessage());
                             }
-                        }
-                        else if (command.startsWith("details")) {
+                        } else if (command.startsWith("details")) {
                             try {
                                 System.out.println("\n" + ManagerBoss.getDetailsOfRequestWithId(requestId) + "\n");
                             } catch (NotValidRequestIdException e) {
                                 System.out.println(e.getMessage());
                             }
                         }
-                    }
-                    else {
+                    } else {
                         System.err.println("Invalid Command");
                     }
-                }
-                else if (command.equalsIgnoreCase("back")) {
+                } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
-                }
-                else {
+                } else {
                     System.err.println("Invalid Command");
                 }
                 this.execute();
@@ -304,11 +287,9 @@ public class ManagerPage extends Page {
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
                     System.out.println("add/edit/remove [categoryName]");
-                }
-                else if (command.equalsIgnoreCase("back")) {
+                } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
-                }
-                else {
+                } else {
                     Matcher matcher = getMatcher(command, "^(add|remove|edit)\\s+(\\w+)$");
                     if (matcher.matches()) {
                         String categoryName = matcher.group(2);
@@ -319,19 +300,16 @@ public class ManagerPage extends Page {
                             } catch (RepeatedCategoryNameException e) {
                                 System.out.println(e.getMessage());
                             }
-                        }
-                        else if (command.startsWith("remove")) {
+                        } else if (command.startsWith("remove")) {
                             try {
                                 int result = ManagerBoss.startDeleteCategoryWithName(categoryName);
                             } catch (ThereIsNotCategoryWithNameException | NullPointerException e) {
                                 System.out.println(e.getMessage());
                             }
-                        }
-                        else if (command.startsWith("edit")) {
+                        } else if (command.startsWith("edit")) {
 
                         }
-                    }
-                    else {
+                    } else {
                         System.err.println("Invalid Command.");
                     }
                 }
@@ -379,38 +357,11 @@ public class ManagerPage extends Page {
         };
     }
 
-    @Override
-    public boolean show() {
-        super.show();
-        return false;
-    }
 
     @Override
     public void execute() {
 
+        super.execute();
 
-        show();
-        Page nextPage = null;
-        String command = scanner.nextLine();
-        if (command.equalsIgnoreCase("1")) {
-            nextPage = manageRequests();
-        }
-        else if (command.equalsIgnoreCase("5")){
-            nextPage = parentPage;
-        }
-        else if (command.equalsIgnoreCase("2")) {
-            nextPage = manageUsers();
-        }
-        else if(command.equalsIgnoreCase("3")) {
-            nextPage = manageCategories();
-        }
-        else if (command.equalsIgnoreCase("4")) {
-            nextPage = manageAllProducts();
-        }
-        else {
-            System.err.println("Invalid Command");
-            this.execute();
-        }
-        nextPage.execute();
     }
 }

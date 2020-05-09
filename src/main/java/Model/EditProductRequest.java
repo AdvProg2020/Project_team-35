@@ -39,8 +39,11 @@ public class EditProductRequest extends Request {
             toEdit.setPrice(newPrice);
         }if (newInventory != -1){
             toEdit.setInventory(newInventory);
-        }if (newSpecialAttributes!=null){
-            toEdit.setSpecialAttributes(newSpecialAttributes);
+        }
+        if (newSpecialAttributes.keySet().size()==0) {
+            if (newSpecialAttributes != null) {
+                toEdit.setSpecialAttributes(newSpecialAttributes);
+            }
         }
     }
         public String getDetails() {

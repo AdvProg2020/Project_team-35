@@ -106,10 +106,7 @@ public class SellerBoss {
         } else if (!seller.getSalableProducts().contains(product)) {
             throw new SoldProductsCanNotHaveChange("you almost sold this one",iD);
         } else {
-            if (!product.getSpecialAttributes().containsKey(allChanges.keySet())) {
-                throw new ThisAttributeIsNotForThisProduct("invalid attribute which does not exist in this category.");
-            } else {
-                StringBuilder request = new StringBuilder();
+            {
                 ///////////*************************************/****************88//////////////////////////////
                 String name = null;
                 String company = null;
@@ -117,33 +114,44 @@ public class SellerBoss {
                 int inventory = -1;
                 Category category = null;
                 String status = null;
-                if (allChanges.keySet().contains("name")) {
+                if (allChanges.containsKey("name")) {
                         name = allChanges.get("name");
                 }
-                if (allChanges.keySet().contains("category")){
+                if (allChanges.containsKey("category")){
                     category = Category.getCategoryByName(allChanges.get("category"));
                 }
-                if (allChanges.keySet().contains("price")) {
+                if (allChanges.containsKey("price")) {
                         price = Double.parseDouble(allChanges.get("price"));
                 }
-                if (allChanges.keySet().contains("inventory")) {
+                if (allChanges.containsKey("inventory")) {
                         inventory = Integer.parseInt(allChanges.get("inventory"));
                 }
-                if (allChanges.keySet().contains("company")) {
+                if (allChanges.containsKey("company")) {
                         company = allChanges.get("company");
                 }
                 HashMap<String, String> newChange = new HashMap<>();
-                for (String s : allChanges.keySet())
+                for (String s : allChanges.keySet()) {
                     if (!(s.equalsIgnoreCase("name") || s.equalsIgnoreCase("price") || s.equalsIgnoreCase("inventory") || s.equalsIgnoreCase("company") || s.equalsIgnoreCase("category"))) {
                         newChange.put(s, allChanges.get(s));
                     }
+                }
+
+                if (newChange.keySet().size()!=0) {
+                    if (!product.getSpecialAttributes().containsKey(newChange.keySet())) {
+                        throw new ThisAttributeIsNotForThisProduct("invalid attribute which does not exist in this category.");
+                    }
+                }
                 if (category!=null){
-                    if (!category.isThisAttributesForThisCategory(newChange)){
-                        throw new NoMatchBetweenCategoryAndAttributes("these attributes can't be matched with category");
+                    if (newChange.keySet().size()!=0) {
+                        if (!category.isThisAttributesForThisCategory(newChange)) {
+                            throw new NoMatchBetweenCategoryAndAttributes("these attributes can't be matched with category");
+                        }
                     }
                 }else{
-                    if (!product.getCategory().isThisAttributesForThisCategory(newChange)){
-                        throw new NoMatchBetweenCategoryAndAttributes("these attributes can't be matched with category");
+                    if (newChange.keySet().size()!=0) {
+                        if (!product.getCategory().isThisAttributesForThisCategory(newChange)) {
+                            throw new NoMatchBetweenCategoryAndAttributes("these attributes can't be matched with category");
+                        }
                     }
                 }
                 EditProductRequest editProductRequest = new EditProductRequest(seller,product,name,company,price,inventory,newChange,category);

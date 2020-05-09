@@ -48,7 +48,7 @@ public abstract class Page {
         try {
             nextPage.execute();
         }catch (Exception e){
-            System.err.println("invalid command");
+            e.printStackTrace();
             this.execute();
         }
     }
@@ -92,10 +92,10 @@ public abstract class Page {
      */
     protected static boolean checkFormatOfPersonalInformation(String type, String input) {
 
-        if (type.equals("email address")) {
+        if (type.equals("email address")|| type.equalsIgnoreCase("email")) {
             Matcher matcher = getMatcher(input, "^(\\w+)@(\\w+).(\\w+)$");
             return matcher.matches();
-        } else if (type.equals("phone number")) {
+        } else if (type.equals("phone number")|| type.equalsIgnoreCase("phoneNumber")) {
             Matcher matcher = getMatcher(input, "\\d+");
             return matcher.matches();
         }

@@ -17,12 +17,34 @@ public class RegisteringPanel extends Page {
     public RegisteringPanel(String name, Page parentPage) {
         super(name, parentPage);
 
-        subPages.put("3", registerUser());
-        subPages.put("4", loginGetUsername());
+        subPages.put("4", registerUser());
+        subPages.put("5", loginGetUsername());
+        subPages.put("2", new Page("logout",this) {
+            @Override
+            public void execute() {
+                Page nextPage = null;
+                nextPage = new MainPage();
+                if (Account.getOnlineAccount()==null){
+                    System.err.println("you should first login for logout");
+                }else {
+                    AccountBoss.logout(Account.getOnlineAccount());
+                    System.out.println("logout successfully");
+                }
+                nextPage.execute();
+            }
+        });
         subPages.put("offs", this);
-        subPages.put("products", this);
+        subPages.put("6",gotoProducts());
         subPages.put("search", this);
 
+    }
+    private Page gotoProducts(){
+        return new Page("go to productsPage",this) {
+            @Override
+            public void execute() {
+                new ProductsPage("productsPage",this.parentPage).execute();
+            }
+        };
     }
 
     /**
