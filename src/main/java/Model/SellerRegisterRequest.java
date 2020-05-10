@@ -22,7 +22,7 @@ public class SellerRegisterRequest extends Request {
     }
 
     public String getRequestInfo () {
-        return "  Seller Register Request "+" --- RQId: " + this.getRequestId();
+        return "  Seller Register Request --- username: "+username+" --- RQId: " + this.getRequestId();
     }
 
     public void execute()  {

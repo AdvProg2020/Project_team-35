@@ -96,7 +96,7 @@ public class SellerBoss {
         }
     }
 
-    public static void editProduct(HashMap<String, String> allChanges, String id, Seller seller) throws ThisIsNotYours, SoldProductsCanNotHaveChange, ThisAttributeIsNotForThisProduct, NoMatchBetweenCategoryAndAttributes {
+    public static void editProduct(HashMap<String, String> allChanges, String id, Seller seller) throws ThisIsNotYours, SoldProductsCanNotHaveChange, ThisAttributeIsNotForThisProduct, NoMatchBetweenCategoryAndAttributes, ThereIsNotCategoryWithNameException {
         int iD = Integer.parseInt(id);
         Product product = Product.getProductWithId(iD);
         if (product == null) {
@@ -107,7 +107,6 @@ public class SellerBoss {
             throw new SoldProductsCanNotHaveChange("you almost sold this one",iD);
         } else {
             {
-                ///////////*************************************/****************88//////////////////////////////
                 String name = null;
                 String company = null;
                 double price = -1.0;
@@ -119,12 +118,25 @@ public class SellerBoss {
                 }
                 if (allChanges.containsKey("category")){
                     category = Category.getCategoryByName(allChanges.get("category"));
+                    if (category==null){
+                        throw new ThereIsNotCategoryWithNameException("this category does not exist");
+                    }
                 }
                 if (allChanges.containsKey("price")) {
+                    if (!allChanges.get("price").matches("^\\d+.?\\d+$")){
+                        throw new NumberFormatException("number should be");
+                    }
                         price = Double.parseDouble(allChanges.get("price"));
+                        if (price<=0)
+                            throw new NumberFormatException("number is invalid");
                 }
                 if (allChanges.containsKey("inventory")) {
+                    if (!allChanges.get("inventory").matches("^\\d+$")){
+                        throw new NumberFormatException("number should be");
+                    }
                         inventory = Integer.parseInt(allChanges.get("inventory"));
+                        if (inventory<=0)
+                            throw new NumberFormatException("number is invalid");
                 }
                 if (allChanges.containsKey("company")) {
                         company = allChanges.get("company");
@@ -137,8 +149,16 @@ public class SellerBoss {
                 }
 
                 if (newChange.keySet().size()!=0) {
-                    if (!product.getSpecialAttributes().containsKey(newChange.keySet())) {
-                        throw new ThisAttributeIsNotForThisProduct("invalid attribute which does not exist in this category.");
+                    for (String s : newChange.keySet()) {
+                        System.out.println(s);
+                    }
+                    for (String s : product.getSpecialAttributes().keySet()) {
+                        System.out.println(s);
+                    }
+                    for (String s : newChange.keySet()) {
+                        if (!product.getSpecialAttributes().keySet().contains(s)){
+                            throw new ThisAttributeIsNotForThisProduct("this is not invalid attribute for this category");
+                        }
                     }
                 }
                 if (category!=null){
@@ -172,7 +192,7 @@ public class SellerBoss {
         if (off == null) {
             throw new ThisIsNotYours("this does not exist",Integer.parseInt(id));
         }
-        if (!seller.getSellerOffs().contains(off)) {
+        if (!seller.equals(off.getSeller())) {
             throw new ThisIsNotYours("this is not for you.",Integer.parseInt(id));
         }
         return off.showOff();
@@ -188,12 +208,12 @@ public class SellerBoss {
         String format = null;
         for (String s : changes.keySet()) {
             if (s.equalsIgnoreCase("startDate")){
-                date2  = new SimpleDateFormat("dd//MM//yyyy").parse(changes.get(s));
+                date2  = new SimpleDateFormat("dd/MM/yyyy").parse(changes.get(s));
             }
             if (s.equalsIgnoreCase("finalDate")) {
                 dateOfNow = new Date();
                 date = changes.get(s);
-                date1 = new SimpleDateFormat("dd//MM/yyyy").parse(date);
+                date1 = new SimpleDateFormat("dd/MM/yyyy").parse(date);
                 if (date1.before(dateOfNow)) {
                     throw new TimeLimit("this time is passed");
                 }else if (date1.before(date2)){
@@ -218,15 +238,15 @@ public class SellerBoss {
 
     }
     public static void addOff(ArrayList<Integer> id  , Seller seller  , String startDate , String finalDate,String percents , String maxs) throws ParseException, ThisIsNotYours, TimeLimit, InvalidNumber, InputStringExceptNumber {
-           Date start = new SimpleDateFormat("dd//MM//yyyy").parse(startDate);
-           Date finalDates = new SimpleDateFormat("dd//MM//yyyy").parse(finalDate);
+           Date start = new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
+           Date finalDates = new SimpleDateFormat("dd/MM/yyyy").parse(finalDate);
            if (start.after(finalDates)){
                throw new TimeLimit("this time is wrong");
            }
-           if (maxs.matches("^\\d+.\\d+$")){
+           if (!maxs.matches("^(\\d+)(.?)(\\d*)$")){
                throw new InputStringExceptNumber("max has mistake");
            }
-           if (percents.matches("^\\d+.\\d+$")){
+           if (!percents.matches("^(\\d+)(.?)(\\d*)$")){
                throw new InputStringExceptNumber("percent has mistake");
            }
            double max = Double.parseDouble(maxs);

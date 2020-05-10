@@ -113,8 +113,9 @@ public class SellerPage extends Page {
             public void execute() {
                 System.out.println("do you want to back?(yes|no)");
                 String decision = scanner.nextLine();
+                Page nextPage = null;
                 if (decision.equalsIgnoreCase("yes")) {
-                    parentPage.execute();
+                    nextPage = parentPage;
                 } else if (decision.equalsIgnoreCase("no")) {
                     System.out.println("enter data of off:");
                     System.out.println("start date:");
@@ -135,21 +136,24 @@ public class SellerPage extends Page {
                         } else {
                             if (command.matches("^\\d+$")) {
                                 id.add(Integer.parseInt(command));
+                            }else {
+                                System.err.println("invalid format for id");
                             }
                         }
                     }
                     try {
                         SellerBoss.addOff(id, (Seller) Account.getOnlineAccount(), startDate, finalDate, (percent), (max));
                         System.out.println("your request successfully send to manager");
-                        parentPage.execute();
+                        nextPage = parentPage;
                     } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber | InputStringExceptNumber e) {
                         System.err.println(e.getMessage());
-                        this.execute();
+                        nextPage = this;
                     }
                 } else {
                     System.err.println("invalid command");
-                    parentPage.execute();
+                    nextPage = parentPage;
                 }
+                nextPage.execute();
             }
         };
     }
@@ -191,6 +195,7 @@ public class SellerPage extends Page {
                 Page nextPage = null;
                 String regex = "^view off (\\d+)$";
                 Matcher matcher = getMatcher(command, regex);
+                matcher.matches();
                 if (command.matches(regex)) {
                     try {
                         System.out.println(SellerBoss.viewOff((Seller) Account.getOnlineAccount(), matcher.group(1)));
@@ -266,11 +271,14 @@ public class SellerPage extends Page {
                     try {
                         SellerBoss.editProduct(allEditions, matcher.group(1), (Seller) Account.getOnlineAccount());
                         nextPage = parentPage;
-                    } catch (NoMatchBetweenCategoryAndAttributes | ThisIsNotYours | SoldProductsCanNotHaveChange | ThisAttributeIsNotForThisProduct thisIsNotYours) {
+                    } catch (NoMatchBetweenCategoryAndAttributes | ThisIsNotYours | SoldProductsCanNotHaveChange | ThisAttributeIsNotForThisProduct | ThereIsNotCategoryWithNameException thisIsNotYours) {
                         // System.err.println(thisIsNotYours.getMessage());
                         thisIsNotYours.printStackTrace();
                         nextPage = this;
                     }
+                } else if (command.equalsIgnoreCase("help")) {
+                    System.out.println("(edit [productId] ---> {type:end & change:edit} <-> for ending edit *** you cant change category and set its special attributes in a a same time)");
+                    nextPage = this;
                 } else if (command.equalsIgnoreCase("back")) {
                     nextPage = parentPage;
                 } else {
@@ -454,27 +462,36 @@ public class SellerPage extends Page {
         return new Page("remove product", this) {
             @Override
             public void execute() {
+                System.out.println(name);
+                Page nextPage = null;
                 String command = scanner.nextLine();
                 String regex = "^remove (\\d+)$";
                 Matcher matcher = getMatcher(command, regex);
+                matcher.matches();
                 if (command.matches(regex)) {
                     try {
                         try {
                             SellerBoss.removeProduct(matcher.group(1), (Seller) Account.getOnlineAccount(), 0);
+                            nextPage = parentPage;
                         } catch (NullProduct nullProduct) {
                             System.err.println(nullProduct.getMessage());
-                            this.execute();
+                            nextPage = this;
                         }
                     } catch (ThisIsNotYours | SoldProductsCanNotHaveChange thisIsNotYours) {
                         System.err.println(thisIsNotYours.getMessage());
-                        this.execute();
+                        nextPage = this;
                     }
-                } else if (command.matches("back")) {
-                    parentPage.execute();
+                }else if (command.equalsIgnoreCase("help")){
+                    System.out.println("remove [productId] *** back *** help");
+                    nextPage = this;
+                }
+                else if (command.matches("back")) {
+                    nextPage = parentPage;
                 } else {
                     System.err.println("invalid command");
-                    this.execute();
+                    nextPage = this;
                 }
+                nextPage.execute();
             }
         };
     }

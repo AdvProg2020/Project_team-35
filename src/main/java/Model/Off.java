@@ -15,16 +15,22 @@ public class Off {
     private double maximumAmountOfOff;
     private double offPercent;
     private ProductAndOffStatus offStatus;
+    private Seller seller;
 
-    public Off(Date finalDate, Date startDate, ArrayList<Product> includedProducts, double maximumAmountOfOff, double offPercent) {
+    public Off(Date finalDate, Date startDate, ArrayList<Product> includedProducts, double maximumAmountOfOff, double offPercent,Seller seller) {
         this.finalDate = finalDate;
         this.startDate = startDate;
         this.includedProducts = includedProducts;
         this.maximumAmountOfOff = maximumAmountOfOff;
         this.offPercent = offPercent;
         allActiveOffs.add(this);
-        offId = offIdNumber;
+        this.seller = seller;
         offIdNumber+=1;
+        offId = offIdNumber;
+    }
+
+    public Seller getSeller() {
+        return seller;
     }
 
     public int getOffId() {
@@ -40,6 +46,7 @@ public class Off {
     public String showOff(){
         StringBuilder show = new StringBuilder();
         show.append("id: "+getOffId()+"\n");
+        show.append("start date: "+getStartDate().toString()+"\nfinal date: "+getFinalDate().toString()+"\n");
         show.append("status: "+offStatus.name()+"\n");
         show.append("percent: "+offPercent+"\n"+"maximum: "+maximumAmountOfOff+"\n");
         for (Product product : includedProducts) {

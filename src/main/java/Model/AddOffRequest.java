@@ -25,7 +25,7 @@ public class AddOffRequest extends Request {
     }
     public void execute() {
         this.isDone = true;
-        Off off = new Off(newFinalDate,newStartDate,products,max,percent);
+        Off off = new Off(newFinalDate,newStartDate,products,max,percent,seller);
         off.setOffStatus(ProductAndOffStatus.CONFIRMED);
     }
     public String getRequestInfo() {

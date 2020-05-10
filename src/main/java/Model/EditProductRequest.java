@@ -31,6 +31,11 @@ public class EditProductRequest extends Request {
         }
         if (newCategory!=null){
             toEdit.setCategory(newCategory);
+            HashMap<String,String> specialists = new HashMap<>();
+            for (String attribute : toEdit.getCategory().getSpecialAttributes()) {
+                specialists.put(attribute,"");
+            }
+            toEdit.setSpecialAttributes(specialists);
         }
         if (newCompany!=null){
             toEdit.setCompany(newCompany);
@@ -40,9 +45,14 @@ public class EditProductRequest extends Request {
         }if (newInventory != -1){
             toEdit.setInventory(newInventory);
         }
-        if (newSpecialAttributes.keySet().size()==0) {
+        if (newSpecialAttributes.keySet().size()!=0) {
             if (newSpecialAttributes != null) {
-                toEdit.setSpecialAttributes(newSpecialAttributes);
+
+              HashMap<String,String>  attributes = toEdit.getSpecialAttributes();
+                for (String s : newSpecialAttributes.keySet()) {
+                    attributes.put(s,newSpecialAttributes.get(s));
+                }
+                toEdit.setSpecialAttributes(attributes);
             }
         }
     }
