@@ -1,7 +1,6 @@
 package Model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,15 +8,15 @@ public class Off {
     public static ArrayList<Off> allActiveOffs = new ArrayList<>();
     private static int offIdNumber;
     private int offId;
-    private Date finalDate;
-    private Date startDate;
+    private LocalDateTime finalDate;
+    private  LocalDateTime startDate;
     private ArrayList<Product> includedProducts;
     private double maximumAmountOfOff;
     private double offPercent;
     private ProductAndOffStatus offStatus;
     private Seller seller;
 
-    public Off(Date finalDate, Date startDate, ArrayList<Product> includedProducts, double maximumAmountOfOff, double offPercent,Seller seller) {
+    public Off(LocalDateTime finalDate, LocalDateTime startDate, ArrayList<Product> includedProducts, double maximumAmountOfOff, double offPercent, Seller seller) {
         this.finalDate = finalDate;
         this.startDate = startDate;
         this.includedProducts = includedProducts;
@@ -57,7 +56,7 @@ public class Off {
         return show.toString();
     }
 
-    public void setFinalDate(Date finalDate) {
+    public void setFinalDate( LocalDateTime finalDate) {
         this.finalDate = finalDate;
     }
 
@@ -73,7 +72,7 @@ public class Off {
         this.offStatus = offStatus;
     }
 
-    public Date getFinalDate() {
+    public  LocalDateTime getFinalDate() {
         return finalDate;
     }
 
@@ -89,11 +88,11 @@ public class Off {
         return offStatus;
     }
 
-    public Date getStartDate() {
+    public  LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate( LocalDateTime startDate) {
         this.startDate = startDate;
     }
 }

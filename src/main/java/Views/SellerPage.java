@@ -7,6 +7,7 @@ import Controller.SellerBoss;
 import Model.*;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -64,11 +65,15 @@ public class SellerPage extends Page {
         return new Page("edit off", this) {
             @Override
             public void execute() {
+                System.out.println(name);
+                System.out.println("enter command:(edit [off ID] *** back)");
                 String command = scanner.nextLine();
                 Page nextPage = null;
                 String regex = "^edit (\\d+)$";
                 Matcher matcher = getMatcher(command, regex);
+                matcher.matches();
                 if (command.matches(regex)) {
+                    System.out.println("enter\ntype : end\nchange : edit\nto stop process");
                     Off off = Off.getOffById(Integer.parseInt(matcher.group(1)));
                     Seller seller = (Seller) Account.getOnlineAccount();
                     {
@@ -118,15 +123,15 @@ public class SellerPage extends Page {
                     nextPage = parentPage;
                 } else if (decision.equalsIgnoreCase("no")) {
                     System.out.println("enter data of off:");
-                    System.out.println("start date:");
+                    System.out.println("start date:(yyyy-MM-ddThh:mm:ss)");
                     String startDate = scanner.nextLine();
-                    System.out.println("final Date:");
+                    System.out.println("final Date:(yyyy-MM-ddThh:mm:ss)");
                     String finalDate = scanner.nextLine();
                     System.out.println("percent:");
                     String percent = scanner.nextLine();
                     System.out.println("maximum:");
                     String max = scanner.nextLine();
-                    System.out.println("products:");
+                    System.out.println("products:(end add product | [productId])");
                     ArrayList<Integer> id = new ArrayList<>();
                     String command = null;
                     while (true) {
@@ -208,7 +213,11 @@ public class SellerPage extends Page {
                     nextPage = editOff();
                 } else if (command.equalsIgnoreCase("add off")) {
                     nextPage = addOff();
-                } else if (command.equalsIgnoreCase("back")) {
+                }else if (command.equalsIgnoreCase("help")){
+                    System.out.println("add off *** view off [off id] *** edit off *** back *** help");
+                    nextPage = this;
+                }
+                else if (command.equalsIgnoreCase("back")) {
                     nextPage = parentPage;
                 } else {
                     System.err.println("invalid command");

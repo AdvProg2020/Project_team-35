@@ -1,5 +1,6 @@
 package Model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,10 +8,10 @@ public class EditOffRequest extends Request {
     private Off toEdit;
     private double newMaximumAmountOfOff;
     private double newOffPercent;
-    private Date newDate;
-    private Date newFinalDate;
+    private LocalDateTime newDate;
+    private LocalDateTime newFinalDate;
 
-    public EditOffRequest(Seller seller, Off toEdit, double newMaximumAmountOfOff, double newOffPercent, Date newDate , Date newFinalDate) {
+    public EditOffRequest(Seller seller, Off toEdit, double newMaximumAmountOfOff, double newOffPercent, LocalDateTime newDate , LocalDateTime newFinalDate) {
         super(seller);
         this.toEdit = toEdit;
         this.newMaximumAmountOfOff = newMaximumAmountOfOff;
