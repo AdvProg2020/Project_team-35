@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class CustomerTest {
 private Customer customer = new Customer("a","s","d","sdf","23","pass");
-private Product product = new Product("a","s",23,new Seller("a","s","ds","fd","sda","sd","sd"),7,null,null);
+private Product product = new Product("a","s",23,new Seller("a","s","ds","fd","sda","sd","sd"),7,null,null,null);
     @Test
     public void getMoney() {
         customer.setMoney(22.0);

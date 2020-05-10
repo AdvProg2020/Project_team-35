@@ -3,21 +3,11 @@ package Model;
 import java.util.HashMap;
 
 public class AddProductRequest extends Request {
-    private String name;
-    private String company;
-    private int inventory;
-    private double price;
-    private Category category;
-    private HashMap<String,String> specials;
+   private Product product;
 
-    public AddProductRequest(Seller seller, String name, String company, int inventory, double price, Category category, HashMap<String, String> specials) {
+    public AddProductRequest(Seller seller, Product product) {
         super(seller);
-        this.name = name;
-        this.company = company;
-        this.inventory = inventory;
-        this.price = price;
-        this.category = category;
-        this.specials = specials;
+        this.product = product;
     }
 
     public String getDetails() {
@@ -26,8 +16,7 @@ public class AddProductRequest extends Request {
     }
     public void execute() {
         this.isDone = true;
-        Product product = new Product(name,company,price,seller,inventory,category,specials);
-        category.getCategoryProducts().add(product);
+
         product.setProductStatus(ProductAndOffStatus.CONFIRMED);
     }
     public String getRequestInfo() {

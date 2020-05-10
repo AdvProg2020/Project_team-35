@@ -23,12 +23,13 @@ public class RegisteringPanel extends Page {
             @Override
             public void execute() {
                 Page nextPage = null;
-                nextPage = new MainPage();
                 if (Account.getOnlineAccount()==null){
                     System.err.println("you should first login for logout");
+                    nextPage = parentPage;
                 }else {
                     AccountBoss.logout(Account.getOnlineAccount());
                     System.out.println("logout successfully");
+                    nextPage = new MainPage();
                 }
                 nextPage.execute();
             }
@@ -56,16 +57,17 @@ public class RegisteringPanel extends Page {
         return new Page("login", this) {
             @Override
             public void execute() {
+                Page nextPage = null;
                 AccountBoss.startLogin(usernameAndPassword.get("username"), usernameAndPassword.get("password"));
                 System.out.println("login successfully");
                 account = Account.getAccountWithUsername(usernameAndPassword.get("username"));
                 if (parentPage.parentPage.name.equals("Main Menu")) {
                     MainPage mainPage = new MainPage();
-                    mainPage.execute();
+                    nextPage = mainPage;
                 } else {
-                    parentPage.parentPage.execute();
+                  nextPage =  parentPage.parentPage;
                 }
-
+            nextPage.execute();
             }
         };
     }
@@ -75,27 +77,30 @@ public class RegisteringPanel extends Page {
             @Override
             public void execute() {
                 System.out.println("password:");
+                Page nextPage = null;
                 String command = scanner.nextLine();
                 if (command.equals("back")) {
-                    parentPage.execute();
-                }
-                String regex = "(\\S+)";
-                Matcher matcher = getMatcher(command, regex);
-                matcher.matches();
-                if (command.matches(regex)) {
-                    try {
-                        String username = usernameAndPassword.get("username");
-                        AccountBoss.checkPasswordValidity(username, matcher.group(1));
-                        usernameAndPassword.put("password", matcher.group(1));
-                        login().execute();
-                    } catch (PasswordValidity e) {
-                        System.out.println(e.getMessage());
-                        this.execute();
+                    nextPage = parentPage;
+                }else {
+                    String regex = "(\\S+)";
+                    Matcher matcher = getMatcher(command, regex);
+                    matcher.matches();
+                    if (command.matches(regex)) {
+                        try {
+                            String username = usernameAndPassword.get("username");
+                            AccountBoss.checkPasswordValidity(username, matcher.group(1));
+                            usernameAndPassword.put("password", matcher.group(1));
+                            nextPage = login();
+                        } catch (PasswordValidity e) {
+                            System.out.println(e.getMessage());
+                            nextPage = this;
+                        }
+                    } else {
+                        System.err.println("invalid command");
+                        nextPage = this;
                     }
-                } else {
-                    System.err.println("invalid command");
-                    this.execute();
                 }
+                nextPage.execute();
             }
         };
     }
@@ -107,9 +112,11 @@ public class RegisteringPanel extends Page {
             @Override
             public void execute() {
                 System.out.println("print command:");
+
                 String command = scanner.nextLine();
+                Page nextPage = null;
                 if (command.equals("back")) {
-                    parentPage.execute();
+                    nextPage = parentPage;
                 } else {
                     String regex = "login (\\w+)";
                     Matcher matcher = getMatcher(command, regex);
@@ -118,16 +125,17 @@ public class RegisteringPanel extends Page {
                         try {
                             AccountBoss.checkUsernameExistenceInLogin(matcher.group(1));
                             usernameAndPassword.put("username", matcher.group(1));
-                            loginGetPassword().execute();
+                          nextPage =  loginGetPassword();
                         } catch (ExistenceOfUserWithUsername | LoginWithoutLogout e) {
                             System.out.println(e.getMessage());
-                            this.execute();
+                            nextPage = this;
                         }
                     } else {
                         System.err.println("invalid command");
-                        this.execute();
+                        nextPage = this;
                     }
                 }
+                nextPage.execute();
             }
 
         };
@@ -240,25 +248,6 @@ public class RegisteringPanel extends Page {
         };
     }
 
-/*
-    @Override
-    public void execute() {
-        show();
-        Page nextPage = null;
-        String command = scanner.nextLine();
-        if (command.equals("3")) {
-            nextPage = RegisterUser();
-        } else if (command.equals("4")) {
-            nextPage = loginGetUsername();
-
-        } else if (command.equals("6")) {
-            nextPage = parentPage;
-        } else {
-            nextPage = this;
-        }
-        nextPage.execute();
-
-    }*/
 
 
 }

@@ -5,19 +5,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class AddOffRequest extends Request {
-    private LocalDateTime newStartDate;
-    private LocalDateTime newFinalDate;
-    private double percent;
-    private double max;
-    private ArrayList<Product> products;
+   private Off off;
 
-    public AddOffRequest(Seller seller, LocalDateTime newStartDate, LocalDateTime newFinalDate, double percent, double max, ArrayList<Product> products) {
+    public AddOffRequest(Seller seller, Off off) {
         super(seller);
-        this.newStartDate = newStartDate;
-        this.newFinalDate = newFinalDate;
-        this.percent = percent;
-        this.max = max;
-        this.products = products;
+        this.off = off;
     }
 
     public String getDetails() {
@@ -26,8 +18,8 @@ public class AddOffRequest extends Request {
     }
     public void execute() {
         this.isDone = true;
-        Off off = new Off(newFinalDate,newStartDate,products,max,percent,seller);
         off.setOffStatus(ProductAndOffStatus.CONFIRMED);
+
     }
     public String getRequestInfo() {
         return "  ADD OFF Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();

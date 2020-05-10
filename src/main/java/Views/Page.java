@@ -40,9 +40,14 @@ public abstract class Page {
             }
         }
         if (command.equals(String.valueOf(subPages.size()+1)) && parentPage!=null){
-         nextPage = parentPage;
+            // i need help in this part//********************************
+            if (parentPage instanceof UserPage){
+                nextPage = parentPage.parentPage;
+            }else {
+                nextPage = parentPage;
+            }
         }
-        else if (command.equals(String.valueOf(subPages.size()+1))){
+        else if (command.equals(String.valueOf(subPages.size()+1)) && this instanceof MainPage){
             return;
         }
         try {

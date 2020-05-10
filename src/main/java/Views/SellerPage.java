@@ -4,6 +4,7 @@ import Controller.AccountBoss;
 import Controller.Exceptions.*;
 import Controller.Exceptions.NullProduct;
 import Controller.SellerBoss;
+import Controller.ThisIsNotReadyForEdit;
 import Model.*;
 
 import java.text.ParseException;
@@ -80,20 +81,28 @@ public class SellerPage extends Page {
                         String change = new String();
                         String type = new String();
                         offInfoChanges = new HashMap<>();
+                        ArrayList<String> listOfTypes = new ArrayList<>();
+                        listOfTypes.add("startDate");
+                        listOfTypes.add("finalDate");
+                        listOfTypes.add("offPercent");
+                        listOfTypes.add("maximumAmountOfOff");
+                        String[] lists = new String[0];
+                                lists = listOfTypes.toArray(lists);
+                                int i =0 ;
                         do {
-                            type = scanner.nextLine();
+                            System.out.println(lists[i]+":");
                             change = scanner.nextLine();
-                            offInfoChanges.put(type, change);
-                        } while (!(type.equalsIgnoreCase("end") && change.equalsIgnoreCase("edit")));
+                            offInfoChanges.put(lists[i], change);
+                            i+=1;
+                        } while (i<4);
                         try {
-                            try {
-                                SellerBoss.editOff((Seller) Account.getOnlineAccount(), off, offInfoChanges);
-                            } catch (InputStringExceptNumber inputStringExceptNumber) {
-                                System.err.println(inputStringExceptNumber.getMessage());
-                                nextPage = this;
-                            }
-                            System.out.println("edit successfully");
-                        } catch (ItIsNotCorrect | ParseException | TimeLimit itIsNotCorrect) {
+
+                                    SellerBoss.editOff((Seller) Account.getOnlineAccount(), off, offInfoChanges);
+                                    nextPage = parentPage;
+                            System.out.println("send request successfully");
+
+
+                        } catch (ThisIsNotReadyForEdit | InputStringExceptNumber | ItIsNotCorrect | ParseException | TimeLimit itIsNotCorrect) {
                             System.out.println(itIsNotCorrect.getMessage());
                             nextPage = this;
                         }
@@ -409,8 +418,10 @@ public class SellerPage extends Page {
                 subPages.add("category");
                 subPages.add("company");
                 subPages.add("attributes");
+                subPages.add("description");
                 Page nextPage = null;
                 productInfo = new HashMap<>();
+                boolean itHasBack = false;
                 S1:
                 for (String s : subPages) {
                     while (true) {
@@ -423,8 +434,10 @@ public class SellerPage extends Page {
                             String command = scanner.nextLine();
                             if (command.equalsIgnoreCase("back")) {
                                 nextPage = parentPage;
+                                itHasBack = true;
                                 break S1;
                             }
+
                             if (s.equalsIgnoreCase("category")) {
                                 category = Category.getCategoryByName(command);
                                 if (category == null) {
@@ -445,6 +458,7 @@ public class SellerPage extends Page {
                                     String command2 = scanner.nextLine();
                                     if (command2.equalsIgnoreCase("back")) {
                                         nextPage = parentPage;
+                                        itHasBack = true;
                                         break S1;
                                     }
                                     specialAttributes.put(attribute, command2);
@@ -455,14 +469,17 @@ public class SellerPage extends Page {
 
                     }
                 }
-                if (category != null) {
-                    SellerBoss.addRequestProduct(productInfo.get("name"), productInfo.get("price"), productInfo.get("inventory"), specialAttributes, productInfo.get("company"), category, (Seller) Account.getOnlineAccount());
-                    System.out.println("we send request for manager");
-                    parentPage.execute();
-                } else {
-                    System.err.println("you should give data again");
-                    nextPage.execute();
+                if (!itHasBack) {
+                    if (category != null) {
+                        SellerBoss.addRequestProduct(productInfo.get("name"), productInfo.get("price"), productInfo.get("inventory"), specialAttributes, productInfo.get("company"), category, (Seller) Account.getOnlineAccount(),productInfo.get("description"));
+                        System.out.println("we send request for manager");
+                        nextPage = parentPage;
+                    } else {
+                        System.err.println("you should give data again");
+                        nextPage = this;
+                    }
                 }
+                nextPage.execute();
             }
         };
     }

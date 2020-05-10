@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class ProductTest {
    private Category category = new Category("labaniat",null);
     private Seller seller = new Seller("ali","hossein","amini","ali@ad.asd","23232","pass","mihan");
-private Product product = new Product("a","mihan",23,seller,10,category,null);
+private Product product = new Product("a","mihan",23,seller,10,category,null,null);
   private Customer customer = new Customer("mohammad","moli","molis","sad@sad.s","2323","pass");
     @Test
     public void attributeShow() {

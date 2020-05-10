@@ -1,6 +1,9 @@
 package Views;
 
+import Controller.Exceptions.NullProduct;
+import Controller.Exceptions.ProductIsFinished;
 import Controller.ProductBoss;
+import Controller.ProductsCompareNotSameCategories;
 import Model.Account;
 import Model.Customer;
 import Model.Product;
@@ -71,6 +74,7 @@ public class GoodPage extends Page {
                     @Override
                     public void execute() {
                         //this place should change for multi user program
+                        System.out.println(name);
                         Page nextPage = null;
                         if (Account.getOnlineAccount()==null){
                             System.err.println("first login");
@@ -100,6 +104,11 @@ public class GoodPage extends Page {
 
             }
 
+            @Override
+            public void execute() {
+                System.out.println(ProductBoss.showSummeryOfProductDetails(product));
+                super.execute();
+            }
         };
     }
     private Page attributes(){
@@ -123,10 +132,22 @@ public class GoodPage extends Page {
                 String command = scanner.nextLine();
                 String regex = "^compare (\\d+)$";
                 Matcher matcher = getMatcher(command,regex);
+                matcher.matches();
                 Page nextPage = null;
                 if (command.matches(regex)){
-                    nextPage = parentPage;
-                }else if (command.equalsIgnoreCase("back")){
+                    try {
+                        String result = String.valueOf(ProductBoss.compare(matcher.group(1),product));
+                        System.out.println(result);
+                        nextPage = parentPage;
+                    } catch (ProductsCompareNotSameCategories | ProductIsFinished | NullProduct productsCompareNotSameCategories) {
+                        productsCompareNotSameCategories.printStackTrace();
+                        nextPage = this;
+                    }
+                }else if (command.equalsIgnoreCase("help")){
+                    System.out.println("back *** help *** compare [productId]");
+                    nextPage = this;
+                }
+                else if (command.equalsIgnoreCase("back")){
                     nextPage = parentPage;
                 }else {
                     System.err.println("invalid command");

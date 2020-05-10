@@ -18,7 +18,7 @@ public class ProductTest {
         HashMap<String , String> specialAttributes = new HashMap<>();
         specialAttributes.put("wight", "23.34");
         specialAttributes.put("long"  , "43");
-        product = new Product("cheese","mihan" , 20.0 ,seller,2 ,category,specialAttributes);
+        product = new Product("cheese","mihan" , 20.0 ,seller,2 ,category,specialAttributes,null);
 
 
 

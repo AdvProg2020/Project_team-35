@@ -47,16 +47,18 @@ public class ProductsPage extends Page {
                Page nextPage = null;
                String regex = "^show product (\\d+)$";
                 Matcher matcher = getMatcher(command,regex);
+                matcher.matches();
                 if (command.matches(regex)){
                     int id =Integer.parseInt( matcher.group(1) );
                     GoodPage goodPage = null;
-                    try {
-                        goodPage = ProductBoss.goToGoodPage(id);
-                        System.out.println(ProductBoss.showSummeryOfProductDetails(Product.getProductWithId(id)));
-                    } catch (NullProduct nullProduct) {
-                        nullProduct.printStackTrace();
+                    Product product = Product.getProductWithId(id);
+                    if (product!=null) {
+                        nextPage = new GoodPage(product.getName(),this,product);
+                    }else {
+                        System.err.println("invalid id");
+                        nextPage = this ;
                     }
-                    nextPage = goodPage;
+
                 }else if (command.equalsIgnoreCase("back")){
                     nextPage = parentPage;
                 }else {
@@ -203,17 +205,10 @@ public class ProductsPage extends Page {
                 super.execute();
             }
 
-            @Override
-            public boolean show() {
-             return    super.show();
-            }
+
         };
     }
 
-    @Override
-    public boolean show() {
-       return super.show();
-    }
 
     @Override
     public void execute() {

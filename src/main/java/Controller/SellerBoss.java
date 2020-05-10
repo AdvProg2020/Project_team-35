@@ -47,10 +47,13 @@ public class SellerBoss {
         return product.toString();
     }
 
-    public static boolean addRequestProduct(String name, String price, String inventory, HashMap<String, String> attributes, String company, Category category, Seller seller) {
+    public static boolean addRequestProduct(String name, String price, String inventory, HashMap<String, String> attributes, String company, Category category, Seller seller,String description) {
         double productPrice = Double.parseDouble(price);
         int number = Integer.parseInt(inventory);
-        AddProductRequest addProductRequest = new AddProductRequest(seller, name, company, number, productPrice, category, attributes);
+        Product product = new Product(name,company,productPrice,seller,number,category,attributes,description);
+        product.setProductStatus(ProductAndOffStatus.FORMAKE);
+        category.getCategoryProducts().add(product);
+        AddProductRequest addProductRequest = new AddProductRequest(seller ,product);
         return true;
     }
 
@@ -151,12 +154,7 @@ public class SellerBoss {
                 }
 
                 if (newChange.keySet().size() != 0) {
-                    for (String s : newChange.keySet()) {
-                        System.out.println(s);
-                    }
-                    for (String s : product.getSpecialAttributes().keySet()) {
-                        System.out.println(s);
-                    }
+
                     for (String s : newChange.keySet()) {
                         if (!product.getSpecialAttributes().keySet().contains(s)) {
                             throw new ThisAttributeIsNotForThisProduct("this is not invalid attribute for this category");
@@ -176,6 +174,7 @@ public class SellerBoss {
                         }
                     }
                 }
+                product.setProductStatus(ProductAndOffStatus.FOREDIT);
                 EditProductRequest editProductRequest = new EditProductRequest(seller, product, name, company, price, inventory, newChange, category);
             }
         }
@@ -200,7 +199,7 @@ public class SellerBoss {
         return off.showOff();
     }
 
-    public static void editOff(Seller seller, Off off, HashMap<String, String> changes) throws ItIsNotCorrect, ParseException, TimeLimit, InputStringExceptNumber {
+    public static boolean editOff(Seller seller, Off off, HashMap<String, String> changes) throws ItIsNotCorrect, ParseException, TimeLimit, InputStringExceptNumber, ThisIsNotReadyForEdit {
         String date = null;
         double maximum = -1.0;
         double percent = -1.0;
@@ -208,40 +207,46 @@ public class SellerBoss {
         LocalDateTime date2 = off.getStartDate();
         ProductAndOffStatus productAndOffStatus = null;
         String format = null;
+        if (!off.getOffStatus().equals(ProductAndOffStatus.CONFIRMED)) {
+            throw new ThisIsNotReadyForEdit("this is not ready");
+        }
         for (String s : changes.keySet()) {
-            if (s.equalsIgnoreCase("startDate")) {
-                date2 = LocalDateTime.parse(s);
-            }
-            if (s.equalsIgnoreCase("finalDate")) {
-                dateOfNow = LocalDateTime.now();
-                date = changes.get(s);
-                date1 = LocalDateTime.parse(date);
-                if (date1.isBefore(dateOfNow)) {
-                    throw new TimeLimit("this time is passed");
-                } else if (date1.isBefore(date2)) {
-                    throw new TimeLimit("finalize is sooner starting");
+            if (changes.get(s) != null && !changes.get(s).equalsIgnoreCase("\n") && !changes.get(s).equalsIgnoreCase("")) {
+                if (s.equalsIgnoreCase("startDate")) {
+                    date2 = LocalDateTime.parse(changes.get(s));
                 }
-            } else if (s.equalsIgnoreCase("maximumAmountOfOff")) {
-                if (changes.get(s).matches("^\\d+.\\d+$")) {
-                    maximum = Double.parseDouble(changes.get(s));
-                } else {
-                    throw new InputStringExceptNumber("max should be double");
+                if (s.equalsIgnoreCase("finalDate")) {
+                    dateOfNow = LocalDateTime.now();
+                    date = changes.get(s);
+                    date1 = LocalDateTime.parse(date);
+                    if (date1.isBefore(dateOfNow)) {
+                        throw new TimeLimit("this time is passed");
+                    } else if (date1.isBefore(date2)) {
+                        throw new TimeLimit("finalize is sooner starting");
+                    }
+                } else if (s.equalsIgnoreCase("maximumAmountOfOff")) {
+                    if (changes.get(s).matches("^(\\d+)(.?)(\\d*)$")) {
+                        maximum = Double.parseDouble(changes.get(s));
+                    } else {
+                        throw new InputStringExceptNumber("max should be double");
+                    }
+                } else if (s.equalsIgnoreCase("offPercent")) {
+                    if (changes.get(s).matches("^(\\d+)(.?)(\\d*)$")) {
+                        percent = Double.parseDouble(changes.get(s));
+                    } else
+                        throw new InputStringExceptNumber("percent should be double");
                 }
-            } else if (s.equalsIgnoreCase("offPercent")) {
-                if (changes.get(s).matches("\\d+.\\d+")) {
-                    percent = Double.parseDouble(changes.get(s));
-                } else
-                    throw new InputStringExceptNumber("percent should be double");
             }
         }
+        off.setOffStatus(ProductAndOffStatus.FOREDIT);
         EditOffRequest editOffRequest = new EditOffRequest((Seller) Account.getOnlineAccount(), off, maximum, percent, date2, date1);
-
+        return true;
 
     }
 
     public static void addOff(ArrayList<Integer> id, Seller seller, String startDate, String finalDate, String percents, String maxs) throws ParseException, ThisIsNotYours, TimeLimit, InvalidNumber, InputStringExceptNumber {
         LocalDateTime start = LocalDateTime.parse(startDate);
-        LocalDateTime finalDates= LocalDateTime.parse(finalDate);
+        LocalDateTime finalDates = LocalDateTime.parse(finalDate);
 
         if (start.isAfter(finalDates)) {
             throw new TimeLimit("this time is wrong");
@@ -264,6 +269,8 @@ public class SellerBoss {
             }
             allProducts.add(Product.getProductWithId(integer));
         }
-        AddOffRequest addOffRequest = new AddOffRequest(seller, start, finalDates, percent, max, allProducts);
+        Off off = new Off(finalDates, start, allProducts, max, percent, seller);
+        off.setOffStatus(ProductAndOffStatus.FORMAKE);
+        AddOffRequest addOffRequest = new AddOffRequest(seller, off);
     }
 }

@@ -1,5 +1,8 @@
 package Model;
 
+import Views.GoodPage;
+import Views.ProductsPage;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,8 +26,9 @@ public class Product {
     //when the page of product is open.
 
 
-    public Product(String name, String company, double price, Seller seller, int inventory, Category category, HashMap<String, String> specialAttributes) {
+    public Product(String name, String company, double price, Seller seller, int inventory, Category category, HashMap<String, String> specialAttributes,String description) {
         this.name = name;
+        this.description = description;
         this.company = company;
         this.price = price;
         this.seller = seller;

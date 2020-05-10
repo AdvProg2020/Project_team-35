@@ -22,12 +22,12 @@ public class Off {
         this.includedProducts = includedProducts;
         this.maximumAmountOfOff = maximumAmountOfOff;
         this.offPercent = offPercent;
-        allActiveOffs.add(this);
+        Off.allActiveOffs.add(this);
         this.seller = seller;
+        seller.getSellerOffs().add(this);
         offIdNumber+=1;
         offId = offIdNumber;
     }
-
     public Seller getSeller() {
         return seller;
     }
@@ -53,7 +53,8 @@ public class Off {
             show.append("product name: "+product.getName()+"\n");
             show.append("product inventory: "+product.getInventory()+"\n");
         }
-        return show.toString();
+
+        return String.valueOf(show);
     }
 
     public void setFinalDate( LocalDateTime finalDate) {
