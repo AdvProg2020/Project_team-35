@@ -29,7 +29,7 @@ public class DiscountCode {
         }
         return false;
     }
-    public DiscountCode getDiscountCodeWithId(String id) {
+    public static DiscountCode getDiscountCodeWithId(String id) {
         for (DiscountCode discountCode : allDiscountCodes) {
             if (discountCode.id.equals(id))
                 return discountCode;
@@ -60,4 +60,6 @@ public class DiscountCode {
     public int getAvailableUseFrequent() {
         return availableUseFrequent;
     }
+
+
 }

@@ -22,6 +22,8 @@
     <list default="true" id="22a8972d-0158-477b-901a-9c04baa7ad15" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controller/CustomerBoss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/CustomerBoss.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/DiscountCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/DiscountCode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Views/BuyerPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/BuyerPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -161,7 +163,11 @@
       <workItem from="1588064245627" duration="1141000" />
       <workItem from="1588375072856" duration="2035000" />
       <workItem from="1588464258141" duration="2057000" />
-      <workItem from="1588626708648" duration="2305000" />
+      <workItem from="1588626708648" duration="3062000" />
+      <workItem from="1588715874194" duration="2801000" />
+      <workItem from="1588812929541" duration="1129000" />
+      <workItem from="1588857720769" duration="2479000" />
+      <workItem from="1589038350996" duration="5568000" />
     </task>
     <task id="LOCAL-00001" summary="add maven project and java files">
       <created>1587386984402</created>
@@ -380,7 +386,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588465427715</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="add view products in cart">
+      <created>1588629104560</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1588629104560</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -401,7 +414,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="exit of user page and access to login from user page and user page common commands" />
     <MESSAGE value="add view info to view&#10;Manager.getPersonalInfo is correct should change this method in all rules" />
     <MESSAGE value="add company info show process" />
     <MESSAGE value="add edit personal info get field name part.(first step of editing)" />
@@ -426,7 +438,8 @@
     <MESSAGE value="add isThereProductWithIdInCart and getTotalPriceOfCart methods" />
     <MESSAGE value="add some methods in DiscountCode class in models" />
     <MESSAGE value="add some getters in DiscountCode class in models and showDiscountCodes method" />
-    <option name="LAST_COMMIT_MESSAGE" value="add some getters in DiscountCode class in models and showDiscountCodes method" />
+    <MESSAGE value="add view products in cart" />
+    <option name="LAST_COMMIT_MESSAGE" value="add view products in cart" />
   </component>
   <component name="WindowStateProjectService">
     <state x="485" y="75" width="617" height="680" key="#Main" timestamp="1588105443782">
@@ -450,7 +463,7 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="93" y="93" width="1095" height="495" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1280.680@0.0.1280.680" timestamp="1587882504891" />
-    <state x="848" y="52" key="#com.intellij.ide.util.MemberChooser" timestamp="1588464701180">
+    <state x="848" y="52" key="#com.intellij.ide.util.MemberChooser" timestamp="1589041188464">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="259" y="0" key="#com.intellij.ide.util.MemberChooser.inPresentationMode" timestamp="1587998035336">
@@ -459,7 +472,7 @@
     <state x="259" y="0" key="#com.intellij.ide.util.MemberChooser.inPresentationMode/0.0.1280.680@0.0.1280.680" timestamp="1587998035336" />
     <state x="707" y="42" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1588064445398" />
     <state x="574" y="113" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1587565873065" />
-    <state x="848" y="52" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1588464701180" />
+    <state x="848" y="52" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1589041188464" />
     <state x="618" y="306" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1588102713297">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -476,11 +489,11 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="321" y="0" key="#com.intellij.unscramble.UnscrambleDialog/0.0.1280.680@0.0.1280.680" timestamp="1587735909805" />
-    <state x="474" y="0" key="CommitChangelistDialog2" timestamp="1588465424443">
+    <state x="474" y="0" key="CommitChangelistDialog2" timestamp="1588629103014">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="320" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1587566123059" />
-    <state x="474" y="0" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1588465424443" />
+    <state x="474" y="0" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1588629103014" />
     <state width="344" height="438" key="DebuggerActiveHint" timestamp="1587712767245">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -571,12 +584,12 @@
     </state>
     <state x="231" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1588064315832" />
     <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1587490385288" />
-    <state x="361" y="147" key="Vcs.Push.Dialog.v2" timestamp="1588465437428">
+    <state x="361" y="147" key="Vcs.Push.Dialog.v2" timestamp="1588629195883">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="301" y="120" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1587999987522" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1587566134427" />
-    <state x="361" y="147" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1588465437428" />
+    <state x="361" y="147" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1588629195883" />
     <state x="450" y="75" key="VcsDiffUtil.ChangesDialog" timestamp="1587808399852">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -593,12 +606,12 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1587578704067" />
-    <state x="476" y="206" key="git4idea.merge.GitPullDialog" timestamp="1588627371468">
+    <state x="476" y="206" key="git4idea.merge.GitPullDialog" timestamp="1588812956135">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="397" y="168" key="git4idea.merge.GitPullDialog/0.0.1280.680@0.0.1280.680" timestamp="1587999972959" />
     <state x="476" y="204" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1587578711739" />
-    <state x="476" y="206" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1588627371468" />
+    <state x="476" y="206" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1588812956135" />
     <state x="91" y="2" key="new project wizard" timestamp="1587996498862">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
