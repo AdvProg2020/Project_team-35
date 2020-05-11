@@ -287,25 +287,11 @@ public class ManagerPage extends Page {
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
-                    System.out.println("add/remove [categoryName]\nedit category [categoryName] -name/-add/-remove");
+                    System.out.println("add/edit/remove [categoryName]");
                 } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
                 } else if (command.startsWith("edit")) {
-                    Matcher matcher = getMatcher(command, "^edit category (\\w+)-(name|add|remove)$");
-                    if (matcher.matches()) {
-                        if (matcher.group(2).equalsIgnoreCase("name")) {
 
-                        }
-                        else if (matcher.group(2).equalsIgnoreCase("add")) {
-
-                        }
-                        else if (matcher.group(2).equalsIgnoreCase("remove")) {
-
-                        }
-                    }
-                    else {
-                        System.err.println("Invalid command.");
-                    }
                 }
                 else {
                     Matcher matcher = getMatcher(command, "^(add|remove)\\s+(\\w+)$");
@@ -313,6 +299,9 @@ public class ManagerPage extends Page {
                         String categoryName = matcher.group(2);
                         if (command.startsWith("add")) {
                             ArrayList<String> specialAttributes = categorySpecialAttributesScanner();
+                            if (specialAttributes.contains("-back")) {
+                                this.execute();
+                            }
                             try {
                                 ManagerBoss.addNewCategory(categoryName, specialAttributes);
                             } catch (RepeatedCategoryNameException e) {
@@ -341,7 +330,7 @@ public class ManagerPage extends Page {
     }
 
     private static ArrayList<String> categorySpecialAttributesScanner() {
-        System.out.println("Enter every feature in a line. for end enter -end");
+        System.out.println("Enter every feature in a line. for end enter -end. for back enter -end after -back.");
         ArrayList<String> specialAttributes = new ArrayList<>();
         while (true) {
             String feature = scanner.nextLine();
