@@ -75,8 +75,9 @@ public class AccountBoss {
             Manager manager = new Manager(username, name, family, email, phone, password);
         }
         if (type.equals("seller")) {
-            SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(null,company,username,name,family,email,phone,password);
-          //  Manager.newRequests.add(sellerRegisterRequest);
+            Seller seller = new Seller(username,name,family,email,phone,password,company);
+            SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(seller);
+
         }
         if (type.equals("customer")) {
             Customer customer = new Customer(username, name, family, email, phone, password);
@@ -119,6 +120,9 @@ public class AccountBoss {
         }
         if (!Account.isThereAccountWithUserName(username)) {
             throw new ExistenceOfUserWithUsername("this username doesn't exist.");
+        }
+        if (Account.getAccountWithUsername(username) instanceof Seller && !Seller.getAllSellers().contains((Seller) Account.getAccountWithUsername(username))){
+            throw new ExistenceOfUserWithUsername("this username doesn't exist");
         }
     }
 
