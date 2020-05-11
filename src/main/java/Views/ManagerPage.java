@@ -4,6 +4,7 @@ import Controller.AccountBoss;
 import Controller.Exceptions.*;
 import Controller.ManagerBoss;
 import Model.*;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -286,11 +287,28 @@ public class ManagerPage extends Page {
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
-                    System.out.println("add/edit/remove [categoryName]");
+                    System.out.println("add/remove [categoryName]\nedit category [categoryName] -name/-add/-remove");
                 } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
-                } else {
-                    Matcher matcher = getMatcher(command, "^(add|remove|edit)\\s+(\\w+)$");
+                } else if (command.startsWith("edit")) {
+                    Matcher matcher = getMatcher(command, "^edit category (\\w+)-(name|add|remove)$");
+                    if (matcher.matches()) {
+                        if (matcher.group(2).equalsIgnoreCase("name")) {
+
+                        }
+                        else if (matcher.group(2).equalsIgnoreCase("add")) {
+
+                        }
+                        else if (matcher.group(2).equalsIgnoreCase("remove")) {
+
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid command.");
+                    }
+                }
+                else {
+                    Matcher matcher = getMatcher(command, "^(add|remove)\\s+(\\w+)$");
                     if (matcher.matches()) {
                         String categoryName = matcher.group(2);
                         if (command.startsWith("add")) {
@@ -306,8 +324,6 @@ public class ManagerPage extends Page {
                             } catch (ThereIsNotCategoryWithNameException | NullPointerException e) {
                                 System.out.println(e.getMessage());
                             }
-                        } else if (command.startsWith("edit")) {
-
                         }
                     } else {
                         System.err.println("Invalid Command.");
