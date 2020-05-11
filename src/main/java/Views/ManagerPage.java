@@ -4,6 +4,7 @@ import Controller.AccountBoss;
 import Controller.Exceptions.*;
 import Controller.ManagerBoss;
 import Model.*;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -289,12 +290,18 @@ public class ManagerPage extends Page {
                     System.out.println("add/edit/remove [categoryName]");
                 } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
-                } else {
-                    Matcher matcher = getMatcher(command, "^(add|remove|edit)\\s+(\\w+)$");
+                } else if (command.startsWith("edit")) {
+
+                }
+                else {
+                    Matcher matcher = getMatcher(command, "^(add|remove)\\s+(\\w+)$");
                     if (matcher.matches()) {
                         String categoryName = matcher.group(2);
                         if (command.startsWith("add")) {
                             ArrayList<String> specialAttributes = categorySpecialAttributesScanner();
+                            if (specialAttributes.contains("-back")) {
+                                this.execute();
+                            }
                             try {
                                 ManagerBoss.addNewCategory(categoryName, specialAttributes);
                             } catch (RepeatedCategoryNameException e) {
@@ -306,8 +313,6 @@ public class ManagerPage extends Page {
                             } catch (ThereIsNotCategoryWithNameException | NullPointerException e) {
                                 System.out.println(e.getMessage());
                             }
-                        } else if (command.startsWith("edit")) {
-
                         }
                     } else {
                         System.err.println("Invalid Command.");
@@ -325,7 +330,7 @@ public class ManagerPage extends Page {
     }
 
     private static ArrayList<String> categorySpecialAttributesScanner() {
-        System.out.println("Enter every feature in a line. for end enter -end");
+        System.out.println("Enter every feature in a line. for end enter -end. for back enter -end after -back.");
         ArrayList<String> specialAttributes = new ArrayList<>();
         while (true) {
             String feature = scanner.nextLine();
