@@ -2,6 +2,7 @@ package Controller;
 
 import Controller.Exceptions.NullProduct;
 import Controller.Exceptions.ProductIsFinished;
+import Controller.Exceptions.ProductsCompareNotSameCategories;
 import Model.Comment;
 import Model.Customer;
 import Model.Product;

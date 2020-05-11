@@ -3,7 +3,7 @@ package Views;
 import Controller.Exceptions.NullProduct;
 import Controller.Exceptions.ProductIsFinished;
 import Controller.ProductBoss;
-import Controller.ProductsCompareNotSameCategories;
+import Controller.Exceptions.ProductsCompareNotSameCategories;
 import Model.Account;
 import Model.Customer;
 import Model.Product;

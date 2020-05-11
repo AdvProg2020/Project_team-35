@@ -2,8 +2,8 @@
 package Views;
 
 import Controller.CustomerBoss;
-import Controller.DiscountIsNotForYou;
-import Controller.DiscountNotExist;
+import Controller.Exceptions.DiscountIsNotForYou;
+import Controller.Exceptions.DiscountNotExist;
 import Controller.Exceptions.NullProduct;
 import Controller.Exceptions.ProductIsFinished;
 import Controller.ProductBoss;

@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Exceptions;
 
 public class DiscountNotExist extends Exception {
     private int id;
