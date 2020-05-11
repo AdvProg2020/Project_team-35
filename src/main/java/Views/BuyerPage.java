@@ -264,22 +264,7 @@ public class BuyerPage extends Page {
         return new Page("discount code page", this) {
             @Override
             public void execute() {
-                String command = "";
-                String regex = "";
-                Matcher matcher = null;
-                boolean back = false;
-                Page nextPage = null;
-                while (true) {
-                    System.out.println("discount code id: ");
-                    command = scanner.nextLine();
-                    regex = "^(\\d+)$";
-                    matcher = getMatcher(command, regex);
-                    if (command.matches(regex)) {
-                        if (CustomerBoss.hasDiscountCodeWithId((Customer) Account.getOnlineAccount(), command)) {
-                            
-                        }
-                    }
-                }
+                super.execute();
             }
         };
     }

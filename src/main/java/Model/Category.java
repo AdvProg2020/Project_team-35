@@ -56,7 +56,7 @@ public class Category {
         return categoryProducts;
     }
     public boolean isThisAttributesForThisCategory(HashMap<String,String> attributes){
-        ArrayList<String> attri = new ArrayList<>();
+        /*ArrayList<String> attri = new ArrayList<>();
         for (String s : attributes.keySet()) {
             attri.add(s);
         }
@@ -66,5 +66,13 @@ public class Category {
             return true;
         }
         return false;
+
+         */
+        for (String s : attributes.keySet()) {
+            if (!specialAttributes.contains(s)){
+                return false;
+            }
+        }
+        return true;
     }
 }

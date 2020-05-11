@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class CustomerBossTest extends TestCase {
     private Customer customer = new Customer("ali","reza","zare","ali@a.w","23","pass");
-   private Product product = new Product("s","sd",23,new Seller("a","s","sd","asd","23","we","sd"),2,null,null);
+   private Product product = new Product("s","sd",23,new Seller("a","s","sd","asd","23","we","sd"),2,null,null,null);
     @Test
     public void testShowProductsInCart() {
         HashMap<Product,Integer> cart = new HashMap<>();

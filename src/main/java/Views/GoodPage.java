@@ -1,10 +1,16 @@
 package Views;
 
+import Controller.Exceptions.NullProduct;
+import Controller.Exceptions.ProductIsFinished;
 import Controller.ProductBoss;
+import Controller.Exceptions.ProductsCompareNotSameCategories;
+import Model.Account;
+import Model.Customer;
 import Model.Product;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
 
 public class GoodPage extends Page {
     private Product product;
@@ -17,7 +23,26 @@ public class GoodPage extends Page {
         subPages.put("2",attributes());
         subPages.put("3",compare());
         subPages.put("4",comments());
+        subPages.put("5",showRates());
+        subPages.put("6",showComment());
+        subPages.put("7",new RegisteringPanel("registering panel",this));
 
+    }
+    private Page showComment(){
+        return new Page("show comment",this) {
+            @Override
+            public void execute() {
+                super.execute();
+            }
+        };
+    }
+    private Page showRates(){
+        return new Page("show rate",this) {
+            @Override
+            public void execute() {
+
+            }
+        };
     }
 
     /**
@@ -48,7 +73,26 @@ public class GoodPage extends Page {
                 subPages.put("1", new Page("add to cart",this) {
                     @Override
                     public void execute() {
-                        super.execute();
+                        //this place should change for multi user program
+                        System.out.println(name);
+                        Page nextPage = null;
+                        if (Account.getOnlineAccount()==null){
+                            System.err.println("first login");
+                                nextPage = new RegisteringPanel("registering panel",this);
+                        }else if (!(Account.getOnlineAccount() instanceof Customer)){
+                            System.err.println("this process is just for customer");
+                            nextPage = parentPage;
+                        }
+                        else if (product.getInventory()!=0){
+                            Customer customer = (Customer) Account.getOnlineAccount();
+                            customer.getListOFProductsAtCart().put(product,1);
+                            System.out.println("successfully added");
+                            nextPage = parentPage;
+                        }else{
+                            System.err.println("this product is finished");
+                            nextPage = parentPage;
+                        }
+                        nextPage.execute();
                     }
                 });
                 subPages.put("2", new Page("select seller",this) {
@@ -63,64 +107,53 @@ public class GoodPage extends Page {
             @Override
             public void execute() {
                 System.out.println(ProductBoss.showSummeryOfProductDetails(product));
-                setSubPages(subPages);
-                Page nextPage = null;
-                show();
-                String command = scanner.nextLine();
-                if (command.equalsIgnoreCase("1")){
-
-                }else if (command.equalsIgnoreCase("2")){
-
-                }else if (command.equalsIgnoreCase(String.valueOf(subPages.keySet().size()+1))){
-                    nextPage = parentPage;
-                }else {
-
-                }
-                nextPage.execute();
-            }
-
-            @Override
-            public boolean show() {
-                super.show();
-                return false;
+                super.execute();
             }
         };
     }
     private Page attributes(){
         return new Page("attributes" ,  this) {
             @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                super.setSubPages(subPages);
-            }
-
-            @Override
             public void execute() {
-                super.execute();
-            }
-
-            @Override
-            public boolean show() {
-                super.show();
-                return false;
+                System.out.println(name);
+              HashMap<String,String> attributes =    ProductBoss.showAttributes(product);
+                for (String s : attributes.keySet()) {
+                    System.out.println(attributes.get(s)+":\n"+s);
+                }
+            parentPage.execute();
             }
         };
     }
     private Page compare(){
         return new Page("compare" , this) {
             @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                super.setSubPages(subPages);
-            }
-
-            @Override
             public void execute() {
-                super.execute();
-            }
-
-            @Override
-            public boolean show() {
-                super.show();
-                return false;
+                System.out.println(name);
+                String command = scanner.nextLine();
+                String regex = "^compare (\\d+)$";
+                Matcher matcher = getMatcher(command,regex);
+                matcher.matches();
+                Page nextPage = null;
+                if (command.matches(regex)){
+                    try {
+                        String result = String.valueOf(ProductBoss.compare(matcher.group(1),product));
+                        System.out.println(result);
+                        nextPage = parentPage;
+                    } catch (ProductsCompareNotSameCategories | ProductIsFinished | NullProduct productsCompareNotSameCategories) {
+                        productsCompareNotSameCategories.printStackTrace();
+                        nextPage = this;
+                    }
+                }else if (command.equalsIgnoreCase("help")){
+                    System.out.println("back *** help *** compare [productId]");
+                    nextPage = this;
+                }
+                else if (command.equalsIgnoreCase("back")){
+                    nextPage = parentPage;
+                }else {
+                    System.err.println("invalid command");
+                    nextPage = this;
+                }
+                nextPage.execute();
             }
         };
     }
@@ -128,35 +161,30 @@ public class GoodPage extends Page {
         return new Page("Comments" , this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("Add comment" , this);
-            }
-
-            @Override
-            public void execute() {
-                super.execute();
-            }
-
-            @Override
-            public boolean show() {
-                super.show();
-                return false;
+                subPages.put("Add comment", new Page("add comment",this) {
+                    @Override
+                    public void execute() {
+                        Page nextPage = null;
+                        System.out.println("Title:");
+                        String title = scanner.nextLine();
+                        if (title.equalsIgnoreCase("back")){
+                            nextPage = parentPage;
+                        }else {
+                            System.out.println("Content:");
+                            String content = scanner.nextLine();
+                            if (content.equalsIgnoreCase("back")){
+                                nextPage = this;
+                            }
+                            else {
+                                ProductBoss.makeComment(content,title,product,(Customer)Account.getOnlineAccount());
+                                System.out.println("add comment successfully");
+                                nextPage = parentPage;
+                            }
+                        }
+                        nextPage.execute();
+                    }
+                });
             }
         };
-    }
-
-    @Override
-    public boolean show() {
-        super.show();
-        return false;
-    }
-
-    @Override
-    public void execute() {
-        super.execute();
-    }
-
-    @Override
-    public void setSubPages(HashMap<String, Page> subPages) {
-        super.setSubPages(subPages);
     }
 }

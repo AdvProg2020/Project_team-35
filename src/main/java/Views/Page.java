@@ -40,15 +40,20 @@ public abstract class Page {
             }
         }
         if (command.equals(String.valueOf(subPages.size()+1)) && parentPage!=null){
-         nextPage = parentPage;
+            // i need help in this part//********************************
+            if (parentPage instanceof UserPage){
+                nextPage = parentPage.parentPage;
+            }else {
+                nextPage = parentPage;
+            }
         }
-        else if (command.equals(String.valueOf(subPages.size()+1))){
+        else if (command.equals(String.valueOf(subPages.size()+1)) && this instanceof MainPage){
             return;
         }
         try {
             nextPage.execute();
         }catch (Exception e){
-            System.err.println("invalid command");
+            e.printStackTrace();
             this.execute();
         }
     }
@@ -92,10 +97,10 @@ public abstract class Page {
      */
     protected static boolean checkFormatOfPersonalInformation(String type, String input) {
 
-        if (type.equals("email address")) {
+        if (type.equals("email address")|| type.equalsIgnoreCase("email")) {
             Matcher matcher = getMatcher(input, "^(\\w+)@(\\w+).(\\w+)$");
             return matcher.matches();
-        } else if (type.equals("phone number")) {
+        } else if (type.equals("phone number")|| type.equalsIgnoreCase("phoneNumber")) {
             Matcher matcher = getMatcher(input, "\\d+");
             return matcher.matches();
         }

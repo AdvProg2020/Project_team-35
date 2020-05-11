@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class Purchase extends Page{
     public Purchase(String name, Page parentPage) {
         super(name, parentPage);
+        subPages.put("1",new RegisteringPanel("registering panel",this));
 
     }
     private Page receiveInformation(){

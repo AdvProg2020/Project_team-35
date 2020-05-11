@@ -1,7 +1,6 @@
 package Model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,22 +8,28 @@ public class Off {
     public static ArrayList<Off> allActiveOffs = new ArrayList<>();
     private static int offIdNumber;
     private int offId;
-    private Date finalDate;
-    private Date startDate;
+    private LocalDateTime finalDate;
+    private  LocalDateTime startDate;
     private ArrayList<Product> includedProducts;
     private double maximumAmountOfOff;
     private double offPercent;
     private ProductAndOffStatus offStatus;
+    private Seller seller;
 
-    public Off(Date finalDate, Date startDate, ArrayList<Product> includedProducts, double maximumAmountOfOff, double offPercent) {
+    public Off(LocalDateTime finalDate, LocalDateTime startDate, ArrayList<Product> includedProducts, double maximumAmountOfOff, double offPercent, Seller seller) {
         this.finalDate = finalDate;
         this.startDate = startDate;
         this.includedProducts = includedProducts;
         this.maximumAmountOfOff = maximumAmountOfOff;
         this.offPercent = offPercent;
-        allActiveOffs.add(this);
-        offId = offIdNumber;
+        Off.allActiveOffs.add(this);
+        this.seller = seller;
+        seller.getSellerOffs().add(this);
         offIdNumber+=1;
+        offId = offIdNumber;
+    }
+    public Seller getSeller() {
+        return seller;
     }
 
     public int getOffId() {
@@ -40,6 +45,7 @@ public class Off {
     public String showOff(){
         StringBuilder show = new StringBuilder();
         show.append("id: "+getOffId()+"\n");
+        show.append("start date: "+getStartDate().toString()+"\nfinal date: "+getFinalDate().toString()+"\n");
         show.append("status: "+offStatus.name()+"\n");
         show.append("percent: "+offPercent+"\n"+"maximum: "+maximumAmountOfOff+"\n");
         for (Product product : includedProducts) {
@@ -47,10 +53,11 @@ public class Off {
             show.append("product name: "+product.getName()+"\n");
             show.append("product inventory: "+product.getInventory()+"\n");
         }
-        return show.toString();
+
+        return String.valueOf(show);
     }
 
-    public void setFinalDate(Date finalDate) {
+    public void setFinalDate( LocalDateTime finalDate) {
         this.finalDate = finalDate;
     }
 
@@ -66,7 +73,7 @@ public class Off {
         this.offStatus = offStatus;
     }
 
-    public Date getFinalDate() {
+    public  LocalDateTime getFinalDate() {
         return finalDate;
     }
 
@@ -82,11 +89,11 @@ public class Off {
         return offStatus;
     }
 
-    public Date getStartDate() {
+    public  LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate( LocalDateTime startDate) {
         this.startDate = startDate;
     }
 }

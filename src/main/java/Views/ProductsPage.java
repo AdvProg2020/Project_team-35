@@ -17,11 +17,12 @@ public class ProductsPage extends Page {
     private ArrayList<String> available;
     public ProductsPage(String name, Page parentPage) {
         super(name, parentPage);
-        subPages.put("view categories",viewCategories());
-        subPages.put("filtering",filtering());
-        subPages.put("sorting",sorting());
-        subPages.put("show products",showProduct());
-        subPages.put("product page",enterToProductPage());
+        subPages.put("3",viewCategories());
+        subPages.put("2",filtering());
+        subPages.put("1",sorting());
+        subPages.put("4",showProduct());
+        subPages.put("5",enterToProductPage());
+        subPages.put("6",new RegisteringPanel("registering panel",this));
 
     }
     private Page viewCategories(){
@@ -46,15 +47,18 @@ public class ProductsPage extends Page {
                Page nextPage = null;
                String regex = "^show product (\\d+)$";
                 Matcher matcher = getMatcher(command,regex);
+                matcher.matches();
                 if (command.matches(regex)){
                     int id =Integer.parseInt( matcher.group(1) );
                     GoodPage goodPage = null;
-                    try {
-                        goodPage = ProductBoss.goToGoodPage(id);
-                    } catch (NullProduct nullProduct) {
-                        nullProduct.printStackTrace();
+                    Product product = Product.getProductWithId(id);
+                    if (product!=null) {
+                        nextPage = new GoodPage(product.getName(),this,product);
+                    }else {
+                        System.err.println("invalid id");
+                        nextPage = this ;
                     }
-                    nextPage = goodPage;
+
                 }else if (command.equalsIgnoreCase("back")){
                     nextPage = parentPage;
                 }else {
@@ -201,17 +205,10 @@ public class ProductsPage extends Page {
                 super.execute();
             }
 
-            @Override
-            public boolean show() {
-             return    super.show();
-            }
+
         };
     }
 
-    @Override
-    public boolean show() {
-       return super.show();
-    }
 
     @Override
     public void execute() {

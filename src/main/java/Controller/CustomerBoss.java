@@ -70,25 +70,4 @@ public class CustomerBoss {
             return customer.getTotalPriceOFCart();
     }
 
-    public static boolean hasDiscountCodeWithId(Customer customer, String id) {
-        for (DiscountCode discountCode : customer.discountCodes) {
-            if (id.equals(discountCode.getId()))
-                return true;
-        }
-        return false;
-    }
-
-    public static double getDiscountAmount(DiscountCode discountCode, double totalPriceOfCart) {
-        return totalPriceOfCart * discountCode.getDiscountPercent() / 100.0;
-    }
-
-    public static void useDiscountCode(Customer customer, String id) {
-        DiscountCode discountCode = DiscountCode.getDiscountCodeWithId(id);
-        double discountAmount = getDiscountAmount(discountCode, customer.getTotalPriceOFCart());
-        if (discountAmount > discountCode.getMaximumAvailableAmount()) {
-            customer.setPaymentAmount(customer.getTotalPriceOFCart() - discountCode.getMaximumAvailableAmount());
-        }
-        else customer.setPaymentAmount(customer.getTotalPriceOFCart() - discountAmount);
-        discountCode.includedBuyersAndUseFrequency.put(customer, discountCode.includedBuyersAndUseFrequency.get(customer) - 1);
-    }
 }

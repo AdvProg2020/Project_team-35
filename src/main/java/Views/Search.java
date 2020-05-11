@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Search extends Page {
     public Search(String name, Page parentPage) {
         super(name, parentPage);
-        HashMap<String  , String> filters = new HashMap<String, String>();
+        subPages.put("1",new RegisteringPanel("registering panel",this));
 
     }
 

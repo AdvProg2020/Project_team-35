@@ -1,5 +1,8 @@
 package Model;
 
+import Views.GoodPage;
+import Views.ProductsPage;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,14 +21,14 @@ public class Product {
     private ArrayList<Comment> commentsList;
     private ArrayList<Rate> ratesList;
     private HashMap<String, String> specialAttributes;
-   private DiscountCode discountCode;
     private Product onlineProduct;
     private ArrayList<Customer> whoBoughtThisGood;
     //when the page of product is open.
 
 
-    public Product(String name, String company, double price, Seller seller, int inventory, Category category, HashMap<String, String> specialAttributes) {
+    public Product(String name, String company, double price, Seller seller, int inventory, Category category, HashMap<String, String> specialAttributes,String description) {
         this.name = name;
+        this.description = description;
         this.company = company;
         this.price = price;
         this.seller = seller;
@@ -35,6 +38,7 @@ public class Product {
         productNumber+=1;
         productId = productNumber;
         commentsList = new ArrayList<>();
+        whoBoughtThisGood = new ArrayList<>();
         ratesList = new ArrayList<>();
         allProducts.add(this);
         seller.getSalableProducts().add(this);
@@ -193,8 +197,43 @@ public class Product {
         return null;
     }
     public String showSummeryDetailsOfProduct(){
-        String result = "description :\n"+description+"\n"+"price :\n"+price+"\n"+"discount :\n"+discountCode.getId()+"\n"+"category :\n"+category.getCategoryName()+"\n"+"seller :\n"+seller.getUsername()+"\n"+"average :\n"+getAverageOfRates();
+        String result = "description :\n"+description+"\n"+"price :\n"+price+"\n"+"discount :\n"+"category :\n"+category.getCategoryName()+"\n"+"seller :\n"+seller.getUsername()+"\n"+"average :\n"+getAverageOfRates();
         return result;
+    }
+
+    /**
+     * maybe it has mistake
+     * @return
+     */
+    public HashMap<String , String> attributeShow(){
+        HashMap<String , String> attributes = new HashMap<>();
+        attributes.put(String.valueOf(getProductId()),"id");
+        attributes.put(getName(),"name");
+        attributes.put(getCompany(),"company");
+        attributes.put(getSeller().getUsername(),"seller");
+        attributes.put(productStatus.name(),"status");
+        attributes.put(String.valueOf(getPrice()),"price");
+        attributes.put(String.valueOf(getInventory()),"inventory");
+        attributes.put(getCategory().getCategoryName(),"category");
+        attributes.put(getDescription(),"description");
+        if (getWhoBoughtThisGood()!=null) {
+            for (Customer customer : getWhoBoughtThisGood()) {
+                attributes.put(customer.getUsername(), "buyer");
+            }
+        }
+        if (ratesList!=null) {
+            for (Rate rate : ratesList) {
+                attributes.put(rate.getRater().getUsername() + ":" + rate.getRate(), "rate");
+            }
+        }
+        for (Comment comment : commentsList) {
+            attributes.put(comment.getCommenter().getUsername()+":"+comment.getCommentText(),"comment");
+        }
+        for (String s : getSpecialAttributes().keySet()) {
+            attributes.put(specialAttributes.get(s),s);
+        }
+        return attributes;
+
     }
 
     public String getDescription() {
@@ -203,5 +242,40 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * just for test
+     * @param commentsList
+     */
+    public void setCommentsList(ArrayList<Comment> commentsList) {
+        this.commentsList = commentsList;
+    }
+
+    /**
+     * just for test
+     * @param ratesList
+     */
+    public void setRatesList(ArrayList<Rate> ratesList) {
+        this.ratesList = ratesList;
+    }
+
+    /**
+     * just for test
+     * @param whoBoughtThisGood
+     */
+    public void setWhoBoughtThisGood(ArrayList<Customer> whoBoughtThisGood) {
+        this.whoBoughtThisGood = whoBoughtThisGood;
+    }
+
+    public ArrayList<Comment> getCommentsList() {
+        return commentsList;
+    }
+    public String showComments(){
+        String result= "";
+        for (Comment comment : getCommentsList()) {
+            result+=comment.getCommentText();
+        }
+        return result;
     }
 }

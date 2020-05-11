@@ -8,7 +8,7 @@ public class SellerRegisterRequest extends Request {
     }
 
     public String getRequestInfo () {
-        return "  Seller Register Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
+        return "  Seller Register Request --- username: "+seller.getUsername()+" --- RQId: " + this.getRequestId();
     }
 
     public void execute()  {

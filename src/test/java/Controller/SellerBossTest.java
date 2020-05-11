@@ -1,20 +1,17 @@
 package Controller;
 
-import Controller.Exceptions.NullProduct;
-import Controller.Exceptions.SoldProductsCanNotHaveChange;
-import Controller.Exceptions.ThisIsNotYours;
-import Model.Category;
-import Model.Product;
-import Model.Seller;
+import Controller.Exceptions.*;
+import Model.*;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SellerBossTest {
 private  Seller seller = new Seller("ali","reza","ghazan","ali@ali.a","2323","paass","mihan");
-private   Product product = new Product("milk","mihan",2200.0,seller,3,new Category("labaniat",null),null);
+private   Product product = new Product("milk","mihan",2200.0,seller,3,new Category("labaniat",null),null,null);
     @Test
     public void sellerCredit() {
         seller.setMoney(233.0);
@@ -39,7 +36,7 @@ private   Product product = new Product("milk","mihan",2200.0,seller,3,new Categ
 
     @Test
     public void showProduct() {
-        Product product = new Product("milk","mihan",2200.0,seller,3,new Category("labaniat",null),null);
+        Product product = new Product("milk","mihan",2200.0,seller,3,new Category("labaniat",null),null,null);
         HashMap<String , String> attributes = new HashMap<>();
         attributes.put("color","red");
         attributes.put("weight","23");
@@ -54,7 +51,7 @@ private   Product product = new Product("milk","mihan",2200.0,seller,3,new Categ
 
     @Test
     public void addRequestProduct() {
-        Assert.assertTrue(SellerBoss.addRequestProduct("milk","2200.0","3",null,"mihan",new Category("labaniat",null),seller));
+        Assert.assertTrue(SellerBoss.addRequestProduct("milk","2200.0","3",null,"mihan",new Category("labaniat",null),seller,null));
     }
 
     @Test
@@ -96,5 +93,30 @@ private   Product product = new Product("milk","mihan",2200.0,seller,3,new Categ
 
     @Test
     public void addOff() {
+    }
+
+    /**
+     * this is not a complete test and it is not in coverage please complete it
+     */
+    @Test
+    public void testEditOff() {
+        HashMap<String , String> a = new HashMap<>();
+        a.put("startDate","");
+        a.put("percent","29");
+        Off off = new Off(null,null,null,23,12,seller);
+        off.setOffStatus(ProductAndOffStatus.CONFIRMED);
+        try {
+            Assert.assertTrue(SellerBoss.editOff(seller,off,a));
+        } catch (ItIsNotCorrect itIsNotCorrect) {
+            itIsNotCorrect.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (TimeLimit timeLimit) {
+            timeLimit.printStackTrace();
+        } catch (InputStringExceptNumber inputStringExceptNumber) {
+            inputStringExceptNumber.printStackTrace();
+        } catch (ThisIsNotReadyForEdit thisIsNotReadyForEdit) {
+            thisIsNotReadyForEdit.printStackTrace();
+        }
     }
 }

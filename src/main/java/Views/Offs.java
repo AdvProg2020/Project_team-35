@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Offs extends Page{
     public Offs(String name, Page parentPage) {
         super(name, parentPage);
-        HashMap<String , Page> subPages = new HashMap<String, Page>();
+        subPages.put("1",new RegisteringPanel("registering  panel",this));
 
     }
     private Page showProduct(){
