@@ -10,6 +10,7 @@ public class Customer extends Account {
     public ArrayList<BuyLog> buyLogs;
     public HashMap<Product, Integer> cart;
     public static int newOrderNumber = 0;
+    private double paymentAmount = 0;
 
     /**
      * a constructor for customer is equal to accounts but it has some lists new.
@@ -112,5 +113,14 @@ public class Customer extends Account {
     public double getMoney() {
         return money;
     }
+
+    public double getPaymentAmount() {
+        return paymentAmount;
+    }
+
+    public void setPaymentAmount(double paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
+
 }
 
