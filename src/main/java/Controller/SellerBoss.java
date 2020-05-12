@@ -186,13 +186,13 @@ public class SellerBoss {
         return offs;
     }
 
-    public static String viewOff(Seller seller, String id) throws ThisIsNotYours {
+    public static String viewOff(Seller seller, String id) throws ThisIsNotYours, ThisOffNotExist {
         Off off = Off.getOffById(Integer.parseInt(id));
         if (off == null) {
-            throw new ThisIsNotYours("this does not exist", Integer.parseInt(id));
+            throw new ThisOffNotExist("this does not exist", 1);
         }
         if (!seller.equals(off.getSeller())) {
-            throw new ThisIsNotYours("this is not for you.", Integer.parseInt(id));
+            throw new ThisIsNotYours("this is not for you.", 2);
         }
         return off.showOff();
     }
@@ -218,21 +218,21 @@ public class SellerBoss {
                     date = changes.get(s);
                     date1 = LocalDateTime.parse(date);
                     if (date1.isBefore(dateOfNow)) {
-                        throw new TimeLimit("this time is passed");
+                        throw new TimeLimit(2,"this time is passed");
                     } else if (date1.isBefore(date2)) {
-                        throw new TimeLimit("finalize is sooner starting");
+                        throw new TimeLimit(2,"finalize is sooner starting");
                     }
                 } else if (s.equalsIgnoreCase("maximumAmountOfOff")) {
                     if (changes.get(s).matches("^(\\d+)(.?)(\\d*)$")) {
                         maximum = Double.parseDouble(changes.get(s));
                     } else {
-                        throw new InputStringExceptNumber("max should be double");
+                        throw new InputStringExceptNumber("max should be double",3);
                     }
                 } else if (s.equalsIgnoreCase("offPercent")) {
                     if (changes.get(s).matches("^(\\d+)(.?)(\\d*)$")) {
                         percent = Double.parseDouble(changes.get(s));
                     } else
-                        throw new InputStringExceptNumber("percent should be double");
+                        throw new InputStringExceptNumber("percent should be double",3);
                 }
             }
         }
@@ -242,33 +242,36 @@ public class SellerBoss {
 
     }
 
-    public static void addOff(ArrayList<Integer> id, Seller seller, String startDate, String finalDate, String percents, String maxs) throws ParseException, ThisIsNotYours, TimeLimit, InvalidNumber, InputStringExceptNumber {
+    public static boolean addOff(ArrayList<Integer> id, Seller seller, String startDate, String finalDate, String percents, String maxs) throws ParseException, ThisIsNotYours, TimeLimit, InvalidNumber, InputStringExceptNumber {
         LocalDateTime start = LocalDateTime.parse(startDate);
         LocalDateTime finalDates = LocalDateTime.parse(finalDate);
 
         if (start.isAfter(finalDates)) {
-            throw new TimeLimit("this time is wrong");
+            throw new TimeLimit(1,"this time is wrong");
         }
         if (!maxs.matches("^(\\d+)(.?)(\\d*)$")) {
-            throw new InputStringExceptNumber("max has mistake");
+            throw new InputStringExceptNumber("max has mistake",2);
         }
         if (!percents.matches("^(\\d+)(.?)(\\d*)$")) {
-            throw new InputStringExceptNumber("percent has mistake");
+            throw new InputStringExceptNumber("percent has mistake",2);
         }
         double max = Double.parseDouble(maxs);
         double percent = Double.parseDouble(percents);
-        if (percent < 0 || max < 0) {
-            throw new InvalidNumber("you can't give negative");
+        if (percent >100) {
+            throw new InvalidNumber("you can't give negative",3);
         }
         ArrayList<Product> allProducts = new ArrayList<>();
-        for (Integer integer : id) {
-            if (!seller.getSalableProducts().contains(Product.getProductWithId(integer))) {
-                throw new ThisIsNotYours("this is not yours", integer);
+        if (id!=null) {
+            for (Integer integer : id) {
+                if (!seller.getSalableProducts().contains(Product.getProductWithId(integer))) {
+                    throw new ThisIsNotYours("this is not yours", 4);
+                }
+                allProducts.add(Product.getProductWithId(integer));
             }
-            allProducts.add(Product.getProductWithId(integer));
         }
         Off off = new Off(finalDates, start, allProducts, max, percent, seller);
         off.setOffStatus(ProductAndOffStatus.FORMAKE);
         AddOffRequest addOffRequest = new AddOffRequest(seller, off);
+        return true;
     }
 }

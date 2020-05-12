@@ -1,7 +1,13 @@
 package Controller.Exceptions;
 
 public class InputStringExceptNumber extends Exception {
-    public InputStringExceptNumber(String message) {
+    private int id;
+    public InputStringExceptNumber(String message,int id) {
         super(message);
+        this.id = id ;
+    }
+
+    public int getId() {
+        return id;
     }
 }

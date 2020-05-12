@@ -106,4 +106,8 @@ public class Seller extends Account {
     public static ArrayList<Seller> getAllSellers() {
         return allSellers;
     }
+
+    public void addOffTest(Off off){
+        sellerOffs.add(off);
+    }
 }

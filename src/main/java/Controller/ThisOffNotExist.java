@@ -1,8 +1,8 @@
-package Controller.Exceptions;
+package Controller;
 
-public class TimeLimit extends Exception {
+public class ThisOffNotExist extends Exception{
     private int id;
-    public TimeLimit(int id,String message) {
+    public ThisOffNotExist(String message,int id) {
         super(message);
         this.id = id;
     }

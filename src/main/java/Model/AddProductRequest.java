@@ -16,8 +16,8 @@ public class AddProductRequest extends Request {
     }
     public void execute() {
         this.isDone = true;
-
         product.setProductStatus(ProductAndOffStatus.CONFIRMED);
+        seller.getSalableProducts().add(product);
     }
     public String getRequestInfo() {
         return "  ADD PRODUCT Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();

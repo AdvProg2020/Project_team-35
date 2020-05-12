@@ -1,11 +1,9 @@
 package Views;
 
-import Controller.Exceptions.NullProduct;
 import Controller.ProductBoss;
 import Controller.SellerBoss;
 import Model.Category;
 import Model.Product;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import java.util.ArrayList;
 import java.util.HashMap;

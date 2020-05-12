@@ -5,6 +5,7 @@ import Controller.Exceptions.*;
 import Controller.Exceptions.NullProduct;
 import Controller.SellerBoss;
 import Controller.Exceptions.ThisIsNotReadyForEdit;
+import Controller.ThisOffNotExist;
 import Model.*;
 
 import java.text.ParseException;
@@ -212,7 +213,7 @@ public class SellerPage extends Page {
                 if (command.matches(regex)) {
                     try {
                         System.out.println(SellerBoss.viewOff((Seller) Account.getOnlineAccount(), matcher.group(1)));
-                    } catch (ThisIsNotYours thisIsNotYours) {
+                    } catch (ThisIsNotYours | ThisOffNotExist thisIsNotYours) {
                         System.out.println(thisIsNotYours.getMessage());
                         nextPage = parentPage;
                     }

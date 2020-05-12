@@ -48,10 +48,12 @@ public class Off {
         show.append("start date: "+getStartDate().toString()+"\nfinal date: "+getFinalDate().toString()+"\n");
         show.append("status: "+offStatus.name()+"\n");
         show.append("percent: "+offPercent+"\n"+"maximum: "+maximumAmountOfOff+"\n");
-        for (Product product : includedProducts) {
-            show.append("product id: "+product.getProductId()+"\n");
-            show.append("product name: "+product.getName()+"\n");
-            show.append("product inventory: "+product.getInventory()+"\n");
+        if (includedProducts!=null) {
+            for (Product product : includedProducts) {
+                show.append("product id: " + product.getProductId() + "\n");
+                show.append("product name: " + product.getName() + "\n");
+                show.append("product inventory: " + product.getInventory() + "\n");
+            }
         }
 
         return String.valueOf(show);
