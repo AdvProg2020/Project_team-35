@@ -24,6 +24,7 @@ public class ManagerBoss {
             Request request = Manager.getNewRequestWithId(requestId);
             Manager.newRequests.remove(request);
             Manager.checkedRequests.add(request);
+            request.decline();
         }
         else {
             throw new NotValidRequestIdException("requestId is not Valid or is Checked");

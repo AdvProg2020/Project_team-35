@@ -19,10 +19,12 @@ public class AddOffRequest extends Request {
     public void execute() {
         this.isDone = true;
         off.setOffStatus(ProductAndOffStatus.CONFIRMED);
-        seller.getSellerOffs().add(off);
 
     }
     public String getRequestInfo() {
         return "  ADD OFF Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
+    }
+    public void decline() {
+        this.off.setOffStatus(ProductAndOffStatus.DECLINED);
     }
 }

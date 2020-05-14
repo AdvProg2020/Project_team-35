@@ -21,6 +21,9 @@ public class AddProductRequest extends Request {
     }
     public String getRequestInfo() {
         return "  ADD PRODUCT Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
+    }
 
+    public void decline() {
+        this.product.setProductStatus(ProductAndOffStatus.DECLINED);
     }
 }

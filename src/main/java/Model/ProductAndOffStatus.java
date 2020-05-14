@@ -1,5 +1,5 @@
 package Model;
 
 public enum ProductAndOffStatus {
-    FORMAKE, FOREDIT, CONFIRMED;
+    FORMAKE, FOREDIT, CONFIRMED, DECLINED;
 }
