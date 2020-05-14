@@ -290,7 +290,7 @@ public class ManagerPage extends Page {
                 } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
                 } else if (command.startsWith("edit")) {
-
+                    manageCategories().execute();
                 }
                 else {
                     Matcher matcher = getMatcher(command, "^(add|remove)\\s+(\\w+)$");
@@ -328,6 +328,48 @@ public class ManagerPage extends Page {
         };
     }
 
+
+    private Page editCategory(String categoryName) {
+        return new Page("Edit Category", this) {
+
+            @Override
+            public void setSubPages(HashMap<String, Page> subPages) {
+                super.setSubPages(subPages);
+            }
+
+            @Override
+            public void execute() {
+                System.out.println("Enter Command: (-help for help. back for back.)");
+                String command = scanner.nextLine();
+                if (command.equalsIgnoreCase("-help")) {
+                    System.out.println("");
+                    this.execute();
+                }
+                else if (command.equalsIgnoreCase("back")) {
+                    parentPage.execute();
+                }
+                else if (command.equalsIgnoreCase("edit name")) {
+                    String newName = getInputInFormat("Enter new categoryName:", "^\\w+$");
+                }
+                else if (command.equalsIgnoreCase("add attribute")) {
+                    String newAttribute = getInputInFormat("Enter new attribute:", "^\\w+$");
+                }
+                else if (command.equalsIgnoreCase("delete attribute")) {
+                    String toDeleteAttribute = getInputInFormat("Enter attribute to delete:", "^\\w+$");
+                }
+                else if (command.equalsIgnoreCase("rename attribute")) {
+                    String previousName = getInputInFormat("Enter attribute previous name:", "^\\w+$");
+                    String newName = getInputInFormat("Enter attribute newName:", "^\\w+$");
+                }
+            }
+
+            @Override
+            public boolean show() {
+                super.show();
+                return false;
+            }
+        };
+    }
     private static ArrayList<String> categorySpecialAttributesScanner() {
         System.out.println("Enter every feature in a line. for end enter -end. for back enter -end after -back.");
         ArrayList<String> specialAttributes = new ArrayList<>();
