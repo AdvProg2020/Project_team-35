@@ -388,8 +388,8 @@ public class ManagerPage extends Page {
                     try {
                         ManagerBoss.editAttributeName(categoryName, previousAttributeName, newAttributeName);
                         System.out.println("Successful :)");
-                    } catch (FieldDoesNotExist fieldDoesNotExist) {
-                        System.out.println(fieldDoesNotExist.getMessage());
+                    } catch (FieldDoesNotExist | RepeatedCategoryAttributeException e) {
+                        System.out.println(e.getMessage());
                     }
                 }
                 else {
@@ -397,7 +397,6 @@ public class ManagerPage extends Page {
                 }
                 this.execute();
             }
-
             @Override
             public boolean show() {
                 super.show();
