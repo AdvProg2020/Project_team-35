@@ -278,4 +278,8 @@ public class Product {
         }
         return result;
     }
+
+    public ProductAndOffStatus getProductStatus() {
+        return productStatus;
+    }
 }

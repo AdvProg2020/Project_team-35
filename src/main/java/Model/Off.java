@@ -59,7 +59,11 @@ public class Off {
         return String.valueOf(show);
     }
 
-    public void setFinalDate( LocalDateTime finalDate) {
+    public ArrayList<Product> getIncludedProducts() {
+        return includedProducts;
+    }
+
+    public void setFinalDate(LocalDateTime finalDate) {
         this.finalDate = finalDate;
     }
 
