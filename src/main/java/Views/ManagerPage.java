@@ -362,10 +362,16 @@ public class ManagerPage extends Page {
                 }
                 else if (command.equalsIgnoreCase("edit name")) {
                     String newName = getInputInFormat("Enter new categoryName:", "^\\w+$");
-
+                    ManagerBoss.editCategoryName(categoryName, newName);
                 }
                 else if (command.equalsIgnoreCase("add attribute")) {
                     String newAttribute = getInputInFormat("Enter new attribute:", "^\\w+$");
+                    try {
+                        ManagerBoss.addAttributeToCategory(categoryName, newAttribute);
+                    } catch (RepeatedCategoryAttributeException e) {
+                        System.out.println(e.getMessage());
+                        this.execute();
+                    }
                 }
                 else if (command.equalsIgnoreCase("delete attribute")) {
                     String toDeleteAttribute = getInputInFormat("Enter attribute to delete:", "^\\w+$");
@@ -373,6 +379,10 @@ public class ManagerPage extends Page {
                 else if (command.equalsIgnoreCase("rename attribute")) {
                     String previousName = getInputInFormat("Enter attribute previous name:", "^\\w+$");
                     String newName = getInputInFormat("Enter attribute newName:", "^\\w+$");
+                }
+                else {
+                    System.err.println("Invalid command.");
+                    this.execute();
                 }
             }
 

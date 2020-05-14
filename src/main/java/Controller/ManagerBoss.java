@@ -169,4 +169,19 @@ public class ManagerBoss {
     }
 
 
+    public static boolean editCategoryName(String previousName, String newName) {
+        Category.getCategoryByName(previousName).setCategoryName(newName);
+        return true;
+    }
+
+    public static void addAttributeToCategory(String categoryName, String attribute) throws RepeatedCategoryAttributeException {
+        Category category = Category.getCategoryByName(categoryName);
+        if (category.specialAttributes.contains(attribute)) {
+            throw new RepeatedCategoryAttributeException("The requested attribute is repeated. Try again.");
+        }
+        else {
+            category.specialAttributes.add(attribute);
+        }
+    }
+
 }

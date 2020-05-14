@@ -20,9 +20,6 @@ public class Category {
     public static void deleteCategoryAndSubProducts(String categoryName) {
 
     }
-    public static Category getCategoryWithName(String name) {
-        return null;
-    }
     public void editCategory(String name, ArrayList<String> newSpecialAttributes) {
 
     }
@@ -74,5 +71,9 @@ public class Category {
             }
         }
         return true;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
