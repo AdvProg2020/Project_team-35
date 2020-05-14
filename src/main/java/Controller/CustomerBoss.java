@@ -3,7 +3,6 @@ package Controller;
 import Controller.Exceptions.*;
 import Model.*;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
 public class CustomerBoss {
@@ -83,7 +82,7 @@ public class CustomerBoss {
     }
 
     public static void useDiscountCode(Customer customer, String id) {
-        DiscountCode discountCode = DiscountCode.getDiscountCodeWithId(id);
+        DiscountCode discountCode = DiscountCode.getDiscountCodeWithCode(id);
         double discountAmount = getDiscountAmount(discountCode, customer.getTotalPriceOFCart());
         if (discountAmount > discountCode.getMaximumAvailableAmount()) {
             customer.setPaymentAmount(customer.getTotalPriceOFCart() - discountCode.getMaximumAvailableAmount());

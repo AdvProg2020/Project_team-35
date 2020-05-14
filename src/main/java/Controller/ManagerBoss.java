@@ -3,7 +3,9 @@ package Controller;
 import Controller.Exceptions.*;
 import Model.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ManagerBoss {
     public static void acceptRequestWithId(int requestId) throws NotValidRequestIdException {
@@ -159,5 +161,113 @@ public class ManagerBoss {
     }
 
 
+    public static boolean checkCategoryExistence(String categoryName) throws ThereIsNotCategoryWithNameException {
+        if (Category.isThereCategoryWithName(categoryName)) {
+            return true;
+        }
+        else {
+            throw new ThereIsNotCategoryWithNameException("There is'nt any category with requested name.Try again.");
+        }
+    }
 
+
+    public static boolean editCategoryName(String previousName, String newName) {
+        Category.getCategoryByName(previousName).setCategoryName(newName);
+        return true;
+    }
+
+
+    public static void addAttributeToCategory(String categoryName, String attribute) throws RepeatedCategoryAttributeException {
+        Category category = Category.getCategoryByName(categoryName);
+        if (category.specialAttributes.contains(attribute)) {
+            throw new RepeatedCategoryAttributeException("The requested attribute is repeated. Try again.");
+        }
+        else {
+            category.specialAttributes.add(attribute);
+        }
+    }
+
+    public static void deleteAttributeFromCategory(String categoryName, String attribute) throws FieldDoesNotExist {
+        Category category = Category.getCategoryByName(categoryName);
+        if (category.getSpecialAttributes().contains(attribute)) {
+            category.getSpecialAttributes().remove(attribute);
+            deleteAttributeFromProducts(category, attribute);
+        }
+        else {
+            throw new FieldDoesNotExist("The requested attribute does'nt exist. Try again.");
+        }
+    }
+    private static void deleteAttributeFromProducts(Category category, String attribute) {
+        for (Product product : category.getCategoryProducts()) {
+            product.getSpecialAttributes().remove(attribute);
+        }
+    }
+
+
+    public static void editAttributeName(String categoryName, String previousAttributeName, String newAttributeName) throws FieldDoesNotExist, RepeatedCategoryAttributeException {
+        Category category = Category.getCategoryByName(categoryName);
+        ArrayList<String> specialAttributes = category.getSpecialAttributes();
+        if (specialAttributes.contains(previousAttributeName)) {
+            if (specialAttributes.contains(newAttributeName)) {
+                throw new RepeatedCategoryAttributeException("This category has an attribute with your requested new name. Try again.");
+            }
+            specialAttributes.remove(previousAttributeName);
+            specialAttributes.add(newAttributeName);
+            editAttributeNameAtProducts(category, previousAttributeName, newAttributeName);
+        }
+        else {
+            throw new FieldDoesNotExist("This category has no attribute with requested name.");
+        }
+    }
+
+    private static void editAttributeNameAtProducts(Category category, String previousAttributeName, String newAttributeName) {
+        for (Product product : category.getCategoryProducts()) {
+            HashMap<String, String> specialAttributes = product.getSpecialAttributes();
+            if (specialAttributes.containsKey(previousAttributeName)) {
+                String value = specialAttributes.get(previousAttributeName);
+                specialAttributes.remove(previousAttributeName);
+                specialAttributes.put(newAttributeName, value);
+            }
+        }
+    }
+
+
+    public static void checkExistenceOfCustomerUsername(String customerUsername) throws NotExistCustomerWithUserNameException {
+        if (!Customer.isThereCustomerWithUsername(customerUsername)) {
+            throw new NotExistCustomerWithUserNameException("There is'nt any customer with requested username. Enter a customer username:");
+        }
+    }
+
+    public static void createDiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<String> includedCustomersUserNames) {
+        ArrayList<Customer> includedCustomers = new ArrayList<>();
+        for (String userName : includedCustomersUserNames) {
+            includedCustomers.add(Customer.getCustomerWithName(userName));
+        }
+        DiscountCode discountCode = new DiscountCode(code, finalDate, startDate, discountPercent, maximumAvailableAmount, availableUseFrequent, includedCustomers);
+        for (Customer customer : includedCustomers) {
+            customer.discountCodes.add(discountCode);
+        }
+    }
+
+    public static String checkAndGetDiscountCodeDetailsWithCode(String code) throws DiscountNotExist {
+        if (DiscountCode.isThereDiscountCodeWithCode(code)) {
+            return DiscountCode.getDiscountCodeWithCode(code).getDetails();
+        }
+        else {
+            throw new DiscountNotExist("The requested discount code does'nt exist or expired.");
+        }
+    }
+
+    public static void deleteDiscountCodeWithCode(String code) throws DiscountNotExist {
+        if (DiscountCode.isThereDiscountCodeWithCode(code)) {
+            DiscountCode discountCode = DiscountCode.getDiscountCodeWithCode(code);
+            DiscountCode.getAllDiscountCodes().remove(discountCode);
+            for (Customer customer : discountCode.includedBuyersAndUseFrequency.keySet()) {
+                customer.discountCodes.remove(discountCode);
+            }
+        }
+        else {
+            throw new DiscountNotExist("The requested discount code does'nt exist or expired.");
+        }
+    }
 }

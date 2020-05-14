@@ -125,5 +125,17 @@ public class Customer extends Account {
     public void setMoney(double money) {
         this.money = money;
     }
+
+    public static Customer getCustomerWithName(String username) {
+        for (Customer customer : allCustomers) {
+            if (customer.getUsername().equals(username)) {
+                return customer;
+            }
+        }
+        return null;
+    }
+    public static boolean isThereCustomerWithUsername(String username) {
+        return getCustomerWithName(username) != null;
+    }
 }
 

@@ -1,13 +1,7 @@
 package Controller.Exceptions;
 
 public class DiscountNotExist extends Exception {
-    private int id;
-    public DiscountNotExist(int id,String message) {
+    public DiscountNotExist(String message) {
         super(message);
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
     }
 }
