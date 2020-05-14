@@ -354,7 +354,7 @@ public class ManagerPage extends Page {
                 System.out.println("Enter Command: (-help for help. back for back.)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
-                    System.out.println("");
+                    System.out.println("add/delete/rename attribute ---- edit name");
                     this.execute();
                 }
                 else if (command.equalsIgnoreCase("back")) {
@@ -375,6 +375,12 @@ public class ManagerPage extends Page {
                 }
                 else if (command.equalsIgnoreCase("delete attribute")) {
                     String toDeleteAttribute = getInputInFormat("Enter attribute to delete:", "^\\w+$");
+                    try {
+                        ManagerBoss.deleteAttributeFromCategory(categoryName, toDeleteAttribute);
+                    } catch (FieldDoesNotExist fieldDoesNotExist) {
+                        System.out.println(fieldDoesNotExist.getMessage());
+                        this.execute();
+                    }
                 }
                 else if (command.equalsIgnoreCase("rename attribute")) {
                     String previousName = getInputInFormat("Enter attribute previous name:", "^\\w+$");

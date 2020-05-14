@@ -174,6 +174,7 @@ public class ManagerBoss {
         return true;
     }
 
+
     public static void addAttributeToCategory(String categoryName, String attribute) throws RepeatedCategoryAttributeException {
         Category category = Category.getCategoryByName(categoryName);
         if (category.specialAttributes.contains(attribute)) {
@@ -184,4 +185,19 @@ public class ManagerBoss {
         }
     }
 
+    public static void deleteAttributeFromCategory(String categoryName, String attribute) throws FieldDoesNotExist {
+        Category category = Category.getCategoryByName(categoryName);
+        if (category.specialAttributes.contains(attribute)) {
+            category.specialAttributes.remove(attribute);
+            deleteAttributeFromProducts(category, attribute);
+        }
+        else {
+            throw new FieldDoesNotExist("The requested attribute does'nt exist. Try again.");
+        }
+    }
+    private static void deleteAttributeFromProducts(Category category, String attribute) {
+        for (Product product : category.getCategoryProducts()) {
+            product.getSpecialAttributes().remove(attribute);
+        }
+    }
 }
