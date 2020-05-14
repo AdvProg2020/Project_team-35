@@ -355,7 +355,6 @@ public class ManagerPage extends Page {
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
                     System.out.println("add/delete/rename attribute ---- edit name");
-                    this.execute();
                 }
                 else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
@@ -370,7 +369,6 @@ public class ManagerPage extends Page {
                         ManagerBoss.addAttributeToCategory(categoryName, newAttribute);
                     } catch (RepeatedCategoryAttributeException e) {
                         System.out.println(e.getMessage());
-                        this.execute();
                     }
                 }
                 else if (command.equalsIgnoreCase("delete attribute")) {
@@ -379,7 +377,6 @@ public class ManagerPage extends Page {
                         ManagerBoss.deleteAttributeFromCategory(categoryName, toDeleteAttribute);
                     } catch (FieldDoesNotExist fieldDoesNotExist) {
                         System.out.println(fieldDoesNotExist.getMessage());
-                        this.execute();
                     }
                 }
                 else if (command.equalsIgnoreCase("rename attribute")) {
@@ -388,8 +385,8 @@ public class ManagerPage extends Page {
                 }
                 else {
                     System.err.println("Invalid command.");
-                    this.execute();
                 }
+                this.execute();
             }
 
             @Override
