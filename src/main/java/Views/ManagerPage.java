@@ -16,7 +16,8 @@ public class ManagerPage extends Page {
         subPages.put("2", manageUsers());
         subPages.put("3", manageCategories());
         subPages.put("4", manageAllProducts());
-        subPages.put("5", new RegisteringPanel("registering panel", this));
+        subPages.put("5", createDiscountCode());
+        subPages.put("6", new RegisteringPanel("registering panel", this));
     }
 
     private Page manageUsers() {
@@ -170,7 +171,42 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
-                super.execute();
+                System.out.println("Enter command: (-help for help)");
+                String command = scanner.nextLine();
+                if (command.equalsIgnoreCase("-help")) {
+                    System.out.println("create discount code [code] ---- back");
+                }
+                else if (command.equalsIgnoreCase("back")) {
+                    parentPage.execute();
+                }
+                else if (command.startsWith("create discount code")) {
+                    String codeText = getInputInFormat("Enter code text:", "^\\w+$");
+                    if (codeText.equalsIgnoreCase("back")) {
+                        this.execute();
+                    }
+                    String discountPercent = getInputInFormat("Enter discount percent", "^(\\d+.?\\d+)|(back)$");
+                    if (discountPercent.equalsIgnoreCase("back")) {
+                        this.execute();
+                    }
+                    String maximumDiscountAmount = getInputInFormat("Enter maximum discount amount", "^(\\d+.?\\d+)|(back)$");
+                    if (maximumDiscountAmount.equalsIgnoreCase("back")) {
+                        this.execute();
+                    }
+                    String repeatRate = getInputInFormat("How many times a customer can use this code?", "^(\\d+)(\\d+)$");
+                    if (repeatRate.equalsIgnoreCase("back")) {
+                        this.execute();
+                    }
+                    ArrayList<String> customersUserNames = listOfUsersForDiscountCodeScanner();
+                    if (customersUserNames.contains("-back")) {
+                        this.execute();
+                    }
+
+
+                }
+                else {
+                    System.err.println("Invalid Command.");
+                }
+                this.execute();
             }
 
             @Override
@@ -179,6 +215,29 @@ public class ManagerPage extends Page {
                 return false;
             }
         };
+    }
+
+
+    private static ArrayList<String> listOfUsersForDiscountCodeScanner() {
+        System.out.println("Enter every username in a line. for end enter -end. for back enter -back");
+        ArrayList<String> userNames = new ArrayList<>();
+        while (true) {
+            String username = scanner.nextLine();
+            if (username.equalsIgnoreCase("-back")) {
+                userNames.add(username);
+                return userNames;
+            }
+            if (username.equalsIgnoreCase("-end")) {
+                break;
+            }
+            try {
+                ManagerBoss.checkExistenceOfCustomerUsername(username);
+                userNames.add(username);
+            } catch (NotExistCustomerWithUserNameException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return userNames;
     }
 
     private Page viewDiscountCodes() {
@@ -405,10 +464,14 @@ public class ManagerPage extends Page {
         };
     }
     private static ArrayList<String> categorySpecialAttributesScanner() {
-        System.out.println("Enter every feature in a line. for end enter -end. for back enter -end after -back.");
+        System.out.println("Enter every feature in a line. for end enter -end. for back enter -back.");
         ArrayList<String> specialAttributes = new ArrayList<>();
         while (true) {
             String feature = scanner.nextLine();
+            if (feature.equalsIgnoreCase("-back")) {
+                specialAttributes.add(feature);
+                return specialAttributes;
+            }
             if (feature.equalsIgnoreCase("-end")) {
                 break;
             }

@@ -229,4 +229,11 @@ public class ManagerBoss {
             }
         }
     }
+
+
+    public static void checkExistenceOfCustomerUsername(String customerUsername) throws NotExistCustomerWithUserNameException {
+        if (!Customer.isThereCustomerWithUsername(customerUsername)) {
+            throw new NotExistCustomerWithUserNameException("There is'nt any customer with requested username. Enter a customer username:");
+        }
+    }
 }
