@@ -290,7 +290,19 @@ public class ManagerPage extends Page {
                 } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
                 } else if (command.startsWith("edit")) {
-                    manageCategories().execute();
+                    Matcher matcher = getMatcher(command, "^edit (\\w+)$");
+                    if (matcher.matches()) {
+                        try {
+                            ManagerBoss.checkCategoryExistence(matcher.group(1));
+                            editCategory(matcher.group(1)).execute();
+                        } catch (ThereIsNotCategoryWithNameException e) {
+                            System.out.println(e.getMessage());
+                            this.execute();
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid Command.");
+                    }
                 }
                 else {
                     Matcher matcher = getMatcher(command, "^(add|remove)\\s+(\\w+)$");
@@ -350,6 +362,7 @@ public class ManagerPage extends Page {
                 }
                 else if (command.equalsIgnoreCase("edit name")) {
                     String newName = getInputInFormat("Enter new categoryName:", "^\\w+$");
+
                 }
                 else if (command.equalsIgnoreCase("add attribute")) {
                     String newAttribute = getInputInFormat("Enter new attribute:", "^\\w+$");

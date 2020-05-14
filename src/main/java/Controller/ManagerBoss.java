@@ -159,5 +159,14 @@ public class ManagerBoss {
     }
 
 
+    public static boolean checkCategoryExistence(String categoryName) throws ThereIsNotCategoryWithNameException {
+        if (Category.isThereCategoryWithName(categoryName)) {
+            return true;
+        }
+        else {
+            throw new ThereIsNotCategoryWithNameException("There is'nt any category with requested name.Try again.");
+        }
+    }
+
 
 }
