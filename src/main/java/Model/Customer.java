@@ -122,5 +122,8 @@ public class Customer extends Account {
         this.paymentAmount = paymentAmount;
     }
 
+    public void setMoney(double money) {
+        this.money = money;
+    }
 }
 

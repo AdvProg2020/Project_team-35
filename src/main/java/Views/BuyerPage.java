@@ -267,7 +267,6 @@ public class BuyerPage extends Page {
                 String command = "";
                 String regex = "";
                 Matcher matcher = null;
-                boolean back = false;
                 Page nextPage = null;
                 while (true) {
                     System.out.println("discount code id: ");
@@ -275,12 +274,22 @@ public class BuyerPage extends Page {
                     regex = "^(\\d+)$";
                     matcher = getMatcher(command, regex);
                     if (command.matches(regex)) {
-                        if (CustomerBoss.hasDiscountCodeWithId((Customer) Account.getOnlineAccount(), command)) {
-
+                        if (CustomerBoss.hasDiscountCodeWithId((Customer) Account.getOnlineAccount(), command))
+                            CustomerBoss.useDiscountCode((Customer) Account.getOnlineAccount(), command);
+                        else {
+                            System.err.println("this discount code isn't available for you.");
+                            continue;
                         }
+                        nextPage = payment();
+                        break;
                     }
+                    else if (command.equalsIgnoreCase("back")) {
+                        nextPage = parentPage;
+                        break;
+                    }
+                    else System.err.println("invalid command");
                 }
-
+                nextPage.execute();
             }
         };
     }
@@ -289,7 +298,11 @@ public class BuyerPage extends Page {
         return new Page("payment", this) {
             @Override
             public void execute() {
-                super.execute();
+                if (!CustomerBoss.doPayment((Customer) Account.getOnlineAccount()))
+                    System.err.println("your money is not enough! the purchase wasn't successful.");
+                else
+                    System.out.println("purchase successfully done!");
+                parentPage.execute();
             }
         };
     }

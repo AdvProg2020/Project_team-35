@@ -92,4 +92,18 @@ public class CustomerBoss {
         discountCode.includedBuyersAndUseFrequency.put(customer, discountCode.includedBuyersAndUseFrequency.get(customer) - 1);
     }
 
+    public static void dontUseDiscountCode(Customer customer) {
+        customer.setPaymentAmount(customer.getTotalPriceOFCart());
+    }
+
+    public static boolean doPayment(Customer customer) {
+        if (customer.getMoney() < customer.getPaymentAmount())
+            return false;
+        else {
+            customer.setMoney(customer.getMoney() - customer.getPaymentAmount());
+            customer.cart.clear();
+            return true;
+        }
+    }
+
 }
