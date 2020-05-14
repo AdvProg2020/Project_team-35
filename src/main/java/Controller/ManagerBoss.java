@@ -4,6 +4,7 @@ import Controller.Exceptions.*;
 import Model.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ManagerBoss {
     public static void acceptRequestWithId(int requestId) throws NotValidRequestIdException {
@@ -187,8 +188,8 @@ public class ManagerBoss {
 
     public static void deleteAttributeFromCategory(String categoryName, String attribute) throws FieldDoesNotExist {
         Category category = Category.getCategoryByName(categoryName);
-        if (category.specialAttributes.contains(attribute)) {
-            category.specialAttributes.remove(attribute);
+        if (category.getSpecialAttributes().contains(attribute)) {
+            category.getSpecialAttributes().remove(attribute);
             deleteAttributeFromProducts(category, attribute);
         }
         else {
@@ -198,6 +199,34 @@ public class ManagerBoss {
     private static void deleteAttributeFromProducts(Category category, String attribute) {
         for (Product product : category.getCategoryProducts()) {
             product.getSpecialAttributes().remove(attribute);
+        }
+    }
+
+
+    public static void editAttributeName(String categoryName, String previousAttributeName, String newAttributeName) throws FieldDoesNotExist, RepeatedCategoryAttributeException {
+        Category category = Category.getCategoryByName(categoryName);
+        ArrayList<String> specialAttributes = category.getSpecialAttributes();
+        if (specialAttributes.contains(previousAttributeName)) {
+            if (specialAttributes.contains(newAttributeName)) {
+                throw new RepeatedCategoryAttributeException("This category has an attribute with your requested new name. Try again.");
+            }
+            specialAttributes.remove(previousAttributeName);
+            specialAttributes.add(newAttributeName);
+            editAttributeNameAtProducts(category, previousAttributeName, newAttributeName);
+        }
+        else {
+            throw new FieldDoesNotExist("This category has no attribute with requested name.");
+        }
+    }
+
+    private static void editAttributeNameAtProducts(Category category, String previousAttributeName, String newAttributeName) {
+        for (Product product : category.getCategoryProducts()) {
+            HashMap<String, String> specialAttributes = product.getSpecialAttributes();
+            if (specialAttributes.containsKey(previousAttributeName)) {
+                String value = specialAttributes.get(previousAttributeName);
+                specialAttributes.remove(previousAttributeName);
+                specialAttributes.put(newAttributeName, value);
+            }
         }
     }
 }

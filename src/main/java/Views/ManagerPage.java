@@ -362,11 +362,13 @@ public class ManagerPage extends Page {
                 else if (command.equalsIgnoreCase("edit name")) {
                     String newName = getInputInFormat("Enter new categoryName:", "^\\w+$");
                     ManagerBoss.editCategoryName(categoryName, newName);
+                    System.out.println("Successful :)");
                 }
                 else if (command.equalsIgnoreCase("add attribute")) {
                     String newAttribute = getInputInFormat("Enter new attribute:", "^\\w+$");
                     try {
                         ManagerBoss.addAttributeToCategory(categoryName, newAttribute);
+                        System.out.println("Successful :)");
                     } catch (RepeatedCategoryAttributeException e) {
                         System.out.println(e.getMessage());
                     }
@@ -375,13 +377,20 @@ public class ManagerPage extends Page {
                     String toDeleteAttribute = getInputInFormat("Enter attribute to delete:", "^\\w+$");
                     try {
                         ManagerBoss.deleteAttributeFromCategory(categoryName, toDeleteAttribute);
+                        System.out.println("Successful :)");
                     } catch (FieldDoesNotExist fieldDoesNotExist) {
                         System.out.println(fieldDoesNotExist.getMessage());
                     }
                 }
                 else if (command.equalsIgnoreCase("rename attribute")) {
-                    String previousName = getInputInFormat("Enter attribute previous name:", "^\\w+$");
-                    String newName = getInputInFormat("Enter attribute newName:", "^\\w+$");
+                    String previousAttributeName = getInputInFormat("Enter attribute previous name:", "^\\w+$");
+                    String newAttributeName = getInputInFormat("Enter attribute newName:", "^\\w+$");
+                    try {
+                        ManagerBoss.editAttributeName(categoryName, previousAttributeName, newAttributeName);
+                        System.out.println("Successful :)");
+                    } catch (FieldDoesNotExist fieldDoesNotExist) {
+                        System.out.println(fieldDoesNotExist.getMessage());
+                    }
                 }
                 else {
                     System.err.println("Invalid command.");
