@@ -1,6 +1,7 @@
 package Controller;
 
 import Controller.Exceptions.NullProduct;
+import Controller.Exceptions.ProductIsNotConfirmed;
 import Model.Product;
 import Model.ProductAndOffStatus;
 

@@ -1,18 +1,15 @@
 package Views;
-
 import Controller.AccountBoss;
 import Controller.Exceptions.*;
 import Controller.Exceptions.NullProduct;
 import Controller.SellerBoss;
 import Controller.Exceptions.ThisIsNotReadyForEdit;
-import Controller.ThisOffNotExist;
+import Controller.Exceptions.ThisOffNotExist;
 import Model.*;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
-
 public class SellerPage extends Page {
     private HashMap<String, String> productInfo;
     private HashMap<String, String> offInfoChanges;
@@ -87,18 +84,18 @@ public class SellerPage extends Page {
                         listOfTypes.add("offPercent");
                         listOfTypes.add("maximumAmountOfOff");
                         String[] lists = new String[0];
-                                lists = listOfTypes.toArray(lists);
-                                int i =0 ;
+                        lists = listOfTypes.toArray(lists);
+                        int i = 0;
                         do {
-                            System.out.println(lists[i]+":");
+                            System.out.println(lists[i] + ":");
                             change = scanner.nextLine();
                             offInfoChanges.put(lists[i], change);
-                            i+=1;
-                        } while (i<4);
+                            i += 1;
+                        } while (i < 4);
                         try {
 
-                                    SellerBoss.editOff((Seller) Account.getOnlineAccount(), off, offInfoChanges);
-                                    nextPage = parentPage;
+                            SellerBoss.editOff((Seller) Account.getOnlineAccount(), off, offInfoChanges);
+                            nextPage = parentPage;
                             System.out.println("send request successfully");
 
 
@@ -150,7 +147,7 @@ public class SellerPage extends Page {
                         } else {
                             if (command.matches("^\\d+$")) {
                                 id.add(Integer.parseInt(command));
-                            }else {
+                            } else {
                                 System.err.println("invalid format for id");
                             }
                         }
@@ -222,11 +219,10 @@ public class SellerPage extends Page {
                     nextPage = editOff();
                 } else if (command.equalsIgnoreCase("add off")) {
                     nextPage = addOff();
-                }else if (command.equalsIgnoreCase("help")){
+                } else if (command.equalsIgnoreCase("help")) {
                     System.out.println("add off *** view off [off id] *** edit off *** back *** help");
                     nextPage = this;
-                }
-                else if (command.equalsIgnoreCase("back")) {
+                } else if (command.equalsIgnoreCase("back")) {
                     nextPage = parentPage;
                 } else {
                     System.err.println("invalid command");
@@ -471,7 +467,7 @@ public class SellerPage extends Page {
                 }
                 if (!itHasBack) {
                     if (category != null) {
-                        SellerBoss.addRequestProduct(productInfo.get("name"), productInfo.get("price"), productInfo.get("inventory"), specialAttributes, productInfo.get("company"), category, (Seller) Account.getOnlineAccount(),productInfo.get("description"));
+                        SellerBoss.addRequestProduct(productInfo.get("name"), productInfo.get("price"), productInfo.get("inventory"), specialAttributes, productInfo.get("company"), category, (Seller) Account.getOnlineAccount(), productInfo.get("description"));
                         System.out.println("we send request for manager");
                         nextPage = parentPage;
                     } else {
@@ -507,11 +503,10 @@ public class SellerPage extends Page {
                         System.err.println(thisIsNotYours.getMessage());
                         nextPage = this;
                     }
-                }else if (command.equalsIgnoreCase("help")){
+                } else if (command.equalsIgnoreCase("help")) {
                     System.out.println("remove [productId] *** back *** help");
                     nextPage = this;
-                }
-                else if (command.matches("back")) {
+                } else if (command.matches("back")) {
                     nextPage = parentPage;
                 } else {
                     System.err.println("invalid command");

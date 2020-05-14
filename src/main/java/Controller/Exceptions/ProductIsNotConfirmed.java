@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Exceptions;
 
 public class ProductIsNotConfirmed extends  Exception {
     private  int id;

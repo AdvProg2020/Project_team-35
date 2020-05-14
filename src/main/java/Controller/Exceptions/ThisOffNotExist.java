@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Exceptions;
 
 public class ThisOffNotExist extends Exception{
     private int id;

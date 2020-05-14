@@ -13,10 +13,6 @@ import java.util.HashMap;
 
 public class ProductBoss {
 
-
-
-
-
     public static GoodPage goToGoodPage(int id) throws NullProduct {
         Product product = Product.getProductWithId(id);
         GoodPage goodPage = GoodPage.getGoodPage(product);
@@ -76,7 +72,6 @@ public class ProductBoss {
         return result;
     }
 
-
     public static void makeComment(String comment,String title , Product product , Customer customer){
                 Comment comment1 = new Comment(product,comment,customer,title);
     }
@@ -84,4 +79,11 @@ public class ProductBoss {
         return product.showSummeryDetailsOfProduct();
     }
 
+    public static HashMap<String , String> showComments(Product product){
+        HashMap<String , String> comments = new HashMap<>();
+        for (Comment comment : product.getCommentsList()) {
+            comments.put(comment.getCommenter().getUsername(),comment.getCommentText());
+        }
+        return comments;
+    }
 }

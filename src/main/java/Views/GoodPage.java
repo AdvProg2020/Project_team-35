@@ -32,7 +32,14 @@ public class GoodPage extends Page {
         return new Page("show comment",this) {
             @Override
             public void execute() {
-                super.execute();
+                System.out.println(name);
+                HashMap<String , String > result = ProductBoss.showComments(product);
+                if (result!=null) {
+                    for (String s : result.keySet()) {
+                        System.out.println(s + ": " + result.get(s));
+                    }
+                }
+                parentPage.execute();
             }
         };
     }

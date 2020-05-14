@@ -2,13 +2,11 @@ package Views;
 
 import Controller.Exceptions.NullProduct;
 import Controller.OffBoss;
-import Controller.ProductBoss;
-import Controller.ProductIsNotConfirmed;
+import Controller.Exceptions.ProductIsNotConfirmed;
 import Model.Off;
 import Model.Product;
 import Model.ProductAndOffStatus;
 
-import java.util.HashMap;
 import java.util.regex.Matcher;
 
 public class Offs extends Page{
