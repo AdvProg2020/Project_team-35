@@ -266,14 +266,28 @@ public class ManagerPage extends Page {
                 }
                 System.out.println("Enter command: (-help for help)");
                 String command = scanner.nextLine();
+                Matcher matcher = getMatcher(command, "^(view|remove|edit) discount code (\\w+)$");
                 if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
                 }
                 else if (command.equalsIgnoreCase("-help")) {
                     System.out.println("view/remove/edit discount code [code]");
                 }
-                else if (true) {
+                else if (matcher.matches()) {
+                    String code = matcher.group(2);
+                    if (matcher.group(1).equalsIgnoreCase("view")) {
+                        try {
+                            System.out.println(ManagerBoss.checkAndGetDiscountCodeDetailsWithCode(code));
+                        } catch (DiscountNotExist discountNotExist) {
+                            System.out.println(discountNotExist.getMessage());
+                        }
+                    }
+                    else if (matcher.group(1).equalsIgnoreCase("remove")) {
 
+                    }
+                    else if (matcher.group(1).equalsIgnoreCase("edit")) {
+
+                    }
                 }
                 else {
                     System.err.println("Invalid command.");

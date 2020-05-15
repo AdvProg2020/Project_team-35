@@ -14,6 +14,15 @@ public class DiscountCode {
     private int availableUseFrequent;
     public HashMap<Customer, Integer> includedBuyersAndUseFrequency;
 
+    public String getDetails() {
+        String toReturn =  "Code: " + this.code + "\nStart Date: " + this.startDate.toString() + "\nExpire Date: " + this.finalDate.toString()
+                + "\nDiscount Percent: " + this.getDiscountPercent() + "\nMaximum Discount: " + this.getMaximumAvailableAmount()
+                + "\nUsable Rate: " + this.getAvailableUseFrequent() + "\nIncluded Customers | Use Rates: \n";
+        for (Customer customer : this.includedBuyersAndUseFrequency.keySet()) {
+            toReturn += " ** UserName: " + customer.getUsername() + " | Use Number: " + includedBuyersAndUseFrequency.get(customer);
+        }
+        return toReturn;
+    }
     public DiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<Customer> includedCustomers) {
         this.code = code;
         this.finalDate = finalDate;
@@ -43,9 +52,9 @@ public class DiscountCode {
     public static void removeDiscountCode() {
 
     }
-    public static boolean isThereDiscountCodeWithId(String id) {
+    public static boolean isThereDiscountCodeWithCode(String code) {
         for (DiscountCode discountCode : allDiscountCodes) {
-            if (discountCode.code.equals(id))
+            if (discountCode.code.equals(code))
                 return true;
         }
         return false;
@@ -92,4 +101,5 @@ public class DiscountCode {
     public static ArrayList<DiscountCode> getAllDiscountCodes() {
         return allDiscountCodes;
     }
+
 }

@@ -248,4 +248,13 @@ public class ManagerBoss {
             customer.discountCodes.add(discountCode);
         }
     }
+
+    public static String checkAndGetDiscountCodeDetailsWithCode(String code) throws DiscountNotExist {
+        if (DiscountCode.isThereDiscountCodeWithCode(code)) {
+            return DiscountCode.getDiscountCodeWithCode(code).getDetails();
+        }
+        else {
+            throw new DiscountNotExist("The requested discount code does'nt exist or expired.");
+        }
+    }
 }
