@@ -30,7 +30,7 @@ public class DiscountCode {
         this.discountPercent = discountPercent;
         this.maximumAvailableAmount = maximumAvailableAmount;
         this.availableUseFrequent = availableUseFrequent;
-        includedBuyersAndUseFrequency = new HashMap<>();
+        this.includedBuyersAndUseFrequency = new HashMap<>();
         for (Customer customer : includedCustomers) {
             this.includedBuyersAndUseFrequency.put(customer, 0);
         }
@@ -43,15 +43,15 @@ public class DiscountCode {
     public String getDiscountCodeInlineInfo() {
         return "Code: " + this.code + " --- Percent: " + this.discountPercent + " --- ExpireDate: " + this.expireDateToString();
     }
-    public void editDiscountCode(double discountPercent, double maximumAvailableDiscount, int availableUseFrequent, ArrayList<Customer> includedCustomers) {
-
-    }
-    public boolean canUseDiscountCode(Customer customer) {
-        return true;
-    }
-    public static void removeDiscountCode() {
-
-    }
+//    public void editDiscountCode(double discountPercent, double maximumAvailableDiscount, int availableUseFrequent, ArrayList<Customer> includedCustomers) {
+//
+//    }
+//    public boolean canUseDiscountCode(Customer customer) {
+//        return true;
+//    }
+//    public static void removeDiscountCode() {
+//
+//    }
     public static boolean isThereDiscountCodeWithCode(String code) {
         for (DiscountCode discountCode : allDiscountCodes) {
             if (discountCode.code.equals(code))
@@ -66,16 +66,16 @@ public class DiscountCode {
         }
         return null;
     }
-    public static void deleteDiscountCode () {
-
-    }
-    public static DiscountCode getDiscountCodeById(String id){
-        for (DiscountCode discountCode : allDiscountCodes) {
-            if (discountCode.getId().equalsIgnoreCase(id))
-                return discountCode;
-        }
-        return null;
-    }
+//    public static void deleteDiscountCode () {
+//
+//    }
+//    public static DiscountCode getDiscountCodeById(String id){
+//        for (DiscountCode discountCode : allDiscountCodes) {
+//            if (discountCode.getId().equalsIgnoreCase(id))
+//                return discountCode;
+//        }
+//        return null;
+//    }
 
     public String getId() {
         return code;

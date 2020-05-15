@@ -257,4 +257,17 @@ public class ManagerBoss {
             throw new DiscountNotExist("The requested discount code does'nt exist or expired.");
         }
     }
+
+    public static void deleteDiscountCodeWithCode(String code) throws DiscountNotExist {
+        if (DiscountCode.isThereDiscountCodeWithCode(code)) {
+            DiscountCode discountCode = DiscountCode.getDiscountCodeWithCode(code);
+            DiscountCode.getAllDiscountCodes().remove(discountCode);
+            for (Customer customer : discountCode.includedBuyersAndUseFrequency.keySet()) {
+                customer.discountCodes.remove(discountCode);
+            }
+        }
+        else {
+            throw new DiscountNotExist("The requested discount code does'nt exist or expired.");
+        }
+    }
 }

@@ -260,7 +260,7 @@ public class ManagerPage extends Page {
             @Override
             public void execute() {
                 ArrayList<DiscountCode> discountCodes = DiscountCode.getAllDiscountCodes();
-                System.out.println("Discount codes:");
+                System.out.println("Discount Codes:");
                 for (DiscountCode discountCode : discountCodes) {
                     System.out.println(discountCode.getDiscountCodeInlineInfo());
                 }
@@ -283,7 +283,12 @@ public class ManagerPage extends Page {
                         }
                     }
                     else if (matcher.group(1).equalsIgnoreCase("remove")) {
-
+                        try {
+                            ManagerBoss.deleteDiscountCodeWithCode(code);
+                            System.out.println("Successful :)");
+                        } catch (DiscountNotExist discountNotExist) {
+                            System.out.println(discountNotExist.getMessage());
+                        }
                     }
                     else if (matcher.group(1).equalsIgnoreCase("edit")) {
 
