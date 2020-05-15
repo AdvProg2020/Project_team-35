@@ -177,11 +177,11 @@ public class ManagerPage extends Page {
                 if (codeText.equalsIgnoreCase("back")) {
                     parentPage.execute();
                 }
-                String discountPercent = getInputInFormat("Enter discount percent (back for back to first input):", "^(\\d+[.]?\\d+)|(back)$");
+                String discountPercent = getInputInFormat("Enter discount percent (back for back to first input):", "^(\\d{1,2}(\\.\\d+)?)|(back)$");
                 if (discountPercent.equalsIgnoreCase("back")) {
                     this.execute();
                 }
-                String maximumDiscountAmount = getInputInFormat("Enter maximum discount amount (back for back to first input):", "^(\\d+[.]?\\d+)|(back)$");
+                String maximumDiscountAmount = getInputInFormat("Enter maximum discount amount (back for back to first input):", "^(\\d+(\\.\\d+)?)|(back)$");
                 if (maximumDiscountAmount.equalsIgnoreCase("back")) {
                     this.execute();
                 }
@@ -193,20 +193,29 @@ public class ManagerPage extends Page {
                 if (customersUserNames.contains("-back")) {
                     this.execute();
                 }
-                String startDay = getInputInFormat("Enter start date in format [yyyy-mm-dd]:", "^\\d{4}-\\d{2}-\\d{2}$");
-                String finalDay = getInputInFormat("Enter final date in format [yyyy-mm-dd]:", "^\\d{4}-\\d{2}-\\d{2}$");
-                String startTime = getInputInFormat("Enter start time in format [hh:mm:ss]:", "^\\d{2}:\\d{2}:\\d{2}$");
-                String finalTime = getInputInFormat("Enter final time in format [hh:mm:ss]:", "^\\d{2}:\\d{2}:\\d{2}$");
-                LocalDateTime fullStartDate = LocalDateTime.parse(startDay + "T" + startTime);
-                LocalDateTime fullFinalDate = LocalDateTime.parse(finalDay + "T" + finalTime);
+                LocalDateTime fullStartDate = null, fullFinalDate = null;
+                while(true) {
+                    String startDay = getInputInFormat("Enter start date in format [yyyy-mm-dd]:", "^[0-2][0-9]{3}-((0\\d)|(1[0-2]))-(([0-2]\\d)|(3[0-1]))$");
+                    String finalDay = getInputInFormat("Enter final date in format [yyyy-mm-dd]:", "^[0-2][0-9]{3}-((0\\d)|(1[0-2]))-(([0-2]\\d)|(3[0-1]))$");
+                    String startTime = getInputInFormat("Enter start time in format [hh:mm:ss]:", "^(([0-1][0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]$");
+                    String finalTime = getInputInFormat("Enter final time in format [hh:mm:ss]:", "^(([0-1][0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]$");
+                    try{
+                        fullStartDate = LocalDateTime.parse(startDay + "T" + startTime);
+                        fullFinalDate = LocalDateTime.parse(finalDay + "T" + finalTime);
+                        break;
+                    }
+                    catch (java.time.format.DateTimeParseException e) {
+                        int index = e.getMessage().indexOf("Invalid date");
+                        System.err.println(e.getMessage().substring(index));
+                    }
+                }
                 double percent = Double.parseDouble(discountPercent);
                 double maximumAmount = Double.parseDouble(maximumDiscountAmount);
                 int repeat = Integer.parseInt(repeatRate);
                 ManagerBoss.createDiscountCode(codeText, fullFinalDate, fullStartDate, percent, maximumAmount, repeat, customersUserNames);
                 System.out.println("Successful :)");
+                parentPage.execute();
             }
-
-
             @Override
             public boolean show() {
                 super.show();
