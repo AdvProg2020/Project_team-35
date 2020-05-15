@@ -3,6 +3,7 @@ package Controller;
 import Controller.Exceptions.*;
 import Model.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -234,6 +235,17 @@ public class ManagerBoss {
     public static void checkExistenceOfCustomerUsername(String customerUsername) throws NotExistCustomerWithUserNameException {
         if (!Customer.isThereCustomerWithUsername(customerUsername)) {
             throw new NotExistCustomerWithUserNameException("There is'nt any customer with requested username. Enter a customer username:");
+        }
+    }
+
+    public static void createDiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<String> includedCustomersUserNames) {
+        ArrayList<Customer> includedCustomers = new ArrayList<>();
+        for (String userName : includedCustomersUserNames) {
+            includedCustomers.add(Customer.getCustomerWithName(userName));
+        }
+        DiscountCode discountCode = new DiscountCode(code, finalDate, startDate, discountPercent, maximumAvailableAmount, availableUseFrequent, includedCustomers);
+        for (Customer customer : includedCustomers) {
+            customer.discountCodes.add(discountCode);
         }
     }
 }

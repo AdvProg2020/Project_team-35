@@ -5,6 +5,7 @@ import Controller.Exceptions.*;
 import Controller.ManagerBoss;
 import Model.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -174,25 +175,25 @@ public class ManagerPage extends Page {
                 System.out.println("Enter command: (-help for help)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
-                    System.out.println("create discount code [code] ---- back");
+                    System.out.println("create discount code ---- back");
                 }
                 else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
                 }
                 else if (command.startsWith("create discount code")) {
-                    String codeText = getInputInFormat("Enter code text:", "^\\w+$");
+                    String codeText = getInputInFormat("Enter code text:(back for back to menu)", "^\\w+$");
                     if (codeText.equalsIgnoreCase("back")) {
                         this.execute();
                     }
-                    String discountPercent = getInputInFormat("Enter discount percent", "^(\\d+.?\\d+)|(back)$");
+                    String discountPercent = getInputInFormat("Enter discount percent(back for back to menu)", "^(\\d+[.]?\\d+)|(back)$");
                     if (discountPercent.equalsIgnoreCase("back")) {
                         this.execute();
                     }
-                    String maximumDiscountAmount = getInputInFormat("Enter maximum discount amount", "^(\\d+.?\\d+)|(back)$");
+                    String maximumDiscountAmount = getInputInFormat("Enter maximum discount amount:(back for back to menu)", "^(\\d+[.]?\\d+)|(back)$");
                     if (maximumDiscountAmount.equalsIgnoreCase("back")) {
                         this.execute();
                     }
-                    String repeatRate = getInputInFormat("How many times a customer can use this code?", "^(\\d+)(\\d+)$");
+                    String repeatRate = getInputInFormat("How many times a customer can use this code?(back for back to menu)", "^(\\d+)$");
                     if (repeatRate.equalsIgnoreCase("back")) {
                         this.execute();
                     }
@@ -200,8 +201,17 @@ public class ManagerPage extends Page {
                     if (customersUserNames.contains("-back")) {
                         this.execute();
                     }
-                    // تاریخها
-
+                    String startDay = getInputInFormat("Enter start date in format [yyyy-mm-dd]:", "^\\d{4}-\\d{2}-\\d{2}$");
+                    String finalDay = getInputInFormat("Enter final date in format [yyyy-mm-dd]:", "^\\d{4}-\\d{2}-\\d{2}$");
+                    String startTime = getInputInFormat("Enter start time in format [hh:mm:ss]:", "^\\d{2}:\\d{2}:\\d{2}$");
+                    String finalTime = getInputInFormat("Enter final time in format [hh:mm:ss]:", "^\\d{2}:\\d{2}:\\d{2}$");
+                    LocalDateTime fullStartDate = LocalDateTime.parse(startDay + "T" + startTime);
+                    LocalDateTime fullFinalDate = LocalDateTime.parse(finalDay + "T" + finalTime);
+                    double percent = Double.parseDouble(discountPercent);
+                    double maximumAmount = Double.parseDouble(maximumDiscountAmount);
+                    int repeat = Integer.parseInt(repeatRate);
+                    ManagerBoss.createDiscountCode(codeText, fullFinalDate, fullStartDate, percent, maximumAmount, repeat, customersUserNames);
+                    System.out.println("Successful :)");
                 }
                 else {
                     System.err.println("Invalid Command.");
