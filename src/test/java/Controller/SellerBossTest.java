@@ -33,9 +33,6 @@ public class SellerBossTest {
         Assert.assertArrayEquals(categories.toArray(), SellerBoss.showCategories().toArray());
     }
 
-    @Test
-    public void showHistoryOfSales() {
-    }
 
     @Test
     public void showProduct() {
@@ -46,25 +43,20 @@ public class SellerBossTest {
         product.setSpecialAttributes(attributes);
         System.out.println(product.toString());
         try {
+
             Assert.assertEquals(SellerBoss.showProduct("1", seller), product.toString());
-        } catch (ThisIsNotYours thisIsNotYours) {
+
+        } catch (NullProduct | ThisIsNotYours thisIsNotYours) {
             thisIsNotYours.printStackTrace();
         }
     }
 
-    @Test
-    public void addRequestProduct() {
-    }
-
-    @Test
-    public void showBuyers() {
-    }
 
     @Test
     public void removeProduct() {
         int identifier = 0;
         try {
-            Assert.assertTrue(SellerBoss.removeProduct("2", seller, identifier));
+            Assert.assertTrue(SellerBoss.removeProduct("2", seller));
         } catch (ThisIsNotYours thisIsNotYours) {
             System.out.println(thisIsNotYours.getMessage());
             Assert.assertEquals(2, thisIsNotYours.getId());
@@ -77,49 +69,41 @@ public class SellerBossTest {
         }
     }
 
-    @Test
-    public void editProduct() {
-    }
-
-    @Test
-    public void showOffs() {
-    }
 
     @Test
     public void viewOff() {
         LocalDateTime localDateTime = LocalDateTime.parse("2222-10-12T22:23:44");
         LocalDateTime localDateTime1 = LocalDateTime.parse("2200-10-23T12:23:10");
-        Off off = new Off(localDateTime, localDateTime1, null, 23, 12, new Seller("s","s","sd","ads","22","asd","asda"));
+        Off off = new Off(localDateTime, localDateTime1, null, 23, 12, new Seller("s", "s", "sd", "ads", "22", "asd", "asda"));
         off.setOffStatus(ProductAndOffStatus.CONFIRMED);
         try {
-            Assert.assertEquals(SellerBoss.viewOff(seller,"1"),"salam");
+            Assert.assertEquals(SellerBoss.viewOff(seller, "1"), "salam");
         } catch (ThisIsNotYours thisIsNotYours) {
-            Assert.assertEquals(thisIsNotYours.getId(),2);
+            Assert.assertEquals(thisIsNotYours.getId(), 2);
         } catch (ThisOffNotExist thisOffNotExist) {
-          Assert.assertEquals(  thisOffNotExist.getId(),1);
+            Assert.assertEquals(thisOffNotExist.getId(), 1);
         }
 
 
     }
 
-    @Test
-    public void editOff() {
-    }
 
     @Test
     public void addOff() {
         try {
-            Assert.assertTrue(SellerBoss.addOff(null,seller,"2201-10-23T12:23:10","2202-10-12T22:23:44","-23","233"));
+            Assert.assertTrue(SellerBoss.addOff(null, seller, "2201-10-23T12:23:10", "2202-10-12T22:23:44", "-23", "233"));
+        } catch (NullProduct nullProduct) {
+            nullProduct.printStackTrace();
         } catch (ParseException e) {
             Assert.assertNotNull(e);
         } catch (ThisIsNotYours thisIsNotYours) {
-            Assert.assertEquals(thisIsNotYours.getId(),4);
+            Assert.assertEquals(thisIsNotYours.getId(), 4);
         } catch (TimeLimit timeLimit) {
-            Assert.assertEquals(timeLimit.getId(),1);
+            Assert.assertEquals(timeLimit.getId(), 1);
         } catch (InvalidNumber invalidNumber) {
-            Assert.assertEquals(invalidNumber.getId(),3);
+            Assert.assertEquals(invalidNumber.getId(), 3);
         } catch (InputStringExceptNumber inputStringExceptNumber) {
-            Assert.assertEquals(inputStringExceptNumber.getId(),2);
+            Assert.assertEquals(inputStringExceptNumber.getId(), 2);
         }
     }
 
@@ -147,4 +131,85 @@ public class SellerBossTest {
             thisIsNotReadyForEdit.printStackTrace();
         }
     }
+
+    @Test
+    public void testTestSellerCredit() {
+        seller.setMoney(234);
+        Assert.assertEquals(seller.getMoney(), SellerBoss.sellerCredit(seller), 1);
+    }
+
+    @Test
+    public void testTestShowCategories() {
+        Category category = new Category("n", null);
+        Category category1 = new Category("l", null);
+        Category.allCategories.add(category);
+        Category.allCategories.add(category1);
+        ArrayList<String> a = new ArrayList<>();
+        ArrayList<String> c = SellerBoss.showCategories();
+        Assert.assertArrayEquals(new ArrayList[]{c}, new ArrayList[]{a});
+    }
+
+    /**
+     * this one need sell log constructor
+     */
+    @Test
+    public void testTestShowHistoryOfSales() {
+
+    }
+
+    @Test
+    public void testTestShowProduct() {
+        try {
+            Assert.assertEquals(SellerBoss.showProduct("1", seller), "laklak");
+        } catch (ThisIsNotYours thisIsNotYours) {
+            Assert.assertEquals(thisIsNotYours.getId(), 1);
+        } catch (NullProduct nullProduct) {
+            Assert.assertEquals(nullProduct.getId(), 2);
+        }
+    }
+
+    @Test
+    public void testTestAddRequestProduct() {
+        Category category = new Category("lak", null);
+        Assert.assertEquals(SellerBoss.addRequestProduct("kal", "22", "2", null, "sd", category, seller, "great"), true);
+    }
+
+    public void testTestShowBuyers() {
+    }
+
+
+    @Test
+    public void testTestEditProduct() {
+        HashMap<String, String> changes = new HashMap<>();
+        changes.put("kmlm", "22");
+        seller.getSalableProducts().remove(product);
+        Product product1 = new Product("asd", "asd", 23, new Seller("asd", "asd", "ads", "asd", "sad", "ads", "asd"), 2, product.getCategory(), null, "");
+        try {
+            product.setProductStatus(ProductAndOffStatus.CONFIRMED);
+            System.out.println(product.getProductStatus().name());
+            Assert.assertTrue(SellerBoss.editProduct(changes, "1", seller));
+            System.out.println(product.getProductStatus().name());
+
+        } catch (ThisIsNotYours thisIsNotYours) {
+            Assert.assertEquals(thisIsNotYours.getId(), 2);
+        } catch (SoldProductsCanNotHaveChange soldProductsCanNotHaveChange) {
+            Assert.assertEquals(soldProductsCanNotHaveChange.getId(), 3);
+        } catch (ThisAttributeIsNotForThisProduct thisAttributeIsNotForThisProduct) {
+            Assert.assertEquals(thisAttributeIsNotForThisProduct.getId(), 3);
+        } catch (NoMatchBetweenCategoryAndAttributes noMatchBetweenCategoryAndAttributes) {
+            Assert.assertEquals(noMatchBetweenCategoryAndAttributes.getId(), 7);
+        } catch (ThereIsNotCategoryWithNameException e) {
+            Assert.assertEquals(e.getId(), 4);
+        } catch (NullProduct nullProduct) {
+            Assert.assertEquals(nullProduct.getId(), 1);
+        } catch (InvalidNumber invalidNumber) {
+            Assert.assertEquals(invalidNumber.getId(), 5);
+        }
+    }
+
+    public void testTestShowOffs() {
+
+    }
+
+
 }

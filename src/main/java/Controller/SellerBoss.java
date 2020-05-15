@@ -32,19 +32,20 @@ public class SellerBoss {
         return sales;
     }
 
-    public static String showProduct(String id, Seller seller) throws ThisIsNotYours {
+    public static String showProduct(String id, Seller seller) throws ThisIsNotYours, NullProduct {
         int productId = Integer.parseInt(id);
         Product product = Product.getProductWithId(productId);
         if (product == null) {
-            throw new ThisIsNotYours("we don't have this one.", productId);
+            throw new NullProduct("we don't have this one.", 1);
         }
         if (!seller.equals(product.getSeller())) {
-            throw new ThisIsNotYours("this is not yours", productId);
+            throw new ThisIsNotYours("this is not yours", 2);
         }
         return product.toString();
     }
 
     public static boolean addRequestProduct(String name, String price, String inventory, HashMap<String, String> attributes, String company, Category category, Seller seller,String description) {
+
         double productPrice = Double.parseDouble(price);
         int number = Integer.parseInt(inventory);
         Product product = new Product(name,company,productPrice,seller,number,category,attributes,description);
@@ -79,34 +80,36 @@ public class SellerBoss {
      * @throws ThisIsNotYours
      * @throws SoldProductsCanNotHaveChange
      */
-    public static boolean removeProduct(String id, Seller seller, int testIdentifier) throws ThisIsNotYours, SoldProductsCanNotHaveChange, NullProduct {
+    public static boolean removeProduct(String id, Seller seller) throws ThisIsNotYours, SoldProductsCanNotHaveChange, NullProduct {
         int iD = Integer.parseInt(id);
         Product product = Product.getProductWithId(iD);
         if (product == null) {
-            testIdentifier = 1;
+
             throw new NullProduct("this product does not exist", 1);
         } else if (!product.getSeller().equals(seller)) {
-            testIdentifier = 2;
+
             throw new ThisIsNotYours("this is not yours", 2);
         } else if (!seller.getSalableProducts().contains(product)) {
-            testIdentifier = 3;
+
             throw new SoldProductsCanNotHaveChange("you almost sold this one", 3);
         } else {
-            testIdentifier = 4;
             Product.deleteProduct(product);
             return true;
         }
     }
 
-    public static void editProduct(HashMap<String, String> allChanges, String id, Seller seller) throws ThisIsNotYours, SoldProductsCanNotHaveChange, ThisAttributeIsNotForThisProduct, NoMatchBetweenCategoryAndAttributes, ThereIsNotCategoryWithNameException {
+    public static boolean editProduct(HashMap<String, String> allChanges, String id, Seller seller) throws ThisIsNotYours, SoldProductsCanNotHaveChange, ThisAttributeIsNotForThisProduct, NoMatchBetweenCategoryAndAttributes, ThereIsNotCategoryWithNameException, NullProduct, InvalidNumber {
         int iD = Integer.parseInt(id);
         Product product = Product.getProductWithId(iD);
         if (product == null) {
-            throw new NullPointerException();
-        } else if (!product.getSeller().equals(seller)) {
-            throw new ThisIsNotYours("this is not yours", iD);
+            throw new NullProduct("null product",1);
+        }else if (!product.getProductStatus().equals(ProductAndOffStatus.CONFIRMED)){
+            throw new NullProduct("null product",1);
+        }
+        else if (!product.getSeller().equals(seller)) {
+            throw new ThisIsNotYours("this is not yours", 2);
         } else if (!seller.getSalableProducts().contains(product)) {
-            throw new SoldProductsCanNotHaveChange("you almost sold this one", iD);
+            throw new SoldProductsCanNotHaveChange("you almost sold this one", 3);
         } else {
             {
                 String name = null;
@@ -121,24 +124,24 @@ public class SellerBoss {
                 if (allChanges.containsKey("category")) {
                     category = Category.getCategoryByName(allChanges.get("category"));
                     if (category == null) {
-                        throw new ThereIsNotCategoryWithNameException("this category does not exist");
+                        throw new ThereIsNotCategoryWithNameException("this category does not exist",4);
                     }
                 }
                 if (allChanges.containsKey("price")) {
                     if (!allChanges.get("price").matches("^\\d+.?\\d+$")) {
-                        throw new NumberFormatException("number should be");
+                        throw new InvalidNumber("number should be",5);
                     }
                     price = Double.parseDouble(allChanges.get("price"));
                     if (price <= 0)
-                        throw new NumberFormatException("number is invalid");
+                        throw new InvalidNumber("number is invalid",5);
                 }
                 if (allChanges.containsKey("inventory")) {
                     if (!allChanges.get("inventory").matches("^\\d+$")) {
-                        throw new NumberFormatException("number should be");
+                        throw new InvalidNumber("number should be",5);
                     }
                     inventory = Integer.parseInt(allChanges.get("inventory"));
                     if (inventory <= 0)
-                        throw new NumberFormatException("number is invalid");
+                        throw new InvalidNumber("number is invalid",5);
                 }
                 if (allChanges.containsKey("company")) {
                     company = allChanges.get("company");
@@ -149,30 +152,32 @@ public class SellerBoss {
                         newChange.put(s, allChanges.get(s));
                     }
                 }
+if (product.getSpecialAttributes()!=null) {
+    if (newChange.keySet().size() != 0) {
 
-                if (newChange.keySet().size() != 0) {
-
-                    for (String s : newChange.keySet()) {
-                        if (!product.getSpecialAttributes().keySet().contains(s)) {
-                            throw new ThisAttributeIsNotForThisProduct("this is not invalid attribute for this category");
-                        }
-                    }
-                }
+        for (String s : newChange.keySet()) {
+            if (!product.getSpecialAttributes().keySet().contains(s)) {
+                throw new ThisAttributeIsNotForThisProduct("this is not valid attribute for this category", 6);
+            }
+        }
+    }
+}
                 if (category != null) {
                     if (newChange.keySet().size() != 0) {
                         if (!category.isThisAttributesForThisCategory(newChange)) {
-                            throw new NoMatchBetweenCategoryAndAttributes("these attributes can't be matched with category");
+                            throw new NoMatchBetweenCategoryAndAttributes("these attributes can't be matched with category",7);
                         }
                     }
                 } else {
                     if (newChange.keySet().size() != 0) {
                         if (!product.getCategory().isThisAttributesForThisCategory(newChange)) {
-                            throw new NoMatchBetweenCategoryAndAttributes("these attributes can't be matched with category");
+                            throw new NoMatchBetweenCategoryAndAttributes("these attributes can't be matched with category",7);
                         }
                     }
                 }
                 product.setProductStatus(ProductAndOffStatus.FOREDIT);
                 EditProductRequest editProductRequest = new EditProductRequest(seller, product, name, company, price, inventory, newChange, category);
+                return true;
             }
         }
     }
@@ -241,7 +246,7 @@ public class SellerBoss {
 
     }
 
-    public static boolean addOff(ArrayList<Integer> id, Seller seller, String startDate, String finalDate, String percents, String maxs) throws ParseException, ThisIsNotYours, TimeLimit, InvalidNumber, InputStringExceptNumber {
+    public static boolean addOff(ArrayList<Integer> id, Seller seller, String startDate, String finalDate, String percents, String maxs) throws ParseException, ThisIsNotYours, TimeLimit, InvalidNumber, InputStringExceptNumber, NullProduct {
         LocalDateTime start = LocalDateTime.parse(startDate);
         LocalDateTime finalDates = LocalDateTime.parse(finalDate);
 
@@ -264,6 +269,9 @@ public class SellerBoss {
             for (Integer integer : id) {
                 if (!seller.getSalableProducts().contains(Product.getProductWithId(integer))) {
                     throw new ThisIsNotYours("this is not yours", 4);
+                }
+                else if (Product.getProductWithId(integer)==null){
+                    throw new NullProduct("null product",5);
                 }
                 allProducts.add(Product.getProductWithId(integer));
             }

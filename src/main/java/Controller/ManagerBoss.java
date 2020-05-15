@@ -122,7 +122,7 @@ public class ManagerBoss {
             return 0;
         }
         else {
-            throw new ThereIsNotCategoryWithNameException("There isn't any category with requested name.");
+            throw new ThereIsNotCategoryWithNameException("There isn't any category with requested name.",1);
         }
     }
 
@@ -167,7 +167,7 @@ public class ManagerBoss {
             return true;
         }
         else {
-            throw new ThereIsNotCategoryWithNameException("There is'nt any category with requested name.Try again.");
+            throw new ThereIsNotCategoryWithNameException("There is'nt any category with requested name.Try again.",1);
         }
     }
 

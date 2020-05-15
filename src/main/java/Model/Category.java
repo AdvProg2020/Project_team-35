@@ -61,6 +61,8 @@ public class Category {
 
          */
         for (String s : attributes.keySet()) {
+            if (specialAttributes==null)
+                return false;
             if (!specialAttributes.contains(s)){
                 return false;
             }

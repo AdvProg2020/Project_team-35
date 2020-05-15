@@ -156,7 +156,7 @@ public class SellerPage extends Page {
                         SellerBoss.addOff(id, (Seller) Account.getOnlineAccount(), startDate, finalDate, (percent), (max));
                         System.out.println("your request successfully send to manager");
                         nextPage = parentPage;
-                    } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber | InputStringExceptNumber e) {
+                    } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber | InputStringExceptNumber | NullProduct e) {
                         System.err.println(e.getMessage());
                         nextPage = this;
                     }
@@ -285,7 +285,7 @@ public class SellerPage extends Page {
                     try {
                         SellerBoss.editProduct(allEditions, matcher.group(1), (Seller) Account.getOnlineAccount());
                         nextPage = parentPage;
-                    } catch (NoMatchBetweenCategoryAndAttributes | ThisIsNotYours | SoldProductsCanNotHaveChange | ThisAttributeIsNotForThisProduct | ThereIsNotCategoryWithNameException thisIsNotYours) {
+                    } catch (NoMatchBetweenCategoryAndAttributes | ThisIsNotYours | SoldProductsCanNotHaveChange | ThisAttributeIsNotForThisProduct | ThereIsNotCategoryWithNameException | NullProduct | InvalidNumber thisIsNotYours) {
                         // System.err.println(thisIsNotYours.getMessage());
                         thisIsNotYours.printStackTrace();
                         nextPage = this;
@@ -342,9 +342,10 @@ public class SellerPage extends Page {
                 if (command.matches(regex)) {
                     try {
                         matcher.matches();
-                        System.out.println(SellerBoss.showProduct(matcher.group(1), (Seller) Account.getOnlineAccount()));
+
+                            System.out.println(SellerBoss.showProduct(matcher.group(1), (Seller) Account.getOnlineAccount()));
                         nextPage = parentPage;
-                    } catch (ThisIsNotYours thisIsNotYours) {
+                    } catch (NullProduct|ThisIsNotYours thisIsNotYours) {
                         System.err.println(thisIsNotYours.getMessage());
                         nextPage = parentPage;
 
@@ -493,7 +494,7 @@ public class SellerPage extends Page {
                 if (command.matches(regex)) {
                     try {
                         try {
-                            SellerBoss.removeProduct(matcher.group(1), (Seller) Account.getOnlineAccount(), 0);
+                            SellerBoss.removeProduct(matcher.group(1), (Seller) Account.getOnlineAccount());
                             nextPage = parentPage;
                         } catch (NullProduct nullProduct) {
                             System.err.println(nullProduct.getMessage());
