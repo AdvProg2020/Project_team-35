@@ -17,12 +17,7 @@ public class Category {
         categoryProducts = new ArrayList<>();
     }
 
-    public static void deleteCategoryAndSubProducts(String categoryName) {
 
-    }
-    public void editCategory(String name, ArrayList<String> newSpecialAttributes) {
-
-    }
     public static Category getCategoryByName(String name){
         for (Category category : allCategories) {
             if (category.getCategoryName().equalsIgnoreCase(name))
