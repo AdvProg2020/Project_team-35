@@ -41,6 +41,9 @@ public class EditOffRequest extends Request {
             if (newFinalDate!= null){
                 toEdit.setFinalDate(newFinalDate);
             }
+    }
 
+    public void decline(){
+        this.toEdit.setOffStatus(ProductAndOffStatus.CONFIRMED);
     }
 }

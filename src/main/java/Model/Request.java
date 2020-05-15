@@ -20,8 +20,13 @@ public abstract class Request {
     public abstract String getDetails();
     public abstract String getRequestInfo();
     public abstract void execute();
+    public abstract void decline();
 
     public int getRequestId() {
         return requestId;
+    }
+
+    public Seller getSeller() {
+        return seller;
     }
 }

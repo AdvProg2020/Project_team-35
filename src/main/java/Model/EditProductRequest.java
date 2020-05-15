@@ -65,4 +65,9 @@ public class EditProductRequest extends Request {
     public String getRequestInfo() {
         return "  EDIT PRODUCT Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
     }
+
+
+    public void decline(){
+        this.toEdit.setProductStatus(ProductAndOffStatus.CONFIRMED);
+    }
 }
