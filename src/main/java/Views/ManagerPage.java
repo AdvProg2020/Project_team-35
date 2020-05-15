@@ -18,7 +18,8 @@ public class ManagerPage extends Page {
         subPages.put("3", manageCategories());
         subPages.put("4", manageAllProducts());
         subPages.put("5", createDiscountCode());
-        subPages.put("6", new RegisteringPanel("registering panel", this));
+        subPages.put("6", viewDiscountCodes());
+        subPages.put("7", new RegisteringPanel("registering panel", this));
     }
 
     private Page manageUsers() {
@@ -258,7 +259,26 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
-                super.execute();
+                ArrayList<DiscountCode> discountCodes = DiscountCode.getAllDiscountCodes();
+                System.out.println("Discount codes:");
+                for (DiscountCode discountCode : discountCodes) {
+                    System.out.println(discountCode.getDiscountCodeInlineInfo());
+                }
+                System.out.println("Enter command: (-help for help)");
+                String command = scanner.nextLine();
+                if (command.equalsIgnoreCase("back")) {
+                    parentPage.execute();
+                }
+                else if (command.equalsIgnoreCase("-help")) {
+                    System.out.println("view/remove/edit discount code [code]");
+                }
+                else if (true) {
+
+                }
+                else {
+                    System.err.println("Invalid command.");
+                }
+                this.execute();
             }
 
             @Override
@@ -280,11 +300,11 @@ public class ManagerPage extends Page {
             public void execute() {
                 ArrayList<Request> newRequests = Manager.getNewRequests();
                 ArrayList<Request> checkedRequests = Manager.getCheckedRequests();
-                System.out.println("New Requests :");
+                System.out.println("New Requests:");
                 for (Request newRequest : newRequests) {
                     System.out.println(newRequest.getRequestInfo());
                 }
-                System.out.println("Checked Requests :");
+                System.out.println("Checked Requests:");
                 for (Request checkedRequest : checkedRequests) {
                     System.out.println(checkedRequest.getRequestInfo());
                 }

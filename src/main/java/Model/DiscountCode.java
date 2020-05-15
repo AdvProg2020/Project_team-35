@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DiscountCode {
-    public static ArrayList<DiscountCode> allDiscountCodes;
+    public static ArrayList<DiscountCode> allDiscountCodes = new ArrayList<>();
     private String code;
     private LocalDateTime finalDate;
     private LocalDateTime startDate;
@@ -25,8 +25,15 @@ public class DiscountCode {
         for (Customer customer : includedCustomers) {
             this.includedBuyersAndUseFrequency.put(customer, 0);
         }
+        allDiscountCodes.add(this);
+    }
+    public String expireDateToString() {
+        return finalDate.getYear() + "-" + finalDate.getMonth() + "-" + finalDate.getDayOfMonth();
     }
 
+    public String getDiscountCodeInlineInfo() {
+        return "Code: " + this.code + " --- Percent: " + this.discountPercent + " --- ExpireDate: " + this.expireDateToString();
+    }
     public void editDiscountCode(double discountPercent, double maximumAvailableDiscount, int availableUseFrequent, ArrayList<Customer> includedCustomers) {
 
     }
@@ -82,5 +89,7 @@ public class DiscountCode {
         return availableUseFrequent;
     }
 
-
+    public static ArrayList<DiscountCode> getAllDiscountCodes() {
+        return allDiscountCodes;
+    }
 }
