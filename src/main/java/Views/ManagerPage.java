@@ -172,52 +172,40 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
-                System.out.println("Enter command: (-help for help)");
-                String command = scanner.nextLine();
-                if (command.equalsIgnoreCase("-help")) {
-                    System.out.println("create discount code ---- back");
-                }
-                else if (command.equalsIgnoreCase("back")) {
+
+                String codeText = getInputInFormat("Enter code text (back for back to previous menu):", "^\\w+$");
+                if (codeText.equalsIgnoreCase("back")) {
                     parentPage.execute();
                 }
-                else if (command.startsWith("create discount code")) {
-                    String codeText = getInputInFormat("Enter code text:(back for back to menu)", "^\\w+$");
-                    if (codeText.equalsIgnoreCase("back")) {
-                        this.execute();
-                    }
-                    String discountPercent = getInputInFormat("Enter discount percent(back for back to menu)", "^(\\d+[.]?\\d+)|(back)$");
-                    if (discountPercent.equalsIgnoreCase("back")) {
-                        this.execute();
-                    }
-                    String maximumDiscountAmount = getInputInFormat("Enter maximum discount amount:(back for back to menu)", "^(\\d+[.]?\\d+)|(back)$");
-                    if (maximumDiscountAmount.equalsIgnoreCase("back")) {
-                        this.execute();
-                    }
-                    String repeatRate = getInputInFormat("How many times a customer can use this code?(back for back to menu)", "^(\\d+)$");
-                    if (repeatRate.equalsIgnoreCase("back")) {
-                        this.execute();
-                    }
-                    ArrayList<String> customersUserNames = listOfUsersForDiscountCodeScanner();
-                    if (customersUserNames.contains("-back")) {
-                        this.execute();
-                    }
-                    String startDay = getInputInFormat("Enter start date in format [yyyy-mm-dd]:", "^\\d{4}-\\d{2}-\\d{2}$");
-                    String finalDay = getInputInFormat("Enter final date in format [yyyy-mm-dd]:", "^\\d{4}-\\d{2}-\\d{2}$");
-                    String startTime = getInputInFormat("Enter start time in format [hh:mm:ss]:", "^\\d{2}:\\d{2}:\\d{2}$");
-                    String finalTime = getInputInFormat("Enter final time in format [hh:mm:ss]:", "^\\d{2}:\\d{2}:\\d{2}$");
-                    LocalDateTime fullStartDate = LocalDateTime.parse(startDay + "T" + startTime);
-                    LocalDateTime fullFinalDate = LocalDateTime.parse(finalDay + "T" + finalTime);
-                    double percent = Double.parseDouble(discountPercent);
-                    double maximumAmount = Double.parseDouble(maximumDiscountAmount);
-                    int repeat = Integer.parseInt(repeatRate);
-                    ManagerBoss.createDiscountCode(codeText, fullFinalDate, fullStartDate, percent, maximumAmount, repeat, customersUserNames);
-                    System.out.println("Successful :)");
+                String discountPercent = getInputInFormat("Enter discount percent (back for back to first input):", "^(\\d+[.]?\\d+)|(back)$");
+                if (discountPercent.equalsIgnoreCase("back")) {
+                    this.execute();
                 }
-                else {
-                    System.err.println("Invalid Command.");
+                String maximumDiscountAmount = getInputInFormat("Enter maximum discount amount (back for back to first input):", "^(\\d+[.]?\\d+)|(back)$");
+                if (maximumDiscountAmount.equalsIgnoreCase("back")) {
+                    this.execute();
                 }
-                this.execute();
+                String repeatRate = getInputInFormat("How many times a customer can use this code? (back for back to first input)", "^(\\d+)$");
+                if (repeatRate.equalsIgnoreCase("back")) {
+                    this.execute();
+                }
+                ArrayList<String> customersUserNames = listOfUsersForDiscountCodeScanner();
+                if (customersUserNames.contains("-back")) {
+                    this.execute();
+                }
+                String startDay = getInputInFormat("Enter start date in format [yyyy-mm-dd]:", "^\\d{4}-\\d{2}-\\d{2}$");
+                String finalDay = getInputInFormat("Enter final date in format [yyyy-mm-dd]:", "^\\d{4}-\\d{2}-\\d{2}$");
+                String startTime = getInputInFormat("Enter start time in format [hh:mm:ss]:", "^\\d{2}:\\d{2}:\\d{2}$");
+                String finalTime = getInputInFormat("Enter final time in format [hh:mm:ss]:", "^\\d{2}:\\d{2}:\\d{2}$");
+                LocalDateTime fullStartDate = LocalDateTime.parse(startDay + "T" + startTime);
+                LocalDateTime fullFinalDate = LocalDateTime.parse(finalDay + "T" + finalTime);
+                double percent = Double.parseDouble(discountPercent);
+                double maximumAmount = Double.parseDouble(maximumDiscountAmount);
+                int repeat = Integer.parseInt(repeatRate);
+                ManagerBoss.createDiscountCode(codeText, fullFinalDate, fullStartDate, percent, maximumAmount, repeat, customersUserNames);
+                System.out.println("Successful :)");
             }
+
 
             @Override
             public boolean show() {
@@ -368,12 +356,10 @@ public class ManagerPage extends Page {
                             System.out.println(e.getMessage());
                             this.execute();
                         }
-                    }
-                    else {
+                    } else {
                         System.err.println("Invalid Command.");
                     }
-                }
-                else {
+                } else {
                     Matcher matcher = getMatcher(command, "^(add|remove)\\s+(\\w+)$");
                     if (matcher.matches()) {
                         String categoryName = matcher.group(2);
@@ -424,16 +410,13 @@ public class ManagerPage extends Page {
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
                     System.out.println("add/delete/rename attribute ---- edit name");
-                }
-                else if (command.equalsIgnoreCase("back")) {
+                } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
-                }
-                else if (command.equalsIgnoreCase("edit name")) {
+                } else if (command.equalsIgnoreCase("edit name")) {
                     String newName = getInputInFormat("Enter new categoryName:", "^\\w+$");
                     ManagerBoss.editCategoryName(categoryName, newName);
                     System.out.println("Successful :)");
-                }
-                else if (command.equalsIgnoreCase("add attribute")) {
+                } else if (command.equalsIgnoreCase("add attribute")) {
                     String newAttribute = getInputInFormat("Enter new attribute:", "^\\w+$");
                     try {
                         ManagerBoss.addAttributeToCategory(categoryName, newAttribute);
@@ -441,8 +424,7 @@ public class ManagerPage extends Page {
                     } catch (RepeatedCategoryAttributeException e) {
                         System.out.println(e.getMessage());
                     }
-                }
-                else if (command.equalsIgnoreCase("delete attribute")) {
+                } else if (command.equalsIgnoreCase("delete attribute")) {
                     String toDeleteAttribute = getInputInFormat("Enter attribute to delete:", "^\\w+$");
                     try {
                         ManagerBoss.deleteAttributeFromCategory(categoryName, toDeleteAttribute);
@@ -450,8 +432,7 @@ public class ManagerPage extends Page {
                     } catch (FieldDoesNotExist fieldDoesNotExist) {
                         System.out.println(fieldDoesNotExist.getMessage());
                     }
-                }
-                else if (command.equalsIgnoreCase("rename attribute")) {
+                } else if (command.equalsIgnoreCase("rename attribute")) {
                     String previousAttributeName = getInputInFormat("Enter attribute previous name:", "^\\w+$");
                     String newAttributeName = getInputInFormat("Enter attribute newName:", "^\\w+$");
                     try {
@@ -460,12 +441,12 @@ public class ManagerPage extends Page {
                     } catch (FieldDoesNotExist | RepeatedCategoryAttributeException e) {
                         System.out.println(e.getMessage());
                     }
-                }
-                else {
+                } else {
                     System.err.println("Invalid command.");
                 }
                 this.execute();
             }
+
             @Override
             public boolean show() {
                 super.show();
@@ -473,6 +454,7 @@ public class ManagerPage extends Page {
             }
         };
     }
+
     private static ArrayList<String> categorySpecialAttributesScanner() {
         System.out.println("Enter every feature in a line. for end enter -end. for back enter -back.");
         ArrayList<String> specialAttributes = new ArrayList<>();
