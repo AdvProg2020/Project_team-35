@@ -114,6 +114,7 @@ public class GoodPage extends Page {
             @Override
             public void execute() {
                 System.out.println(ProductBoss.showSummeryOfProductDetails(product));
+
                 super.execute();
             }
         };
@@ -193,5 +194,11 @@ public class GoodPage extends Page {
                 });
             }
         };
+    }
+
+    @Override
+    public void execute() {
+        ProductBoss.updateReviewNumberOfAProductPage(product);
+        super.execute();
     }
 }

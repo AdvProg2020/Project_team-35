@@ -3,8 +3,7 @@ package Model;
 import Views.GoodPage;
 import Views.ProductsPage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class Product {
     public static ArrayList<Product> allProducts = new ArrayList<>();
@@ -12,11 +11,12 @@ public class Product {
     private static int productNumber;
     private ProductAndOffStatus productStatus;
     private String name;
+    private int reviewNumber;
     private String description;
     private String company;
     private double price;
     private Seller seller;
-    private  int inventory;
+    private int inventory;
     private Category category;
     private ArrayList<Comment> commentsList;
     private ArrayList<Rate> ratesList;
@@ -26,7 +26,7 @@ public class Product {
     //when the page of product is open.
 
 
-    public Product(String name, String company, double price, Seller seller, int inventory, Category category, HashMap<String, String> specialAttributes,String description) {
+    public Product(String name, String company, double price, Seller seller, int inventory, Category category, HashMap<String, String> specialAttributes, String description) {
         this.name = name;
         this.description = description;
         this.company = company;
@@ -34,8 +34,9 @@ public class Product {
         this.seller = seller;
         this.inventory = inventory;
         this.category = category;
+        reviewNumber = 0;
         this.specialAttributes = specialAttributes;
-        productNumber+=1;
+        productNumber += 1;
         productId = productNumber;
         commentsList = new ArrayList<>();
         whoBoughtThisGood = new ArrayList<>();
@@ -62,29 +63,22 @@ public class Product {
 
     /**
      * this is updated.
+     *
      * @param productId
      * @return
      */
-    public static Product getProductWithId(int productId){
+    public static Product getProductWithId(int productId) {
         for (Product product : allProducts) {
             if (product.productId == productId)
                 return product;
         }
         return null;
     }
+
     private void updateProductAverageRate(int productId) {
 
     }
 
-
-
-
-    public void sortList(HashMap<String, Double> doubleList, HashMap<String, Integer> intList, HashMap<String, String> stringList) {
-
-    }
-    public void filterList(HashMap<String, Double> doubleList, HashMap<String, Integer> intList, HashMap<String, String> stringList) {
-
-    }
 
     public int getProductId() {
         return productId;
@@ -93,26 +87,28 @@ public class Product {
     @Override
     public String toString() {
         String productInfo = null;
-        productInfo = "name : "+name+"\n"
-                +"company name : "+company+"\n"
-                +"price : "+price+"\n"
-                +"seller : "+seller.getUsername()+"\n"
-                +"inventory : "+inventory+"\n"
-                +"category : "+category.getCategoryName()+"\n"
-                +"product id : "+productId+"\n";
+        productInfo = "name : " + name + "\n"
+                + "company name : " + company + "\n"
+                + "price : " + price + "\n"
+                + "seller : " + seller.getUsername() + "\n"
+                + "inventory : " + inventory + "\n";
+        if (category!=null) {
+           productInfo +="category : " + category.getCategoryName() + "\n";
+        }
+             productInfo+= "product id : " + productId + "\n";
         productInfo += "special Attributes : \n";
-        if (specialAttributes!=null) {
+        if (specialAttributes != null) {
             for (String s : specialAttributes.keySet()) {
                 productInfo = productInfo + s + " : " + specialAttributes.get(s) + "\n";
             }
         }
-        productInfo+= "comment List : \n";
+        productInfo += "comment List : \n";
         for (Comment comment : commentsList) {
-            productInfo+= comment.getCommentInfo();
+            productInfo += comment.getCommentInfo();
         }
-        productInfo+= "rate list : \n";
+        productInfo += "rate list : \n";
         for (Rate rate : ratesList) {
-            productInfo+= rate.getRateInfo();
+            productInfo += rate.getRateInfo();
         }
 
         return productInfo;
@@ -125,16 +121,18 @@ public class Product {
     public String getName() {
         return name;
     }
-    public double getAverageOfRates(){
+
+    public double getAverageOfRates() {
         double average = 0.0;
-        int number =0;
+        int number = 0;
         for (Rate rate : ratesList) {
             average = rate.getRate();
-            number+=1;
+            number += 1;
         }
-        return average/number;
+        return average / number;
     }
-    public static void deleteProduct(Product product){
+
+    public static void deleteProduct(Product product) {
         allProducts.remove(product);
         product.getSeller().getSalableProducts().remove(product);
     }
@@ -190,47 +188,92 @@ public class Product {
     public void setSpecialAttributes(HashMap<String, String> specialAttributes) {
         this.specialAttributes = specialAttributes;
     }
-    public String getProductFieldForSort(String field){
-        if (field.equalsIgnoreCase("inventory")||field.equalsIgnoreCase("price")||field.equalsIgnoreCase("")){
 
+    public static ArrayList<Product> getProductFieldForSort(String field) {
+        if (field.equalsIgnoreCase("rate")) {
+            Comparator<Product> rateCompare = new Comparator<Product>() {
+                @Override
+                public int compare(Product o1, Product o2) {
+                    return (int) -(o1.getAverageOfRates()-o2.getAverageOfRates());
+                }
+            };
+            Collections.sort(allProducts,rateCompare);
+
+        } else if (field.equalsIgnoreCase("review number")) {
+            Comparator<Product> reviewCompare = new Comparator<Product>() {
+                @Override
+                public int compare(Product o1, Product o2) {
+                    return -(o1.getReviewNumber() - o2.getReviewNumber());
+                }
+            };
+            Collections.sort(allProducts,reviewCompare);
+        } else if (field.equalsIgnoreCase("inventory")) {
+            Comparator<Product> inventoryCompare = new Comparator<Product>() {
+                @Override
+                public int compare(Product o1, Product o2) {
+                    return -(o1.getInventory() - o2.getInventory());
+                }
+            };
+            Collections.sort(allProducts, inventoryCompare);
+
+        } else if (field.equalsIgnoreCase("name")) {
+            Comparator<Product> nameCompare = new Comparator<Product>() {
+                @Override
+                public int compare(Product o1, Product o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            };
+            Collections.sort(allProducts, nameCompare);
+
+        } else if (field.equalsIgnoreCase("price")) {
+
+            Comparator<Product> priceCompare = new Comparator<Product>() {
+                @Override
+                public int compare(Product o1, Product o2) {
+                    return (int) -(o1.getPrice() - o2.getPrice());
+                }
+            };
+            Collections.sort(allProducts, priceCompare);
         }
-        return null;
+        return allProducts;
     }
-    public String showSummeryDetailsOfProduct(){
-        String result = "description :\n"+description+"\n"+"price :\n"+price+"\n"+"discount :\n"+"category :\n"+category.getCategoryName()+"\n"+"seller :\n"+seller.getUsername()+"\n"+"average :\n"+getAverageOfRates();
+
+    public String showSummeryDetailsOfProduct() {
+        String result = "description :\n" + description + "\n" + "price :\n" + price + "\n" + "discount :\n" + "category :\n" + category.getCategoryName() + "\n" + "seller :\n" + seller.getUsername() + "\n" + "average :\n" + getAverageOfRates();
         return result;
     }
 
     /**
      * maybe it has mistake
+     *
      * @return
      */
-    public HashMap<String , String> attributeShow(){
-        HashMap<String , String> attributes = new HashMap<>();
-        attributes.put(String.valueOf(getProductId()),"id");
-        attributes.put(getName(),"name");
-        attributes.put(getCompany(),"company");
-        attributes.put(getSeller().getUsername(),"seller");
-        attributes.put(productStatus.name(),"status");
-        attributes.put(String.valueOf(getPrice()),"price");
-        attributes.put(String.valueOf(getInventory()),"inventory");
-        attributes.put(getCategory().getCategoryName(),"category");
-        attributes.put(getDescription(),"description");
-        if (getWhoBoughtThisGood()!=null) {
+    public HashMap<String, String> attributeShow() {
+        HashMap<String, String> attributes = new HashMap<>();
+        attributes.put(String.valueOf(getProductId()), "id");
+        attributes.put(getName(), "name");
+        attributes.put(getCompany(), "company");
+        attributes.put(getSeller().getUsername(), "seller");
+        attributes.put(productStatus.name(), "status");
+        attributes.put(String.valueOf(getPrice()), "price");
+        attributes.put(String.valueOf(getInventory()), "inventory");
+        attributes.put(getCategory().getCategoryName(), "category");
+        attributes.put(getDescription(), "description");
+        if (getWhoBoughtThisGood() != null) {
             for (Customer customer : getWhoBoughtThisGood()) {
                 attributes.put(customer.getUsername(), "buyer");
             }
         }
-        if (ratesList!=null) {
+        if (ratesList != null) {
             for (Rate rate : ratesList) {
                 attributes.put(rate.getRater().getUsername() + ":" + rate.getRate(), "rate");
             }
         }
         for (Comment comment : commentsList) {
-            attributes.put(comment.getCommenter().getUsername()+":"+comment.getCommentText(),"comment");
+            attributes.put(comment.getCommenter().getUsername() + ":" + comment.getCommentText(), "comment");
         }
         for (String s : getSpecialAttributes().keySet()) {
-            attributes.put(specialAttributes.get(s),s);
+            attributes.put(specialAttributes.get(s), s);
         }
         return attributes;
 
@@ -246,6 +289,7 @@ public class Product {
 
     /**
      * just for test
+     *
      * @param commentsList
      */
     public void setCommentsList(ArrayList<Comment> commentsList) {
@@ -254,6 +298,7 @@ public class Product {
 
     /**
      * just for test
+     *
      * @param ratesList
      */
     public void setRatesList(ArrayList<Rate> ratesList) {
@@ -262,6 +307,7 @@ public class Product {
 
     /**
      * just for test
+     *
      * @param whoBoughtThisGood
      */
     public void setWhoBoughtThisGood(ArrayList<Customer> whoBoughtThisGood) {
@@ -271,15 +317,24 @@ public class Product {
     public ArrayList<Comment> getCommentsList() {
         return commentsList;
     }
-    public String showComments(){
-        String result= "";
+
+    public String showComments() {
+        String result = "";
         for (Comment comment : getCommentsList()) {
-            result+=comment.getCommentText();
+            result += comment.getCommentText();
         }
         return result;
     }
 
     public ProductAndOffStatus getProductStatus() {
         return productStatus;
+    }
+
+    public int getReviewNumber() {
+        return reviewNumber;
+    }
+
+    public void setReviewNumber(int reviewNumber) {
+        this.reviewNumber = reviewNumber;
     }
 }

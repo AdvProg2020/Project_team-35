@@ -1,11 +1,13 @@
 package Controller;
 
+import Controller.Exceptions.InvalidFieldForSort;
 import Controller.Exceptions.NullProduct;
 import Controller.Exceptions.ProductIsFinished;
 import Controller.Exceptions.ProductsCompareNotSameCategories;
 import Model.Comment;
 import Model.Customer;
 import Model.Product;
+import Model.ProductAndOffStatus;
 import Views.GoodPage;
 
 import java.util.ArrayList;
@@ -22,19 +24,20 @@ public class ProductBoss {
         return goodPage;
     }
 
-    public static ArrayList<Product> sortProduct(String field) {
-        ArrayList<Product> all = new ArrayList<>();
-        all = Product.getAllProducts();
-        for (int i = 0; i < all.size() - 1; i++) {
-            for (int j = 0; j < all.size(); j++) {
-                String field1 = null;
-                String field2 = null;
-                if (field.equalsIgnoreCase("price")) {
-
-                }
-            }
+    public static ArrayList<String> sortProduct(String field) throws InvalidFieldForSort {
+        if (!(field.equalsIgnoreCase("rate")||field.equalsIgnoreCase("price")||field.equalsIgnoreCase("inventory")||field.equalsIgnoreCase("name")||field.equalsIgnoreCase("review number"))){
+            throw new InvalidFieldForSort("invalid field",1);
         }
-        return null;
+        ArrayList<Product> confirmedProducts = new ArrayList<>();
+        for (Product product : Product.getProductFieldForSort(field)) {
+            if (product.getProductStatus().equals(ProductAndOffStatus.CONFIRMED))
+            confirmedProducts.add(product);
+        }
+        ArrayList<String> productsName = new ArrayList<>();
+        for (Product product : confirmedProducts) {
+            productsName.add(product.getName());
+        }
+      return productsName;
     }
 
     public static HashMap<String, String> showAttributes(Product product) {
@@ -85,5 +88,8 @@ public class ProductBoss {
             comments.put(comment.getCommenter().getUsername(),comment.getCommentText());
         }
         return comments;
+    }
+    public static void updateReviewNumberOfAProductPage(Product product){
+        product.setReviewNumber(product.getReviewNumber()+1);
     }
 }
