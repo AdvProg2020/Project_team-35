@@ -21,6 +21,9 @@ public class SellerBoss {
         }
         return categories;
     }
+    public static ArrayList<Category> sortCategory(String field)  {
+        return Category.sortCategory(field);
+    }
 
     public static ArrayList<String> showHistoryOfSales(Seller seller) {
         ArrayList<String> sales = new ArrayList<>();

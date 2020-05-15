@@ -1,9 +1,6 @@
 package Model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Category {
     public static ArrayList<Category> allCategories = new ArrayList<>();
@@ -73,4 +70,27 @@ public class Category {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
+
+    public static ArrayList<Category> sortCategory(String field){
+        if (field.equalsIgnoreCase("name")){
+            Comparator<Category> nameCategory = new Comparator<Category>() {
+                @Override
+                public int compare(Category o1, Category o2) {
+                    return o1.getCategoryName().compareTo(o2.getCategoryName());
+                }
+            };
+            Collections.sort(allCategories,nameCategory);
+        }else if (field.equalsIgnoreCase("productNumber")){
+            Comparator<Category> productNumber = new Comparator<Category>() {
+                @Override
+                public int compare(Category o1, Category o2) {
+                    return -(o1.getCategoryProducts().size()-o2.getCategoryProducts().size());
+                }
+            };
+            Collections.sort(allCategories,productNumber);
+        }
+        return allCategories;
+
+    }
 }
+

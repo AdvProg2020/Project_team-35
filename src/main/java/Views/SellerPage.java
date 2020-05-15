@@ -245,14 +245,39 @@ public class SellerPage extends Page {
 
     private Page viewCategory() {
         return new Page("view categories", this) {
+         private    ArrayList<Category> list = new ArrayList<>();
+         private String field = "name";
             @Override
             public void execute() {
+                System.out.println("field of sort:"+field);
                 System.out.println("categories:");
-                for (String category : SellerBoss.showCategories()) {
-                    System.out.println(category);
+                list = SellerBoss.sortCategory(field);
+                for (Category category : list) {
+                    String size = "";
+                    if (field.equalsIgnoreCase("productNumber")){
+                        size = String.valueOf(category.getCategoryProducts().size());
+                    }
+                    System.out.println(category.getCategoryName()+"     "+size );
                 }
-                // i have doubt in here
-                parentPage.execute();
+                System.out.println("enter command:");
+                String command = scanner.nextLine();
+                Page nextPage = null;
+                String regex = "^sort (name|productNumber)$";
+                Matcher matcher = getMatcher(command,regex);
+                matcher.matches();
+                if (command.matches(regex)){
+                  field = matcher.group(1);
+                    nextPage = this;
+                }else if (command.equalsIgnoreCase("back")){
+                    nextPage = parentPage;
+                }else if (command.equalsIgnoreCase("help")){
+                    System.out.println("(help *** back *** sort [name|productNumber])");
+                    nextPage = this;
+                }else {
+                    System.err.println("invalid command");
+                    nextPage = this;
+                }
+                nextPage.execute();
             }
         };
     }
