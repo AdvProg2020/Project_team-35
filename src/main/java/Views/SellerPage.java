@@ -380,7 +380,7 @@ public class SellerPage extends Page {
                 int i = 1;
                 System.out.println("products:");
                 for (Product product : productList) {
-                    System.out.println(i + ")" + product.getName());
+                    System.out.println(i + ")" + product.getName()+"        product now inventory: "+product.getInventory()   );
                     i += 1;
                 }
                 setSubPages(subPages);

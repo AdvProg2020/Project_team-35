@@ -52,4 +52,72 @@ public class SellerTest {
         Seller.allSellers.add(seller);
         Assert.assertEquals(Seller.getAllSellers().get(0), all.get(0));
     }
+
+    @Test
+    public void getSalesHistory() {
+    }
+
+    @Test
+    public void hasHeProductWithId() {
+    }
+
+    @Test
+    public void isProductWithIdAtAnyOff() {
+    }
+
+    @Test
+    public void deleteAccount() {
+    }
+
+    @Test
+    public void setMoney() {
+    }
+
+    @Test
+    public void testGetUsername() {
+    }
+
+    @Test
+    public void testGetPersonalInfo() {
+    }
+
+    @Test
+    public void testGetCompanyName() {
+    }
+
+    @Test
+    public void setCompanyName() {
+    }
+
+    @Test
+    public void testGetMoney() {
+    }
+
+    @Test
+    public void getSellLogs() {
+    }
+
+    @Test
+    public void getSalableProducts() {
+        Product product = new Product("la","lala",23,seller,3,new Category("as",null),null,"");
+        Product product1 = new Product("kal","nak",243,seller,4,new Category("kal",null),null,"");
+        
+        Assert.assertEquals(seller.getSalableProducts(),null);
+    }
+
+    @Test
+    public void getSellerOffs() {
+    }
+
+    @Test
+    public void testGetShortInfo() {
+    }
+
+    @Test
+    public void testGetAllSellers() {
+    }
+
+    @Test
+    public void addOffTest() {
+    }
 }
