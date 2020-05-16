@@ -12,6 +12,7 @@ public class DiscountCode {
     private double discountPercent;
     private double maximumAvailableAmount;
     private int availableUseFrequent;
+    private static String currentSort = "Nothing";
     public HashMap<Customer, Integer> includedBuyersAndUseFrequency;
 
     public String getDetails() {
@@ -102,4 +103,11 @@ public class DiscountCode {
         return allDiscountCodes;
     }
 
+    public static String getCurrentSort() {
+        return currentSort;
+    }
+
+    public static void setCurrentSort(String currentSort) {
+        DiscountCode.currentSort = currentSort;
+    }
 }

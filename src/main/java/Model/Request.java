@@ -22,6 +22,15 @@ public abstract class Request {
     public abstract String getRequestInfo();
     public abstract void execute();
     public abstract void decline();
+    private static String currentSort = "Nothing";
+
+    public static String getCurrentSort() {
+        return currentSort;
+    }
+
+    public static void setCurrentSort(String currentSort) {
+        Request.currentSort = currentSort;
+    }
 
     public int getRequestId() {
         return requestId;

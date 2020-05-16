@@ -18,6 +18,7 @@ public abstract class Account {
     private static boolean isThereOnlineUser;
     protected boolean isThisAccountLogged;
     protected int typeOfAccount;
+    private static String currentSort = "Nothing";
     /**
      * account constructor
      * @param username
@@ -205,5 +206,13 @@ public abstract class Account {
 
     public String getFullName() {
         return this.getFirstName() + this.getLastName();
+    }
+
+    public static String getCurrentSort() {
+        return currentSort;
+    }
+
+    public static void setCurrentSort(String currentSort) {
+        Account.currentSort = currentSort;
     }
 }

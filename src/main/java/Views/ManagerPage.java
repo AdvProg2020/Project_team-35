@@ -37,6 +37,7 @@ public class ManagerPage extends Page {
                 for (Account user : allUsers) {
                     System.out.println(user.getShortInfo());
                 }
+                System.out.println("Current Sort: " + Account.getCurrentSort());
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
@@ -278,6 +279,7 @@ public class ManagerPage extends Page {
                 for (DiscountCode discountCode : discountCodes) {
                     System.out.println(discountCode.getDiscountCodeInlineInfo());
                 }
+                System.out.println("Current Sort: " + DiscountCode.getCurrentSort());
                 System.out.println("Enter command: (-help for help)");
                 String command = scanner.nextLine();
                 Matcher matcher = getMatcher(command, "^(view|remove|edit) discount code (\\w+)$");
@@ -285,7 +287,16 @@ public class ManagerPage extends Page {
                     parentPage.execute();
                 }
                 else if (command.equalsIgnoreCase("-help")) {
-                    System.out.println("view/remove/edit discount code [code]");
+                    System.out.println("view/remove/edit discount code [code]\nsort by (percent|maximum|frequent)-(a-b)(a for ascending b for else)");
+                }
+                else if (command.startsWith("sort by")){
+                    Matcher sortMatcher = getMatcher(command, "^sort by (percent|maximum|frequent|startdate|finaldate)-(a|b)");
+                    if (sortMatcher.matches()) {
+                        ManagerBoss.sortDiscountCodesWithField(sortMatcher.group(1) + "-" + sortMatcher.group(2));
+                    }
+                    else {
+                        System.err.println("Invalid Command.");
+                    }
                 }
                 else if (matcher.matches()) {
                     String code = matcher.group(2);
@@ -341,6 +352,7 @@ public class ManagerPage extends Page {
                 for (Request checkedRequest : checkedRequests) {
                     System.out.println(checkedRequest.getRequestInfo());
                 }
+                System.out.println("Current Sort: " + Request.getCurrentSort());
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
@@ -418,6 +430,7 @@ public class ManagerPage extends Page {
                 for (Category category : allCategories) {
                     System.out.println(category.getShortInfo());
                 }
+                System.out.println("Current Sort: " + Category.getCurrentSort());
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
