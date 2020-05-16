@@ -61,7 +61,9 @@ public class SellerBoss {
         int number = Integer.parseInt(inventory);
         Product product = new Product(name,company,productPrice,seller,number,category,attributes,description);
         product.setProductStatus(ProductAndOffStatus.FORMAKE);
-        category.getCategoryProducts().add(product);
+        if (category != null) {
+            category.getCategoryProducts().add(product);
+        }
         AddProductRequest addProductRequest = new AddProductRequest(seller ,product);
         return true;
     }
@@ -137,7 +139,10 @@ public class SellerBoss {
         Product product = Product.getProductWithId(iD);
         if (product == null) {
             throw new NullProduct("null product",1);
-        }else if (!product.getProductStatus().equals(ProductAndOffStatus.CONFIRMED)){
+        }else if (product.getProductStatus()==null){
+            throw new NullProduct("null product",1);
+        }
+        else if (!product.getProductStatus().equals(ProductAndOffStatus.CONFIRMED)){
             throw new NullProduct("null product",1);
         }
         else if (!product.getSeller().equals(seller)) {
@@ -241,7 +246,7 @@ if (product.getSpecialAttributes()!=null) {
         return off.showOff();
     }
 
-    public static boolean editOff(Seller seller, Off off, HashMap<String, String> changes) throws ItIsNotCorrect, ParseException, TimeLimit, InputStringExceptNumber, ThisIsNotReadyForEdit {
+    public static boolean editOff(Seller seller, Off off, HashMap<String, String> changes) throws   TimeLimit, InputStringExceptNumber, ThisIsNotReadyForEdit {
         String date = null;
         double maximum = -1.0;
         double percent = -1.0;
@@ -250,7 +255,7 @@ if (product.getSpecialAttributes()!=null) {
         ProductAndOffStatus productAndOffStatus = null;
         String format = null;
         if (!off.getOffStatus().equals(ProductAndOffStatus.CONFIRMED)) {
-            throw new ThisIsNotReadyForEdit("this is not ready");
+            throw new ThisIsNotReadyForEdit("this is not ready",1);
         }
         for (String s : changes.keySet()) {
             if (changes.get(s) != null && !changes.get(s).equalsIgnoreCase("\n") && !changes.get(s).equalsIgnoreCase("")) {
