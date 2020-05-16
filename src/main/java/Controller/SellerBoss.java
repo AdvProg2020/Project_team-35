@@ -66,7 +66,7 @@ public class SellerBoss {
         return true;
     }
 
-    public static ArrayList<String> showBuyers(String id, Seller seller) throws ThisIsNotYours {
+    public static ArrayList<String> showBuyers(String id, Seller seller) throws ThisIsNotYours, NullProduct {
         int iD = Integer.parseInt(id);
         Product product = getProduct(id, seller);
         ArrayList<String> buyers = new ArrayList<>();
@@ -85,16 +85,19 @@ public class SellerBoss {
         }
         return sorted;
     }
-    public static ArrayList<Customer>  sortBuyers(String id , Seller seller,String field) throws ThisIsNotYours {
+    public static ArrayList<Customer>  sortBuyers(String id , Seller seller,String field) throws ThisIsNotYours, NullProduct {
         Product product = getProduct(id, seller);
         return product.sortBuyers(field);
     }
 
-    private static Product getProduct(String id, Seller seller) throws ThisIsNotYours {
+    private static Product getProduct(String id, Seller seller) throws ThisIsNotYours, NullProduct {
         int iD = Integer.parseInt(id);
         Product product = Product.getProductWithId(iD);
+        if (product==null){
+            throw  new NullProduct("null product",1);
+        }
         if (!product.getSeller().equals(seller)) {
-            throw new ThisIsNotYours("this product belongs to another seller", iD);
+            throw new ThisIsNotYours("this product belongs to another seller", 2);
         }
         return product;
     }

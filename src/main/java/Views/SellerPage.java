@@ -441,7 +441,7 @@ public class SellerPage extends Page {
                     try {
                         field = matcher.group(2);
                         buyersList = SellerBoss.sortBuyers(matcher.group(1),(Seller)Account.getOnlineAccount(),field);
-                    } catch (ThisIsNotYours thisIsNotYours) {
+                    } catch (ThisIsNotYours | NullProduct thisIsNotYours) {
                         thisIsNotYours.printStackTrace();
                     }
                     nextPage = this;

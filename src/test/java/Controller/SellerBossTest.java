@@ -176,9 +176,21 @@ public class SellerBossTest {
         Assert.assertEquals(SellerBoss.addRequestProduct("kal", "22", "2", null, "sd", "ategory", seller, "great"), true);
     }
 
+    @Test
     public void testTestShowBuyers() {
         Customer customer = new Customer("l","d","d","df","23","pass");
         Customer customer1 = new Customer("m","m","v","c","123","psd");
+        product.setProductStatus(ProductAndOffStatus.CONFIRMED);
+        product.getWhoBoughtThisGood().add(customer);
+        product.getWhoBoughtThisGood().add(customer1);
+        Product product1 = new Product("sad","asd",23,new Seller("asd","asd","asd","dsf","sdf","gf","dgf"),3,new Category("lkdsa",null),null,"");
+        try {
+            Assert.assertEquals(SellerBoss.showBuyers("2",seller),null);
+        } catch (ThisIsNotYours thisIsNotYours) {
+          Assert.assertEquals( thisIsNotYours.getId(),2);
+        } catch (NullProduct nullProduct) {
+            Assert.assertEquals(nullProduct.getId(),1);
+        }
     }
 
 
