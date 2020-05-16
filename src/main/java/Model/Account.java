@@ -202,4 +202,8 @@ public abstract class Account {
         }
         return "Wait For Accept";
     }
+
+    public String getFullName() {
+        return this.getFirstName() + this.getLastName();
+    }
 }

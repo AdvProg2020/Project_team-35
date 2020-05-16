@@ -34,8 +34,8 @@ public class ManagerPage extends Page {
             @Override
             public void execute() {
                 ArrayList<Account> allUsers = Account.getAllAccounts();
-                for (Account activeUser : allUsers) {
-                    System.out.println(activeUser.getShortInfo());
+                for (Account user : allUsers) {
+                    System.out.println(user.getShortInfo());
                 }
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
@@ -54,6 +54,20 @@ public class ManagerPage extends Page {
                         }
                     } else {
                         System.err.println("Invalid Command");
+                    }
+                }else if(command.startsWith("sort by")){
+                    Matcher matcher = getMatcher(command, "^sort by (\\S+)$");
+                    if (matcher.matches()) {
+                        Matcher matcher1 = getMatcher(matcher.group(1), "^(name|username)-(a|b)$");
+                        if (matcher1.matches()) {
+                            ManagerBoss.sortAccountWithField(matcher.group(1));
+                        }
+                        else {
+                            System.err.println("Invalid Command.");
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid Command.");
                     }
                 } else if (command.startsWith("delete user")) {
                     Matcher matcher = getMatcher(command, "^delete user (\\w+)$");

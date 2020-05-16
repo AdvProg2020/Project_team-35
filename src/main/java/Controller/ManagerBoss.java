@@ -316,4 +316,25 @@ public class ManagerBoss {
         }
         return false;
     }
+    public static boolean sortAccountWithField(String field) {
+        if (field.startsWith("name")) {
+            if (field.charAt(5) == 'a') {
+                Collections.sort(Account.allAccounts, Comparator.comparing(Account::getFullName));
+            }
+            if (field.charAt(5) == 'b') {
+                Collections.sort(Account.allAccounts, Comparator.comparing(Account::getFullName).reversed());
+            }
+            return true;
+        }
+        if (field.startsWith("username")) {
+            if (field.charAt(9) == 'a') {
+                Collections.sort(Account.allAccounts, Comparator.comparing(Account::getUsername));
+            }
+            if (field.charAt(9) == 'b') {
+                Collections.sort(Account.allAccounts, Comparator.comparing(Account::getUsername).reversed());
+            }
+            return true;
+        }
+        return false;
+    }
 }
