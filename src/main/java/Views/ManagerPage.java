@@ -33,7 +33,7 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
-                ArrayList<Account> allActiveUsers = ManagerBoss.getAllActiveUsers();
+                ArrayList<Account> allActiveUsers = Account.getAllAccounts();
                 for (Account activeUser : allActiveUsers) {
                     System.out.println(activeUser.getShortInfo());
                 }

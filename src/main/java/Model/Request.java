@@ -3,6 +3,7 @@ package Model;
 import Views.MainPage;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public abstract class Request {
     protected Seller seller;
@@ -29,4 +30,15 @@ public abstract class Request {
     public Seller getSeller() {
         return seller;
     }
+
+    static class SortRequestById implements Comparator<Request> {
+
+        @Override
+        public int compare(Request one, Request two) {
+            return one.getRequestId() - two.getRequestId();
+        }
+    }
+
+
+
 }

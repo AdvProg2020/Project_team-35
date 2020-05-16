@@ -183,4 +183,23 @@ public abstract class Account {
     public static ArrayList<Account> getAllAccounts() {
         return allAccounts;
     }
+
+    protected String getIsConfirmedOrWaitForCheck() {
+        if (this instanceof Manager) {
+            if (Manager.getAllManagers().contains(this)) {
+                return "Confirmed";
+            }
+        }
+        else if (this instanceof Customer) {
+            if (Customer.getAllCustomers().contains(this)) {
+                return "Confirmed";
+            }
+        }
+        else if (this instanceof Seller) {
+            if (Seller.getAllSellers().contains(this)) {
+                return "Accept";
+            }
+        }
+        return "Wait For Accept";
+    }
 }
