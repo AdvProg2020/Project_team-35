@@ -407,10 +407,24 @@ public class ManagerPage extends Page {
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
-                    System.out.println("add/edit/remove [categoryName]");
+                    System.out.println("add/edit/remove [categoryName]\nsort by (name|size)-(a|b) (a for ascending b for else)");
                 } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
-                } else if (command.startsWith("edit")) {
+                } else if(command.startsWith("sort by")) {
+                    Matcher matcher = getMatcher(command, "^sort by (\\S+)$");
+                    if (matcher.matches()) {
+                        Matcher matcher1 = getMatcher(matcher.group(1), "^(name|size)-(a|b)$");
+                        if (matcher1.matches()) {
+                            ManagerBoss.sortCategoryWithField(matcher.group(1));
+                        }
+                        else {
+                            System.err.println("Invalid Command.");
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid Command.");
+                    }
+                }else if (command.startsWith("edit")) {
                     Matcher matcher = getMatcher(command, "^edit (\\w+)$");
                     if (matcher.matches()) {
                         try {

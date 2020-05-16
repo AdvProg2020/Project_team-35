@@ -69,7 +69,9 @@ public class Category {
         }
         return true;
     }
-
+    public int getSize() {
+        return this.categoryProducts.size();
+    }
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }

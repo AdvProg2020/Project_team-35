@@ -289,4 +289,31 @@ public class ManagerBoss {
             throw new DiscountNotExist("The requested discount code does'nt exist or expired.");
         }
     }
+
+
+
+    public static boolean sortCategoryWithField(String field) {
+            if (field.charAt(5) == 'a') {
+                if (field.startsWith("name")) {
+                    Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName));
+                    Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName));
+                }
+                if (field.startsWith("size")) {
+                    Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize));
+                    Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize));
+                }
+            }
+        if (field.charAt(5) == 'b') {
+            if (field.startsWith("name")) {
+                Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName).reversed());
+                Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName).reversed());
+            }
+            if (field.startsWith("size")) {
+                Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize).reversed());
+                Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize).reversed());
+            }
+            return true;
+        }
+        return false;
+    }
 }
