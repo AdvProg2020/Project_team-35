@@ -1,7 +1,10 @@
 package Controller;
 
 import Model.Customer;
+import Model.DiscountCode;
+import Model.Off;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,31 +15,24 @@ public class Boss {
             date = new Date();
     }
 
-    public void startAddOnlineProductToOnlineCustomerCart() {
+    public static boolean removeExpiredOffsAndDiscountCodes() {
+        LocalDateTime now = LocalDateTime.now();
+        for (int i = 0; i < DiscountCode.getAllDiscountCodes().size(); i++) {
+            DiscountCode discountCode = DiscountCode.getAllDiscountCodes().get(i);
+            if (now.isAfter(discountCode.getFinalDate())) {
+                DiscountCode.getAllDiscountCodes().remove(discountCode);
+                i--;
+            }
+        }
 
+        for (int j = 0; j < Off.getAllActiveOffs().size(); j++) {
+            Off off = Off.getAllActiveOffs().get(j);
+            if (now.isAfter(off.getFinalDate())) {
+                Off.getAllActiveOffs().remove(off);
+                j--;
+            }
+        }
+        return true;
     }
-    public void startCompareOnlineProductWithProductWithId(int toCompareProductId) {
-
-    }
-    public void validateDiscountCodeForOnlineCustomer(String discountCode) {
-
-    }
-    public void startPurchaseOrderForOnlineUser(String orderInformation) {
-
-    }
-
-    public void startSortList(HashMap<String, Double> doubleList, HashMap<String, Integer> intList, HashMap<String, String> stringList) {
-
-    }
-    public void startFilterList(HashMap<String, Double> doubleList, HashMap<String, Integer> intList, HashMap<String, String> stringList) {
-
-    }
-    public void manageSortAndFilter(HashMap<String, Double> doubleList, HashMap<String, Integer> intList, HashMap<String, String> stringList) {
-
-    }
-
-
-
-
 
 }

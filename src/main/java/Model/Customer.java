@@ -99,11 +99,11 @@ public class Customer extends Account {
                 "Username: " + this.getUsername() + "\n" +
                 "Name: " + this.getFirstName() + " " + this.getLastName() + "\n" +
                 "Email: " + this.getEmail() + "\n" +
-                "PhoneNumber: " + this.getPhoneNumber() + "\n";
+                "PhoneNumber: " + this.getPhoneNumber();
     }
     @Override
     public String getShortInfo() {
-        return "UserName : " + this.getUsername() + " --- " + "Type : Customer";
+        return "UserName : " + this.getUsername() + " -- " + "Type : Customer" + " -- Condition: " + getIsConfirmedOrWaitForCheck();
     }
 
     public static ArrayList<Customer> getAllCustomers() {
@@ -147,5 +147,7 @@ public class Customer extends Account {
     public static boolean isThereCustomerWithUsername(String username) {
         return getCustomerWithName(username) != null;
     }
+
+
 }
 

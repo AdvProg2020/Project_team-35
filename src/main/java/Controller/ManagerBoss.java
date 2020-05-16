@@ -5,6 +5,8 @@ import Model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class ManagerBoss {
@@ -43,6 +45,24 @@ public class ManagerBoss {
             throw new NotValidRequestIdException("requestId is not valid");
         }
     }
+
+    public static boolean sortRequestsWithField(String field) {
+        if (field.startsWith("id")) {
+            if (field.charAt(3) == 'a') {
+                Collections.sort(Manager.newRequests, Comparator.comparing(Request::getRequestId));
+                Collections.sort(Manager.checkedRequests, Comparator.comparing(Request::getRequestId));
+                Request.setCurrentSort("Request ID - Ascending");
+            }
+            if (field.charAt(3) == 'b') {
+                Collections.sort(Manager.newRequests, Comparator.comparing(Request::getRequestId).reversed());
+                Collections.sort(Manager.checkedRequests, Comparator.comparing(Request::getRequestId).reversed());
+                Request.setCurrentSort("Request ID - Descending");
+            }
+            return true;
+        }
+        return false;
+      }
+
 
     public static String  getDetailsOfAccountWithUserName(String username) throws NotValidUserNameException {
         if (Account.isThereActiveAccountWithUserName(username)) {
@@ -239,12 +259,17 @@ public class ManagerBoss {
         }
     }
 
-    public static void createDiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<String> includedCustomersUserNames) {
+    public static void createDiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<String> includedCustomersUserNames, double minimumPriceForUse) {
         ArrayList<Customer> includedCustomers = new ArrayList<>();
-        for (String userName : includedCustomersUserNames) {
-            includedCustomers.add(Customer.getCustomerWithName(userName));
+        if (includedCustomersUserNames.contains("-all")) {
+            includedCustomers.addAll(Customer.getAllCustomers());
         }
-        DiscountCode discountCode = new DiscountCode(code, finalDate, startDate, discountPercent, maximumAvailableAmount, availableUseFrequent, includedCustomers);
+        else {
+            for (String userName : includedCustomersUserNames) {
+                includedCustomers.add(Customer.getCustomerWithName(userName));
+            }
+        }
+        DiscountCode discountCode = new DiscountCode(code, finalDate, startDate, discountPercent, maximumAvailableAmount, availableUseFrequent, includedCustomers, minimumPriceForUse);
         for (Customer customer : includedCustomers) {
             customer.discountCodes.add(discountCode);
         }
@@ -270,5 +295,121 @@ public class ManagerBoss {
         else {
             throw new DiscountNotExist("The requested discount code does'nt exist or expired.");
         }
+    }
+
+
+
+    public static boolean sortCategoryWithField(String field) {
+            if (field.charAt(5) == 'a') {
+                if (field.startsWith("name")) {
+                    Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName));
+                    Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName));
+                    Category.setCurrentSort("Category Name - Ascending");
+                }
+                if (field.startsWith("size")) {
+                    Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize));
+                    Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize));
+                    Category.setCurrentSort("Category Size - Aescending");
+                }
+            }
+        if (field.charAt(5) == 'b') {
+            if (field.startsWith("name")) {
+                Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName).reversed());
+                Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName).reversed());
+                Category.setCurrentSort("Category Name - Descending");
+            }
+            if (field.startsWith("size")) {
+                Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize).reversed());
+                Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize).reversed());
+                Category.setCurrentSort("Category Size - Descending");
+            }
+            return true;
+        }
+        return false;
+    }
+    public static boolean sortAccountWithField(String field) {
+        if (field.startsWith("name")) {
+            if (field.charAt(5) == 'a') {
+                Collections.sort(Account.allAccounts, Comparator.comparing(Account::getFullName));
+                Account.setCurrentSort("Account FullName - Ascending");
+            }
+            if (field.charAt(5) == 'b') {
+                Collections.sort(Account.allAccounts, Comparator.comparing(Account::getFullName).reversed());
+                Account.setCurrentSort("Account FullName - Descending");
+            }
+            return true;
+        }
+        if (field.startsWith("username")) {
+            if (field.charAt(9) == 'a') {
+                Collections.sort(Account.allAccounts, Comparator.comparing(Account::getUsername));
+                Account.setCurrentSort("Account Username - Ascending");
+            }
+            if (field.charAt(9) == 'b') {
+                Collections.sort(Account.allAccounts, Comparator.comparing(Account::getUsername).reversed());
+                Account.setCurrentSort("Account Username - Descending");
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public static boolean sortDiscountCodesWithField(String field) {
+        if (field.startsWith("percent")) {
+            if (field.charAt(8) == 'a') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getDiscountPercent));
+                DiscountCode.setCurrentSort("Discount Code Percent - Ascending");
+            }
+            if (field.charAt(8) == 'b') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getDiscountPercent).reversed());
+                DiscountCode.setCurrentSort("Discount Code Percent - Descending");
+            }
+            return true;
+        }
+        if (field.startsWith("maximum")) {
+            if (field.charAt(8) == 'a') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getMaximumAvailableAmount));
+                DiscountCode.setCurrentSort("Discount Code Maximum Amount - Ascending");
+            }
+            if (field.charAt(8) == 'b') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getMaximumAvailableAmount).reversed());
+                DiscountCode.setCurrentSort("Discount Code Maximum Amount - Descending");
+            }
+            return true;
+        }
+        if (field.startsWith("frequent")) {
+            if (field.charAt(9) == 'a') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getAvailableUseFrequent));
+                DiscountCode.setCurrentSort("Discount Code Available Frequent - Ascending");
+            }
+            if (field.charAt(9) == 'b') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getAvailableUseFrequent).reversed());
+                DiscountCode.setCurrentSort("Discount Code Available Frequent - Descending");
+            }
+            return true;
+        }
+        if (field.startsWith("startdate")) {
+            if (field.charAt(10) == 'a') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::startDateToString));
+                DiscountCode.setCurrentSort("Discount Code Start Date - Ascending");
+            }
+            if (field.charAt(10) == 'b') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::startDateToString).reversed());
+                DiscountCode.setCurrentSort("Discount Code Start Date - Descending");
+            }
+        }
+        if (field.startsWith("finaldate")) {
+            if (field.charAt(10) == 'a') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::expireDateToString));
+                DiscountCode.setCurrentSort("Discount Code Final Date - Ascending");
+            }
+            if (field.charAt(10) == 'b') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::expireDateToString).reversed());
+                DiscountCode.setCurrentSort("Discount Code Final Date - Descending");
+            }
+        }
+
+        return false;
     }
 }

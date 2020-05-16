@@ -7,6 +7,7 @@ public class Category {
     private String categoryName;
     public ArrayList<Product> categoryProducts;
     public ArrayList<String> specialAttributes;
+    private static String currentSort = "Nothing";
 
     public Category(String categoryName, ArrayList<String> specialAttributes) {
         this.categoryName = categoryName;
@@ -66,9 +67,19 @@ public class Category {
         }
         return true;
     }
-
+    public int getSize() {
+        return this.categoryProducts.size();
+    }
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public static void setCurrentSort(String currentSort) {
+        Category.currentSort = currentSort;
+    }
+
+    public static String getCurrentSort() {
+        return currentSort;
     }
 
     public static ArrayList<Category> sortCategory(String field){
