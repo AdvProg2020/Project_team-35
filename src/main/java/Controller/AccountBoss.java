@@ -153,7 +153,7 @@ public class AccountBoss {
         Account.setOnlineAccount(account);
     }
 
-    public static void startEditPersonalField(String fieldName, String newValue) throws NotValidFieldException {
+    public static void startEditPersonalField(String fieldName, String newValue,Account account) throws NotValidFieldException, InvalidNumber {
         if (fieldName.equalsIgnoreCase("firstName")) {
             Account.getOnlineAccount().setFirstName(newValue);
         } else if (fieldName.equalsIgnoreCase("lastName")) {
@@ -164,7 +164,20 @@ public class AccountBoss {
             Account.getOnlineAccount().setPhoneNumber(newValue);
         } else if (fieldName.equalsIgnoreCase("password")) {
             Account.getOnlineAccount().setPassword(newValue);
-        } else if (fieldName.equalsIgnoreCase("companyName")) {
+        }else if (fieldName.equalsIgnoreCase("money")){
+            if (account instanceof Customer){
+                Customer customer = (Customer) account;
+                if (newValue.matches("^\\d+.?\\d+$")) {
+                    customer.setMoney(Double.parseDouble(newValue));
+                }
+                else {
+                    throw new InvalidNumber("invalid format for money",4);
+                }
+            }else {
+                throw new  NotValidFieldException("money is valid just for customer");
+            }
+        }
+        else if (fieldName.equalsIgnoreCase("companyName")) {
             if (Account.getOnlineAccount() instanceof Seller) {
                 ((Seller) Account.getOnlineAccount()).setCompanyName(newValue);
             } else

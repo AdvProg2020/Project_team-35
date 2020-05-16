@@ -177,6 +177,8 @@ public class SellerBossTest {
     }
 
     public void testTestShowBuyers() {
+        Customer customer = new Customer("l","d","d","df","23","pass");
+        Customer customer1 = new Customer("m","m","v","c","123","psd");
     }
 
 

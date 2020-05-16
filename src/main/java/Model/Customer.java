@@ -99,7 +99,8 @@ public class Customer extends Account {
                 "Username: " + this.getUsername() + "\n" +
                 "Name: " + this.getFirstName() + " " + this.getLastName() + "\n" +
                 "Email: " + this.getEmail() + "\n" +
-                "PhoneNumber: " + this.getPhoneNumber();
+                "PhoneNumber: " + this.getPhoneNumber()+"\n"+
+                "money: "+this.getMoney();
     }
     @Override
     public String getShortInfo() {
