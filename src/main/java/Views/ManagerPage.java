@@ -33,8 +33,8 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
-                ArrayList<Account> allActiveUsers = Account.getAllAccounts();
-                for (Account activeUser : allActiveUsers) {
+                ArrayList<Account> allUsers = Account.getAllAccounts();
+                for (Account activeUser : allUsers) {
                     System.out.println(activeUser.getShortInfo());
                 }
                 System.out.println("Enter Command : (-help for help)");
@@ -330,7 +330,23 @@ public class ManagerPage extends Page {
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
-                    System.out.println("Accept/Decline/details [RID]");
+                    System.out.println("Accept/Decline/details [RID]\nSort by id-a/-b (a for ascending b for else)");
+                }
+                else if (command.startsWith("sort by")) {
+                    Matcher matcher = getMatcher(command, "^sort by (\\S+)$");
+                    if (matcher.matches()) {
+                        Matcher matcher1 = getMatcher(matcher.group(1), "^id-(a|b)$");
+                        if (matcher1.matches()) {
+                            ManagerBoss.sortRequestsWithField(matcher.group(1));
+                        }
+                        else {
+                            System.err.println("Invalid Command.");
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid command.");
+                    }
+
                 } else if (command.startsWith("accept") || command.startsWith("decline") || command.startsWith("details")) {
                     Matcher matcher = getMatcher(command, "^(accept|decline|details)\\s+(\\d+)$");
                     if (matcher.matches()) {

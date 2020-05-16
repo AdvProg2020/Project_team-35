@@ -31,13 +31,7 @@ public abstract class Request {
         return seller;
     }
 
-    static class SortRequestById implements Comparator<Request> {
 
-        @Override
-        public int compare(Request one, Request two) {
-            return one.getRequestId() - two.getRequestId();
-        }
-    }
 
 
 

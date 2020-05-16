@@ -5,6 +5,8 @@ import Model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class ManagerBoss {
@@ -43,6 +45,28 @@ public class ManagerBoss {
             throw new NotValidRequestIdException("requestId is not valid");
         }
     }
+
+    public static boolean sortRequestsWithField(String field) {
+        if (field.startsWith("id")) {
+            Comparator<Request> sortById = new Comparator<Request>() {
+                @Override
+                public int compare(Request o1, Request o2) {
+                    return -(o1.getRequestId() - o2.getRequestId());
+                }
+            };
+            if (field.charAt(3) == 'a') {
+                Collections.sort(Manager.newRequests, sortById);
+                Collections.sort(Manager.checkedRequests, sortById);
+            }
+            if (field.charAt(3) == 'b') {
+                Collections.sort(Manager.newRequests, sortById.reversed());
+                Collections.sort(Manager.checkedRequests, sortById.reversed());
+            }
+            return true;
+        }
+        else return false;
+    }
+
 
     public static String  getDetailsOfAccountWithUserName(String username) throws NotValidUserNameException {
         if (Account.isThereActiveAccountWithUserName(username)) {
