@@ -2,6 +2,8 @@ package Model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 public class Off {
@@ -99,7 +101,56 @@ public class Off {
         return startDate;
     }
 
+    public int getNumberOfOffProduct(){
+        return getIncludedProducts().size();
+    }
     public void setStartDate( LocalDateTime startDate) {
         this.startDate = startDate;
+    }
+
+    public static ArrayList<Off> sorting(String field){
+        if (field.equalsIgnoreCase("startDate")){
+            Collections.sort(allActiveOffs,Comparator.comparing(Off::getStartDate));
+        }else if (field.equalsIgnoreCase("finishDate")){
+            Collections.sort(allActiveOffs,Comparator.comparing(Off::getFinalDate));
+        }else if (field.equalsIgnoreCase("max")){
+            Collections.sort(allActiveOffs,Comparator.comparing(Off::getMaximumAmountOfOff));
+        }else if (field.equalsIgnoreCase("percent")){
+            Collections.sort(allActiveOffs,Comparator.comparing(Off::getOffPercent));
+        }else if (field.equalsIgnoreCase("number")){
+            Collections.sort(allActiveOffs,Comparator.comparing(Off::getNumberOfOffProduct));
+        }
+        return allActiveOffs;
+    }
+    public static boolean isThereProduct(Product product){
+        for (Off activeOff : allActiveOffs) {
+            if (activeOff.getIncludedProducts().contains(product))
+                return true;
+        }
+        return false;
+    }
+    public static ArrayList<Product> getAllProducts(){
+        ArrayList<Product> result = new ArrayList<>();
+        for (Off allActiveOff : allActiveOffs) {
+            for (Product product : allActiveOff.getIncludedProducts()) {
+                result.add(product);
+            }
+        }
+        return result;
+    }
+    public static ArrayList<Product> sortAllProducts(String field){
+        ArrayList<Product> a = getAllProducts();
+        if (field.equalsIgnoreCase("name")){
+            Collections.sort(a,Comparator.comparing(Product::getName));
+        }else if (field.equalsIgnoreCase("price")){
+            Collections.sort(a,Comparator.comparing(Product::getPrice));
+        }else if (field.equalsIgnoreCase("rate")){
+            Collections.sort(a,Comparator.comparing(Product::getAverageOfRates));
+        }else if (field.equalsIgnoreCase("reviewNumber")){
+            Collections.sort(a,Comparator.comparing(Product::getReviewNumber));
+        }else if (field.equalsIgnoreCase("inventory")){
+            Collections.sort(a,Comparator.comparing(Product::getInventory));
+        }
+        return a;
     }
 }

@@ -24,20 +24,14 @@ public class ProductBoss {
         return goodPage;
     }
 
-    public static ArrayList<String> sortProduct(String field) throws InvalidFieldForSort {
-        if (!(field.equalsIgnoreCase("rate")||field.equalsIgnoreCase("price")||field.equalsIgnoreCase("inventory")||field.equalsIgnoreCase("name")||field.equalsIgnoreCase("review number"))){
-            throw new InvalidFieldForSort("invalid field",1);
-        }
+    public static ArrayList<Product> sortProduct(String field)  {
+
         ArrayList<Product> confirmedProducts = new ArrayList<>();
         for (Product product : Product.getProductFieldForSort(field)) {
             if (product.getProductStatus().equals(ProductAndOffStatus.CONFIRMED))
             confirmedProducts.add(product);
         }
-        ArrayList<String> productsName = new ArrayList<>();
-        for (Product product : confirmedProducts) {
-            productsName.add(product.getName());
-        }
-      return productsName;
+        return confirmedProducts;
     }
 
     public static HashMap<String, String> showAttributes(Product product) {

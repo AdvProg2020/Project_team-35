@@ -32,18 +32,15 @@ public class ProductBossTest {
 product1.setProductStatus(ProductAndOffStatus.CONFIRMED);
 product.setProductStatus(ProductAndOffStatus.FOREDIT);
 product2.setProductStatus(ProductAndOffStatus.CONFIRMED);
-        try {
             ArrayList<String> a = new ArrayList<>();
             a.add("ad");
 
             a.add("lal");
             Assert.assertEquals(ProductBoss.sortProduct("name"),a);
-            for (String s : ProductBoss.sortProduct("name")) {
+            for (Product s : ProductBoss.sortProduct("name")) {
                 System.out.println(s);
             }
-        } catch (InvalidFieldForSort invalidFieldForSort) {
-            Assert.assertEquals(invalidFieldForSort.getId(),1);
-        }
+
     }
 
     @Test

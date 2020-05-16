@@ -104,6 +104,8 @@ public class SellerBossTest {
             Assert.assertEquals(invalidNumber.getId(), 3);
         } catch (InputStringExceptNumber inputStringExceptNumber) {
             Assert.assertEquals(inputStringExceptNumber.getId(), 2);
+        } catch (JustOneOffForEveryProduct justOneOffForEveryProduct) {
+            Assert.assertEquals(justOneOffForEveryProduct.getId(),6);
         }
     }
 
@@ -171,7 +173,7 @@ public class SellerBossTest {
     @Test
     public void testTestAddRequestProduct() {
         Category category = new Category("lak", null);
-        Assert.assertEquals(SellerBoss.addRequestProduct("kal", "22", "2", null, "sd", category, seller, "great"), true);
+        Assert.assertEquals(SellerBoss.addRequestProduct("kal", "22", "2", null, "sd", "ategory", seller, "great"), true);
     }
 
     public void testTestShowBuyers() {

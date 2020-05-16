@@ -47,8 +47,16 @@ public class SellerBoss {
         return product.toString();
     }
 
-    public static boolean addRequestProduct(String name, String price, String inventory, HashMap<String, String> attributes, String company, Category category, Seller seller,String description) {
+    public static ArrayList<String> getWithNameOfCategoryItsSpecials(String categoryName) throws ThereIsNotCategoryWithNameException {
+        Category category = Category.getCategoryByName(categoryName);
+        if (category==null){
+            throw new ThereIsNotCategoryWithNameException("null",1);
+        }
+        return category.getSpecialAttributes();
+    }
+    public static boolean addRequestProduct(String name, String price, String inventory, HashMap<String, String> attributes, String company, String category1, Seller seller,String description) {
 
+        Category category = Category.getCategoryByName(category1);
         double productPrice = Double.parseDouble(price);
         int number = Integer.parseInt(inventory);
         Product product = new Product(name,company,productPrice,seller,number,category,attributes,description);
@@ -60,15 +68,35 @@ public class SellerBoss {
 
     public static ArrayList<String> showBuyers(String id, Seller seller) throws ThisIsNotYours {
         int iD = Integer.parseInt(id);
-        Product product = Product.getProductWithId(iD);
-        if (!product.getSeller().equals(seller)) {
-            throw new ThisIsNotYours("this product belongs to another seller", iD);
-        }
+        Product product = getProduct(id, seller);
         ArrayList<String> buyers = new ArrayList<>();
         for (Customer customer : product.getWhoBoughtThisGood()) {
             buyers.add(customer.getUsername());
         }
         return buyers;
+    }
+
+    public static ArrayList<Product> sortProductForSpecialSeller(String field,Seller seller){
+        ArrayList<Product>         result = Product.getProductFieldForSort(field);
+       ArrayList<Product> sorted = new ArrayList<>();
+        for (Product product : result) {
+            if (seller.getSalableProducts().contains(product))
+                sorted.add(product);
+        }
+        return sorted;
+    }
+    public static ArrayList<Customer>  sortBuyers(String id , Seller seller,String field) throws ThisIsNotYours {
+        Product product = getProduct(id, seller);
+        return product.sortBuyers(field);
+    }
+
+    private static Product getProduct(String id, Seller seller) throws ThisIsNotYours {
+        int iD = Integer.parseInt(id);
+        Product product = Product.getProductWithId(iD);
+        if (!product.getSeller().equals(seller)) {
+            throw new ThisIsNotYours("this product belongs to another seller", iD);
+        }
+        return product;
     }
 
     /**
@@ -185,12 +213,18 @@ if (product.getSpecialAttributes()!=null) {
         }
     }
 
-    public static ArrayList<String> showOffs(Seller seller) {
-        ArrayList<String> offs = new ArrayList<>();
-        for (Off off : seller.getSellerOffs()) {
-            offs.add(String.valueOf(off.getOffId()));
+    public static ArrayList<Off> showOffs(Seller seller) {
+      return seller.getSellerOffs();
+    }
+
+    public static ArrayList<Off> sortOffs(String field  , Seller seller){
+       ArrayList<Off> totalSorted =  OffBoss.sortOff(field);
+       ArrayList<Off> result  = new ArrayList<>();
+        for (Off off : totalSorted) {
+            if (off.getSeller().equals(seller))
+                result.add(off);
         }
-        return offs;
+        return result;
     }
 
     public static String viewOff(Seller seller, String id) throws ThisIsNotYours, ThisOffNotExist {
@@ -249,7 +283,7 @@ if (product.getSpecialAttributes()!=null) {
 
     }
 
-    public static boolean addOff(ArrayList<Integer> id, Seller seller, String startDate, String finalDate, String percents, String maxs) throws ParseException, ThisIsNotYours, TimeLimit, InvalidNumber, InputStringExceptNumber, NullProduct {
+    public static boolean addOff(ArrayList<Integer> id, Seller seller, String startDate, String finalDate, String percents, String maxs) throws ParseException, ThisIsNotYours, TimeLimit, InvalidNumber, InputStringExceptNumber, NullProduct, JustOneOffForEveryProduct {
         LocalDateTime start = LocalDateTime.parse(startDate);
         LocalDateTime finalDates = LocalDateTime.parse(finalDate);
 
@@ -275,6 +309,8 @@ if (product.getSpecialAttributes()!=null) {
                 }
                 else if (Product.getProductWithId(integer)==null){
                     throw new NullProduct("null product",5);
+                }else if (Off.isThereProduct(Product.getProductWithId(integer))){
+                    throw new JustOneOffForEveryProduct("product is in another one",6);
                 }
                 allProducts.add(Product.getProductWithId(integer));
             }

@@ -134,6 +134,16 @@ public class Customer extends Account {
         }
         return null;
     }
+    public int getNumberOfBoughtProduct(Product product){
+        int number = 0;
+        for (BuyLog buyLog : buyLogs) {
+            for (Product boughtProduct : buyLog.getBoughtProducts()) {
+                if (product.equals(boughtProduct))
+                    number+=1;
+            }
+        }
+        return number;
+    }
     public static boolean isThereCustomerWithUsername(String username) {
         return getCustomerWithName(username) != null;
     }

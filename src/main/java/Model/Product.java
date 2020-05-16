@@ -133,6 +133,12 @@ public class Product {
     }
 
     public static void deleteProduct(Product product) {
+        for (Off allActiveOff : Off.allActiveOffs) {
+            if (allActiveOff.getIncludedProducts().contains(product)) {
+                allActiveOff.getIncludedProducts().remove(product);
+                break;
+            }
+        }
         allProducts.remove(product);
         product.getSeller().getSalableProducts().remove(product);
     }
@@ -199,7 +205,7 @@ public class Product {
             };
             Collections.sort(allProducts,rateCompare);
 
-        } else if (field.equalsIgnoreCase("review number")) {
+        } else if (field.equalsIgnoreCase("reviewNumber")) {
             Comparator<Product> reviewCompare = new Comparator<Product>() {
                 @Override
                 public int compare(Product o1, Product o2) {
@@ -336,5 +342,26 @@ public class Product {
 
     public void setReviewNumber(int reviewNumber) {
         this.reviewNumber = reviewNumber;
+    }
+    public ArrayList<Customer> sortBuyers(String field){
+        if (field.equalsIgnoreCase("username")){
+            Comparator<Customer> usernameCompare = new Comparator<Customer>() {
+                @Override
+                public int compare(Customer o1, Customer o2) {
+                    return o1.getUsername().compareTo(o2.getUsername());
+                }
+            };
+            Collections.sort(whoBoughtThisGood,usernameCompare);
+
+        }else if (field.equalsIgnoreCase("number")){
+            Comparator<Customer> numberCompare = new Comparator<Customer>() {
+                @Override
+                public int compare(Customer o1, Customer o2) {
+                    return o1.getNumberOfBoughtProduct(Product.getProductWithId(productId))-o2.getNumberOfBoughtProduct(Product.getProductWithId(productId));
+                }
+            };
+            Collections.sort(whoBoughtThisGood,numberCompare);
+        }
+        return whoBoughtThisGood;
     }
 }

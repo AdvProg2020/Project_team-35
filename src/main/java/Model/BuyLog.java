@@ -8,4 +8,8 @@ public class BuyLog extends Log{
     public ArrayList<Product> boughtProducts;
     private String sellerName;
     private boolean isDelivered;
+
+    public ArrayList<Product> getBoughtProducts() {
+        return boughtProducts;
+    }
 }

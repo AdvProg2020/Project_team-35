@@ -1,12 +1,12 @@
 package Views;
 
 import Controller.Exceptions.NullProduct;
-import Controller.OffBoss;
 import Controller.Exceptions.ProductIsNotConfirmed;
+import Controller.OffBoss;
 import Model.Off;
 import Model.Product;
-import Model.ProductAndOffStatus;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class Offs extends Page{
@@ -50,21 +50,51 @@ public class Offs extends Page{
         };
     }
 
+    private ArrayList<Product> list = new ArrayList<>();
+    private String field = "name";
     @Override
     public void execute() {
-        for (Off activeOff : Off.allActiveOffs) {
-
-            if (activeOff.getOffStatus().equals(ProductAndOffStatus.CONFIRMED)){
-                System.out.println("off id : "+activeOff.getOffId());
-                for (Product product : activeOff.getIncludedProducts()) {
-                    if (product.getPrice()>activeOff.getMaximumAmountOfOff())
-                        System.out.println(product.getName()+" : "+"    real price : "+product.getPrice()+"     off price : "+(product.getPrice()-activeOff.getMaximumAmountOfOff()));
-                    else if (product.getPrice()<activeOff.getMaximumAmountOfOff()){
-                        System.out.println(product.getName()+" : "+"    real price : "+product.getPrice()+"     off price : "+(product.getPrice()*(1-activeOff.getOffPercent()/100)));
-                    }
-                }
-            }
+        if (field.equalsIgnoreCase("nothing"))
+            list = Off.getAllProducts();
+        else {
+            list = OffBoss.sortProducts(field);
         }
-        super.execute();
+        System.out.println("list of offs products:");
+        System.out.println(field);
+        for (Product product : list) {
+            System.out.println(product.getName());
+        }
+        System.out.println("do you want to sort offs products list?(if yes just type yes)");
+        String command = scanner.nextLine();
+        Page nextPage = null;
+        if (command.equalsIgnoreCase("yes")){
+            String command2 = scanner.nextLine();
+            String regex = "(name|reviewNumber|price|inventory|rate)";
+            Matcher matcher = getMatcher(command2,regex);
+            matcher.matches();
+            if (command2.matches(regex)){
+                field = matcher.group(1);
+                nextPage = this;
+            }else if (command2.equalsIgnoreCase("disable")){
+                field = "name";
+                nextPage = this;
+            }else if (field.equalsIgnoreCase("current field")){
+                System.out.println(field);
+                nextPage = this;
+            }else if (command2.equalsIgnoreCase("help")){
+                System.out.println("[name|price|inventory|reviewNumber|rate] *** back *** help *** disable *** current field");
+                nextPage = this;
+            }
+            else if (command2.matches("back")){
+                nextPage = parentPage;
+            }
+            else {
+                System.err.println("invalid filed");
+                nextPage = this;
+            }
+            nextPage.execute();
+        }else {
+            super.execute();
+        }
     }
 }

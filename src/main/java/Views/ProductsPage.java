@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 
 public class ProductsPage extends Page {
     private String sortFields;
-    private ArrayList<String> currentList;
+    private ArrayList<Product> currentList;
     private ArrayList<String> available;
     public ProductsPage(String name, Page parentPage) {
         super(name, parentPage);
@@ -114,10 +114,10 @@ public class ProductsPage extends Page {
                 available.add("price");
                 available.add("name");
                 available.add("rate");
-                available.add("review numbers");
+                available.add("reviewNumber");
                 available.add("inventory");
 
-                sortFields=("reviews number");
+                sortFields=("reviewNumber");
                 subPages.put("3", new Page("show available",this) {
                     @Override
                     public void execute() {
@@ -148,16 +148,13 @@ public class ProductsPage extends Page {
                         if (command.matches(regex)){
                             String field = matcher.group(1);
                             if (available.contains(field)){
-                                try {
+
                                     currentList = ProductBoss.sortProduct(field);
-                                    for (String s : currentList) {
-                                        System.out.println(s);
+                                    for (Product s : currentList) {
+                                        System.out.println(s.getName());
                                     }
                                     nextPage = parentPage;
-                                } catch (InvalidFieldForSort invalidFieldForSort) {
-                                    invalidFieldForSort.printStackTrace();
-                                    nextPage = this;
-                                }
+
                             }else {
                                 System.err.println("invalid field");
                                 nextPage = this;
@@ -183,7 +180,7 @@ public class ProductsPage extends Page {
                 subPages.put("2", new Page("disable sort" , this) {
                     @Override
                     public void execute() {
-                        sortFields=("reviews number");
+                        sortFields=("reviewNumber");
                         System.out.println("disable successfully");
                         parentPage.execute();
                     }

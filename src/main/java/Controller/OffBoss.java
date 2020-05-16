@@ -2,6 +2,7 @@ package Controller;
 
 import Controller.Exceptions.NullProduct;
 import Controller.Exceptions.ProductIsNotConfirmed;
+import Model.Off;
 import Model.Product;
 import Model.ProductAndOffStatus;
 
@@ -26,6 +27,13 @@ public class OffBoss {
     }
     public void startRemoveOff(int OffId) {
 
+    }
+    public static ArrayList<Off> sortOff(String field){
+        return Off.sorting(field);
+    }
+    public static ArrayList<Product> sortProducts(String field){
+        ArrayList<Product> a = Off.sortAllProducts(field);
+        return a;
     }
 
 }
