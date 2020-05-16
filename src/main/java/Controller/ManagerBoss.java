@@ -48,24 +48,18 @@ public class ManagerBoss {
 
     public static boolean sortRequestsWithField(String field) {
         if (field.startsWith("id")) {
-            Comparator<Request> sortById = new Comparator<Request>() {
-                @Override
-                public int compare(Request o1, Request o2) {
-                    return -(o1.getRequestId() - o2.getRequestId());
-                }
-            };
             if (field.charAt(3) == 'a') {
-                Collections.sort(Manager.newRequests, sortById);
-                Collections.sort(Manager.checkedRequests, sortById);
+                Collections.sort(Manager.newRequests, Comparator.comparing(Request::getRequestId));
+                Collections.sort(Manager.checkedRequests, Comparator.comparing(Request::getRequestId));
             }
             if (field.charAt(3) == 'b') {
-                Collections.sort(Manager.newRequests, sortById.reversed());
-                Collections.sort(Manager.checkedRequests, sortById.reversed());
+                Collections.sort(Manager.newRequests, Comparator.comparing(Request::getRequestId).reversed());
+                Collections.sort(Manager.checkedRequests, Comparator.comparing(Request::getRequestId).reversed());
             }
             return true;
         }
-        else return false;
-    }
+        return false;
+      }
 
 
     public static String  getDetailsOfAccountWithUserName(String username) throws NotValidUserNameException {
