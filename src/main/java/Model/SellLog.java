@@ -11,6 +11,13 @@ public class SellLog extends Log {
     private String buyerName;
     private boolean isReceived;
 
+    public SellLog(double receivedAmount, double offDiscountAmount, ArrayList<Product> soldProducts, String buyerName) {
+        this.receivedAmount = receivedAmount;
+        this.offDiscountAmount = offDiscountAmount;
+        this.soldProducts = soldProducts;
+        this.buyerName = buyerName;
+    }
+
     public ArrayList<Product> getSoldProducts() {
         return soldProducts;
     }

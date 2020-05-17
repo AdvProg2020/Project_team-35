@@ -97,11 +97,21 @@ public class CustomerBoss {
     }
 
     public static boolean doPayment(Customer customer) {
+        ArrayList<Product> products = new ArrayList<>();
         if (customer.getMoney() < customer.getPaymentAmount())
             return false;
         else {
             customer.setMoney(customer.getMoney() - customer.getPaymentAmount());
-            customer.cart.clear();
+            for (Seller seller : Seller.getAllSellers()) {
+                for (Product product : customer.cart.keySet()) {
+                    if (product.getSeller() == seller) {
+                        products.add(product);
+                    }
+
+                    new SellLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, customer.getUsername());
+                    new BuyLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, seller.getUsername());
+                }
+            }
             return true;
         }
     }

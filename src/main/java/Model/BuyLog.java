@@ -8,4 +8,11 @@ public class BuyLog extends Log{
     public ArrayList<Product> boughtProducts;
     private String sellerName;
     private boolean isDelivered;
+
+    public BuyLog(double purchasedMoney, double offDiscountMoney, ArrayList<Product> boughtProducts, String sellerName) {
+        this.purchasedMoney = purchasedMoney;
+        OffDiscountMoney = offDiscountMoney;
+        this.boughtProducts = boughtProducts;
+        this.sellerName = sellerName;
+    }
 }
