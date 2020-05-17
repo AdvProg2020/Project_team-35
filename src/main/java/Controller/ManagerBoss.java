@@ -385,10 +385,24 @@ public class ManagerBoss {
             return true;
         }
         if (field.startsWith("startdate")) {
-
+            if (field.charAt(10) == 'a') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::startDateToString));
+                DiscountCode.setCurrentSort("Discount Code Start Date - Ascending");
+            }
+            if (field.charAt(10) == 'b') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::startDateToString).reversed());
+                DiscountCode.setCurrentSort("Discount Code Start Date - Descending");
+            }
         }
         if (field.startsWith("finaldate")) {
-
+            if (field.charAt(10) == 'a') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::expireDateToString));
+                DiscountCode.setCurrentSort("Discount Code Final Date - Ascending");
+            }
+            if (field.charAt(10) == 'b') {
+                Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::expireDateToString).reversed());
+                DiscountCode.setCurrentSort("Discount Code Final Date - Descending");
+            }
         }
 
         return false;

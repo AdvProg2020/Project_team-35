@@ -38,21 +38,15 @@ public class DiscountCode {
         allDiscountCodes.add(this);
     }
     public String expireDateToString() {
-        return finalDate.getYear() + "-" + finalDate.getMonth() + "-" + finalDate.getDayOfMonth();
+        return finalDate.getYear() + "-" + finalDate.getMonthValue() + "-" + finalDate.getDayOfMonth();
     }
-
+    public String startDateToString() {
+        return startDate.getYear() + "-" + startDate.getMonthValue() + "-" + startDate.getDayOfMonth();
+    }
     public String getDiscountCodeInlineInfo() {
         return "Code: " + this.code + " --- Percent: " + this.discountPercent + " --- ExpireDate: " + this.expireDateToString();
     }
-//    public void editDiscountCode(double discountPercent, double maximumAvailableDiscount, int availableUseFrequent, ArrayList<Customer> includedCustomers) {
-//
-//    }
-//    public boolean canUseDiscountCode(Customer customer) {
-//        return true;
-//    }
-//    public static void removeDiscountCode() {
-//
-//    }
+
     public static boolean isThereDiscountCodeWithCode(String code) {
         for (DiscountCode discountCode : allDiscountCodes) {
             if (discountCode.code.equals(code))
