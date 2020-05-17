@@ -188,12 +188,12 @@ public abstract class Account {
     protected String getIsConfirmedOrWaitForCheck() {
         if (this instanceof Manager) {
             if (Manager.getAllManagers().contains(this)) {
-                return "Confirmed";
+                return "Accepted";
             }
         }
         else if (this instanceof Customer) {
             if (Customer.getAllCustomers().contains(this)) {
-                return "Confirmed";
+                return "Accepted";
             }
         }
         else if (this instanceof Seller) {

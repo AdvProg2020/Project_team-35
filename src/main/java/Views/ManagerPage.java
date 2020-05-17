@@ -41,7 +41,7 @@ public class ManagerPage extends Page {
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
-                    System.out.println("view/delete user [username] ---- create manager profile");
+                    System.out.println("view/delete user [username] --- create manager profile\nsort by (name|username)-(a|b)");
                 } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
                 } else if (command.startsWith("view")) {
@@ -85,7 +85,10 @@ public class ManagerPage extends Page {
                 } else if (command.equalsIgnoreCase("create manager profile")) {
                     HashMap<String, String> allPersonalInfo = new HashMap<>();
                     allPersonalInfo.put("type", "manager");
-                    String username = getInputInFormat("Username: ", "\\w+");
+                    String username = getInputInFormat("Username: (-back for back)", "(\\w+)|(-back)");
+                    if (username.equalsIgnoreCase("-back")) {
+                        this.execute();
+                    }
                     try {
                         ManagerBoss.checkNewManagerUserName(username);
                     } catch (RepeatedUserName repeatedUserName) {
@@ -132,17 +135,17 @@ public class ManagerPage extends Page {
     }
 
     private HashMap<String, String> inputManagerData(HashMap<String, String> personalInfo) {
-        String password = getInputInFormat("Password: (-back for back)", "\\w+");
+        String password = getInputInFormat("Password: (-back for back)", "(\\w+)|(-back)");
         personalInfo.put("password", password);
         if (password.equalsIgnoreCase("-back")) {
             return personalInfo;
         }
-        String name = getInputInFormat("Name: (-back for back)", "\\w+");
+        String name = getInputInFormat("Name: (-back for back)", "(\\w+)|(-back)");
         personalInfo.put("name", name);
         if (name.equalsIgnoreCase("-back")) {
             return personalInfo;
         }
-        String familyName = getInputInFormat("FamilyName: (-back for back)", "\\w+");
+        String familyName = getInputInFormat("FamilyName: (-back for back)", "(\\w+)|(-back)");
         personalInfo.put("family", familyName);
         if (familyName.equalsIgnoreCase("-back")) {
             return personalInfo;
