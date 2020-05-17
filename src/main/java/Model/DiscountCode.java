@@ -14,17 +14,19 @@ public class DiscountCode {
     private int availableUseFrequent;
     private static String currentSort = "Nothing";
     public HashMap<Customer, Integer> includedBuyersAndUseFrequency;
+    private double minimumTotalPriceForUse;
 
     public String getDetails() {
         String toReturn =  "Code: " + this.code + "\nStart Date: " + this.startDate.toString() + "\nExpire Date: " + this.finalDate.toString()
                 + "\nDiscount Percent: " + this.getDiscountPercent() + "\nMaximum Discount: " + this.getMaximumAvailableAmount()
+                +"Minimum Total Price For Use (-1 means it hasn't minimum): " + this.getMinimumTotalPriceForUse()
                 + "\nUsable Rate: " + this.getAvailableUseFrequent() + "\nIncluded Customers | Use Rates: \n";
         for (Customer customer : this.includedBuyersAndUseFrequency.keySet()) {
             toReturn += " ** UserName: " + customer.getUsername() + " | Use Number: " + includedBuyersAndUseFrequency.get(customer);
         }
         return toReturn;
     }
-    public DiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<Customer> includedCustomers) {
+    public DiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<Customer> includedCustomers, double minimumTotalPriceForUse) {
         this.code = code;
         this.finalDate = finalDate;
         this.startDate = startDate;
@@ -32,6 +34,7 @@ public class DiscountCode {
         this.maximumAvailableAmount = maximumAvailableAmount;
         this.availableUseFrequent = availableUseFrequent;
         this.includedBuyersAndUseFrequency = new HashMap<>();
+        this.minimumTotalPriceForUse = minimumTotalPriceForUse;
         for (Customer customer : includedCustomers) {
             this.includedBuyersAndUseFrequency.put(customer, 0);
         }
@@ -107,5 +110,13 @@ public class DiscountCode {
 
     public LocalDateTime getStartDate() {
         return startDate;
+    }
+
+    public double getMinimumTotalPriceForUse() {
+        return minimumTotalPriceForUse;
+    }
+
+    public void setMinimumTotalPriceForUse(double minimumTotalPriceForUse) {
+        this.minimumTotalPriceForUse = minimumTotalPriceForUse;
     }
 }

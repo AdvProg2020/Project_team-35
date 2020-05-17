@@ -228,7 +228,9 @@ public class ManagerPage extends Page {
                 double percent = Double.parseDouble(discountPercent);
                 double maximumAmount = Double.parseDouble(maximumDiscountAmount);
                 int repeat = Integer.parseInt(repeatRate);
-                ManagerBoss.createDiscountCode(codeText, fullFinalDate, fullStartDate, percent, maximumAmount, repeat, customersUserNames);
+                String minimumTotalPriceForUse = getInputInFormat("Some discount codes have a minimum amount of total price for use. If you want to have it, enter the minimum,else enter -1", "^(\\d+(\\.)?(\\d*)?)|(-1)$");
+                double minimumPrice = Double.parseDouble(minimumTotalPriceForUse);
+                ManagerBoss.createDiscountCode(codeText, fullFinalDate, fullStartDate, percent, maximumAmount, repeat, customersUserNames, minimumPrice);
                 System.out.println("Successful :)");
                 parentPage.execute();
             }
@@ -242,7 +244,7 @@ public class ManagerPage extends Page {
 
 
     private static ArrayList<String> listOfUsersForDiscountCodeScanner() {
-        System.out.println("Enter every username in a line. for end enter -end. for back enter -back");
+        System.out.println("Enter every username in a line. for end enter -end. for back enter -back. -all for all Customers.");
         ArrayList<String> userNames = new ArrayList<>();
         while (true) {
             String username = scanner.nextLine();
@@ -252,6 +254,11 @@ public class ManagerPage extends Page {
             }
             if (username.equalsIgnoreCase("-end")) {
                 break;
+            }
+            if (username.equalsIgnoreCase("-all")) {
+                userNames.clear();
+                userNames.add(username);
+                return userNames;
             }
             try {
                 ManagerBoss.checkExistenceOfCustomerUsername(username);

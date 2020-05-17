@@ -259,12 +259,17 @@ public class ManagerBoss {
         }
     }
 
-    public static void createDiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<String> includedCustomersUserNames) {
+    public static void createDiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<String> includedCustomersUserNames, double minimumPriceForUse) {
         ArrayList<Customer> includedCustomers = new ArrayList<>();
-        for (String userName : includedCustomersUserNames) {
-            includedCustomers.add(Customer.getCustomerWithName(userName));
+        if (includedCustomersUserNames.contains("-all")) {
+            includedCustomers.addAll(Customer.getAllCustomers());
         }
-        DiscountCode discountCode = new DiscountCode(code, finalDate, startDate, discountPercent, maximumAvailableAmount, availableUseFrequent, includedCustomers);
+        else {
+            for (String userName : includedCustomersUserNames) {
+                includedCustomers.add(Customer.getCustomerWithName(userName));
+            }
+        }
+        DiscountCode discountCode = new DiscountCode(code, finalDate, startDate, discountPercent, maximumAvailableAmount, availableUseFrequent, includedCustomers, minimumPriceForUse);
         for (Customer customer : includedCustomers) {
             customer.discountCodes.add(discountCode);
         }
