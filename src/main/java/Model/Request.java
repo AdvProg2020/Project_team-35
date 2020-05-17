@@ -39,7 +39,24 @@ public abstract class Request {
     public Seller getSeller() {
         return seller;
     }
-
+    public String getTypeOfRequest() {
+        if (this instanceof SellerRegisterRequest) {
+            return "Seller Register";
+        }
+        if (this instanceof AddOffRequest) {
+            return "Add Off";
+        }
+        if (this instanceof AddProductRequest) {
+            return "Add Product";
+        }
+        if (this instanceof EditOffRequest) {
+            return "Edit Off";
+        }
+        if (this instanceof EditProductRequest) {
+            return "Edit Product";
+        }
+        return null;
+    }
 
 
 

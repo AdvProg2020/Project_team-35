@@ -373,17 +373,25 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
+                System.out.println("New Requests:");
+                System.out.print("+-----------------------+------------------------+--------------------+\n");
+                System.out.print("|    TypeOfRequest      |   Requester Username   |     Request Id     |\n");
+                System.out.print("+-----------------------+------------------------+--------------------+\n");
                 ArrayList<Request> newRequests = Manager.getNewRequests();
                 ArrayList<Request> checkedRequests = Manager.getCheckedRequests();
-                System.out.println("New Requests:");
                 for (Request newRequest : newRequests) {
-                    System.out.println(newRequest.getRequestInfo());
+                    System.out.format("| %-21s | %-22s | %-18s |%n", newRequest.getTypeOfRequest(), newRequest.getSeller().getUsername(), newRequest.getRequestId());
+                    System.out.print("+-----------------------+------------------------+--------------------+\n");
                 }
-                System.out.println("Checked Requests:");
+                System.out.println("\nChecked Requests:");
+                System.out.print("+-----------------------+------------------------+--------------------+\n");
+                System.out.print("|    TypeOfRequest      |   Requester Username   |      Request Id    |\n");
+                System.out.print("+-----------------------+------------------------+--------------------+\n");
                 for (Request checkedRequest : checkedRequests) {
-                    System.out.println(checkedRequest.getRequestInfo());
+                    System.out.format("| %-21s | %-22s | %-18s |%n", checkedRequest.getTypeOfRequest(), checkedRequest.getSeller().getUsername(), checkedRequest.getRequestId());
+                    System.out.print("+-----------------------+------------------------+--------------------+\n");
                 }
-                System.out.println("Current Sort: " + Request.getCurrentSort());
+                System.out.println("\nCurrent Sort: " + Request.getCurrentSort());
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
