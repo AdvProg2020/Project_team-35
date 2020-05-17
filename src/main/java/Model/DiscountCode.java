@@ -104,4 +104,8 @@ public class DiscountCode {
     public static void setCurrentSort(String currentSort) {
         DiscountCode.currentSort = currentSort;
     }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
 }

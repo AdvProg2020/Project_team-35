@@ -119,4 +119,8 @@ public class Off {
         }
         return toReturn.toString();
     }
+
+    public static ArrayList<Off> getAllActiveOffs() {
+        return allActiveOffs;
+    }
 }
