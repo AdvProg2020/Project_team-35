@@ -102,4 +102,21 @@ public class Off {
     public void setStartDate( LocalDateTime startDate) {
         this.startDate = startDate;
     }
+
+
+    public String expireDateToString() {
+        return finalDate.getYear() + "-" + finalDate.getMonthValue() + "-" + finalDate.getDayOfMonth();
+    }
+    public String startDateToString() {
+        return startDate.getYear() + "-" + startDate.getMonthValue() + "-" + startDate.getDayOfMonth();
+    }
+
+    public String getIncludedProductsId() {
+        StringBuilder toReturn = new StringBuilder();
+        for (Product product : this.includedProducts) {
+            toReturn.append(product.getProductId());
+            toReturn.append(" -- ");
+        }
+        return toReturn.toString();
+    }
 }

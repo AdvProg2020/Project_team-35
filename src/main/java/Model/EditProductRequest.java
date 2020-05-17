@@ -57,13 +57,16 @@ public class EditProductRequest extends Request {
         }
     }
         public String getDetails() {
-            return "Seller Register Request : \nRequestId: " + this.getRequestId() + "\n" + this.seller.getPersonalInfo();
-
+            return "Edit Product Request : \nRequestId: " + this.getRequestId() + "\nRequester Username: " + this.seller.getUsername()
+                    + "\nNewCategory: " + this.newCategory + " --- CurrentCategory: " + this.toEdit.getCategory() +
+                    "\nNewPrice: " + this.newPrice + " --- CurrentPrice: " + this.toEdit.getPrice() + "\nNewCompany: " + this.newCompany
+                    + " --- CurrentCompany: " + this.toEdit.getCompany() + "\nNewInventory: " + this.newInventory + " --- CurrentInventory: " + this.toEdit.getInventory() +
+                    "\nProductId: " + this.toEdit.getProductId() + "\n(-1 means no change)";
         }
 
     @Override
     public String getRequestInfo() {
-        return "  EDIT PRODUCT Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
+        return "  Edit Product Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
     }
 
 
