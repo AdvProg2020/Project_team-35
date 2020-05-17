@@ -37,6 +37,7 @@ public abstract class Account {
         this.password = password;
         this.typeOfAccount = typeOfAccount;
         allAccounts.add(this);
+        Account.setCurrentSort("Nothing");
     }
 
     public static boolean isIsThereOnlineUser() {

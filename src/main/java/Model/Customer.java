@@ -99,12 +99,11 @@ public class Customer extends Account {
                 "Username: " + this.getUsername() + "\n" +
                 "Name: " + this.getFirstName() + " " + this.getLastName() + "\n" +
                 "Email: " + this.getEmail() + "\n" +
-                "PhoneNumber: " + this.getPhoneNumber()+"\n"+
-                "money: "+this.getMoney();
+                "PhoneNumber: " + this.getPhoneNumber() + "\n";
     }
     @Override
     public String getShortInfo() {
-        return "UserName : " + this.getUsername() + " -- " + "Type : Customer" + " -- Condition: " + getIsConfirmedOrWaitForCheck();
+        return "UserName : " + this.getUsername() + " --- " + "Type : Customer";
     }
 
     public static ArrayList<Customer> getAllCustomers() {
@@ -122,33 +121,6 @@ public class Customer extends Account {
     public void setPaymentAmount(double paymentAmount) {
         this.paymentAmount = paymentAmount;
     }
-
-    public void setMoney(double money) {
-        this.money = money;
-    }
-
-    public static Customer getCustomerWithName(String username) {
-        for (Customer customer : allCustomers) {
-            if (customer.getUsername().equals(username)) {
-                return customer;
-            }
-        }
-        return null;
-    }
-    public int getNumberOfBoughtProduct(Product product){
-        int number = 0;
-        for (BuyLog buyLog : buyLogs) {
-            for (Product boughtProduct : buyLog.getBoughtProducts()) {
-                if (product.equals(boughtProduct))
-                    number+=1;
-            }
-        }
-        return number;
-    }
-    public static boolean isThereCustomerWithUsername(String username) {
-        return getCustomerWithName(username) != null;
-    }
-
 
 }
 

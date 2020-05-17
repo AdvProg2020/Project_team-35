@@ -91,4 +91,28 @@ public class CustomerBoss {
         discountCode.includedBuyersAndUseFrequency.put(customer, discountCode.includedBuyersAndUseFrequency.get(customer) - 1);
     }
 
+    public static void dontUseDiscountCode(Customer customer) {
+        customer.setPaymentAmount(customer.getTotalPriceOFCart());
+    }
+
+    public static boolean doPayment(Customer customer) {
+        ArrayList<Product> products = new ArrayList<>();
+        if (customer.getMoney() < customer.getPaymentAmount())
+            return false;
+        else {
+            customer.setMoney(customer.getMoney() - customer.getPaymentAmount());
+            for (Seller seller : Seller.getAllSellers()) {
+                for (Product product : customer.cart.keySet()) {
+                    if (product.getSeller() == seller) {
+                        products.add(product);
+                    }
+
+                    new SellLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, customer.getUsername());
+                    new BuyLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, seller.getUsername());
+                }
+            }
+            return true;
+        }
+    }
+
 }

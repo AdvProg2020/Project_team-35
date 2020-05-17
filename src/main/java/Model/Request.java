@@ -12,6 +12,7 @@ public abstract class Request {
         requestId = requestIdNumber;
         this.seller = seller;
         Manager.newRequests.add(this);
+        Request.setCurrentSort("Nothing");
     }
 
 

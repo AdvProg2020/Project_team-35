@@ -9,7 +9,10 @@ public class BuyLog extends Log{
     private String sellerName;
     private boolean isDelivered;
 
-    public ArrayList<Product> getBoughtProducts() {
-        return boughtProducts;
+    public BuyLog(double purchasedMoney, double offDiscountMoney, ArrayList<Product> boughtProducts, String sellerName) {
+        this.purchasedMoney = purchasedMoney;
+        OffDiscountMoney = offDiscountMoney;
+        this.boughtProducts = boughtProducts;
+        this.sellerName = sellerName;
     }
 }

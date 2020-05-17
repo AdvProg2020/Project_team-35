@@ -13,6 +13,7 @@ public class Category {
         this.categoryName = categoryName;
         this.specialAttributes = specialAttributes;
         categoryProducts = new ArrayList<>();
+        Category.setCurrentSort("Nothing");
     }
 
 
