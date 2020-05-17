@@ -39,6 +39,7 @@ public class DiscountCode {
             this.includedBuyersAndUseFrequency.put(customer, 0);
         }
         allDiscountCodes.add(this);
+        DiscountCode.setCurrentSort("Nothing");
     }
     public String expireDateToString() {
         return finalDate.getYear() + "-" + finalDate.getMonthValue() + "-" + finalDate.getDayOfMonth();

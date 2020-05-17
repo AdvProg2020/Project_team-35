@@ -19,11 +19,11 @@ public class ManagerPage extends Page {
         subPages.put("4", manageAllProducts());
         subPages.put("5", createDiscountCode());
         subPages.put("6", viewDiscountCodes());
-        subPages.put("7", new RegisteringPanel("registering panel", this));
+        subPages.put("7", new RegisteringPanel("Registering Panel", this));
     }
 
     private Page manageUsers() {
-        return new Page("manage users", this) {
+        return new Page("Manage Users", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
                 subPages.put("view", this);
@@ -166,7 +166,7 @@ public class ManagerPage extends Page {
     }
 
     private Page manageAllProducts() {
-        return new Page("manage all products", this) {
+        return new Page("Manage All Products", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
 
@@ -204,7 +204,7 @@ public class ManagerPage extends Page {
     }
 
     private Page createDiscountCode() {
-        return new Page("create discount code", this) {
+        return new Page("Create Discount Code", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
                 super.setSubPages(subPages);
@@ -295,7 +295,7 @@ public class ManagerPage extends Page {
     }
 
     private Page viewDiscountCodes() {
-        return new Page("view discount codes", this) {
+        return new Page("View Discount Codes", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
                 subPages.put("view discount codes", this);
@@ -365,7 +365,7 @@ public class ManagerPage extends Page {
     }
 
     private Page manageRequests() {
-        return new Page("manage requests", this) {
+        return new Page("Manage Requests", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
 
@@ -455,7 +455,7 @@ public class ManagerPage extends Page {
     }
 
     private Page manageCategories() {
-        return new Page("manage categories", this) {
+        return new Page("Manage Categories", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
             }
