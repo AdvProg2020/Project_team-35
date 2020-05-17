@@ -198,7 +198,7 @@ public abstract class Account {
         }
         else if (this instanceof Seller) {
             if (Seller.getAllSellers().contains(this)) {
-                return "Accept";
+                return "Accepted";
             }
         }
         return "Wait For Accept";
