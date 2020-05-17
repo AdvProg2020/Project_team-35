@@ -33,9 +33,14 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
+                System.out.print("+-----------------------+------------------+------------------------+\n");
+                System.out.print("|        UserName       |      Type        |         Condition      |\n");
+                System.out.print("+-----------------------+------------------+------------------------+\n");
+
                 ArrayList<Account> allUsers = Account.getAllAccounts();
                 for (Account user : allUsers) {
-                    System.out.println(user.getShortInfo());
+                    System.out.format("| %-21s | %-16s | %-22s |%n", user.getUsername(), user.getTypeOfAccount(), user.getIsConfirmedOrWaitForCheck());
+                    System.out.print("+-----------------------+------------------+------------------------+\n");
                 }
                 System.out.println("Current Sort: " + Account.getCurrentSort());
                 System.out.println("Enter Command : (-help for help)");

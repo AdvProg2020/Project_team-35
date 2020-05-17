@@ -185,7 +185,7 @@ public abstract class Account {
         return allAccounts;
     }
 
-    protected String getIsConfirmedOrWaitForCheck() {
+    public String getIsConfirmedOrWaitForCheck() {
         if (this instanceof Manager) {
             if (Manager.getAllManagers().contains(this)) {
                 return "Accepted";
@@ -202,6 +202,19 @@ public abstract class Account {
             }
         }
         return "Wait For Accept";
+    }
+
+    public String getTypeOfAccount() {
+        if (this instanceof Manager) {
+            return "Manager";
+        }
+        if (this instanceof Seller) {
+            return "Seller";
+        }
+        if (this instanceof Customer) {
+            return "Customer";
+        }
+        return null;
     }
 
     public String getFullName() {
