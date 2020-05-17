@@ -61,12 +61,14 @@ public class SellerBoss {
         int number = Integer.parseInt(inventory);
         Product product = new Product(name,company,productPrice,seller,number,category,attributes,description);
         product.setProductStatus(ProductAndOffStatus.FORMAKE);
-        category.getCategoryProducts().add(product);
+        if (category != null) {
+            category.getCategoryProducts().add(product);
+        }
         AddProductRequest addProductRequest = new AddProductRequest(seller ,product);
         return true;
     }
 
-    public static ArrayList<String> showBuyers(String id, Seller seller) throws ThisIsNotYours {
+    public static ArrayList<String> showBuyers(String id, Seller seller) throws ThisIsNotYours, NullProduct {
         int iD = Integer.parseInt(id);
         Product product = getProduct(id, seller);
         ArrayList<String> buyers = new ArrayList<>();
@@ -85,16 +87,19 @@ public class SellerBoss {
         }
         return sorted;
     }
-    public static ArrayList<Customer>  sortBuyers(String id , Seller seller,String field) throws ThisIsNotYours {
+    public static ArrayList<Customer>  sortBuyers(String id , Seller seller,String field) throws ThisIsNotYours, NullProduct {
         Product product = getProduct(id, seller);
         return product.sortBuyers(field);
     }
 
-    private static Product getProduct(String id, Seller seller) throws ThisIsNotYours {
+    private static Product getProduct(String id, Seller seller) throws ThisIsNotYours, NullProduct {
         int iD = Integer.parseInt(id);
         Product product = Product.getProductWithId(iD);
+        if (product==null){
+            throw  new NullProduct("null product",1);
+        }
         if (!product.getSeller().equals(seller)) {
-            throw new ThisIsNotYours("this product belongs to another seller", iD);
+            throw new ThisIsNotYours("this product belongs to another seller", 2);
         }
         return product;
     }
@@ -134,7 +139,10 @@ public class SellerBoss {
         Product product = Product.getProductWithId(iD);
         if (product == null) {
             throw new NullProduct("null product",1);
-        }else if (!product.getProductStatus().equals(ProductAndOffStatus.CONFIRMED)){
+        }else if (product.getProductStatus()==null){
+            throw new NullProduct("null product",1);
+        }
+        else if (!product.getProductStatus().equals(ProductAndOffStatus.CONFIRMED)){
             throw new NullProduct("null product",1);
         }
         else if (!product.getSeller().equals(seller)) {
@@ -238,7 +246,7 @@ if (product.getSpecialAttributes()!=null) {
         return off.showOff();
     }
 
-    public static boolean editOff(Seller seller, Off off, HashMap<String, String> changes) throws ItIsNotCorrect, ParseException, TimeLimit, InputStringExceptNumber, ThisIsNotReadyForEdit {
+    public static boolean editOff(Seller seller, Off off, HashMap<String, String> changes) throws   TimeLimit, InputStringExceptNumber, ThisIsNotReadyForEdit {
         String date = null;
         double maximum = -1.0;
         double percent = -1.0;
@@ -247,7 +255,7 @@ if (product.getSpecialAttributes()!=null) {
         ProductAndOffStatus productAndOffStatus = null;
         String format = null;
         if (!off.getOffStatus().equals(ProductAndOffStatus.CONFIRMED)) {
-            throw new ThisIsNotReadyForEdit("this is not ready");
+            throw new ThisIsNotReadyForEdit("this is not ready",1);
         }
         for (String s : changes.keySet()) {
             if (changes.get(s) != null && !changes.get(s).equalsIgnoreCase("\n") && !changes.get(s).equalsIgnoreCase("")) {
@@ -304,7 +312,7 @@ if (product.getSpecialAttributes()!=null) {
         ArrayList<Product> allProducts = new ArrayList<>();
         if (id!=null) {
             for (Integer integer : id) {
-                if (!seller.getSalableProducts().contains(Product.getProductWithId(integer))) {
+                if (!seller.hasHeProductWithId(integer)) {
                     throw new ThisIsNotYours("this is not yours", 4);
                 }
                 else if (Product.getProductWithId(integer)==null){

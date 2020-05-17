@@ -2,7 +2,7 @@ package Views;
 import Controller.AccountBoss;
 import Controller.Exceptions.*;
 import Controller.Exceptions.NullProduct;
-import Controller.JustOneOffForEveryProduct;
+import Controller.Exceptions.JustOneOffForEveryProduct;
 import Controller.SellerBoss;
 import Controller.Exceptions.ThisIsNotReadyForEdit;
 import Controller.Exceptions.ThisOffNotExist;
@@ -100,7 +100,7 @@ public class SellerPage extends Page {
                             System.out.println("send request successfully");
 
 
-                        } catch (ThisIsNotReadyForEdit | InputStringExceptNumber | ItIsNotCorrect | ParseException | TimeLimit itIsNotCorrect) {
+                        } catch (ThisIsNotReadyForEdit | InputStringExceptNumber | TimeLimit itIsNotCorrect) {
                             System.out.println(itIsNotCorrect.getMessage());
                             nextPage = this;
                         }
@@ -380,7 +380,7 @@ public class SellerPage extends Page {
                 int i = 1;
                 System.out.println("products:");
                 for (Product product : productList) {
-                    System.out.println(i + ")" + product.getName());
+                    System.out.println(i + ")" + product.getName()+"        product now inventory: "+product.getInventory()   );
                     i += 1;
                 }
                 setSubPages(subPages);
@@ -441,7 +441,7 @@ public class SellerPage extends Page {
                     try {
                         field = matcher.group(2);
                         buyersList = SellerBoss.sortBuyers(matcher.group(1),(Seller)Account.getOnlineAccount(),field);
-                    } catch (ThisIsNotYours thisIsNotYours) {
+                    } catch (ThisIsNotYours | NullProduct thisIsNotYours) {
                         thisIsNotYours.printStackTrace();
                     }
                     nextPage = this;

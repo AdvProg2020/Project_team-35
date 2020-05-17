@@ -1,6 +1,5 @@
 package Controller;
 
-import Controller.Exceptions.InvalidFieldForSort;
 import Controller.Exceptions.NullProduct;
 import Controller.Exceptions.ProductIsFinished;
 import Controller.Exceptions.ProductsCompareNotSameCategories;

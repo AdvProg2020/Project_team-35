@@ -126,5 +126,34 @@ public class Customer extends Account {
         this.paymentAmount = paymentAmount;
     }
 
+    public void setMoney(double money) {
+        this.money = money;
+    }
+    public Integer getNumberOfBoughtProduct(Product product){
+        int number = 0;
+        for (BuyLog log : buyLogs) {
+            if (log.isDelivered()){
+                if (log.getBoughtProducts().contains(product))
+                    number++;
+            }
+        }
+        return number;
+    }
+
+    public static boolean isThereCustomerWithUsername(String username){
+        for (Customer customer : allCustomers) {
+            if (customer.getUsername().equalsIgnoreCase(username))
+                return true;
+        }
+        return false;
+    }
+
+    public static Customer getCustomerWithName(String username){
+        for (Customer customer : allCustomers) {
+            if (customer.getUsername().equalsIgnoreCase(username))
+                return customer;
+        }
+        return null;
+    }
 }
 

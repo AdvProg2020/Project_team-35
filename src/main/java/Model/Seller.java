@@ -34,10 +34,12 @@ public class Seller extends Account {
         return null;
     }
     public boolean hasHeProductWithId(int productId) {
-        return true;
-    }
-    public boolean isProductWithIdAtAnyOff(int productId) {
-        return true;
+        Product product = Product.getProductWithId(productId);
+        if (product==null)
+            return false;
+        if (salableProducts.contains(product))
+            return true;
+        return false;
     }
 
 
@@ -50,8 +52,11 @@ public class Seller extends Account {
      * just for test
      * @param money
      */
-    public void setMoney(double money) {
+    public boolean setMoney(double money) {
+        if (money<0)
+            return false;
         this.money = money;
+        return true;
     }
 
     @Override
@@ -79,8 +84,9 @@ public class Seller extends Account {
         return companyName;
     }
 
-    public void setCompanyName(String companyName) {
+    public boolean setCompanyName(String companyName) {
         this.companyName = companyName;
+        return true;
     }
 
     public double getMoney() {
