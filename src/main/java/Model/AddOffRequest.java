@@ -16,11 +16,12 @@ public class AddOffRequest extends Request {
 
     }
 
-    public void execute() {
+    public boolean execute() {
         this.isDone = true;
         off.setOffStatus(ProductAndOffStatus.CONFIRMED);
-
+        return true;
     }
+
     public String getRequestInfo() {
         return "  Add Off Request --- Requester Username: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
     }

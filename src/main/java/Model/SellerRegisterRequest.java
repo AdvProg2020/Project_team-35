@@ -11,9 +11,10 @@ public class SellerRegisterRequest extends Request {
         return "  Seller Register Request --- username: "+seller.getUsername()+" --- RQId: " + this.getRequestId();
     }
 
-    public void execute()  {
+    public boolean execute()  {
         Seller.allSellers.add(seller);
         this.isDone = true;
+        return true;
     }
 
     /**
