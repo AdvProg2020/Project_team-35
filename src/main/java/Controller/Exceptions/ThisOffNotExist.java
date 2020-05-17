@@ -1,8 +1,8 @@
 package Controller.Exceptions;
 
-public class NoMatchBetweenCategoryAndAttributes extends Exception {
+public class ThisOffNotExist extends Exception{
     private int id;
-    public NoMatchBetweenCategoryAndAttributes(String message,int id) {
+    public ThisOffNotExist(String message,int id) {
         super(message);
         this.id = id;
     }
@@ -11,4 +11,3 @@ public class NoMatchBetweenCategoryAndAttributes extends Exception {
         return id;
     }
 }
-

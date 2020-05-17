@@ -1,8 +1,24 @@
 package Controller;
 
+import Controller.Exceptions.NullProduct;
+import Controller.Exceptions.ProductIsNotConfirmed;
+import Model.Off;
+import Model.Product;
+import Model.ProductAndOffStatus;
+
 import java.util.ArrayList;
 
 public class OffBoss {
+    public static Product ProductPageTransfer(int id) throws NullProduct, ProductIsNotConfirmed {
+        Product product = Product.getProductWithId(id);
+        if (product==null){
+            throw new NullProduct("this is not existed",1);
+        }
+        if (!product.getProductStatus().equals(ProductAndOffStatus.CONFIRMED)){
+            throw new ProductIsNotConfirmed("this is not confirmed",2);
+        }
+        return product;
+    }
     public void startCreateOff(ArrayList<Integer> includedProductsIds, double percent, double maximum, char date) {
 
     }
@@ -11,6 +27,13 @@ public class OffBoss {
     }
     public void startRemoveOff(int OffId) {
 
+    }
+    public static ArrayList<Off> sortOff(String field){
+        return Off.sorting(field);
+    }
+    public static ArrayList<Product> sortProducts(String field){
+        ArrayList<Product> a = Off.sortAllProducts(field);
+        return a;
     }
 
 }

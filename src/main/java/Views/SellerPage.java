@@ -1,17 +1,16 @@
 package Views;
-
 import Controller.AccountBoss;
 import Controller.Exceptions.*;
 import Controller.Exceptions.NullProduct;
+import Controller.JustOneOffForEveryProduct;
 import Controller.SellerBoss;
 import Controller.Exceptions.ThisIsNotReadyForEdit;
+import Controller.Exceptions.ThisOffNotExist;
 import Model.*;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
-
 public class SellerPage extends Page {
     private HashMap<String, String> productInfo;
     private HashMap<String, String> offInfoChanges;
@@ -86,18 +85,18 @@ public class SellerPage extends Page {
                         listOfTypes.add("offPercent");
                         listOfTypes.add("maximumAmountOfOff");
                         String[] lists = new String[0];
-                                lists = listOfTypes.toArray(lists);
-                                int i =0 ;
+                        lists = listOfTypes.toArray(lists);
+                        int i = 0;
                         do {
-                            System.out.println(lists[i]+":");
+                            System.out.println(lists[i] + ":");
                             change = scanner.nextLine();
                             offInfoChanges.put(lists[i], change);
-                            i+=1;
-                        } while (i<4);
+                            i += 1;
+                        } while (i < 4);
                         try {
 
-                                    SellerBoss.editOff((Seller) Account.getOnlineAccount(), off, offInfoChanges);
-                                    nextPage = parentPage;
+                            SellerBoss.editOff((Seller) Account.getOnlineAccount(), off, offInfoChanges);
+                            nextPage = parentPage;
                             System.out.println("send request successfully");
 
 
@@ -149,7 +148,7 @@ public class SellerPage extends Page {
                         } else {
                             if (command.matches("^\\d+$")) {
                                 id.add(Integer.parseInt(command));
-                            }else {
+                            } else {
                                 System.err.println("invalid format for id");
                             }
                         }
@@ -158,7 +157,7 @@ public class SellerPage extends Page {
                         SellerBoss.addOff(id, (Seller) Account.getOnlineAccount(), startDate, finalDate, (percent), (max));
                         System.out.println("your request successfully send to manager");
                         nextPage = parentPage;
-                    } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber | InputStringExceptNumber e) {
+                    } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber | InputStringExceptNumber | NullProduct | JustOneOffForEveryProduct e) {
                         System.err.println(e.getMessage());
                         nextPage = this;
                     }
@@ -196,12 +195,18 @@ public class SellerPage extends Page {
 
             }
 
+            private ArrayList<Off> sortOffList = new ArrayList<>();
+            private String field = "number";
             @Override
             public void execute() {
-                setSubPages(subPages);
-                show();
-                for (String off : SellerBoss.showOffs((Seller) Account.getOnlineAccount())) {
-                    System.out.println(off);
+
+                  sortOffList = SellerBoss.sortOffs(field,(Seller)Account.getOnlineAccount());
+
+                System.out.println("your offs ids:");
+                System.out.println(field);
+                System.out.println("this list is from down to up");
+                for (Off off : sortOffList) {
+                    System.out.println(off.getOffId());
                 }
                 System.out.println("enter your command:");
                 String command = scanner.nextLine();
@@ -212,7 +217,7 @@ public class SellerPage extends Page {
                 if (command.matches(regex)) {
                     try {
                         System.out.println(SellerBoss.viewOff((Seller) Account.getOnlineAccount(), matcher.group(1)));
-                    } catch (ThisIsNotYours thisIsNotYours) {
+                    } catch (ThisIsNotYours | ThisOffNotExist thisIsNotYours) {
                         System.out.println(thisIsNotYours.getMessage());
                         nextPage = parentPage;
                     }
@@ -221,14 +226,27 @@ public class SellerPage extends Page {
                     nextPage = editOff();
                 } else if (command.equalsIgnoreCase("add off")) {
                     nextPage = addOff();
-                }else if (command.equalsIgnoreCase("help")){
-                    System.out.println("add off *** view off [off id] *** edit off *** back *** help");
+                } else if (command.equalsIgnoreCase("help")) {
+                    System.out.println("add off *** view off [off id] *** edit off *** back *** help\nsort off by [max|startDate|finishDate|percent|number] *** disable *** current field");
+                    nextPage = this;
+                } else if (command.equalsIgnoreCase("back")) {
+                    nextPage = parentPage;
+                } else if (command.equalsIgnoreCase("disable")){
+                    field = "number";
+                    nextPage = this;
+                }else if (command.equalsIgnoreCase("current field")){
+                    System.out.println("***     "+field+"        ***");
                     nextPage = this;
                 }
-                else if (command.equalsIgnoreCase("back")) {
-                    nextPage = parentPage;
-                } else {
-                    System.err.println("invalid command");
+                else {
+                    regex = "^sort off by (startDate|finishDate|percent|max|number)$";
+                  matcher = getMatcher(command,regex);
+                  matcher.matches();
+                    if (command.matches(regex)){
+                        field = matcher.group(1);
+                    }else {
+                        System.err.println("invalid command");
+                    }
                     nextPage = this;
                 }
                 nextPage.execute();
@@ -248,14 +266,39 @@ public class SellerPage extends Page {
 
     private Page viewCategory() {
         return new Page("view categories", this) {
+         private    ArrayList<Category> list = new ArrayList<>();
+         private String field = "name";
             @Override
             public void execute() {
+                System.out.println("field of sort:"+field);
                 System.out.println("categories:");
-                for (String category : SellerBoss.showCategories()) {
-                    System.out.println(category);
+                list = SellerBoss.sortCategory(field);
+                for (Category category : list) {
+                    String size = "";
+                    if (field.equalsIgnoreCase("productNumber")){
+                        size = String.valueOf(category.getCategoryProducts().size());
+                    }
+                    System.out.println(category.getCategoryName()+"     "+size );
                 }
-                // i have doubt in here
-                parentPage.execute();
+                System.out.println("enter command:");
+                String command = scanner.nextLine();
+                Page nextPage = null;
+                String regex = "^sort (name|productNumber)$";
+                Matcher matcher = getMatcher(command,regex);
+                matcher.matches();
+                if (command.matches(regex)){
+                  field = matcher.group(1);
+                    nextPage = this;
+                }else if (command.equalsIgnoreCase("back")){
+                    nextPage = parentPage;
+                }else if (command.equalsIgnoreCase("help")){
+                    System.out.println("(help *** back *** sort [name|productNumber])");
+                    nextPage = this;
+                }else {
+                    System.err.println("invalid command");
+                    nextPage = this;
+                }
+                nextPage.execute();
             }
         };
     }
@@ -288,7 +331,7 @@ public class SellerPage extends Page {
                     try {
                         SellerBoss.editProduct(allEditions, matcher.group(1), (Seller) Account.getOnlineAccount());
                         nextPage = parentPage;
-                    } catch (NoMatchBetweenCategoryAndAttributes | ThisIsNotYours | SoldProductsCanNotHaveChange | ThisAttributeIsNotForThisProduct | ThereIsNotCategoryWithNameException thisIsNotYours) {
+                    } catch (NoMatchBetweenCategoryAndAttributes | ThisIsNotYours | SoldProductsCanNotHaveChange | ThisAttributeIsNotForThisProduct | ThereIsNotCategoryWithNameException | NullProduct | InvalidNumber thisIsNotYours) {
                         // System.err.println(thisIsNotYours.getMessage());
                         thisIsNotYours.printStackTrace();
                         nextPage = this;
@@ -326,18 +369,22 @@ public class SellerPage extends Page {
                 subPages.put("edit product", editProduct());
             }
 
+            private ArrayList<Customer> buyersList = new ArrayList<>();
+            private String field = "name";
+            private String productSortField = "reviewNumber";
+            private ArrayList<Product> productList = new ArrayList<>();
             @Override
             public void execute() {
+                productList = SellerBoss.sortProductForSpecialSeller(productSortField,(Seller)Account.getOnlineAccount());
                 Seller seller = (Seller) Account.getOnlineAccount();
                 int i = 1;
                 System.out.println("products:");
-                for (Product product : seller.getSalableProducts()) {
+                for (Product product : productList) {
                     System.out.println(i + ")" + product.getName());
                     i += 1;
                 }
                 setSubPages(subPages);
-                show();
-                System.out.println("enter command :");
+                System.out.println("enter command :(help|back|...)");
                 String command = scanner.nextLine();
                 Page nextPage = null;
                 String regex = "^view (\\d+)$";
@@ -345,27 +392,59 @@ public class SellerPage extends Page {
                 if (command.matches(regex)) {
                     try {
                         matcher.matches();
-                        System.out.println(SellerBoss.showProduct(matcher.group(1), (Seller) Account.getOnlineAccount()));
-                        nextPage = parentPage;
-                    } catch (ThisIsNotYours thisIsNotYours) {
+
+                            System.out.println(SellerBoss.showProduct(matcher.group(1), (Seller) Account.getOnlineAccount()));
+
+                    } catch (NullProduct|ThisIsNotYours thisIsNotYours) {
                         System.err.println(thisIsNotYours.getMessage());
-                        nextPage = parentPage;
 
                     }
+                    nextPage = parentPage;
+                }
+                if (command.equalsIgnoreCase("disable buyers sort")){
+                    field = "name";
+                    nextPage = this;
+                }
+                if (command.equalsIgnoreCase("current buyers sort")){
+                    System.out.println("***     "+field+"       ***");
+                    nextPage = this;
+                }
+                regex = "^sort products by (name|reviewNumber|price|inventory)$";
+                if (command.equalsIgnoreCase(regex)){
+                    matcher = getMatcher(command,regex);
+                    matcher.matches();
+                    productSortField = matcher.group(1);
+                    nextPage = this;
+                }
+                if (command.equalsIgnoreCase("disable saleable products sort")){
+                    productSortField = "reviewNumber";
+                    nextPage = this;
+                }
+                if (command.equalsIgnoreCase("current product sort")){
+                    System.out.println("***     "+productSortField+"    ***");
+                    nextPage = this;
                 }
                 regex = "^view buyers (\\d+)$";
                 matcher = getMatcher(command, regex);
                 matcher.matches();
                 if (command.matches(regex)) {
-                    try {
-                        for (String buyer : SellerBoss.showBuyers(matcher.group(1), (Seller) Account.getOnlineAccount())) {
-                            System.out.println(buyer);
+                    System.out.println(field);
+                        for (Customer customer : buyersList) {
+                            System.out.println(customer.getUsername());
                         }
+                    nextPage = this;
+                }
+                regex = "^sort buyers of (\\d+) by (username|number)$";
+                if (command.matches(regex)){
+                    matcher = getMatcher(command,regex);
+                    matcher.matches();
+                    try {
+                        field = matcher.group(2);
+                        buyersList = SellerBoss.sortBuyers(matcher.group(1),(Seller)Account.getOnlineAccount(),field);
                     } catch (ThisIsNotYours thisIsNotYours) {
-                        System.out.println(thisIsNotYours.getMessage());
-                        nextPage = parentPage;
+                        thisIsNotYours.printStackTrace();
                     }
-                    nextPage = parentPage;
+                    nextPage = this;
                 }
                 regex = "^edit product$";
                 if (command.matches(regex)) {
@@ -377,7 +456,7 @@ public class SellerPage extends Page {
                 }
                 regex = "^help$";
                 if (command.matches(regex)) {
-                    System.out.println("back *** edit products *** view buyers [productId] *** view [productId]");
+                    System.out.println("back *** edit products *** view buyers [productId] *** view [productId]\nsort buyers of [productId] by [username|number] *** disable buyers sort *** current buyers sort\nsort products by [name|inventory|price|reviewNumber] *** disable saleable products sort *** current product sort");
                     nextPage = this;
                 }
                 try {
@@ -393,21 +472,11 @@ public class SellerPage extends Page {
 
     private Page addProduct() {
         return new Page("add product", this) {
-            @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                System.out.println(name);
-                this.subPages.put("name", this);
-                this.subPages.put("price", this);
-                this.subPages.put("category", this);
-                this.subPages.put("inventory", this);
-                this.subPages.put("company", this);
-                this.subPages.put("seller", this);
-                this.subPages.put("attributes", this);
 
-            }
 
             @Override
             public void execute() {
+                System.out.println(name);
                 HashMap<String, String> specialAttributes = new HashMap<>();
                 Category category = null;
                 ArrayList<String> subPages = new ArrayList<>();
@@ -421,6 +490,8 @@ public class SellerPage extends Page {
                 Page nextPage = null;
                 productInfo = new HashMap<>();
                 boolean itHasBack = false;
+                ArrayList<String > specials = new ArrayList<>();
+                boolean itHasCategory = false;
                 S1:
                 for (String s : subPages) {
                     while (true) {
@@ -438,30 +509,33 @@ public class SellerPage extends Page {
                             }
 
                             if (s.equalsIgnoreCase("category")) {
-                                category = Category.getCategoryByName(command);
-                                if (category == null) {
-                                    System.err.println("we don't have a category with this name");
-                                    continue;
+                                try {
+                                    specials = SellerBoss.getWithNameOfCategoryItsSpecials(command);
+                                    itHasCategory = true;
+                                } catch (ThereIsNotCategoryWithNameException e) {
+                                    e.printStackTrace();
+                                    nextPage = this;
+                                    break S1;
                                 }
                             }
                             productInfo.put(s, command);
                             break;
                         } else {
-                            if (category == null) {
-                                System.err.println("we don't have this category.");
-                                break S1;
-
-                            } else {
-                                for (String attribute : category.getSpecialAttributes()) {
-                                    System.out.println(attribute + " : ");
-                                    String command2 = scanner.nextLine();
-                                    if (command2.equalsIgnoreCase("back")) {
-                                        nextPage = parentPage;
-                                        itHasBack = true;
-                                        break S1;
-                                    }
-                                    specialAttributes.put(attribute, command2);
-                                }
+                              {
+                                  if (itHasCategory) {
+                                      if (specials != null) {
+                                          for (String attribute : specials) {
+                                              System.out.println(attribute + " : ");
+                                              String command2 = scanner.nextLine();
+                                              if (command2.equalsIgnoreCase("back")) {
+                                                  nextPage = parentPage;
+                                                  itHasBack = true;
+                                                  break S1;
+                                              }
+                                              specialAttributes.put(attribute, command2);
+                                          }
+                                      }
+                                  }
                                 break;
                             }
                         }
@@ -469,8 +543,8 @@ public class SellerPage extends Page {
                     }
                 }
                 if (!itHasBack) {
-                    if (category != null) {
-                        SellerBoss.addRequestProduct(productInfo.get("name"), productInfo.get("price"), productInfo.get("inventory"), specialAttributes, productInfo.get("company"), category, (Seller) Account.getOnlineAccount(),productInfo.get("description"));
+                    if (itHasCategory) {
+                        SellerBoss.addRequestProduct(productInfo.get("name"), productInfo.get("price"), productInfo.get("inventory"), specialAttributes, productInfo.get("company"), productInfo.get("category"), (Seller) Account.getOnlineAccount(), productInfo.get("description"));
                         System.out.println("we send request for manager");
                         nextPage = parentPage;
                     } else {
@@ -496,7 +570,7 @@ public class SellerPage extends Page {
                 if (command.matches(regex)) {
                     try {
                         try {
-                            SellerBoss.removeProduct(matcher.group(1), (Seller) Account.getOnlineAccount(), 0);
+                            SellerBoss.removeProduct(matcher.group(1), (Seller) Account.getOnlineAccount());
                             nextPage = parentPage;
                         } catch (NullProduct nullProduct) {
                             System.err.println(nullProduct.getMessage());
@@ -506,11 +580,10 @@ public class SellerPage extends Page {
                         System.err.println(thisIsNotYours.getMessage());
                         nextPage = this;
                     }
-                }else if (command.equalsIgnoreCase("help")){
+                } else if (command.equalsIgnoreCase("help")) {
                     System.out.println("remove [productId] *** back *** help");
                     nextPage = this;
-                }
-                else if (command.matches("back")) {
+                } else if (command.matches("back")) {
                     nextPage = parentPage;
                 } else {
                     System.err.println("invalid command");

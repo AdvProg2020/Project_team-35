@@ -1,8 +1,8 @@
 package Controller.Exceptions;
 
-public class TimeLimit extends Exception {
-    private int id;
-    public TimeLimit(int id,String message) {
+public class ProductIsNotConfirmed extends  Exception {
+    private  int id;
+    public ProductIsNotConfirmed(String message,int id) {
         super(message);
         this.id = id;
     }

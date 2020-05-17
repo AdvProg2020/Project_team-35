@@ -1,8 +1,9 @@
 package Controller.Exceptions;
 
-public class NoMatchBetweenCategoryAndAttributes extends Exception {
+public class InvalidFieldForSort extends Exception {
     private int id;
-    public NoMatchBetweenCategoryAndAttributes(String message,int id) {
+
+    public InvalidFieldForSort(String message, int id) {
         super(message);
         this.id = id;
     }
@@ -11,4 +12,3 @@ public class NoMatchBetweenCategoryAndAttributes extends Exception {
         return id;
     }
 }
-

@@ -1,8 +1,6 @@
 package Model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class EditOffRequest extends Request {
     private Off toEdit;
@@ -20,10 +18,17 @@ public class EditOffRequest extends Request {
         this.newFinalDate = newFinalDate;
     }
     public String getDetails() {
-        return "Seller Register Request : \nRequestId: " + this.getRequestId() + "\n" + this.seller.getPersonalInfo();
+        return "Edit Off Request : \nRequestId: " + this.getRequestId() + "\nCurrentStartDate: " + this.toEdit.startDateToString()
+                +" --- NewStartDate: " + this.startDateToString()
+                + "\nFinal Date: " + this.toEdit.expireDateToString()
+                + " --- NewFinalDate: " + this.expireDateToString() + "\nMaximum Amount: " + this.toEdit.getMaximumAmountOfOff()
+                +" --- NewMaximumAmount: " + this.toEdit.getMaximumAmountOfOff()
+                + "\nPercent: " + this.toEdit.getOffPercent() + " --- NewPercent: " + this.toEdit.getOffPercent()
+                + "\nRequester Username: " + this.seller.getUsername()
+                + "\nIncluded Product Ids: " + this.toEdit.getIncludedProductsId();
     }
     public String getRequestInfo() {
-        return "  EDIT OFF Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
+        return "  Edit Off Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
 
     }
     public void execute() {
@@ -41,6 +46,16 @@ public class EditOffRequest extends Request {
             if (newFinalDate!= null){
                 toEdit.setFinalDate(newFinalDate);
             }
+    }
 
+    public void decline(){
+        this.toEdit.setOffStatus(ProductAndOffStatus.CONFIRMED);
+    }
+
+    public String expireDateToString() {
+        return newFinalDate.getYear() + "-" + newFinalDate.getMonthValue() + "-" + newFinalDate.getDayOfMonth();
+    }
+    public String startDateToString() {
+        return newDate.getYear() + "-" + newDate.getMonthValue() + "-" + newDate.getDayOfMonth();
     }
 }

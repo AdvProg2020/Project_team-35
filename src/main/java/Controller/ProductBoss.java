@@ -1,21 +1,19 @@
 package Controller;
 
+import Controller.Exceptions.InvalidFieldForSort;
 import Controller.Exceptions.NullProduct;
 import Controller.Exceptions.ProductIsFinished;
 import Controller.Exceptions.ProductsCompareNotSameCategories;
 import Model.Comment;
 import Model.Customer;
 import Model.Product;
+import Model.ProductAndOffStatus;
 import Views.GoodPage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProductBoss {
-
-
-
-
 
     public static GoodPage goToGoodPage(int id) throws NullProduct {
         Product product = Product.getProductWithId(id);
@@ -26,19 +24,14 @@ public class ProductBoss {
         return goodPage;
     }
 
-    public static ArrayList<Product> sortProduct(String field) {
-        ArrayList<Product> all = new ArrayList<>();
-        all = Product.getAllProducts();
-        for (int i = 0; i < all.size() - 1; i++) {
-            for (int j = 0; j < all.size(); j++) {
-                String field1 = null;
-                String field2 = null;
-                if (field.equalsIgnoreCase("price")) {
+    public static ArrayList<Product> sortProduct(String field)  {
 
-                }
-            }
+        ArrayList<Product> confirmedProducts = new ArrayList<>();
+        for (Product product : Product.getProductFieldForSort(field)) {
+            if (product.getProductStatus().equals(ProductAndOffStatus.CONFIRMED))
+            confirmedProducts.add(product);
         }
-        return null;
+        return confirmedProducts;
     }
 
     public static HashMap<String, String> showAttributes(Product product) {
@@ -76,7 +69,6 @@ public class ProductBoss {
         return result;
     }
 
-
     public static void makeComment(String comment,String title , Product product , Customer customer){
                 Comment comment1 = new Comment(product,comment,customer,title);
     }
@@ -84,4 +76,14 @@ public class ProductBoss {
         return product.showSummeryDetailsOfProduct();
     }
 
+    public static HashMap<String , String> showComments(Product product){
+        HashMap<String , String> comments = new HashMap<>();
+        for (Comment comment : product.getCommentsList()) {
+            comments.put(comment.getCommenter().getUsername(),comment.getCommentText());
+        }
+        return comments;
+    }
+    public static void updateReviewNumberOfAProductPage(Product product){
+        product.setReviewNumber(product.getReviewNumber()+1);
+    }
 }

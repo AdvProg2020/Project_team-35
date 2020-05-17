@@ -2,6 +2,7 @@ package Views;
 
 
 import Controller.AccountBoss;
+import Controller.Exceptions.InvalidNumber;
 import Controller.Exceptions.NotValidFieldException;
 import Model.Account;
 import Model.Customer;
@@ -139,10 +140,10 @@ public class UserPage extends Page {
                 else if (checkFormatOfPersonalInformation(fieldName, command)) {
                     fieldChange = command;
                     try {
-                        AccountBoss.startEditPersonalField(fieldName, fieldChange);
+                        AccountBoss.startEditPersonalField(fieldName, fieldChange,Account.getOnlineAccount());
                         System.out.println("successfully changed");
                         nextPage = viewPersonalInfo();
-                    } catch (NotValidFieldException e) {
+                    } catch (NotValidFieldException | InvalidNumber e) {
                         System.err.println(e.getMessage());
                         this.execute();
                     }

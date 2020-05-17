@@ -1,31 +1,22 @@
 package Model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Category {
     public static ArrayList<Category> allCategories = new ArrayList<>();
     private String categoryName;
     public ArrayList<Product> categoryProducts;
     public ArrayList<String> specialAttributes;
+    private static String currentSort = "Nothing";
 
     public Category(String categoryName, ArrayList<String> specialAttributes) {
         this.categoryName = categoryName;
         this.specialAttributes = specialAttributes;
         categoryProducts = new ArrayList<>();
+        Category.setCurrentSort("Nothing");
     }
 
-    public static void deleteCategoryAndSubProducts(String categoryName) {
 
-    }
-    public static Category getCategoryWithName(String name) {
-        return null;
-    }
-    public void editCategory(String name, ArrayList<String> newSpecialAttributes) {
-
-    }
     public static Category getCategoryByName(String name){
         for (Category category : allCategories) {
             if (category.getCategoryName().equalsIgnoreCase(name))
@@ -69,10 +60,49 @@ public class Category {
 
          */
         for (String s : attributes.keySet()) {
+            if (specialAttributes==null)
+                return false;
             if (!specialAttributes.contains(s)){
                 return false;
             }
         }
         return true;
     }
+    public int getSize() {
+        return this.categoryProducts.size();
+    }
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public static void setCurrentSort(String currentSort) {
+        Category.currentSort = currentSort;
+    }
+
+    public static String getCurrentSort() {
+        return currentSort;
+    }
+
+    public static ArrayList<Category> sortCategory(String field){
+        if (field.equalsIgnoreCase("name")){
+            Comparator<Category> nameCategory = new Comparator<Category>() {
+                @Override
+                public int compare(Category o1, Category o2) {
+                    return o1.getCategoryName().compareTo(o2.getCategoryName());
+                }
+            };
+            Collections.sort(allCategories,nameCategory);
+        }else if (field.equalsIgnoreCase("productNumber")){
+            Comparator<Category> productNumber = new Comparator<Category>() {
+                @Override
+                public int compare(Category o1, Category o2) {
+                    return -(o1.getCategoryProducts().size()-o2.getCategoryProducts().size());
+                }
+            };
+            Collections.sort(allCategories,productNumber);
+        }
+        return allCategories;
+
+    }
 }
+

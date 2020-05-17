@@ -22,6 +22,10 @@ public class Comment {
         return false;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public String getCommentText() {
         return commentText;
     }

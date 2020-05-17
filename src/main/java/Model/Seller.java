@@ -68,7 +68,7 @@ public class Seller extends Account {
                 "Email: "+getEmail()+"\n" +
                 "PhoneNumber: "+getPhoneNumber()+"\n"+
                 "Company: "+getCompanyName()+"\n"+
-                "password: "+getPassword()+"\n";
+                "password: "+getPassword();
     }
 
     /**
@@ -100,10 +100,14 @@ public class Seller extends Account {
     }
     @Override
     public String getShortInfo() {
-        return "UserName : " + this.getUsername() + "  ---  " + "Type : Seller";
+        return "UserName : " + this.getUsername() + "  --  " + "Type : Seller" + " -- Condition: " + getIsConfirmedOrWaitForCheck();
     }
 
     public static ArrayList<Seller> getAllSellers() {
         return allSellers;
+    }
+
+    public void addOffTest(Off off){
+        sellerOffs.add(off);
     }
 }

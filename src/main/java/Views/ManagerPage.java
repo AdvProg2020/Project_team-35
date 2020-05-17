@@ -4,8 +4,8 @@ import Controller.AccountBoss;
 import Controller.Exceptions.*;
 import Controller.ManagerBoss;
 import Model.*;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -17,11 +17,13 @@ public class ManagerPage extends Page {
         subPages.put("2", manageUsers());
         subPages.put("3", manageCategories());
         subPages.put("4", manageAllProducts());
-        subPages.put("5", new RegisteringPanel("registering panel", this));
+        subPages.put("5", createDiscountCode());
+        subPages.put("6", viewDiscountCodes());
+        subPages.put("7", new RegisteringPanel("Registering Panel", this));
     }
 
     private Page manageUsers() {
-        return new Page("manage users", this) {
+        return new Page("Manage Users", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
                 subPages.put("view", this);
@@ -31,14 +33,20 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
-                ArrayList<Account> allActiveUsers = ManagerBoss.getAllActiveUsers();
-                for (Account activeUser : allActiveUsers) {
-                    System.out.println(activeUser.getShortInfo());
+                System.out.print("+-----------------------+------------------+------------------------+\n");
+                System.out.print("|        UserName       |      Type        |         Condition      |\n");
+                System.out.print("+-----------------------+------------------+------------------------+\n");
+
+                ArrayList<Account> allUsers = Account.getAllAccounts();
+                for (Account user : allUsers) {
+                    System.out.format("| %-21s | %-16s | %-22s |%n", user.getUsername(), user.getTypeOfAccount(), user.getIsConfirmedOrWaitForCheck());
+                    System.out.print("+-----------------------+------------------+------------------------+\n");
                 }
+                System.out.println("Current Sort: " + Account.getCurrentSort());
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
-                    System.out.println("view/delete user [username] ---- create manager profile");
+                    System.out.println("view/delete user [username] --- create manager profile\nsort by (name|username)-(a|b)");
                 } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
                 } else if (command.startsWith("view")) {
@@ -52,6 +60,20 @@ public class ManagerPage extends Page {
                         }
                     } else {
                         System.err.println("Invalid Command");
+                    }
+                }else if(command.startsWith("sort by")){
+                    Matcher matcher = getMatcher(command, "^sort by (\\S+)$");
+                    if (matcher.matches()) {
+                        Matcher matcher1 = getMatcher(matcher.group(1), "^(name|username)-(a|b)$");
+                        if (matcher1.matches()) {
+                            ManagerBoss.sortAccountWithField(matcher.group(1));
+                        }
+                        else {
+                            System.err.println("Invalid Command.");
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid Command.");
                     }
                 } else if (command.startsWith("delete user")) {
                     Matcher matcher = getMatcher(command, "^delete user (\\w+)$");
@@ -68,7 +90,10 @@ public class ManagerPage extends Page {
                 } else if (command.equalsIgnoreCase("create manager profile")) {
                     HashMap<String, String> allPersonalInfo = new HashMap<>();
                     allPersonalInfo.put("type", "manager");
-                    String username = getInputInFormat("Username: ", "\\w+");
+                    String username = getInputInFormat("Username: (-back for back)", "(\\w+)|(-back)");
+                    if (username.equalsIgnoreCase("-back")) {
+                        this.execute();
+                    }
                     try {
                         ManagerBoss.checkNewManagerUserName(username);
                     } catch (RepeatedUserName repeatedUserName) {
@@ -76,7 +101,11 @@ public class ManagerPage extends Page {
                         this.execute();
                     }
                     allPersonalInfo.put("username", username);
-                    AccountBoss.makeAccount(inputManagerData(allPersonalInfo));
+                    HashMap<String, String> managerData = inputManagerData(allPersonalInfo);
+                    if (managerData.containsValue("-back")) {
+                        this.execute();
+                    }
+                    AccountBoss.makeAccount(managerData);
                     System.out.println("New manager account added successfully.");
                 } else {
                     System.err.println("Invalid Command");
@@ -111,21 +140,33 @@ public class ManagerPage extends Page {
     }
 
     private HashMap<String, String> inputManagerData(HashMap<String, String> personalInfo) {
-        String password = getInputInFormat("Password:", "\\w+");
+        String password = getInputInFormat("Password: (-back for back)", "(\\w+)|(-back)");
         personalInfo.put("password", password);
-        String name = getInputInFormat("Name:", "\\w+");
+        if (password.equalsIgnoreCase("-back")) {
+            return personalInfo;
+        }
+        String name = getInputInFormat("Name: (-back for back)", "(\\w+)|(-back)");
         personalInfo.put("name", name);
-        String familyName = getInputInFormat("FamilyName:", "\\w+");
+        if (name.equalsIgnoreCase("-back")) {
+            return personalInfo;
+        }
+        String familyName = getInputInFormat("FamilyName: (-back for back)", "(\\w+)|(-back)");
         personalInfo.put("family", familyName);
-        String email = getInputInFormat("Email:", "^(\\S+)@(\\S+)\\.(\\S+)$");
+        if (familyName.equalsIgnoreCase("-back")) {
+            return personalInfo;
+        }
+        String email = getInputInFormat("Email: (-back for back)", "^((\\S+)@(\\S+)\\.(\\S+))|(-back)$");
         personalInfo.put("email address", email);
-        String phoneNumber = getInputInFormat("PhoneNumber:", "^\\d+$");
+        if (email.equalsIgnoreCase("-back")) {
+            return personalInfo;
+        }
+        String phoneNumber = getInputInFormat("PhoneNumber: (-back for back)", "^(\\d+)|(-back)$");
         personalInfo.put("phone number", phoneNumber);
         return personalInfo;
     }
 
     private Page manageAllProducts() {
-        return new Page("manage all products", this) {
+        return new Page("Manage All Products", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
 
@@ -163,7 +204,7 @@ public class ManagerPage extends Page {
     }
 
     private Page createDiscountCode() {
-        return new Page("create discount code", this) {
+        return new Page("Create Discount Code", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
                 super.setSubPages(subPages);
@@ -171,9 +212,58 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
-                super.execute();
-            }
 
+                String codeText = getInputInFormat("Enter code text (back for back to previous menu):", "^\\w+$");
+                if (codeText.equalsIgnoreCase("back")) {
+                    parentPage.execute();
+                }
+                String discountPercent = getInputInFormat("Enter discount percent (back for back to first input):", "^(\\d{1,2}(\\.\\d+)?)|(back)$");
+                if (discountPercent.equalsIgnoreCase("back")) {
+                    this.execute();
+                }
+                String maximumDiscountAmount = getInputInFormat("Enter maximum discount amount (back for back to first input):", "^(\\d+(\\.\\d+)?)|(back)$");
+                if (maximumDiscountAmount.equalsIgnoreCase("back")) {
+                    this.execute();
+                }
+                String repeatRate = getInputInFormat("How many times a customer can use this code? (back for back to first input)", "^(\\d+)$");
+                if (repeatRate.equalsIgnoreCase("back")) {
+                    this.execute();
+                }
+                ArrayList<String> customersUserNames = listOfUsersForDiscountCodeScanner();
+                if (customersUserNames.contains("-back")) {
+                    this.execute();
+                }
+                LocalDateTime fullStartDate = null, fullFinalDate = null;
+                while(true) {
+                    String startDay = getInputInFormat("Enter start date in format [yyyy-mm-dd]:", "^[0-2][0-9]{3}-((0\\d)|(1[0-2]))-(([0-2]\\d)|(3[0-1]))$");
+                    String finalDay = getInputInFormat("Enter final date in format [yyyy-mm-dd]:", "^[0-2][0-9]{3}-((0\\d)|(1[0-2]))-(([0-2]\\d)|(3[0-1]))$");
+                    String startTime = getInputInFormat("Enter start time in format [hh:mm:ss]:", "^(([0-1][0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]$");
+                    String finalTime = getInputInFormat("Enter final time in format [hh:mm:ss]:", "^(([0-1][0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]$");
+                    try{
+                        fullStartDate = LocalDateTime.parse(startDay + "T" + startTime);
+                        fullFinalDate = LocalDateTime.parse(finalDay + "T" + finalTime);
+                        try {
+                            ManagerBoss.checkStartDateAndFinalDateForDiscountCode(fullStartDate, fullFinalDate);
+                            break;
+                        } catch (DateException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    catch (java.time.format.DateTimeParseException e) {
+                        int index = e.getMessage().indexOf("Invalid date");
+                        System.err.println(e.getMessage().substring(index));
+                    }
+
+                }
+                double percent = Double.parseDouble(discountPercent);
+                double maximumAmount = Double.parseDouble(maximumDiscountAmount);
+                int repeat = Integer.parseInt(repeatRate);
+                String minimumTotalPriceForUse = getInputInFormat("Some discount codes have a minimum amount of total price for use. If you want to have it, enter the minimum, else enter -1", "^(\\d+(\\.)?(\\d*)?)|(-1)$");
+                double minimumPrice = Double.parseDouble(minimumTotalPriceForUse);
+                ManagerBoss.createDiscountCode(codeText, fullFinalDate, fullStartDate, percent, maximumAmount, repeat, customersUserNames, minimumPrice);
+                System.out.println("Successful :)");
+                parentPage.execute();
+            }
             @Override
             public boolean show() {
                 super.show();
@@ -182,8 +272,36 @@ public class ManagerPage extends Page {
         };
     }
 
+
+    private static ArrayList<String> listOfUsersForDiscountCodeScanner() {
+        System.out.println("Enter every username in a line. for end enter -end. for back enter -back. -all for all Customers.");
+        ArrayList<String> userNames = new ArrayList<>();
+        while (true) {
+            String username = scanner.nextLine();
+            if (username.equalsIgnoreCase("-back")) {
+                userNames.add(username);
+                return userNames;
+            }
+            if (username.equalsIgnoreCase("-end")) {
+                break;
+            }
+            if (username.equalsIgnoreCase("-all")) {
+                userNames.clear();
+                userNames.add(username);
+                return userNames;
+            }
+            try {
+                ManagerBoss.checkExistenceOfCustomerUsername(username);
+                userNames.add(username);
+            } catch (NotExistCustomerWithUserNameException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return userNames;
+    }
+
     private Page viewDiscountCodes() {
-        return new Page("view discount codes", this) {
+        return new Page("View Discount Codes", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
                 subPages.put("view discount codes", this);
@@ -193,7 +311,55 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
-                super.execute();
+                ArrayList<DiscountCode> discountCodes = DiscountCode.getAllDiscountCodes();
+                System.out.println("Discount Codes:");
+                for (DiscountCode discountCode : discountCodes) {
+                    System.out.println(discountCode.getDiscountCodeInlineInfo());
+                }
+                System.out.println("Current Sort: " + DiscountCode.getCurrentSort());
+                System.out.println("Enter command: (-help for help)");
+                String command = scanner.nextLine();
+                Matcher matcher = getMatcher(command, "^(view|remove|edit) discount code (\\w+)$");
+                if (command.equalsIgnoreCase("back")) {
+                    parentPage.execute();
+                }
+                else if (command.equalsIgnoreCase("-help")) {
+                    System.out.println("view/remove/edit discount code [code]\nsort by (percent|maximum|frequent)-(a-b)(a for ascending b for else)");
+                }
+                else if (command.startsWith("sort by")){
+                    Matcher sortMatcher = getMatcher(command, "^sort by (percent|maximum|frequent|startdate|finaldate)-(a|b)");
+                    if (sortMatcher.matches()) {
+                        ManagerBoss.sortDiscountCodesWithField(sortMatcher.group(1) + "-" + sortMatcher.group(2));
+                    }
+                    else {
+                        System.err.println("Invalid Command.");
+                    }
+                }
+                else if (matcher.matches()) {
+                    String code = matcher.group(2);
+                    if (matcher.group(1).equalsIgnoreCase("view")) {
+                        try {
+                            System.out.println(ManagerBoss.checkAndGetDiscountCodeDetailsWithCode(code));
+                        } catch (DiscountNotExist discountNotExist) {
+                            System.out.println(discountNotExist.getMessage());
+                        }
+                    }
+                    else if (matcher.group(1).equalsIgnoreCase("remove")) {
+                        try {
+                            ManagerBoss.deleteDiscountCodeWithCode(code);
+                            System.out.println("Successful :)");
+                        } catch (DiscountNotExist discountNotExist) {
+                            System.out.println(discountNotExist.getMessage());
+                        }
+                    }
+                    else if (matcher.group(1).equalsIgnoreCase("edit")) {
+
+                    }
+                }
+                else {
+                    System.err.println("Invalid command.");
+                }
+                this.execute();
             }
 
             @Override
@@ -205,7 +371,7 @@ public class ManagerPage extends Page {
     }
 
     private Page manageRequests() {
-        return new Page("manage requests", this) {
+        return new Page("Manage Requests", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
 
@@ -213,20 +379,45 @@ public class ManagerPage extends Page {
 
             @Override
             public void execute() {
+                System.out.println("New Requests:");
+                System.out.print("+-----------------------+------------------------+--------------------+\n");
+                System.out.print("|    TypeOfRequest      |   Requester Username   |     Request Id     |\n");
+                System.out.print("+-----------------------+------------------------+--------------------+\n");
                 ArrayList<Request> newRequests = Manager.getNewRequests();
                 ArrayList<Request> checkedRequests = Manager.getCheckedRequests();
-                System.out.println("New Requests :");
                 for (Request newRequest : newRequests) {
-                    System.out.println(newRequest.getRequestInfo());
+                    System.out.format("| %-21s | %-22s | %-18s |%n", newRequest.getTypeOfRequest(), newRequest.getSeller().getUsername(), newRequest.getRequestId());
+                    System.out.print("+-----------------------+------------------------+--------------------+\n");
                 }
-                System.out.println("Checked Requests :");
+                System.out.println("\nChecked Requests:");
+                System.out.print("+-----------------------+------------------------+--------------------+\n");
+                System.out.print("|    TypeOfRequest      |   Requester Username   |      Request Id    |\n");
+                System.out.print("+-----------------------+------------------------+--------------------+\n");
                 for (Request checkedRequest : checkedRequests) {
-                    System.out.println(checkedRequest.getRequestInfo());
+                    System.out.format("| %-21s | %-22s | %-18s |%n", checkedRequest.getTypeOfRequest(), checkedRequest.getSeller().getUsername(), checkedRequest.getRequestId());
+                    System.out.print("+-----------------------+------------------------+--------------------+\n");
                 }
+                System.out.println("\nCurrent Sort: " + Request.getCurrentSort());
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
-                    System.out.println("Accept/Decline/details [RID]");
+                    System.out.println("Accept/Decline/details [RID]\nSort by id-a/-b (a for ascending b for else)");
+                }
+                else if (command.startsWith("sort by")) {
+                    Matcher matcher = getMatcher(command, "^sort by (\\S+)$");
+                    if (matcher.matches()) {
+                        Matcher matcher1 = getMatcher(matcher.group(1), "^id-(a|b)$");
+                        if (matcher1.matches()) {
+                            ManagerBoss.sortRequestsWithField(matcher.group(1));
+                        }
+                        else {
+                            System.err.println("Invalid Command.");
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid command.");
+                    }
+
                 } else if (command.startsWith("accept") || command.startsWith("decline") || command.startsWith("details")) {
                     Matcher matcher = getMatcher(command, "^(accept|decline|details)\\s+(\\d+)$");
                     if (matcher.matches()) {
@@ -270,7 +461,7 @@ public class ManagerPage extends Page {
     }
 
     private Page manageCategories() {
-        return new Page("manage categories", this) {
+        return new Page("Manage Categories", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
             }
@@ -284,16 +475,41 @@ public class ManagerPage extends Page {
                 for (Category category : allCategories) {
                     System.out.println(category.getShortInfo());
                 }
+                System.out.println("Current Sort: " + Category.getCurrentSort());
                 System.out.println("Enter Command : (-help for help)");
                 String command = scanner.nextLine();
                 if (command.equalsIgnoreCase("-help")) {
-                    System.out.println("add/edit/remove [categoryName]");
+                    System.out.println("add/edit/remove [categoryName]\nsort by (name|size)-(a|b) (a for ascending b for else)");
                 } else if (command.equalsIgnoreCase("back")) {
                     parentPage.execute();
-                } else if (command.startsWith("edit")) {
-
-                }
-                else {
+                } else if(command.startsWith("sort by")) {
+                    Matcher matcher = getMatcher(command, "^sort by (\\S+)$");
+                    if (matcher.matches()) {
+                        Matcher matcher1 = getMatcher(matcher.group(1), "^(name|size)-(a|b)$");
+                        if (matcher1.matches()) {
+                            ManagerBoss.sortCategoryWithField(matcher.group(1));
+                        }
+                        else {
+                            System.err.println("Invalid Command.");
+                        }
+                    }
+                    else {
+                        System.err.println("Invalid Command.");
+                    }
+                }else if (command.startsWith("edit")) {
+                    Matcher matcher = getMatcher(command, "^edit (\\w+)$");
+                    if (matcher.matches()) {
+                        try {
+                            ManagerBoss.checkCategoryExistence(matcher.group(1));
+                            editCategory(matcher.group(1)).execute();
+                        } catch (ThereIsNotCategoryWithNameException e) {
+                            System.out.println(e.getMessage());
+                            this.execute();
+                        }
+                    } else {
+                        System.err.println("Invalid Command.");
+                    }
+                } else {
                     Matcher matcher = getMatcher(command, "^(add|remove)\\s+(\\w+)$");
                     if (matcher.matches()) {
                         String categoryName = matcher.group(2);
@@ -329,11 +545,75 @@ public class ManagerPage extends Page {
         };
     }
 
+
+    private Page editCategory(String categoryName) {
+        return new Page("Edit Category", this) {
+
+            @Override
+            public void setSubPages(HashMap<String, Page> subPages) {
+                super.setSubPages(subPages);
+            }
+
+            @Override
+            public void execute() {
+                System.out.println("Enter Command: (-help for help. back for back.)");
+                String command = scanner.nextLine();
+                if (command.equalsIgnoreCase("-help")) {
+                    System.out.println("add/delete/rename attribute ---- edit name");
+                } else if (command.equalsIgnoreCase("back")) {
+                    parentPage.execute();
+                } else if (command.equalsIgnoreCase("edit name")) {
+                    String newName = getInputInFormat("Enter new categoryName:", "^\\w+$");
+                    ManagerBoss.editCategoryName(categoryName, newName);
+                    System.out.println("Successful :)");
+                } else if (command.equalsIgnoreCase("add attribute")) {
+                    String newAttribute = getInputInFormat("Enter new attribute:", "^\\w+$");
+                    try {
+                        ManagerBoss.addAttributeToCategory(categoryName, newAttribute);
+                        System.out.println("Successful :)");
+                    } catch (RepeatedCategoryAttributeException e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else if (command.equalsIgnoreCase("delete attribute")) {
+                    String toDeleteAttribute = getInputInFormat("Enter attribute to delete:", "^\\w+$");
+                    try {
+                        ManagerBoss.deleteAttributeFromCategory(categoryName, toDeleteAttribute);
+                        System.out.println("Successful :)");
+                    } catch (FieldDoesNotExist fieldDoesNotExist) {
+                        System.out.println(fieldDoesNotExist.getMessage());
+                    }
+                } else if (command.equalsIgnoreCase("rename attribute")) {
+                    String previousAttributeName = getInputInFormat("Enter attribute previous name:", "^\\w+$");
+                    String newAttributeName = getInputInFormat("Enter attribute newName:", "^\\w+$");
+                    try {
+                        ManagerBoss.editAttributeName(categoryName, previousAttributeName, newAttributeName);
+                        System.out.println("Successful :)");
+                    } catch (FieldDoesNotExist | RepeatedCategoryAttributeException e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else {
+                    System.err.println("Invalid command.");
+                }
+                this.execute();
+            }
+
+            @Override
+            public boolean show() {
+                super.show();
+                return false;
+            }
+        };
+    }
+
     private static ArrayList<String> categorySpecialAttributesScanner() {
-        System.out.println("Enter every feature in a line. for end enter -end. for back enter -end after -back.");
+        System.out.println("Enter every feature in a line. for end enter -end. for back enter -back.");
         ArrayList<String> specialAttributes = new ArrayList<>();
         while (true) {
             String feature = scanner.nextLine();
+            if (feature.equalsIgnoreCase("-back")) {
+                specialAttributes.add(feature);
+                return specialAttributes;
+            }
             if (feature.equalsIgnoreCase("-end")) {
                 break;
             }
@@ -341,27 +621,6 @@ public class ManagerPage extends Page {
         }
         return specialAttributes;
     }
-
-    private Page newEdit() {
-        return new Page("edit manager data", this) {
-            @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                //commands and back
-            }
-
-            @Override
-            public void execute() {
-                super.execute();
-            }
-
-            @Override
-            public boolean show() {
-//commands and back
-                return false;
-            }
-        };
-    }
-
 
     @Override
     public void execute() {

@@ -1,11 +1,10 @@
 package Views;
 
-import Controller.Exceptions.NullProduct;
+import Controller.Exceptions.InvalidFieldForSort;
 import Controller.ProductBoss;
 import Controller.SellerBoss;
 import Model.Category;
 import Model.Product;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -111,19 +110,18 @@ public class ProductsPage extends Page {
         return new Page("sorting" , this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
+                available = new ArrayList<>();
+                available.add("price");
+                available.add("name");
+                available.add("rate");
+                available.add("reviewNumber");
+                available.add("inventory");
 
-                sortFields=("reviews number");
+                sortFields=("reviewNumber");
                 subPages.put("3", new Page("show available",this) {
                     @Override
                     public void execute() {
-                         available = new ArrayList<>();
-                        available.add("price");
-                        available.add("name");
-                        available.add("average of rates");
-                        available.add("review numbers");
-                        available.add("seller name");
-                        available.add("company name");
-                        available.add("inventory");
+
                         for (Category category : Category.allCategories) {
                             for (String attribute : category.specialAttributes) {
                                 available.add(attribute);
@@ -141,15 +139,22 @@ public class ProductsPage extends Page {
                 subPages.put("4", new Page("sort" , this) {
                     @Override
                     public void execute() {
-                        System.out.println("(back|sort)");
+                        System.out.println("(back|sort [sortField])");
                         String command = scanner.nextLine();
                         Page nextPage = null;
-                        String regex = "sort (^\\S+$)";
+                        String regex = "^sort (\\S+)$";
                         Matcher matcher = getMatcher(command,regex);
+                        matcher.matches();
                         if (command.matches(regex)){
                             String field = matcher.group(1);
-                            if (!available.contains(field)){
-                                currentList = ProductBoss.sortProduct(field);
+                            if (available.contains(field)){
+
+                                    currentList = ProductBoss.sortProduct(field);
+                                    for (Product s : currentList) {
+                                        System.out.println(s.getName());
+                                    }
+                                    nextPage = parentPage;
+
                             }else {
                                 System.err.println("invalid field");
                                 nextPage = this;
@@ -161,6 +166,7 @@ public class ProductsPage extends Page {
                             System.err.println("invalid command");
                             nextPage = this;
                         }
+                        nextPage.execute();
                     }
                 });
                 subPages.put("1", new Page("current sort" , this) {
@@ -174,7 +180,7 @@ public class ProductsPage extends Page {
                 subPages.put("2", new Page("disable sort" , this) {
                     @Override
                     public void execute() {
-                        sortFields=("reviews number");
+                        sortFields=("reviewNumber");
                         System.out.println("disable successfully");
                         parentPage.execute();
                     }

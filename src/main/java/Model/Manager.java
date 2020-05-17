@@ -84,12 +84,12 @@ public class Manager extends Account {
                 "Username: " + getUsername() + "\n" +
                 "Name: " + getFirstName() + "\n" +
                 "Email: " + getEmail() + "\n" +
-                "PhoneNumber: " + getPhoneNumber() + "\n";
+                "PhoneNumber: " + getPhoneNumber();
     }
 
     @Override
     public String getShortInfo() {
-        return "UserName : " + this.getUsername() + "  ---  " + "Type : Manager";
+        return "UserName : " + this.getUsername() + "  --  " + "Type : Manager" + " -- Condition: " + getIsConfirmedOrWaitForCheck();
     }
 
     public static ArrayList<Manager> getAllManagers() {

@@ -18,6 +18,7 @@ public abstract class Account {
     private static boolean isThereOnlineUser;
     protected boolean isThisAccountLogged;
     protected int typeOfAccount;
+    private static String currentSort = "Nothing";
     /**
      * account constructor
      * @param username
@@ -36,6 +37,7 @@ public abstract class Account {
         this.password = password;
         this.typeOfAccount = typeOfAccount;
         allAccounts.add(this);
+        Account.setCurrentSort("Nothing");
     }
 
     public static boolean isIsThereOnlineUser() {
@@ -182,5 +184,49 @@ public abstract class Account {
 
     public static ArrayList<Account> getAllAccounts() {
         return allAccounts;
+    }
+
+    public String getIsConfirmedOrWaitForCheck() {
+        if (this instanceof Manager) {
+            if (Manager.getAllManagers().contains(this)) {
+                return "Accepted";
+            }
+        }
+        else if (this instanceof Customer) {
+            if (Customer.getAllCustomers().contains(this)) {
+                return "Accepted";
+            }
+        }
+        else if (this instanceof Seller) {
+            if (Seller.getAllSellers().contains(this)) {
+                return "Accepted";
+            }
+        }
+        return "Wait For Accept";
+    }
+
+    public String getTypeOfAccount() {
+        if (this instanceof Manager) {
+            return "Manager";
+        }
+        if (this instanceof Seller) {
+            return "Seller";
+        }
+        if (this instanceof Customer) {
+            return "Customer";
+        }
+        return null;
+    }
+
+    public String getFullName() {
+        return this.getFirstName() + this.getLastName();
+    }
+
+    public static String getCurrentSort() {
+        return currentSort;
+    }
+
+    public static void setCurrentSort(String currentSort) {
+        Account.currentSort = currentSort;
     }
 }

@@ -22,6 +22,9 @@ public class SellerRegisterRequest extends Request {
      */
     public String getDetails() {
         return "Seller Register Request : \nRequestId: " + this.getRequestId() + "\n" + this.seller.getPersonalInfo();
+    }
 
+    public void decline() {
+        Account.getAllAccounts().remove(this.getSeller());
     }
 }

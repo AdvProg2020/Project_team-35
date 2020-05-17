@@ -41,7 +41,7 @@ public abstract class Page {
         }
         if (command.equals(String.valueOf(subPages.size()+1)) && parentPage!=null){
             // i need help in this part//********************************
-            if (parentPage instanceof UserPage){
+            if (parentPage instanceof UserPage && Account.getOnlineAccount()==null){
                 nextPage = parentPage.parentPage;
             }else {
                 nextPage = parentPage;
