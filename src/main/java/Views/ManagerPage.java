@@ -93,7 +93,11 @@ public class ManagerPage extends Page {
                         this.execute();
                     }
                     allPersonalInfo.put("username", username);
-                    AccountBoss.makeAccount(inputManagerData(allPersonalInfo));
+                    HashMap<String, String> managerData = inputManagerData(allPersonalInfo);
+                    if (managerData.containsValue("-back")) {
+                        this.execute();
+                    }
+                    AccountBoss.makeAccount(managerData);
                     System.out.println("New manager account added successfully.");
                 } else {
                     System.err.println("Invalid Command");
@@ -128,15 +132,27 @@ public class ManagerPage extends Page {
     }
 
     private HashMap<String, String> inputManagerData(HashMap<String, String> personalInfo) {
-        String password = getInputInFormat("Password:", "\\w+");
+        String password = getInputInFormat("Password: (-back for back)", "\\w+");
         personalInfo.put("password", password);
-        String name = getInputInFormat("Name:", "\\w+");
+        if (password.equalsIgnoreCase("-back")) {
+            return personalInfo;
+        }
+        String name = getInputInFormat("Name: (-back for back)", "\\w+");
         personalInfo.put("name", name);
-        String familyName = getInputInFormat("FamilyName:", "\\w+");
+        if (name.equalsIgnoreCase("-back")) {
+            return personalInfo;
+        }
+        String familyName = getInputInFormat("FamilyName: (-back for back)", "\\w+");
         personalInfo.put("family", familyName);
-        String email = getInputInFormat("Email:", "^(\\S+)@(\\S+)\\.(\\S+)$");
+        if (familyName.equalsIgnoreCase("-back")) {
+            return personalInfo;
+        }
+        String email = getInputInFormat("Email: (-back for back)", "^((\\S+)@(\\S+)\\.(\\S+))|(-back)$");
         personalInfo.put("email address", email);
-        String phoneNumber = getInputInFormat("PhoneNumber:", "^\\d+$");
+        if (email.equalsIgnoreCase("-back")) {
+            return personalInfo;
+        }
+        String phoneNumber = getInputInFormat("PhoneNumber: (-back for back)", "^(\\d+)|(-back)$");
         personalInfo.put("phone number", phoneNumber);
         return personalInfo;
     }
@@ -583,27 +599,6 @@ public class ManagerPage extends Page {
         }
         return specialAttributes;
     }
-
-    private Page newEdit() {
-        return new Page("edit manager data", this) {
-            @Override
-            public void setSubPages(HashMap<String, Page> subPages) {
-                //commands and back
-            }
-
-            @Override
-            public void execute() {
-                super.execute();
-            }
-
-            @Override
-            public boolean show() {
-//commands and back
-                return false;
-            }
-        };
-    }
-
 
     @Override
     public void execute() {
