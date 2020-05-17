@@ -43,10 +43,7 @@ public class Seller extends Account {
     }
 
 
-    @Override
-    public void deleteAccount() {
 
-    }
 
     /**
      * just for test

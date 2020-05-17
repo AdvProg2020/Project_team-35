@@ -46,10 +46,7 @@ public class Manager extends Account {
         return super.toString();
     }
 
-    @Override
-    public void deleteAccount() {
 
-    }
     public static Request getNewRequestWithId(int id) {
         for (Request newRequest : newRequests) {
             if (newRequest.getRequestId() == id) {

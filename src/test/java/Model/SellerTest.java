@@ -66,9 +66,7 @@ public class SellerTest {
     }
 
 
-    @Test
-    public void deleteAccount() {
-    }
+
 
     @Test
     public void setMoney() {
@@ -125,10 +123,15 @@ public class SellerTest {
 
     @Test
     public void testGetShortInfo() {
+
+        Assert.assertEquals(seller.getPersonalInfo(),null);
     }
 
     @Test
     public void testGetAllSellers() {
+        ArrayList<Seller> a = new ArrayList<>();
+        a.contains(seller);
+        Assert.assertEquals(Seller.getAllSellers(),a);
     }
 
     @Test

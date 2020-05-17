@@ -117,7 +117,6 @@ public abstract class Account {
             return true;
         return false;
     }
-    public abstract void deleteAccount();
     public abstract String getPersonalInfo();
     public abstract String getShortInfo();
 
