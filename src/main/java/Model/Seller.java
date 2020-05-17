@@ -34,10 +34,12 @@ public class Seller extends Account {
         return null;
     }
     public boolean hasHeProductWithId(int productId) {
-        return true;
-    }
-    public boolean isProductWithIdAtAnyOff(int productId) {
-        return true;
+        Product product = Product.getProductWithId(productId);
+        if (product==null)
+            return false;
+        if (salableProducts.contains(product))
+            return true;
+        return false;
     }
 
 

@@ -312,7 +312,7 @@ if (product.getSpecialAttributes()!=null) {
         ArrayList<Product> allProducts = new ArrayList<>();
         if (id!=null) {
             for (Integer integer : id) {
-                if (!seller.getSalableProducts().contains(Product.getProductWithId(integer))) {
+                if (!seller.hasHeProductWithId(integer)) {
                     throw new ThisIsNotYours("this is not yours", 4);
                 }
                 else if (Product.getProductWithId(integer)==null){

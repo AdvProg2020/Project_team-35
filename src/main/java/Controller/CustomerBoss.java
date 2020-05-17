@@ -107,8 +107,8 @@ public class CustomerBoss {
                         products.add(product);
                     }
 
-                    new SellLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, customer.getUsername());
-                    new BuyLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, seller.getUsername());
+                   // new SellLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, customer.getUsername());
+                    //new BuyLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, seller.getUsername());
                 }
             }
             return true;

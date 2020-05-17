@@ -15,4 +15,12 @@ public class BuyLog extends Log{
         this.boughtProducts = boughtProducts;
         this.sellerName = sellerName;
     }
+
+    public boolean isDelivered() {
+        return isDelivered;
+    }
+
+    public ArrayList<Product> getBoughtProducts() {
+        return boughtProducts;
+    }
 }

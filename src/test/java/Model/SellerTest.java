@@ -60,11 +60,11 @@ public class SellerTest {
 
     @Test
     public void hasHeProductWithId() {
+        Product product = new Product("a","s",23,seller,2,new Category("a",null),null,"");
+
+        Assert.assertTrue(seller.hasHeProductWithId(1));
     }
 
-    @Test
-    public void isProductWithIdAtAnyOff() {
-    }
 
     @Test
     public void deleteAccount() {
