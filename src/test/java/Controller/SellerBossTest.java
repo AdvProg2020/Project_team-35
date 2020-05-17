@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class SellerBossTest {
     private Seller seller = new Seller("ali", "reza", "ghazan", "ali@ali.a", "2323", "paass", "mihan");
-    private Product product = new Product("milk", "mihan", 2200.0, seller, 3, new Category("labaniat", null), null, null);
+   // private Product product = new Product("milk", "mihan", 2200.0, seller, 3, new Category("labaniat", null), null, null);
 
     @Test
     public void sellerCredit() {
@@ -164,6 +164,8 @@ public class SellerBossTest {
     public void testTestShowBuyers() {
         Customer customer = new Customer("l","d","d","df","23","pass");
         Customer customer1 = new Customer("m","m","v","c","123","psd");
+         Product product = new Product("milk", "mihan", 2200.0, seller, 3, new Category("labaniat", null), null, null);
+
         product.setProductStatus(ProductAndOffStatus.CONFIRMED);
         product.getWhoBoughtThisGood().add(customer);
         product.getWhoBoughtThisGood().add(customer1);
@@ -182,6 +184,8 @@ public class SellerBossTest {
     public void testTestEditProduct() {
         HashMap<String, String> changes = new HashMap<>();
         changes.put("kmlm", "22");
+       Product product = new Product("milk", "mihan", 2200.0, seller, 3, new Category("labaniat", null), null, null);
+
         seller.getSalableProducts().remove(product);
         Product product1 = new Product("asd", "asd", 23, new Seller("asd", "asd", "ads", "asd", "sad", "ads", "asd"), 2, product.getCategory(), null, "");
         try {
@@ -277,6 +281,8 @@ public class SellerBossTest {
     public void showBuyers() {
         Customer customer = new Customer("l","d","d","df","23","pass");
         Customer customer1 = new Customer("m","m","v","c","123","psd");
+         Product product = new Product("milk", "mihan", 2200.0, seller, 3, new Category("labaniat", null), null, null);
+
         product.setProductStatus(ProductAndOffStatus.CONFIRMED);
         product.getWhoBoughtThisGood().add(customer);
         product.getWhoBoughtThisGood().add(customer1);
@@ -292,6 +298,14 @@ public class SellerBossTest {
 
     @Test
     public void sortProductForSpecialSeller() {
+        Product product = new Product("lak","kale",234,seller,3,new Category("pal",null),null,"");
+        Product product1 = new Product("aaa","mam",23,seller,2,new Category("mak",null),null,"");
+        Product product2 = new Product("bbb","pal",120,seller,3,new Category("pore",null),null,"");
+
+        ArrayList<Product> a = new ArrayList<>();
+        a.add(product1);a.add(product2);a.add(product);
+        Assert.assertEquals(SellerBoss.sortProductForSpecialSeller("name",seller),a);
+
     }
 
     @Test
@@ -304,6 +318,7 @@ public class SellerBossTest {
     public void editProduct() {
         HashMap<String, String> changes = new HashMap<>();
         changes.put("kmlm", "22");
+        Product product = new Product("milk", "mihan", 2200.0, seller, 3, new Category("labaniat", null), null, null);
         seller.getSalableProducts().remove(product);
         Product product1 = new Product("asd", "asd", 23, new Seller("asd", "asd", "ads", "asd", "sad", "ads", "asd"), 2, product.getCategory(), null, "");
         try {

@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import org.junit.runner.RunWith;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -71,30 +72,43 @@ public class SellerTest {
 
     @Test
     public void setMoney() {
+        Assert.assertTrue(seller.setMoney(21));
     }
 
     @Test
     public void testGetUsername() {
+        Assert.assertEquals(seller.getUsername(),"username");
     }
 
     @Test
     public void testGetPersonalInfo() {
+        Assert.assertNotNull(seller.getPersonalInfo());
     }
 
     @Test
     public void testGetCompanyName() {
+        seller.setCompanyName("ali");
+        Assert.assertEquals(seller.getCompanyName(),"ali");
     }
 
     @Test
     public void setCompanyName() {
+      Assert.assertTrue(seller.setCompanyName("mamanama"));
     }
 
     @Test
     public void testGetMoney() {
+        seller.setMoney(243);
+        Assert.assertEquals(seller.getMoney(),243,1);
     }
 
     @Test
     public void getSellLogs() {
+        SellLog sellLog = new SellLog(null,null);
+        seller.getSellLogs().add(sellLog);
+        ArrayList<SellLog> sellLogs = new ArrayList<>();
+        sellLogs.add(sellLog);
+        Assert.assertEquals(seller.getSellLogs(),sellLogs);
     }
 
     @Test

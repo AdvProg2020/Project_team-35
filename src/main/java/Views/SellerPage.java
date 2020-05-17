@@ -2,7 +2,7 @@ package Views;
 import Controller.AccountBoss;
 import Controller.Exceptions.*;
 import Controller.Exceptions.NullProduct;
-import Controller.JustOneOffForEveryProduct;
+import Controller.Exceptions.JustOneOffForEveryProduct;
 import Controller.SellerBoss;
 import Controller.Exceptions.ThisIsNotReadyForEdit;
 import Controller.Exceptions.ThisOffNotExist;

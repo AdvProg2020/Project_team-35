@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Exceptions;
 
 public class JustOneOffForEveryProduct extends Exception {
     private int id;
