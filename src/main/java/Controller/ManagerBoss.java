@@ -412,4 +412,15 @@ public class ManagerBoss {
 
         return false;
     }
+
+
+    public static boolean checkStartDateAndFinalDateForDiscountCode(LocalDateTime start, LocalDateTime end) throws DateException {
+        if (end.isBefore(LocalDateTime.now())) {
+            throw new DateException("The end time is before now! Are you OK?! :)");
+        }
+        if (end.isBefore(start)) {
+            throw new DateException("The end time is before start time! Are you OK?! :)");
+        }
+        return true;
+    }
 }

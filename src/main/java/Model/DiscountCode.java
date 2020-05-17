@@ -19,7 +19,7 @@ public class DiscountCode {
     public String getDetails() {
         String toReturn =  "Code: " + this.code + "\nStart Date: " + this.startDate.toString() + "\nExpire Date: " + this.finalDate.toString()
                 + "\nDiscount Percent: " + this.getDiscountPercent() + "\nMaximum Discount: " + this.getMaximumAvailableAmount()
-                +"Minimum Total Price For Use (-1 means it hasn't minimum): " + this.getMinimumTotalPriceForUse()
+                +"\nMinimum Total Price For Use (-1 means it hasn't minimum): " + this.getMinimumTotalPriceForUse()
                 + "\nUsable Rate: " + this.getAvailableUseFrequent() + "\nIncluded Customers | Use Rates: \n";
         for (Customer customer : this.includedBuyersAndUseFrequency.keySet()) {
             toReturn += " ** UserName: " + customer.getUsername() + " | Use Number: " + includedBuyersAndUseFrequency.get(customer);

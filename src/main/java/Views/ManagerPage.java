@@ -242,17 +242,23 @@ public class ManagerPage extends Page {
                     try{
                         fullStartDate = LocalDateTime.parse(startDay + "T" + startTime);
                         fullFinalDate = LocalDateTime.parse(finalDay + "T" + finalTime);
-                        break;
+                        try {
+                            ManagerBoss.checkStartDateAndFinalDateForDiscountCode(fullStartDate, fullFinalDate);
+                            break;
+                        } catch (DateException e) {
+                            System.out.println(e.getMessage());
+                        }
                     }
                     catch (java.time.format.DateTimeParseException e) {
                         int index = e.getMessage().indexOf("Invalid date");
                         System.err.println(e.getMessage().substring(index));
                     }
+
                 }
                 double percent = Double.parseDouble(discountPercent);
                 double maximumAmount = Double.parseDouble(maximumDiscountAmount);
                 int repeat = Integer.parseInt(repeatRate);
-                String minimumTotalPriceForUse = getInputInFormat("Some discount codes have a minimum amount of total price for use. If you want to have it, enter the minimum,else enter -1", "^(\\d+(\\.)?(\\d*)?)|(-1)$");
+                String minimumTotalPriceForUse = getInputInFormat("Some discount codes have a minimum amount of total price for use. If you want to have it, enter the minimum, else enter -1", "^(\\d+(\\.)?(\\d*)?)|(-1)$");
                 double minimumPrice = Double.parseDouble(minimumTotalPriceForUse);
                 ManagerBoss.createDiscountCode(codeText, fullFinalDate, fullStartDate, percent, maximumAmount, repeat, customersUserNames, minimumPrice);
                 System.out.println("Successful :)");
