@@ -10,23 +10,25 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class ManagerBoss {
-    public static void acceptRequestWithId(int requestId) throws NotValidRequestIdException {
+    public static boolean acceptRequestWithId(int requestId) throws NotValidRequestIdException {
         if (Manager.isThereNewRequestWithId(requestId)) {
             Request request = Manager.getNewRequestWithId(requestId);
             request.execute();
             Manager.newRequests.remove(request);
             Manager.checkedRequests.add(request);
+            return true;
         }
         else {
             throw new NotValidRequestIdException("requestId is not Valid or is Checked");
         }
     }
-    public static void declineRequestWithId(int requestId) throws NotValidRequestIdException {
+    public static boolean declineRequestWithId(int requestId) throws NotValidRequestIdException {
         if (Manager.isThereNewRequestWithId(requestId)) {
             Request request = Manager.getNewRequestWithId(requestId);
             Manager.newRequests.remove(request);
             Manager.checkedRequests.add(request);
             request.decline();
+            return true;
         }
         else {
             throw new NotValidRequestIdException("requestId is not Valid or is Checked");
@@ -108,7 +110,7 @@ public class ManagerBoss {
 
 
 
-    public static void removeProductWithId(int productId) throws ThereISNotProductWithIdException {
+    public static boolean removeProductWithId(int productId) throws ThereISNotProductWithIdException {
         if (Product.isThereProductWithId(productId)) {
             Product toRemove = Product.getProductWithId(productId);
             Category category = toRemove.getCategory();
@@ -116,6 +118,7 @@ public class ManagerBoss {
             Seller seller = toRemove.getSeller();
             seller.getSalableProducts().remove(toRemove);
             Product.getAllProducts().remove(toRemove);
+            return true;
         }
         else {
             throw new ThereISNotProductWithIdException("There isn't product with requested id.");
@@ -146,7 +149,7 @@ public class ManagerBoss {
         }
     }
 
-    private static void deleteProductsOfCategoryAtProductClass(Category toDelete) {
+    private static boolean deleteProductsOfCategoryAtProductClass(Category toDelete) {
         int size = Product.getAllProducts().size();
         for(int i = 0; i < size; i++){
             Product product = Product.getAllProducts().get(i);
@@ -156,9 +159,10 @@ public class ManagerBoss {
                 size--;
             }
         }
+        return true;
     }
 
-    private static void deleteProductsOfCategoryAtSellerClass(Category toDelete) {
+    private static boolean deleteProductsOfCategoryAtSellerClass(Category toDelete) {
         int sellersNumber = Seller.getAllSellers().size();
         for (int sellerNumber = 0; sellerNumber < sellersNumber; sellerNumber++) {
             Seller seller = Seller.getAllSellers().get(sellerNumber);
@@ -172,6 +176,7 @@ public class ManagerBoss {
                 }
             }
         }
+        return true;
     }
 
     public static boolean checkNewManagerUserName(String username) throws RepeatedUserName {
@@ -198,34 +203,37 @@ public class ManagerBoss {
     }
 
 
-    public static void addAttributeToCategory(String categoryName, String attribute) throws RepeatedCategoryAttributeException {
+    public static boolean addAttributeToCategory(String categoryName, String attribute) throws RepeatedCategoryAttributeException {
         Category category = Category.getCategoryByName(categoryName);
         if (category.specialAttributes.contains(attribute)) {
             throw new RepeatedCategoryAttributeException("The requested attribute is repeated. Try again.");
         }
         else {
             category.specialAttributes.add(attribute);
+            return true;
         }
     }
 
-    public static void deleteAttributeFromCategory(String categoryName, String attribute) throws FieldDoesNotExist {
+    public static boolean deleteAttributeFromCategory(String categoryName, String attribute) throws FieldDoesNotExist {
         Category category = Category.getCategoryByName(categoryName);
         if (category.getSpecialAttributes().contains(attribute)) {
             category.getSpecialAttributes().remove(attribute);
             deleteAttributeFromProducts(category, attribute);
+            return true;
         }
         else {
             throw new FieldDoesNotExist("The requested attribute does'nt exist. Try again.");
         }
     }
-    private static void deleteAttributeFromProducts(Category category, String attribute) {
+    private static boolean deleteAttributeFromProducts(Category category, String attribute) {
         for (Product product : category.getCategoryProducts()) {
             product.getSpecialAttributes().remove(attribute);
         }
+        return true;
     }
 
 
-    public static void editAttributeName(String categoryName, String previousAttributeName, String newAttributeName) throws FieldDoesNotExist, RepeatedCategoryAttributeException {
+    public static boolean editAttributeName(String categoryName, String previousAttributeName, String newAttributeName) throws FieldDoesNotExist, RepeatedCategoryAttributeException {
         Category category = Category.getCategoryByName(categoryName);
         ArrayList<String> specialAttributes = category.getSpecialAttributes();
         if (specialAttributes.contains(previousAttributeName)) {
@@ -235,13 +243,14 @@ public class ManagerBoss {
             specialAttributes.remove(previousAttributeName);
             specialAttributes.add(newAttributeName);
             editAttributeNameAtProducts(category, previousAttributeName, newAttributeName);
+            return true;
         }
         else {
             throw new FieldDoesNotExist("This category has no attribute with requested name.");
         }
     }
 
-    private static void editAttributeNameAtProducts(Category category, String previousAttributeName, String newAttributeName) {
+    private static boolean editAttributeNameAtProducts(Category category, String previousAttributeName, String newAttributeName) {
         for (Product product : category.getCategoryProducts()) {
             HashMap<String, String> specialAttributes = product.getSpecialAttributes();
             if (specialAttributes.containsKey(previousAttributeName)) {
@@ -250,16 +259,18 @@ public class ManagerBoss {
                 specialAttributes.put(newAttributeName, value);
             }
         }
+        return true;
     }
 
 
-    public static void checkExistenceOfCustomerUsername(String customerUsername) throws NotExistCustomerWithUserNameException {
+    public static boolean checkExistenceOfCustomerUsername(String customerUsername) throws NotExistCustomerWithUserNameException {
         if (!Customer.isThereCustomerWithUsername(customerUsername)) {
             throw new NotExistCustomerWithUserNameException("There is'nt any customer with requested username. Enter a customer username:");
         }
+        return true;
     }
 
-    public static void createDiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<String> includedCustomersUserNames, double minimumPriceForUse) {
+    public static boolean createDiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<String> includedCustomersUserNames, double minimumPriceForUse) {
         ArrayList<Customer> includedCustomers = new ArrayList<>();
         if (includedCustomersUserNames.contains("-all")) {
             includedCustomers.addAll(Customer.getAllCustomers());
@@ -273,6 +284,7 @@ public class ManagerBoss {
         for (Customer customer : includedCustomers) {
             customer.discountCodes.add(discountCode);
         }
+        return true;
     }
 
     public static String checkAndGetDiscountCodeDetailsWithCode(String code) throws DiscountNotExist {
@@ -284,13 +296,14 @@ public class ManagerBoss {
         }
     }
 
-    public static void deleteDiscountCodeWithCode(String code) throws DiscountNotExist {
+    public static boolean deleteDiscountCodeWithCode(String code) throws DiscountNotExist {
         if (DiscountCode.isThereDiscountCodeWithCode(code)) {
             DiscountCode discountCode = DiscountCode.getDiscountCodeWithCode(code);
             DiscountCode.getAllDiscountCodes().remove(discountCode);
             for (Customer customer : discountCode.includedBuyersAndUseFrequency.keySet()) {
                 customer.discountCodes.remove(discountCode);
             }
+            return true;
         }
         else {
             throw new DiscountNotExist("The requested discount code does'nt exist or expired.");
