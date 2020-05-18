@@ -1,13 +1,13 @@
 package Controller.Exceptions;
 
-public class ExistenceOfUserWithUsername extends Exception {
+public class CategoryNull extends Exception{
     private int id;
 
     public int getId() {
         return id;
     }
 
-    public ExistenceOfUserWithUsername(String message, int id) {
+    public CategoryNull(String message, int id) {
         super(message);
         this.id = id;
     }

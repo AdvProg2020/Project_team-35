@@ -44,8 +44,9 @@ public abstract class Account {
         return isThereOnlineUser;
     }
 
-    public static void setIsThereOnlineUser(boolean isThereOnlineUser) {
+    public static boolean setIsThereOnlineUser(boolean isThereOnlineUser) {
         Account.isThereOnlineUser = isThereOnlineUser;
+        return true;
     }
 
     /**
@@ -62,16 +63,18 @@ public abstract class Account {
      */
     public static void setOnlineAccount(Account onlineAccount) {
         Account.onlineAccount = onlineAccount;
+        setIsThereOnlineUser(true);
     }
 
     public static ArrayList<Account> getAllLoggedAccounts() {
         return allLoggedAccounts;
     }
 
-    public static void setAllLoggedAccounts(ArrayList<Account> allLoggedAccounts) {
+/*    public static void setAllLoggedAccounts(ArrayList<Account> allLoggedAccounts) {
         Account.allLoggedAccounts = allLoggedAccounts;
     }
 
+ */
     public static int getTypeOfAccount(Account account) {
         return account.typeOfAccount;
     }

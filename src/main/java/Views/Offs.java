@@ -1,12 +1,19 @@
 package Views;
 
+import Controller.Exceptions.CategoryNull;
+import Controller.Exceptions.ExistenceOfUserWithUsername;
 import Controller.Exceptions.NullProduct;
 import Controller.Exceptions.ProductIsNotConfirmed;
 import Controller.OffBoss;
+import Controller.Exceptions.SellerShouldJustBe;
+import Model.Category;
 import Model.Off;
 import Model.Product;
+import Model.ProductFilters.*;
+import Model.Seller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 
 public class Offs extends Page{
@@ -14,7 +21,64 @@ public class Offs extends Page{
         super(name, parentPage);
         subPages.put("1",new RegisteringPanel("registering  panel",this));
         subPages.put("2", goToProductPage());
+        subPages.put("3",filtering());
 
+    }
+    private Page filtering(){
+        return new Page("filter",this) {
+            private ArrayList<Product> sortedProducts = new ArrayList<>();
+            @Override
+            public void setSubPages(HashMap<String, Page> subPages) {
+                super.setSubPages(subPages);
+                subPages.put("1", new Page("show available filters",this) {
+                    @Override
+                    public void execute() {
+                        System.out.println("Category\nCompany\nInventory\nName\nPrice\nProduct\nSeller");
+                        parentPage.execute();
+                    }
+                });
+
+                subPages.put("2", new Page("filter",this) {
+                    @Override
+                    public void execute() {
+                   String command =  scanner.nextLine();
+                   Page nextPage = null;
+                   if (command.equalsIgnoreCase("Name")){
+
+                   }else if (command.equalsIgnoreCase("Category")){
+
+                   }else if (command.equalsIgnoreCase("Inventory")){
+
+                   }else if (command.equalsIgnoreCase("Company")){
+
+                   }else if (command.equalsIgnoreCase("Price")){
+
+                   }else if (command.equalsIgnoreCase("Product")){
+
+                   }else if (command.equalsIgnoreCase("Seller")){
+
+                   }
+                    }
+                });
+                subPages.put("3", new Page("current filters",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
+                subPages.put("4", new Page("disable filter",this) {
+                    @Override
+                    public void execute() {
+                        super.execute();
+                    }
+                });
+            }
+
+            @Override
+            public void execute() {
+                super.execute();
+            }
+        };
     }
     private Page goToProductPage(){
         return new Page("go to product page",this) {
