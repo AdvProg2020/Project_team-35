@@ -88,10 +88,7 @@ public class Customer extends Account {
         return null;
     }
 
-    @Override
-    public void deleteAccount() {
 
-    }
 
     @Override
     public String getPersonalInfo() {

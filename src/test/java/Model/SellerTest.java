@@ -3,19 +3,17 @@ package Model;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.junit.runner.RunWith;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
+import java.util.HashMap;
 
 public class SellerTest {
     Seller seller = new Seller("username", "name", "lastName", "mail@e.ir", "09100577581", "09100577581", "company");
 
     @Test
-    public void getUsername() {
-        Assert.assertEquals(seller.getUsername(), "username");
+    public void testGetUsername() {
+        Assert.assertEquals(seller.getUsername(),"username");
+        Assert.assertNotEquals(seller.getUsername(),"mamad");
     }
 
     @Test
@@ -44,9 +42,10 @@ public class SellerTest {
     @Test
     public void getShortInfo() {
         Assert.assertEquals(seller.getShortInfo(), "UserName : username" + "  --  " + "Type : Seller" + " -- Condition: Wait For Accept");
+        Assert.assertNotEquals(seller.getShortInfo(),null);
     }
 
-    @Test
+    /*@Test
     public void getAllSellers() {
         ArrayList<Seller> all = new ArrayList<>();
         all.add(seller);
@@ -54,31 +53,69 @@ public class SellerTest {
         Assert.assertEquals(Seller.getAllSellers().get(0), all.get(0));
     }
 
+     */
+
     @Test
     public void getSalesHistory() {
+        HashMap<Product,Integer> a = new HashMap<>();
+        Product product = new Product("as","asd",23,seller,2,new Category("ad",null),null,"");
+       ArrayList<Product> s = new ArrayList<>();
+       s.add(product);
+        SellLog sellLog = new SellLog(s,null);
+        a.put(product,sellLog.getNumberOfProducts(product));
+        seller.getSellLogs().add(sellLog);
+        Assert.assertEquals(seller.getSalesHistory(),a);
     }
 
+    @Test
+    public void testGetSellerOffs(){
+       // Assert.assertEquals(seller.getSellerOffs(),null);
+        Product product = new Product("ad","asd",23,seller,2,new Category("sad",null),null,"");
+        ArrayList<Product>a = new ArrayList<>();
+        a.add(product);
+        Off off = new Off(null,null,a,200,12,seller);
+
+        ArrayList<Off> b = new ArrayList<>();
+        b.add(off);
+        for (Off activeOff : Off.allActiveOffs) {
+            System.out.println(activeOff.getOffId());
+        }
+        Assert.assertEquals(seller.getSellerOffs(),b);
+    }
     @Test
     public void hasHeProductWithId() {
         Product product = new Product("a","s",23,seller,2,new Category("a",null),null,"");
 
-        Assert.assertTrue(seller.hasHeProductWithId(1));
+        Assert.assertEquals(seller.hasHeProductWithId(3),2);
+        Assert.assertEquals(seller.hasHeProductWithId(11),5);
+        Seller seller1 = new Seller("asd","asd","das","ads","Ad","dsa","Asd");
+        Product product1 = new Product("ads","ad",23,seller1,2,new Category("asd",null),null,"");
+        Assert.assertEquals(seller.hasHeProductWithId(product1.getProductId()),7);
     }
 
 
+
     @Test
-    public void deleteAccount() {
+    public void testSetSellerOffs(){
+        ArrayList<Off> a = new ArrayList<>();
+        Product product = new Product("asd","ads",23,seller,0,new Category("asd",null),null,"");
+        ArrayList<Product> s = new ArrayList<>();
+        s.add(product);
+        Off off = new Off(null,null,s,231,12,seller);
+        a.add(off);
+        Assert.assertTrue(seller.setSellerOffs(a));
+        Off off1 = null;
+        a.add(off1);
+        Assert.assertFalse(seller.setSellerOffs(a));
     }
 
     @Test
     public void setMoney() {
         Assert.assertTrue(seller.setMoney(21));
+        Assert.assertFalse(seller.setMoney(-23));
     }
 
-    @Test
-    public void testGetUsername() {
-        Assert.assertEquals(seller.getUsername(),"username");
-    }
+
 
     @Test
     public void testGetPersonalInfo() {
@@ -110,28 +147,41 @@ public class SellerTest {
         sellLogs.add(sellLog);
         Assert.assertEquals(seller.getSellLogs(),sellLogs);
     }
+    @Test
+    public void testSetSalableProducts(){
+        Product product = new Product("la","lala",23,seller,3,new Category("as",null),null,"");
+        Product product1 = new Product("kal","nak",243,seller,0,new Category("kal",null),null,"");
+
+        ArrayList<Product> a = new ArrayList<>();
+        a.add(product);
+        Assert.assertTrue(seller.setSalableProducts(a));
+        a.add(product1);
+        Assert.assertFalse(seller.setSalableProducts(a));
+    }
 
     @Test
     public void getSalableProducts() {
         Product product = new Product("la","lala",23,seller,3,new Category("as",null),null,"");
         Product product1 = new Product("kal","nak",243,seller,4,new Category("kal",null),null,"");
-        
-        Assert.assertEquals(seller.getSalableProducts(),null);
+
+        ArrayList<Product> a = new ArrayList<>();
+        a.add(product);
+        a.add(product1);
+        Assert.assertEquals(seller.getSalableProducts(),a);
     }
 
-    @Test
-    public void getSellerOffs() {
-    }
 
-    @Test
-    public void testGetShortInfo() {
-    }
+
+
 
     @Test
     public void testGetAllSellers() {
+        ArrayList<Seller> a = new ArrayList<>();
+        a.add(seller);
+        Seller.allSellers.add(seller);
+        Assert.assertEquals(Seller.getAllSellers(),a);
     }
 
-    @Test
-    public void addOffTest() {
-    }
+
+
 }

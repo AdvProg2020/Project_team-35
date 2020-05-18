@@ -109,15 +109,9 @@ public class DiscountCode {
         DiscountCode.currentSort = currentSort;
     }
 
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
 
     public double getMinimumTotalPriceForUse() {
         return minimumTotalPriceForUse;
     }
 
-    public void setMinimumTotalPriceForUse(double minimumTotalPriceForUse) {
-        this.minimumTotalPriceForUse = minimumTotalPriceForUse;
-    }
 }

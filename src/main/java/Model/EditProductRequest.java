@@ -23,7 +23,7 @@ public class EditProductRequest extends Request {
         this.newCategory = newCategory;
     }
 
-    public void execute() {
+    public boolean execute() {
         this.isDone = true;
         toEdit.setProductStatus(ProductAndOffStatus.CONFIRMED);
         if (newName!=null){
@@ -55,6 +55,7 @@ public class EditProductRequest extends Request {
                 toEdit.setSpecialAttributes(attributes);
             }
         }
+        return true;
     }
         public String getDetails() {
             return "Edit Product Request : \nRequestId: " + this.getRequestId() + "\nRequester Username: " + this.seller.getUsername()

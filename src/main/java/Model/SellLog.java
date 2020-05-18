@@ -20,6 +20,14 @@ public class SellLog extends Log {
         isReceived = received;
     }
 
+    public Integer getNumberOfProducts(Product product){
+        int i = 0;
+        for (Product soldProduct : getSoldProducts()) {
+            if (soldProduct.equals(product))
+                i++;
+        }
+        return i;
+    }
     public ArrayList<Product> getSoldProducts() {
         return soldProducts;
     }

@@ -22,8 +22,8 @@ public class EditOffRequest extends Request {
                 +" --- NewStartDate: " + this.startDateToString()
                 + "\nFinal Date: " + this.toEdit.expireDateToString()
                 + " --- NewFinalDate: " + this.expireDateToString() + "\nMaximum Amount: " + this.toEdit.getMaximumAmountOfOff()
-                +" --- NewMaximumAmount: " + this.toEdit.getMaximumAmountOfOff()
-                + "\nPercent: " + this.toEdit.getOffPercent() + " --- NewPercent: " + this.toEdit.getOffPercent()
+                +" --- NewMaximumAmount: " + this.getNewMaximumAmountOfOff()
+                + "\nPercent: " + this.toEdit.getOffPercent() + " --- NewPercent: " + this.getNewOffPercent()
                 + "\nRequester Username: " + this.seller.getUsername()
                 + "\nIncluded Product Ids: " + this.toEdit.getIncludedProductsId();
     }
@@ -31,7 +31,7 @@ public class EditOffRequest extends Request {
         return "  Edit Off Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
 
     }
-    public void execute() {
+    public boolean execute() {
             this.isDone = true;
             toEdit.setOffStatus(ProductAndOffStatus.CONFIRMED);
             if (newDate!=null){
@@ -46,6 +46,7 @@ public class EditOffRequest extends Request {
             if (newFinalDate!= null){
                 toEdit.setFinalDate(newFinalDate);
             }
+            return true;
     }
 
     public void decline(){
@@ -58,4 +59,13 @@ public class EditOffRequest extends Request {
     public String startDateToString() {
         return newDate.getYear() + "-" + newDate.getMonthValue() + "-" + newDate.getDayOfMonth();
     }
+
+    public double getNewMaximumAmountOfOff() {
+        return newMaximumAmountOfOff;
+    }
+
+    public double getNewOffPercent() {
+        return newOffPercent;
+    }
+
 }

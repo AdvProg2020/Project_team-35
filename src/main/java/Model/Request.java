@@ -21,7 +21,7 @@ public abstract class Request {
     public static int requestIdNumber;
     public abstract String getDetails();
     public abstract String getRequestInfo();
-    public abstract void execute();
+    public abstract boolean execute();
     public abstract void decline();
     private static String currentSort = "Nothing";
 
@@ -44,19 +44,18 @@ public abstract class Request {
         if (this instanceof SellerRegisterRequest) {
             return "Seller Register";
         }
-        if (this instanceof AddOffRequest) {
+        else if (this instanceof AddOffRequest) {
             return "Add Off";
         }
-        if (this instanceof AddProductRequest) {
+        else if (this instanceof AddProductRequest) {
             return "Add Product";
         }
-        if (this instanceof EditOffRequest) {
+        else if (this instanceof EditOffRequest) {
             return "Edit Off";
         }
-        if (this instanceof EditProductRequest) {
+        else {
             return "Edit Product";
         }
-        return null;
     }
 
 

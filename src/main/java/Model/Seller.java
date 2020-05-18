@@ -1,5 +1,6 @@
 package Model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,42 +31,36 @@ public class Seller extends Account {
         salableProducts = new ArrayList<Product>();
     }
 
-    public HashMap<Product, Integer> getSalesHistory() {
-        return null;
+    public HashMap<Product, Integer> getSalesHistory(){
+        HashMap<Product,Integer> history = new HashMap<>();
+        for (SellLog sellLog : sellLogs) {
+            if (sellLog.getSoldProducts()!=null) for (Product product : sellLog.getSoldProducts()) {
+                history.put(product, sellLog.getNumberOfProducts(product));
+            }
+        }
+        return history;
     }
-    public boolean hasHeProductWithId(int productId) {
+    public int hasHeProductWithId(int productId) {
         Product product = Product.getProductWithId(productId);
         if (product==null)
-            return false;
-        if (salableProducts.contains(product))
-            return true;
-        return false;
+            return 5;
+       else if (salableProducts.contains(product))
+            return 2;
+        else
+            return 7;
     }
-
-
-    @Override
-    public void deleteAccount() {
-
-    }
-
-    /**
-     * just for test
-     * @param money
-     */
-    public boolean setMoney(double money) {
+    public boolean setMoney(double money){
         if (money<0)
             return false;
         this.money = money;
         return true;
     }
-
     @Override
-    public String getUsername() {
+    public String getUsername(){
         return super.getUsername();
     }
-
     @Override
-    public String getPersonalInfo() {
+    public String getPersonalInfo(){
         return "Type: Seller\n" +
                 "Username: "+getUsername()+"\n" +
                 "Name: "+getFirstName()+"\n" +
@@ -75,45 +70,68 @@ public class Seller extends Account {
                 "Company: "+getCompanyName()+"\n"+
                 "password: "+getPassword();
     }
-
-    /**
-     * update this method.
-     * @return
-     */
-    public String getCompanyName() {
+    public String getCompanyName(){
         return companyName;
     }
 
-    public boolean setCompanyName(String companyName) {
+    public boolean setCompanyName(String companyName){
         this.companyName = companyName;
         return true;
     }
 
-    public double getMoney() {
+    public double getMoney(){
         return money;
     }
 
-    public ArrayList<SellLog> getSellLogs() {
+    public ArrayList<SellLog> getSellLogs(){
         return sellLogs;
     }
 
     public ArrayList<Product> getSalableProducts() {
+       ArrayList<Product> result = new ArrayList<>();
+        for (Product product : salableProducts) {
+            if (product.getInventory()!=0)
+                result.add(product);
+        }
+        setSalableProducts(result);
         return salableProducts;
     }
 
+    public boolean setSalableProducts(ArrayList<Product> salableProducts) {
+        for (Product product : salableProducts) {
+            if (product.getInventory()<=0)
+                return false;
+        }
+        this.salableProducts = salableProducts;
+        return true;
+    }
+
     public ArrayList<Off> getSellerOffs() {
+        ArrayList<Off> result = new ArrayList<>();
+        for (Off activeOff : Off.getAllActiveOffs()) {
+            if (activeOff.getSeller().equals(this))
+                result.add(activeOff);
+        }
+        setSellerOffs(result);
         return sellerOffs;
     }
+
+    public boolean setSellerOffs(ArrayList<Off> sellerOffs){
+        for (Off off : sellerOffs) {
+            if (off==null)
+                return false;
+        }
+
+            this.sellerOffs = sellerOffs;
+            return true;
+
+    }
+
     @Override
-    public String getShortInfo() {
+    public String getShortInfo(){
         return "UserName : " + this.getUsername() + "  --  " + "Type : Seller" + " -- Condition: " + getIsConfirmedOrWaitForCheck();
     }
-
     public static ArrayList<Seller> getAllSellers() {
         return allSellers;
-    }
-
-    public void addOffTest(Off off){
-        sellerOffs.add(off);
     }
 }

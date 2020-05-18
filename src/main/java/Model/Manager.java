@@ -41,15 +41,7 @@ public class Manager extends Account {
         return allManagers.size() > 0;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 
-    @Override
-    public void deleteAccount() {
-
-    }
     public static Request getNewRequestWithId(int id) {
         for (Request newRequest : newRequests) {
             if (newRequest.getRequestId() == id) {
@@ -66,7 +58,6 @@ public class Manager extends Account {
         }
         return null;
     }
-
     public static boolean isThereNewRequestWithId(int requestId) {
         return getNewRequestWithId(requestId) != null;
     }
@@ -76,7 +67,7 @@ public class Manager extends Account {
     /**
      * this format is true
      *
-     * @return
+     *
      */
     @Override
     public String getPersonalInfo() {
@@ -86,7 +77,6 @@ public class Manager extends Account {
                 "Email: " + getEmail() + "\n" +
                 "PhoneNumber: " + getPhoneNumber();
     }
-
     @Override
     public String getShortInfo() {
         return "UserName : " + this.getUsername() + "  --  " + "Type : Manager" + " -- Condition: " + getIsConfirmedOrWaitForCheck();
