@@ -38,5 +38,6 @@ public class RequestTest {
         Assert.assertEquals(editOffRequest.getTypeOfRequest(), "Edit Off");
         Assert.assertEquals(editProductRequest.getTypeOfRequest(), "Edit Product");
 
+
     }
 }

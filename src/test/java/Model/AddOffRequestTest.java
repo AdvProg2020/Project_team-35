@@ -25,6 +25,7 @@ public class AddOffRequestTest {
 
     @Test
     public void execute() {
+        Assert.assertEquals(request.execute(), true);
     }
 
     @Test
