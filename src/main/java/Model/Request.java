@@ -44,19 +44,18 @@ public abstract class Request {
         if (this instanceof SellerRegisterRequest) {
             return "Seller Register";
         }
-        if (this instanceof AddOffRequest) {
+        else if (this instanceof AddOffRequest) {
             return "Add Off";
         }
-        if (this instanceof AddProductRequest) {
+        else if (this instanceof AddProductRequest) {
             return "Add Product";
         }
-        if (this instanceof EditOffRequest) {
+        else if (this instanceof EditOffRequest) {
             return "Edit Off";
         }
-        if (this instanceof EditProductRequest) {
+        else /*if (this instanceof EditProductRequest)*/ {
             return "Edit Product";
         }
-        return null;
     }
 
 

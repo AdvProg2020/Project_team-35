@@ -8,11 +8,8 @@ import java.util.ArrayList;
 
 public class AddOffRequestTest {
     private Seller seller1 = new Seller("a","a","s","sd","ds","sad","asd");
-    private Seller seller2 = new Seller("username", "name", "lastName", "mail@e.ir", "09100577581", "09100577581", "company");
     LocalDateTime localDateTime = LocalDateTime.parse("2320-10-19T22:02:23");
     LocalDateTime localDateTime2 = LocalDateTime.parse("2000-10-19T22:02:23");
-    LocalDateTime localDateTime1 = LocalDateTime.now();
-    LocalDateTime localDateTime3 = LocalDateTime.parse("2002-10-19T22:02:23");
     private  Off off = new Off(localDateTime,localDateTime2,new ArrayList<>(),344,23,seller1);
     AddOffRequest request = new AddOffRequest(seller1, off);
     @Test
