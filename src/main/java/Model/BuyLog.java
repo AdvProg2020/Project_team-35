@@ -42,4 +42,7 @@ public class BuyLog extends Log{
         return a;
     }
 
+    public void setDelivered(boolean delivered) {
+        isDelivered = delivered;
+    }
 }

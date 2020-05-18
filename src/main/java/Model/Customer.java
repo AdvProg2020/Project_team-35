@@ -24,10 +24,10 @@ public class Customer extends Account {
      */
     public Customer(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
         super(username, firstName, lastName, email, phoneNumber, password, 2);
-        allCustomers.add(this);
         discountCodes = new ArrayList<DiscountCode>();
         buyLogs = new ArrayList<BuyLog>();
         cart = new HashMap<>();
+        allCustomers.add(this);
     }
 
     public boolean isThereProductWithIdInCart(int id) {
@@ -83,11 +83,6 @@ public class Customer extends Account {
     }
 
 
-    @Override
-    public String toString() {
-        return null;
-    }
-
 
     public ArrayList<BuyLog> getBuyLogs() {
         return buyLogs;
@@ -129,8 +124,10 @@ public class Customer extends Account {
         int number = 0;
         for (BuyLog log : buyLogs) {
             if (log.isDelivered()){
-                if (log.getBoughtProducts().contains(product))
-                    number++;
+                for (Product boughtProduct : log.getBoughtProducts()) {
+                    if (boughtProduct.equals(product))
+                        number++;
+                }
             }
         }
         return number;

@@ -45,9 +45,6 @@ public class Product {
         seller.getSalableProducts().add(this);
     }
 
-    public static void rateProduct(int productId, int rate) {
-
-    }
 
     public ArrayList<Customer> getWhoBoughtThisGood() {
         return whoBoughtThisGood;
@@ -74,10 +71,17 @@ public class Product {
         }
         return null;
     }
-
+/*
     private void updateProductAverageRate(int productId) {
+        Product product = Product.getProductWithId(productId);
+        double average = 0.0;
+        for (Rate rate : product.getRatesList()) {
+            average+=rate.getRate();
+        }
+        }
 
-    }
+ */
+
 
 
     public int getProductId() {
@@ -121,18 +125,17 @@ public class Product {
     public String getName() {
         return name;
     }
-
     public double getAverageOfRates() {
         double average = 0.0;
         int number = 0;
         for (Rate rate : ratesList) {
-            average = rate.getRate();
+            average += rate.getRate();
             number += 1;
         }
         return average / number;
     }
 
-    public static void deleteProduct(Product product) {
+    public static boolean deleteProduct(Product product) {
         for (Off allActiveOff : Off.allActiveOffs) {
             if (allActiveOff.getIncludedProducts().contains(product)) {
                 allActiveOff.getIncludedProducts().remove(product);
@@ -141,6 +144,8 @@ public class Product {
         }
         allProducts.remove(product);
         product.getSeller().getSalableProducts().remove(product);
+        product.getCategory().getCategoryProducts().remove(product);
+        return true;
     }
 
     public HashMap<String, String> getSpecialAttributes() {
@@ -357,7 +362,7 @@ public class Product {
             Comparator<Customer> numberCompare = new Comparator<Customer>() {
                 @Override
                 public int compare(Customer o1, Customer o2) {
-                    return o1.getNumberOfBoughtProduct(Product.getProductWithId(productId))-o2.getNumberOfBoughtProduct(Product.getProductWithId(productId));
+                    return -(o1.getNumberOfBoughtProduct(Product.getProductWithId(productId))-o2.getNumberOfBoughtProduct(Product.getProductWithId(productId)));
                 }
             };
             Collections.sort(whoBoughtThisGood,numberCompare);

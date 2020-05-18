@@ -86,10 +86,21 @@ public class ProductTest {
 
     @Test
     public void getAverageOfRates() {
+        Rate rate = new Rate(customer,4,product);
+        Rate rate1 = new Rate(customer,2,product);
+        Assert.assertEquals(3,product.getAverageOfRates(),1);
     }
 
     @Test
     public void deleteProduct() {
+        ArrayList<Product> a = new ArrayList<>();
+        a.add(product);
+        ArrayList<Product> s = new ArrayList<>();
+        Product product1 = new Product("ad","ads",231,seller,23,category,null,"");
+        s.add(product1);
+        Off off1 = new Off(null,null,s,233,24,seller);
+        Off off = new Off(null,null,a,233,12,seller);
+        Assert.assertTrue(Product.deleteProduct(product));
     }
 
     @Test
@@ -169,6 +180,11 @@ public class ProductTest {
 
     @Test
     public void showSummeryDetailsOfProduct() {
+        Product product = new Product("a", "mihan", 23, seller, 10, category, null, "");
+        String result = "description :\n" + "" + "\n" + "price :\n" + "23" + "\n" + "category :\n" + category.getCategoryName() + "\n" + "seller :\n" + seller.getUsername() + "\n" + "average :\n" + product.getAverageOfRates();
+
+        Assert.assertSame(result,product.showSummeryDetailsOfProduct());
+
     }
 
     @Test
@@ -197,6 +213,13 @@ public class ProductTest {
 
     @Test
     public void getCommentsList() {
+        Comment comment = new Comment(product,"asd",customer,"sa");
+        Comment comment1 = new Comment(product,"dsa",customer,"asd");
+        ArrayList<Comment> a = new ArrayList<>();
+        a.add(comment);
+        a.add(comment1);
+        product.setCommentsList(a);
+        Assert.assertEquals(product.getCommentsList(),a);
     }
 
     @Test
@@ -209,10 +232,15 @@ public class ProductTest {
 
     @Test
     public void getProductStatus() {
+        product.setProductStatus(ProductAndOffStatus.CONFIRMED);
+        Assert.assertEquals(product.getProductStatus(),ProductAndOffStatus.CONFIRMED);
     }
 
     @Test
     public void getReviewNumber() {
+        product.setReviewNumber(12);
+        Assert.assertEquals(product.getReviewNumber(),12);
+        Assert.assertNotEquals(product.getReviewNumber(),11);
     }
 
     @Test
@@ -223,21 +251,56 @@ public class ProductTest {
     public void sortBuyers() {
         ArrayList<Customer> a = new ArrayList<>();
         a.add(customer);
-        Customer customer1 = new Customer("mohammad1", "moli", "molis", "sad@sad.s", "2323", "pass");
-        Customer customer2 = new Customer("mohammad2", "moli", "molis", "sad@sad.s", "2323", "pass");
+        Customer customer1 = new Customer("mohammadzzz", "moli", "molis", "sad@sad.s", "2323", "pass");
+        Customer customer2 = new Customer("mohammadz", "moli", "molis", "sad@sad.s", "2323", "pass");
 
-        a.add(customer1);
         a.add(customer2);
+        a.add(customer1);
         ArrayList<Product> b = new ArrayList<>();
         b.add(product);
-        BuyLog buyLog = new BuyLog(233,12,b,seller.getUsername());
-        customer.getBuyLogs().add(buyLog);
-        product.getWhoBoughtThisGood().add(customer1);
+        b.add(product);
+        b.add(product);
+       BuyLog buyLog = new BuyLog(233,12,b,seller.getUsername());
+       buyLog.setDelivered(true);
+        customer1.getBuyLogs().add(buyLog);
+
+
+       product.getWhoBoughtThisGood().add(customer1);
         product.getWhoBoughtThisGood().add(customer);
         product.getWhoBoughtThisGood().add(customer2);
-        for (Customer customer3 : product.getWhoBoughtThisGood()) {
-            System.out.println(customer3.getUsername());
+
+
+        for (Customer number : product.sortBuyers("username")) {
+            System.out.println(number.getUsername());
         }
-        Assert.assertEquals(null, product.sortBuyers("number"));
+        Assert.assertEquals(a, product.sortBuyers("username"));
+
+
+        ArrayList<Product> n = new ArrayList<>();
+        n.add(product);
+        n.add(product);
+
+      BuyLog buyLog1 = new BuyLog(213,23,n,seller.getUsername());
+      customer2.getBuyLogs().add(buyLog1);
+        a.remove(customer1);
+        a.remove(customer2);
+        a.remove(customer);
+        buyLog1.setDelivered(true);
+        a.add(customer1);
+        a.add(customer2);
+        a.add(customer);
+        for (Customer customer3 : a) {
+            System.out.println(customer3.getUsername());
+            System.out.println(customer3.getNumberOfBoughtProduct(product));
+        }
+        Assert.assertEquals(a,product.sortBuyers("number"));
+    }
+
+    @Test
+    public void getRateList(){
+        ArrayList<Rate> a = new ArrayList<>();
+        Rate rate = new Rate(customer,23,product);
+        a.add(rate);
+        Assert.assertEquals(product.getRatesList(),a);
     }
 }
