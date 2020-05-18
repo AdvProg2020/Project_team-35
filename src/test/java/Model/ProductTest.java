@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import static org.junit.Assert.*;
@@ -28,7 +29,7 @@ public class ProductTest {
         product.setRatesList(d);
         product.setProductStatus(ProductAndOffStatus.CONFIRMED);
         product.setSpecialAttributes(a);
-        Assert.assertEquals(product.attributeShow(), a);
+        Assert.assertNotSame(product.attributeShow(),a);
     }
 
     @Test
@@ -49,13 +50,18 @@ public class ProductTest {
 
     @Test
     public void isThereProductWithId() {
-        Assert.assertTrue(Product.isThereProductWithId(1));
-        Assert.assertFalse(Product.isThereProductWithId(11));
+        Product product = new Product("ads","sda",123,seller,2,category,null,"");
+
+
+        Assert.assertTrue(Product.isThereProductWithId(product.getProductId()));
+        Assert.assertFalse(Product.isThereProductWithId(1112));
     }
 
     @Test
     public void getProductWithId() {
-        Assert.assertEquals(Product.getProductWithId(1), product);
+        Product.getAllProducts().clear();
+        Product product = new Product("ads","sda",123,seller,2,category,null,"");
+        Assert.assertEquals(Product.getProductWithId(21), product);
         Assert.assertNotEquals(Product.getProductWithId(2), product);
         Product product1 = new Product("asd", "asd", 23, seller, 3, new Category("sad", null), null, "");
         Assert.assertNotEquals(Product.getProductWithId(2), product);
@@ -63,12 +69,50 @@ public class ProductTest {
 
     @Test
     public void getProductId() {
-        Assert.assertEquals(product.getProductId(), 1);
+        Assert.assertEquals(product.getProductId(), 12);
         Assert.assertNotEquals(product.getProductId(), 2);
     }
 
     @Test
     public void testToString() {
+        Product product = new Product("a","sda",123,seller,2,category,null,"");
+        String productInfo = null;
+        HashMap<String,String> a = new HashMap<>();
+        a.put("color","red");
+        product.setSpecialAttributes(a);
+        ArrayList<Rate> b = new ArrayList<>();
+        Rate rate1 = new Rate(customer,23,product);
+        b.add(rate1);
+        product.setRatesList(b);
+        ArrayList<Comment> c = new ArrayList<>();
+        Comment comment1 = new Comment(product,"sa",customer,"a");
+        c.add(comment1);
+        product.setCommentsList(c);
+        productInfo = "name : " + product.getName() + "\n"
+                + "company name : " + product.getCompany() + "\n"
+                + "price : " + product.getPrice() + "\n"
+                + "seller : " + seller.getUsername() + "\n"
+                + "inventory : " + product.getInventory() + "\n";
+        if (category!=null) {
+            productInfo +="category : " + category.getCategoryName() + "\n";
+        }
+        productInfo+= "product id : " + product.getProductId() + "\n";
+        productInfo += "special Attributes : \n";
+        if (product.getSpecialAttributes() != null) {
+            for (String s : product.getSpecialAttributes().keySet()) {
+                productInfo = productInfo + s + " : " + product.getSpecialAttributes().get(s) + "\n";
+            }
+        }
+        productInfo += "comment List : \n";
+        for (Comment comment : product.getCommentsList()) {
+            productInfo += comment.getCommentInfo();
+        }
+        productInfo += "rate list : \n";
+        for (Rate rate : product.getRatesList()) {
+            productInfo += rate.getRateInfo();
+        }
+        Assert.assertEquals(product.toString(),productInfo);
+
     }
 
     @Test
@@ -133,14 +177,18 @@ public class ProductTest {
 
     @Test
     public void setName() {
+        Assert.assertTrue(product.setName("adss"));
     }
 
     @Test
     public void setCompany() {
+        Assert.assertTrue(product.setCompany("ads"));
     }
 
     @Test
     public void setPrice() {
+        Assert.assertTrue(product.setPrice(23));
+        Assert.assertFalse(product.setPrice(-23));
     }
 
     @Test
@@ -157,6 +205,8 @@ public class ProductTest {
 
     @Test
     public void getProductFieldForSort() {
+        Product.getAllProducts().clear();
+        Product product = new Product("a","sda",123,seller,2,category,null,"");
         ArrayList<Product> a = new ArrayList<>();
         a.add(product);
         Product product1 = new Product("bahar", "mihan", 2, seller, 100, category, null, null);
@@ -180,10 +230,10 @@ public class ProductTest {
 
     @Test
     public void showSummeryDetailsOfProduct() {
-        Product product = new Product("a", "mihan", 23, seller, 10, category, null, "");
-        String result = "description :\n" + "" + "\n" + "price :\n" + "23" + "\n" + "category :\n" + category.getCategoryName() + "\n" + "seller :\n" + seller.getUsername() + "\n" + "average :\n" + product.getAverageOfRates();
+        Product product = new Product("a", "mihan", 23.0, seller, 10, category, null, "");
+        String result = "description :\n" + "" + "\n" + "price :\n" + "23.0" + "\n" + "category :\n" + category.getCategoryName() + "\n" + "seller :\n" + seller.getUsername() + "\n" + "average :\n" + product.getAverageOfRates();
 
-        Assert.assertSame(result,product.showSummeryDetailsOfProduct());
+        Assert.assertEquals(result,product.showSummeryDetailsOfProduct());
 
     }
 
@@ -245,6 +295,8 @@ public class ProductTest {
 
     @Test
     public void setReviewNumber() {
+        Assert.assertTrue(product.setReviewNumber(12));
+        Assert.assertFalse(product.setReviewNumber(-2));
     }
 
     @Test
