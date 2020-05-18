@@ -22,4 +22,26 @@ private Product product = new Product("a","s",23,new Seller("a","s","ds","fd","s
         customer.setCart(cart);
         Assert.assertEquals(66,customer.getTotalPriceOFCart(),1);
     }
+    @Test
+    public void getListOFProductsAtCart() {
+        HashMap<Product, Integer> map = new HashMap<>();
+        map.put(product, 2);
+        customer.cart.put(product, 2);
+        Assert.assertEquals(customer.cart, map);
+    }
+    @Test
+    public void getPaymentAmount() {
+        customer.setPaymentAmount(10.0);
+        Assert.assertEquals(10.0, 1);
+    }
+    @Test
+    public void isThereCustomerWithUsername() {
+        Assert.assertTrue(Customer.isThereCustomerWithUsername("a"));
+        Assert.assertFalse(Customer.isThereCustomerWithUsername("b"));
+    }
+    @Test
+    public  void getCustomerWithName(String username) {
+        Assert.assertEquals(customer, Customer.getCustomerWithName("a"));
+        Assert.assertNull(Customer.getCustomerWithName("b"));
+    }
 }
