@@ -6,8 +6,11 @@ import Controller.Exceptions.NullProduct;
 import Controller.Exceptions.ProductIsFinished;
 import Controller.ProductBoss;
 import Model.Account;
+import Model.BuyLog;
 import Model.Customer;
+import Model.Product;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
@@ -147,16 +150,41 @@ public class BuyerPage extends Page {
         };
     }
 
+    private Page showOrder(){
+        return new Page("show order",viewOrders()) {
+            @Override
+            public void execute() {
+                super.execute();
+            }
+        };
+    }
+
+    private Page rate(){
+        return new Page("rate",viewOrders()) {
+            @Override
+            public void execute() {
+                super.execute();
+            }
+        };
+    }
     private Page viewOrders() {
         return new Page("view orders", this) {
             @Override
             public void setSubPages(HashMap<String, Page> subPages) {
-                subPages.put("show order", this);
-                subPages.put("rate", this);
+                subPages.put("1", showOrder());
+                subPages.put("2", rate());
             }
 
             @Override
             public void execute() {
+                ArrayList<BuyLog> buyLogs = CustomerBoss.showBuyResume((Customer)Account.getOnlineAccount());
+                for (BuyLog log : buyLogs) {
+                    System.out.println(log.getOrderNumber());
+                    HashMap<Product,Integer> products = CustomerBoss.showProductsOfALog(log);
+                    for (Product product : products.keySet()) {
+                        System.out.println(product.getName()+"  **************  "+products.get(product));
+                    }
+                }
                 super.execute();
             }
 

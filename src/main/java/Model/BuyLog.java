@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BuyLog extends Log{
     private double purchasedMoney;
@@ -14,6 +15,8 @@ public class BuyLog extends Log{
         OffDiscountMoney = offDiscountMoney;
         this.boughtProducts = boughtProducts;
         this.sellerName = sellerName;
+        numberOfLogs++;
+        orderNumber = numberOfLogs;
     }
 
     public boolean isDelivered() {
@@ -23,4 +26,20 @@ public class BuyLog extends Log{
     public ArrayList<Product> getBoughtProducts() {
         return boughtProducts;
     }
+    public int getNumberOfProduct(Product product){
+        int i =0;
+        for (Product boughtProduct : getBoughtProducts()) {
+            if (product.equals(boughtProduct))
+                i++;
+        }
+        return i;
+    }
+    public HashMap<Product,Integer> historyOfBuys(){
+        HashMap<Product,Integer> a = new HashMap<>();
+        for (Product product : getBoughtProducts()) {
+            a.put(product,getNumberOfProduct(product));
+        }
+        return a;
+    }
+
 }

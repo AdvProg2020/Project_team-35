@@ -1,8 +1,15 @@
 package Model;
 
 public abstract class Log {
-    private static int numberOfLogs;
-    private int logId;
+    protected static int numberOfLogs;
+    protected int logId;
     //date;
-    private int orderNumber;
+    protected int orderNumber;
+
+    public int getLogId() {
+        return logId;
+    }
+    public int getOrderNumber(){
+        return orderNumber;
+    }
 }

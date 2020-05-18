@@ -4,6 +4,7 @@ import Controller.Exceptions.*;
 import Model.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CustomerBoss {
     public static double showMoney(Customer customer) {
@@ -114,5 +115,11 @@ public class CustomerBoss {
             return true;
         }
     }
+    public static ArrayList<BuyLog> showBuyResume(Customer customer){
+        return customer.getBuyLogs();
+    }
 
+    public static HashMap<Product,Integer> showProductsOfALog(BuyLog buyLog){
+        return buyLog.historyOfBuys();
+    }
 }
