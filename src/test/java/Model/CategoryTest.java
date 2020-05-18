@@ -17,7 +17,7 @@ public class CategoryTest {
     @Test
     public void getCategoryByName() {
         Category category = new Category("labaniat",null);
-        Assert.assertEquals(Category.getCategoryByName("labaniat"), category);
+        Assert.assertEquals(Category.getCategoryByName("labaniat").getCategoryName(), category.getCategoryName());
         Assert.assertEquals(Category.getCategoryByName("sdsd"), null);
     }
 

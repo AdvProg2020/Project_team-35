@@ -29,7 +29,7 @@ public class EditProductRequestTest {
 
     @Test
     public void testGetRequestInfo() {
-        Assert.assertEquals("  Edit Product Request --- UserName: " + "a" + " --- RQId: " + 1, editProductRequest.getRequestInfo());
+        Assert.assertEquals("  Edit Product Request --- UserName: " + "a" + " --- RQId: " + 3, editProductRequest.getRequestInfo());
 
     }
 

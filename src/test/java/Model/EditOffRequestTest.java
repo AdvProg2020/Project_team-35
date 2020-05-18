@@ -36,7 +36,7 @@ public class EditOffRequestTest {
         LocalDateTime localDateTime2 = LocalDateTime.parse("2000-10-19T22:02:23");
         Off off = new Off(localDateTime,localDateTime2,new ArrayList<>(),344,23,seller1);
         EditOffRequest editOffRequest = new EditOffRequest(seller1, off, 1, 1, localDateTime, localDateTime2);
-        Assert.assertEquals(editOffRequest.getRequestInfo(), "  Edit Off Request --- UserName: " + "a" + " --- RQId: " + 1);
+        Assert.assertEquals(editOffRequest.getRequestInfo(), "  Edit Off Request --- UserName: " + "a" + " --- RQId: " + 4);
 
     }
 
