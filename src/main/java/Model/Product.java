@@ -327,7 +327,7 @@ public class Product {
     public String showComments() {
         String result = "";
         for (Comment comment : getCommentsList()) {
-            result += comment.getCommentText();
+            result += comment.getCommenter().getUsername()+" : title -> "+"( "+comment.getTitle()+" ) "+comment.getCommentText()+"\n";
         }
         return result;
     }
@@ -363,5 +363,9 @@ public class Product {
             Collections.sort(whoBoughtThisGood,numberCompare);
         }
         return whoBoughtThisGood;
+    }
+
+    public ArrayList<Rate> getRatesList() {
+        return ratesList;
     }
 }
