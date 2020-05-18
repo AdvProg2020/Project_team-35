@@ -1,12 +1,16 @@
 package Views;
 
-import Controller.Exceptions.NullProduct;
-import Controller.Exceptions.ProductIsNotConfirmed;
+import Controller.Exceptions.*;
+import Controller.MaxMinReplacement;
 import Controller.OffBoss;
+import Model.Category;
 import Model.Off;
 import Model.Product;
+import Model.ProductFilters.*;
+import Model.Seller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 
 public class Offs extends Page{
@@ -14,7 +18,114 @@ public class Offs extends Page{
         super(name, parentPage);
         subPages.put("1",new RegisteringPanel("registering  panel",this));
         subPages.put("2", goToProductPage());
+        subPages.put("3",filtering());
 
+    }
+    private Page filtering(){
+        return new Page("filter",this) {
+            private ArrayList<Product> sortedProducts = new ArrayList<>();
+            @Override
+            public void setSubPages(HashMap<String, Page> subPages) {
+                super.setSubPages(subPages);
+                subPages.put("1", new Page("show available filters",this) {
+                    @Override
+                    public void execute() {
+                        System.out.println("Category\nCompany\nInventory\nName\nPrice\nProduct\nSeller");
+                        parentPage.execute();
+                    }
+                });
+
+                subPages.put("2", new Page("filter",this) {
+                    @Override
+                    public void execute() {
+                   String command =  scanner.nextLine();
+                   Page nextPage = null;
+                   String field = "";
+                   String amount1 = "";
+                   String amount2 = "";
+                   if (command.equalsIgnoreCase("Name")){
+                       String name = scanner.nextLine();
+                        amount1 = name;
+                        field = "Name";
+                   }else if (command.equalsIgnoreCase("Category")){
+                       String category = scanner.nextLine();
+                       field = "Category";
+                       amount1 = category;
+                   }else if (command.equalsIgnoreCase("Inventory")){
+                       field = "Inventory";
+                   }else if (command.equalsIgnoreCase("Company")){
+                       String company = scanner.nextLine();
+                       field = "Company";
+                       amount1 = company;
+                   }else if (command.equalsIgnoreCase("Price")){
+                       String min = scanner.nextLine();
+                       String max = scanner.nextLine();
+                       field = "Price";
+                       amount1 = min;
+                       amount2 = max;
+                   }
+                   else if (command.equalsIgnoreCase("Seller")){
+                       String seller = scanner.nextLine();
+                       field = "Seller";
+                       amount1 = seller;
+                   }else if (command.equalsIgnoreCase("back")){
+                       parentPage.execute();
+                       return;
+                   }
+                   else {
+                       this.execute();
+                       return;
+                   }
+                        try {
+                            OffBoss.addFieldToFilterFields(field,amount1,amount2);
+                        } catch (CategoryNull | InvalidNumber | MaxMinReplacement | SellerShouldJustBe categoryNull) {
+                            categoryNull.printStackTrace();
+                        }
+                        parentPage.execute();
+                    }
+                });
+                subPages.put("3", new Page("current filters",this) {
+                    @Override
+                    public void execute() {
+                        System.out.println("filter fields: ");
+                        if (OffBoss.getFields()!=null) {
+                            for (ProductFilter field : OffBoss.getFields()) {
+                                System.out.println(field.getFilterName());
+                            }
+                        }
+                        parentPage.execute();
+                    }
+                });
+                subPages.put("4", new Page("disable filter",this) {
+                    @Override
+                    public void execute() {
+                        Page nextPage = null;
+                        System.out.println("enter a field:");
+                        String field = scanner.nextLine();
+                        if (!OffBoss.disableFilter(field)){
+                            System.err.println("invalid");
+                            nextPage = this;
+                        }else {
+                            nextPage = parentPage;
+                        }
+                        nextPage.execute();
+                    }
+                });
+                subPages.put("5", new Page("show products",this) {
+                    @Override
+                    public void execute() {
+                        for (Product product : OffBoss.filterFields(OffBoss.getProducts())) {
+                            System.out.println(product.getName());
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void execute() {
+                super.execute();
+            }
+        };
     }
     private Page goToProductPage(){
         return new Page("go to product page",this) {

@@ -18,14 +18,20 @@ public class EditProductRequestTest {
 
     @Test
     public void execute() {
+        HashMap<String, String> newAttributes = new HashMap<>();
+        newAttributes.put("salam", "chetori");
+        EditProductRequest editProductRequest = new EditProductRequest(seller1, product, "a", "a", 1, 1, newAttributes, category);
         Assert.assertEquals(editProductRequest.execute(),true);
+
     }
 
-    @Test
-    public void getDetails() {
-    }
+
 
     @Test
-    public void getRequestInfo() {
+    public void testGetRequestInfo() {
+        Assert.assertEquals("  Edit Product Request --- UserName: " + "a" + " --- RQId: " + 3, editProductRequest.getRequestInfo());
+
     }
+
+
 }

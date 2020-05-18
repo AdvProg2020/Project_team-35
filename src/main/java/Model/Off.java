@@ -29,6 +29,7 @@ public class Off {
         seller.getSellerOffs().add(this);
         offIdNumber+=1;
         offId = offIdNumber;
+        this.offStatus = ProductAndOffStatus.FORMAKE;
     }
     public Seller getSeller() {
         return seller;

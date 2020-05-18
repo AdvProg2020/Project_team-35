@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -86,6 +87,26 @@ private Seller seller = new Seller("a","a","s","sd","ds","sad","asd");
         for (Off off3 : a) {
             ids.add(off3.getOffId());
         }
-        Assert.assertEquals(ids,null);
+        ArrayList<Integer> result = new ArrayList<>();
+        result.add(3);
+        result.add(1);
+        result.add(2);
+        Assert.assertEquals(ids, result);
+    }
+
+    @Test
+    public void testShowOff() {
+        LocalDateTime localDateTime1 = LocalDateTime.parse("2000-10-19T22:02:23");
+        LocalDateTime localDateTime2 = LocalDateTime.parse("2020-10-19T22:02:23");
+        ArrayList<Product> productsList = new ArrayList<>();
+        Category category = new Category("labaniat",null);
+        Product product = new Product("a", "mihan", 23, seller, 10, category, null, null);
+        productsList.add(product);
+        Off off2 = new Off(localDateTime2,localDateTime1,productsList,233,22,seller);
+        Assert.assertEquals("id: "+4+"\n" + "start date: "+"2000-10-19T22:02:23"+"\nfinal date: "+"2020-10-19T22:02:23"+"\n"
+            +"status: "+"FORMAKE"+"\n"+"percent: "+22.0+"\n"+"maximum: "+233.0+"\n"
+            +"product id: " + 1 + "\n"+"product name: " + "a" + "\n"
+            +"product inventory: " + 10 + "\n" , off2.showOff());
     }
 }
+

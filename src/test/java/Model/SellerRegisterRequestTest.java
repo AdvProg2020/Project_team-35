@@ -10,7 +10,7 @@ public class SellerRegisterRequestTest {
 
     @Test
     public void getRequestInfo() {
-        Assert.assertEquals(request.getRequestInfo(), "  Seller Register Request --- username: username --- RQId: 1");
+        Assert.assertEquals(request.getRequestInfo(), "  Seller Register Request --- username: username --- RQId: 4");
     }
 
     @Test

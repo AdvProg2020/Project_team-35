@@ -315,9 +315,7 @@ if (product.getSpecialAttributes()!=null) {
                 if (seller.hasHeProductWithId(integer)!=2) {
                     throw new ThisIsNotYours("this is not yours", 4);
                 }
-                else if (Product.getProductWithId(integer)==null){
-                    throw new NullProduct("null product",5);
-                }else if (Off.isThereProduct(Product.getProductWithId(integer))){
+               else if (Off.isThereProduct(Product.getProductWithId(integer))){
                     throw new JustOneOffForEveryProduct("product is in another one",6);
                 }
                 allProducts.add(Product.getProductWithId(integer));

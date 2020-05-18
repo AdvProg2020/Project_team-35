@@ -45,9 +45,6 @@ public class Product {
         seller.getSalableProducts().add(this);
     }
 
-    public static void rateProduct(int productId, int rate) {
-
-    }
 
     public ArrayList<Customer> getWhoBoughtThisGood() {
         return whoBoughtThisGood;
@@ -74,10 +71,17 @@ public class Product {
         }
         return null;
     }
-
+/*
     private void updateProductAverageRate(int productId) {
+        Product product = Product.getProductWithId(productId);
+        double average = 0.0;
+        for (Rate rate : product.getRatesList()) {
+            average+=rate.getRate();
+        }
+        }
 
-    }
+ */
+
 
 
     public int getProductId() {
@@ -121,18 +125,17 @@ public class Product {
     public String getName() {
         return name;
     }
-
     public double getAverageOfRates() {
         double average = 0.0;
         int number = 0;
         for (Rate rate : ratesList) {
-            average = rate.getRate();
+            average += rate.getRate();
             number += 1;
         }
         return average / number;
     }
 
-    public static void deleteProduct(Product product) {
+    public static boolean deleteProduct(Product product) {
         for (Off allActiveOff : Off.allActiveOffs) {
             if (allActiveOff.getIncludedProducts().contains(product)) {
                 allActiveOff.getIncludedProducts().remove(product);
@@ -141,6 +144,8 @@ public class Product {
         }
         allProducts.remove(product);
         product.getSeller().getSalableProducts().remove(product);
+        product.getCategory().getCategoryProducts().remove(product);
+        return true;
     }
 
     public HashMap<String, String> getSpecialAttributes() {
@@ -171,24 +176,34 @@ public class Product {
         this.productStatus = productStatus;
     }
 
-    public void setName(String name) {
+    public boolean setName(String name) {
         this.name = name;
+        return true;
     }
 
-    public void setCompany(String company) {
+    public boolean setCompany(String company) {
         this.company = company;
+        return true;
     }
 
-    public void setPrice(double price) {
+    public boolean setPrice(double price) {
+        if (price<=0)
+            return false;
         this.price = price;
+        return true;
     }
 
-    public void setInventory(int inventory) {
+    public boolean setInventory(int inventory) {
+        if (inventory<=0)
+            return false;
         this.inventory = inventory;
+
+        return true;
     }
 
-    public void setCategory(Category category) {
+    public boolean setCategory(Category category) {
         this.category = category;
+        return true;
     }
 
     public void setSpecialAttributes(HashMap<String, String> specialAttributes) {
@@ -245,7 +260,7 @@ public class Product {
     }
 
     public String showSummeryDetailsOfProduct() {
-        String result = "description :\n" + description + "\n" + "price :\n" + price + "\n" + "discount :\n" + "category :\n" + category.getCategoryName() + "\n" + "seller :\n" + seller.getUsername() + "\n" + "average :\n" + getAverageOfRates();
+        String result = "description :\n" + description + "\n" + "price :\n" + price + "\n" + "category :\n" + category.getCategoryName() + "\n" + "seller :\n" + seller.getUsername() + "\n" + "average :\n" + getAverageOfRates();
         return result;
     }
 
@@ -340,8 +355,11 @@ public class Product {
         return reviewNumber;
     }
 
-    public void setReviewNumber(int reviewNumber) {
+    public boolean setReviewNumber(int reviewNumber) {
+        if (reviewNumber<=0)
+            return false;
         this.reviewNumber = reviewNumber;
+        return true;
     }
     public ArrayList<Customer> sortBuyers(String field){
         if (field.equalsIgnoreCase("username")){
@@ -357,7 +375,7 @@ public class Product {
             Comparator<Customer> numberCompare = new Comparator<Customer>() {
                 @Override
                 public int compare(Customer o1, Customer o2) {
-                    return o1.getNumberOfBoughtProduct(Product.getProductWithId(productId))-o2.getNumberOfBoughtProduct(Product.getProductWithId(productId));
+                    return -(o1.getNumberOfBoughtProduct(Product.getProductWithId(productId))-o2.getNumberOfBoughtProduct(Product.getProductWithId(productId)));
                 }
             };
             Collections.sort(whoBoughtThisGood,numberCompare);

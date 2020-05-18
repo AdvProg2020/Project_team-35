@@ -90,8 +90,14 @@ public class SellerBossTest {
 
     @Test
     public void addOff() {
+        Product product = new Product("ad","as",12,seller,2,new Category("Asd",null),null,"gerara");
+        ArrayList<Product> a = new ArrayList<>();
+        a.add(product);
+        ArrayList<Integer> id = new ArrayList<>();
+        id.add(product.getProductId());
         try {
-            Assert.assertTrue(SellerBoss.addOff(null, seller, "2201-10-23T12:23:10", "2202-10-12T22:23:44", "-23", "233"));
+
+            Assert.assertTrue(SellerBoss.addOff(id, seller, "2201-10-23T12:23:10", "2202-10-12T22:23:44", "23", "233"));
         } catch (NullProduct nullProduct) {
             nullProduct.printStackTrace();
         } catch (ParseException e) {
@@ -107,6 +113,116 @@ public class SellerBossTest {
         } catch (JustOneOffForEveryProduct justOneOffForEveryProduct) {
             Assert.assertEquals(justOneOffForEveryProduct.getId(),6);
         }
+        try {
+            Assert.assertTrue(SellerBoss.addOff(null, seller, "2201-10-23T12:23:10", "2202-10-12T22:23:44", "120", "233"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (ThisIsNotYours thisIsNotYours) {
+            thisIsNotYours.printStackTrace();
+        } catch (TimeLimit timeLimit) {
+            timeLimit.printStackTrace();
+        } catch (InvalidNumber invalidNumber) {
+            Assert.assertEquals(3,invalidNumber.getId(),0);
+        } catch (InputStringExceptNumber inputStringExceptNumber) {
+            inputStringExceptNumber.printStackTrace();
+        } catch (NullProduct nullProduct) {
+            nullProduct.printStackTrace();
+        } catch (JustOneOffForEveryProduct justOneOffForEveryProduct) {
+            justOneOffForEveryProduct.printStackTrace();
+        }
+
+        try {
+            Assert.assertTrue(SellerBoss.addOff(null, seller, "2221-10-23T12:23:10", "2202-10-12T22:23:44", "23", "233"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (ThisIsNotYours thisIsNotYours) {
+            thisIsNotYours.printStackTrace();
+        } catch (TimeLimit timeLimit) {
+            Assert.assertEquals(1,timeLimit.getId(),0);
+        } catch (InvalidNumber invalidNumber) {
+            invalidNumber.printStackTrace();
+        } catch (InputStringExceptNumber inputStringExceptNumber) {
+            inputStringExceptNumber.printStackTrace();
+        } catch (NullProduct nullProduct) {
+            nullProduct.printStackTrace();
+        } catch (JustOneOffForEveryProduct justOneOffForEveryProduct) {
+            justOneOffForEveryProduct.printStackTrace();
+        }
+        try {
+            Assert.assertTrue(SellerBoss.addOff(null, seller, "2201-10-23T12:23:10", "2202-10-12T22:23:44", "23", "23sad3"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (ThisIsNotYours thisIsNotYours) {
+            thisIsNotYours.printStackTrace();
+        } catch (TimeLimit timeLimit) {
+            timeLimit.printStackTrace();
+        } catch (InvalidNumber invalidNumber) {
+            invalidNumber.printStackTrace();
+        } catch (InputStringExceptNumber inputStringExceptNumber) {
+        Assert.assertEquals(2,inputStringExceptNumber.getId(),0);
+        } catch (NullProduct nullProduct) {
+            nullProduct.printStackTrace();
+        } catch (JustOneOffForEveryProduct justOneOffForEveryProduct) {
+            justOneOffForEveryProduct.printStackTrace();
+        }
+
+        id.add(product.getProductId());
+        try {
+            Assert.assertTrue(SellerBoss.addOff(id, seller, "2201-10-23T12:23:10", "2202-10-12T22:23:44", "23", "233"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (ThisIsNotYours thisIsNotYours) {
+            thisIsNotYours.printStackTrace();
+        } catch (TimeLimit timeLimit) {
+            timeLimit.printStackTrace();
+        } catch (InvalidNumber invalidNumber) {
+            invalidNumber.printStackTrace();
+        } catch (InputStringExceptNumber inputStringExceptNumber) {
+            inputStringExceptNumber.printStackTrace();
+        } catch (NullProduct nullProduct) {
+            nullProduct.printStackTrace();
+        } catch (JustOneOffForEveryProduct justOneOffForEveryProduct) {
+            justOneOffForEveryProduct.printStackTrace();
+        }
+        id.add(233);
+        try {
+            Assert.assertTrue(SellerBoss.addOff(id, seller, "2201-10-23T12:23:10", "2202-10-12T22:23:44", "23", "233"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (ThisIsNotYours thisIsNotYours) {
+            thisIsNotYours.printStackTrace();
+        } catch (TimeLimit timeLimit) {
+            timeLimit.printStackTrace();
+        } catch (InvalidNumber invalidNumber) {
+            invalidNumber.printStackTrace();
+        } catch (InputStringExceptNumber inputStringExceptNumber) {
+            inputStringExceptNumber.printStackTrace();
+        } catch (NullProduct nullProduct) {
+            nullProduct.printStackTrace();
+        } catch (JustOneOffForEveryProduct justOneOffForEveryProduct) {
+            justOneOffForEveryProduct.printStackTrace();
+        }
+        Product product1 = new Product("asd","asd",23,new Seller("ad","sad","asd","sad","Asd","ads","asd"),2,new Category("asd",null),null,"");
+       id.clear();
+       id.add(product1.getProductId());
+        try {
+            Assert.assertTrue(SellerBoss.addOff(id, seller, "2201-10-23T12:23:10", "2202-10-12T22:23:44", "23", "233"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (ThisIsNotYours thisIsNotYours) {
+            thisIsNotYours.printStackTrace();
+        } catch (TimeLimit timeLimit) {
+            timeLimit.printStackTrace();
+        } catch (InvalidNumber invalidNumber) {
+            invalidNumber.printStackTrace();
+        } catch (InputStringExceptNumber inputStringExceptNumber) {
+            inputStringExceptNumber.printStackTrace();
+        } catch (NullProduct nullProduct) {
+            nullProduct.printStackTrace();
+        } catch (JustOneOffForEveryProduct justOneOffForEveryProduct) {
+            justOneOffForEveryProduct.printStackTrace();
+        }
+
     }
 
     /*

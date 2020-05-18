@@ -70,7 +70,7 @@ public class EditProductRequest extends Request {
         return "  Edit Product Request --- UserName: " + seller.getUsername() + " --- RQId: " + this.getRequestId();
     }
 
-
+    @Override
     public void decline(){
         this.toEdit.setProductStatus(ProductAndOffStatus.CONFIRMED);
     }
