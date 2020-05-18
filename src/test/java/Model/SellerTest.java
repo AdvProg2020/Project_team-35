@@ -86,7 +86,8 @@ public class SellerTest {
     public void hasHeProductWithId() {
         Product product = new Product("a","s",23,seller,2,new Category("a",null),null,"");
 
-        Assert.assertEquals(seller.hasHeProductWithId(3),2);
+        System.out.println(product.getProductId());
+        Assert.assertEquals(seller.hasHeProductWithId(1),2);
         Assert.assertEquals(seller.hasHeProductWithId(11),5);
         Seller seller1 = new Seller("asd","asd","das","ads","Ad","dsa","Asd");
         Product product1 = new Product("ads","ad",23,seller1,2,new Category("asd",null),null,"");

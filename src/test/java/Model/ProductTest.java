@@ -25,6 +25,10 @@ public class ProductTest {
         as.add(customer);
         product.setWhoBoughtThisGood(as);
         ArrayList<Rate> d = new ArrayList<>();
+        Comment comment = new Comment(product,"asd",customer,"asd");
+        ArrayList<Comment> asa = new ArrayList<>();
+        asa.add(comment);
+        product.setCommentsList(asa);
         d.add(new Rate(customer, 2, product));
         product.setRatesList(d);
         product.setProductStatus(ProductAndOffStatus.CONFIRMED);
@@ -193,10 +197,13 @@ public class ProductTest {
 
     @Test
     public void setInventory() {
+        Assert.assertTrue(product.setInventory(23));
+        Assert.assertFalse(product.setInventory(-23));
     }
 
     @Test
     public void setCategory() {
+        Assert.assertTrue(product.setCategory(category));
     }
 
     @Test

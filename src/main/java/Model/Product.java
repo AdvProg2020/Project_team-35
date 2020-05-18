@@ -193,12 +193,17 @@ public class Product {
         return true;
     }
 
-    public void setInventory(int inventory) {
+    public boolean setInventory(int inventory) {
+        if (inventory<=0)
+            return false;
         this.inventory = inventory;
+
+        return true;
     }
 
-    public void setCategory(Category category) {
+    public boolean setCategory(Category category) {
         this.category = category;
+        return true;
     }
 
     public void setSpecialAttributes(HashMap<String, String> specialAttributes) {
