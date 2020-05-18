@@ -70,8 +70,14 @@ public class Customer extends Account {
         return true;
     }
 
-    public boolean hasHeBoughtProductWithId(int productId) {
-        return true;
+    public boolean hasBoughtProductWithId(int productId) {
+        for (BuyLog buyLog : buyLogs) {
+            for (Product boughtProduct : buyLog.boughtProducts) {
+                if (boughtProduct.getProductId() == productId)
+                    return true;
+            }
+        }
+        return false;
     }
 
     public void increaseProductAtCart(Product toIncrease) {

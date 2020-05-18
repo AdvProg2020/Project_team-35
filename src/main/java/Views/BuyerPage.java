@@ -2,8 +2,7 @@
 package Views;
 
 import Controller.CustomerBoss;
-import Controller.Exceptions.NullProduct;
-import Controller.Exceptions.ProductIsFinished;
+import Controller.Exceptions.*;
 import Controller.ProductBoss;
 import Model.Account;
 import Model.BuyLog;
@@ -163,7 +162,26 @@ public class BuyerPage extends Page {
         return new Page("rate",viewOrders()) {
             @Override
             public void execute() {
-                super.execute();
+                String command = "";
+                String regex = "rate (\\d+) ([1-5])";
+                Matcher matcher = null;
+                while (true) {
+                    System.out.println("enter command:");
+                    command = scanner.nextLine();
+                    matcher = getMatcher(command, regex);
+                    if (matcher.find()) {
+                        try {
+                            CustomerBoss.rateProduct((Customer) Account.getOnlineAccount(), Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
+                        } catch (ProductIsNotBought productIsNotBought) {
+                            productIsNotBought.printStackTrace();
+                        }
+                    }
+                    else if (command.equalsIgnoreCase("back"))
+                        break;
+                    else {
+                        System.err.println("invalid command");
+                    }
+                }
             }
         };
     }
@@ -294,18 +312,16 @@ public class BuyerPage extends Page {
             public void execute() {
                 String command = "";
                 String regex = "";
-                Matcher matcher = null;
                 Page nextPage = null;
                 while (true) {
                     System.out.println("discount code id: ");
                     command = scanner.nextLine();
                     regex = "^(\\d+)$";
-                    matcher = getMatcher(command, regex);
                     if (command.matches(regex)) {
-                        if (CustomerBoss.hasDiscountCodeWithId((Customer) Account.getOnlineAccount(), command))
+                        try {
                             CustomerBoss.useDiscountCode((Customer) Account.getOnlineAccount(), command);
-                        else {
-                            System.err.println("this discount code isn't available for you.");
+                        } catch (DiscountNotExist | DiscountIsNotForYou | DontHaveMinimumPriceOfCartForDiscount discountException) {
+                            discountException.printStackTrace();
                             continue;
                         }
                         nextPage = payment();
@@ -314,6 +330,10 @@ public class BuyerPage extends Page {
                     else if (command.equalsIgnoreCase("back")) {
                         nextPage = parentPage;
                         break;
+                    }
+                    else if (command.equalsIgnoreCase("end")) {
+                        CustomerBoss.dontUseDiscountCode((Customer) Account.getOnlineAccount());
+                        nextPage = payment();
                     }
                     else System.err.println("invalid command");
                 }

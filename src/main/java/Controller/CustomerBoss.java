@@ -67,7 +67,7 @@ public class CustomerBoss {
     }
 
     public static double showTotalCartPrice(Customer customer) {
-            return customer.getTotalPriceOFCart();
+        return customer.getTotalPriceOFCart();
     }
 
     public static boolean hasDiscountCodeWithId(Customer customer, String id) {
@@ -82,14 +82,24 @@ public class CustomerBoss {
         return totalPriceOfCart * discountCode.getDiscountPercent() / 100.0;
     }
 
-    public static void useDiscountCode(Customer customer, String id) {
+    public static void useDiscountCode(Customer customer, String id) throws DiscountNotExist, DiscountIsNotForYou, DontHaveMinimumPriceOfCartForDiscount {
         DiscountCode discountCode = DiscountCode.getDiscountCodeWithCode(id);
-        double discountAmount = getDiscountAmount(discountCode, customer.getTotalPriceOFCart());
-        if (discountAmount > discountCode.getMaximumAvailableAmount()) {
-            customer.setPaymentAmount(customer.getTotalPriceOFCart() - discountCode.getMaximumAvailableAmount());
+        if (!DiscountCode.isThereDiscountCodeWithCode(id)) {
+            throw new DiscountNotExist("invalid discount code!");
         }
-        else customer.setPaymentAmount(customer.getTotalPriceOFCart() - discountAmount);
-        discountCode.includedBuyersAndUseFrequency.put(customer, discountCode.includedBuyersAndUseFrequency.get(customer) - 1);
+        else if (!CustomerBoss.hasDiscountCodeWithId((Customer) Account.getOnlineAccount(), id)) {
+            throw new DiscountIsNotForYou("this discount code isn't available for you.");
+        }
+        else if (discountCode.getMinimumTotalPriceForUse() != -1 && customer.getTotalPriceOFCart() < discountCode.getMinimumTotalPriceForUse()) {
+            throw new DontHaveMinimumPriceOfCartForDiscount("sorry! your cart price is not enough for this discount.");
+        }
+        else {
+            double discountAmount = getDiscountAmount(discountCode, customer.getTotalPriceOFCart());
+            if (discountAmount > discountCode.getMaximumAvailableAmount()) {
+                customer.setPaymentAmount(customer.getTotalPriceOFCart() - discountCode.getMaximumAvailableAmount());
+            } else customer.setPaymentAmount(customer.getTotalPriceOFCart() - discountAmount);
+            discountCode.includedBuyersAndUseFrequency.put(customer, discountCode.includedBuyersAndUseFrequency.get(customer) - 1);
+        }
     }
 
     public static void dontUseDiscountCode(Customer customer) {
@@ -108,18 +118,28 @@ public class CustomerBoss {
                         products.add(product);
                     }
 
-                   // new SellLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, customer.getUsername());
+                    // new SellLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, customer.getUsername());
                     //new BuyLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, seller.getUsername());
                 }
             }
             return true;
         }
     }
-    public static ArrayList<BuyLog> showBuyResume(Customer customer){
+
+    public static ArrayList<BuyLog> showBuyResume(Customer customer) {
         return customer.getBuyLogs();
     }
 
-    public static HashMap<Product,Integer> showProductsOfALog(BuyLog buyLog){
+    public static HashMap<Product, Integer> showProductsOfALog(BuyLog buyLog) {
         return buyLog.historyOfBuys();
+    }
+
+    public static void rateProduct(Customer customer, int productId, int rate) throws ProductIsNotBought {
+        if (!customer.hasBoughtProductWithId(productId)) {
+            throw new ProductIsNotBought("you can't rate this product because you haven't bought it!");
+        }
+        else {
+            new Rate(customer, rate, Product.getProductWithId(productId));
+        }
     }
 }
