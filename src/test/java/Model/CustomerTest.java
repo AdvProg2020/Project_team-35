@@ -24,8 +24,10 @@ private Product product = new Product("a","s",23,new Seller("a","s","ds","fd","s
     }
     @Test
     public void getListOFProductsAtCart() {
+        HashMap<Product, Integer> map = new HashMap<>();
+        map.put(product, 2);
         customer.cart.put(product, 2);
-        Assert.assertEquals(customer.cart, 1);
+        Assert.assertEquals(customer.cart, map);
     }
     @Test
     public void getPaymentAmount() {
@@ -33,9 +35,13 @@ private Product product = new Product("a","s",23,new Seller("a","s","ds","fd","s
         Assert.assertEquals(10.0, 1);
     }
     @Test
-    public static void isThereCustomerWithUsername(String username) {
+    public void isThereCustomerWithUsername() {
         Assert.assertTrue(Customer.isThereCustomerWithUsername("a"));
         Assert.assertFalse(Customer.isThereCustomerWithUsername("b"));
     }
-
+    @Test
+    public  void getCustomerWithName(String username) {
+        Assert.assertEquals(customer, Customer.getCustomerWithName("a"));
+        Assert.assertNull(Customer.getCustomerWithName("b"));
+    }
 }
