@@ -119,10 +119,10 @@ public class AccountBoss {
             throw new LoginWithoutLogout("first you should logout");
         }
         if (!Account.isThereAccountWithUserName(username)) {
-            throw new ExistenceOfUserWithUsername("this username doesn't exist.");
+            throw new ExistenceOfUserWithUsername("this username doesn't exist.",2);
         }
         if (Account.getAccountWithUsername(username) instanceof Seller && !Seller.getAllSellers().contains((Seller) Account.getAccountWithUsername(username))){
-            throw new ExistenceOfUserWithUsername("this username doesn't exist");
+            throw new ExistenceOfUserWithUsername("this username doesn't exist",2);
         }
     }
 

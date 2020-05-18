@@ -89,4 +89,25 @@ public class OffBoss {
         return listOfProducts;
     }
 
+    public static ArrayList<ProductFilter> getFields() {
+        return fields;
+    }
+    public static boolean disableFilter(String field){
+        for (ProductFilter filter : fields) {
+            if (filter.getFilterName().equalsIgnoreCase(field)) {
+                fields.remove(filter);
+                return true;
+            }
+        }
+        return false;
+    }
+    public static ArrayList<Product> getProducts(){
+        ArrayList<Product> a = new ArrayList<>();
+        for (Off activeOff : Off.allActiveOffs) {
+            for (Product product : activeOff.getIncludedProducts()) {
+                a.add(product);
+            }
+        }
+        return a;
+    }
 }
