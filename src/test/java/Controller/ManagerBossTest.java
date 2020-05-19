@@ -1,8 +1,6 @@
 package Controller;
 
-import Controller.Exceptions.DateException;
-import Controller.Exceptions.DiscountNotExist;
-import Controller.Exceptions.NotExistCustomerWithUserNameException;
+import Controller.Exceptions.*;
 import Model.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,7 +25,6 @@ public class ManagerBossTest {
     Category category1 = new Category("a",new ArrayList<>());
     Category category2 = new Category("b",new ArrayList<>());
     private Customer customer = new Customer("a","a","a","a@a.a","1","1");
-
     Product product1 = new Product("a","a",23,seller1,10,category1,null,null);
 
 
@@ -147,5 +144,85 @@ public class ManagerBossTest {
             fail();
         }
 
+    }
+
+    @Test
+    public void acceptRequestWithId() {
+        SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(seller1);
+
+        try {
+            Assert.assertEquals(ManagerBoss.acceptRequestWithId(1), true);
+            Assert.assertEquals(Manager.getNewRequests().contains(sellerRegisterRequest), false);
+            Assert.assertEquals(Manager.getCheckedRequests().contains(sellerRegisterRequest), true);
+
+        } catch (NotValidRequestIdException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void declineRequestWithId() {
+        SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(seller1);
+        try {
+            Assert.assertEquals(ManagerBoss.declineRequestWithId(1), true);
+            Assert.assertEquals(Manager.getNewRequests().contains(sellerRegisterRequest), false);
+            Assert.assertEquals(Manager.getCheckedRequests().contains(sellerRegisterRequest), true);
+
+        } catch (NotValidRequestIdException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void sortRequestsWithField() {
+        Assert.assertEquals(Request.getCurrentSort(), "Nothing");
+        SellerRegisterRequest sellerRegisterRequest1 = new SellerRegisterRequest(seller1);
+        SellerRegisterRequest sellerRegisterRequest2 = new SellerRegisterRequest(seller2);
+        ManagerBoss.sortRequestsWithField("id-a");
+        Assert.assertEquals(Manager.getNewRequests().get(0), sellerRegisterRequest1);
+        ManagerBoss.sortRequestsWithField("id-b");
+        Assert.assertEquals(Manager.getNewRequests().get(0), sellerRegisterRequest2);
+        Assert.assertEquals(ManagerBoss.sortRequestsWithField("df"), false);
+
+    }
+
+    @Test
+    public void getAllActiveUsers() {
+        Assert.assertEquals(ManagerBoss.getAllActiveUsers().size(), 1);
+        Manager manager = new Manager("username", "name", "lastName", "mail@e.ir", "09100577581", "09100577581");
+        Assert.assertEquals(ManagerBoss.getAllActiveUsers().size(), 2);
+    }
+
+    @Test
+    public void removeProductWithId() {
+        try {
+            ManagerBoss.removeProductWithId(25);
+        } catch (ThereISNotProductWithIdException e) {
+            Assert.assertTrue(true);
+        }
+
+        try {
+                ManagerBoss.removeProductWithId(1);
+                Assert.assertEquals(Product.getAllProducts().size(), 0);
+
+        } catch (ThereISNotProductWithIdException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void startDeleteCategoryWithName() {
+        try {
+            ManagerBoss.startDeleteCategoryWithName("gf");
+        } catch (ThereIsNotCategoryWithNameException e) {
+            Assert.assertTrue(true);
+        }
+
+        try {
+            ManagerBoss.startDeleteCategoryWithName("a");
+            Assert.assertEquals(Category.getAllCategories().size(), 1);
+        } catch (ThereIsNotCategoryWithNameException e) {
+            fail();
+        }
     }
 }
