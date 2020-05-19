@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
@@ -65,15 +66,23 @@ public class ManagerBossTest {
 
     @Test
     public void checkStartDateAndFinalDateForDiscountCode() {
+
         try {
-            ManagerBoss.checkStartDateAndFinalDateForDiscountCode(localDateTime, localDateTime2);
+            ManagerBoss.checkStartDateAndFinalDateForDiscountCode(localDateTime, localDateTimeo);
+        } catch (DateException e) {
+            Assert.assertTrue(true);
+            Assert.assertEquals(e.getMessage(), "The end time is before now! Are you OK?! :)");
+        }
+
+        try {
+            ManagerBoss.checkStartDateAndFinalDateForDiscountCode(localDateTime4, localDateTimeoo);
+            Assert.assertTrue(false);
         } catch (DateException e) {
             Assert.assertTrue(true);
             Assert.assertEquals(e.getMessage(), "The end time is before start time! Are you OK?! :)");
         }
         try {
-            ManagerBoss.checkStartDateAndFinalDateForDiscountCode(localDateTimeo, localDateTimeoo);
-            Assert.assertTrue(true);
+            Assert.assertEquals(ManagerBoss.checkStartDateAndFinalDateForDiscountCode(localDateTime, localDateTime2), true);
         } catch (DateException e) {
             fail();
         }
@@ -213,6 +222,8 @@ public class ManagerBossTest {
 
     @Test
     public void startDeleteCategoryWithName() {
+        Seller.getAllSellers().add(seller1);
+        Seller.getAllSellers().add(seller2);
         try {
             ManagerBoss.startDeleteCategoryWithName("gf");
         } catch (ThereIsNotCategoryWithNameException e) {
@@ -225,6 +236,8 @@ public class ManagerBossTest {
         } catch (ThereIsNotCategoryWithNameException e) {
             fail();
         }
+
+
     }
 
     @Test
@@ -280,11 +293,16 @@ public class ManagerBossTest {
 
     @Test
     public void editAttributeName() {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("one", "1");
+        hashMap.put("two", "2");
+        Product product1 = new Product("a","a",23,seller1,10,category1,hashMap,null);
         ArrayList<String> attributes = new ArrayList<>();
         attributes.add("one");
         attributes.add("two");
         Category category2 = new Category("fff", new ArrayList<>());
         Category category1 = new Category("onee", attributes);
+        category1.getCategoryProducts().add(product1);
         try {
             ManagerBoss.editAttributeName("fff", "s", "f");
         } catch (FieldDoesNotExist fieldDoesNotExist) {

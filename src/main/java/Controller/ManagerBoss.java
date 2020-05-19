@@ -318,7 +318,7 @@ public class ManagerBoss {
                     Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName));
                     Category.setCurrentSort("Category Name - Ascending");
                 }
-                if (field.startsWith("size")) {
+                else if (field.startsWith("size")) {
                     Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize));
                     Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize));
                     Category.setCurrentSort("Category Size - Aescending");
@@ -331,7 +331,7 @@ public class ManagerBoss {
                 Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName).reversed());
                 Category.setCurrentSort("Category Name - Descending");
             }
-            if (field.startsWith("size")) {
+            else if (field.startsWith("size")) {
                 Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize).reversed());
                 Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize).reversed());
                 Category.setCurrentSort("Category Size - Descending");
@@ -346,7 +346,7 @@ public class ManagerBoss {
                 Collections.sort(Account.allAccounts, Comparator.comparing(Account::getFullName));
                 Account.setCurrentSort("Account FullName - Ascending");
             }
-            if (field.charAt(5) == 'b') {
+            else if (field.charAt(5) == 'b') {
                 Collections.sort(Account.allAccounts, Comparator.comparing(Account::getFullName).reversed());
                 Account.setCurrentSort("Account FullName - Descending");
             }
@@ -357,7 +357,7 @@ public class ManagerBoss {
                 Collections.sort(Account.allAccounts, Comparator.comparing(Account::getUsername));
                 Account.setCurrentSort("Account Username - Ascending");
             }
-            if (field.charAt(9) == 'b') {
+            else if (field.charAt(9) == 'b') {
                 Collections.sort(Account.allAccounts, Comparator.comparing(Account::getUsername).reversed());
                 Account.setCurrentSort("Account Username - Descending");
             }
@@ -374,7 +374,7 @@ public class ManagerBoss {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getDiscountPercent));
                 DiscountCode.setCurrentSort("Discount Code Percent - Ascending");
             }
-            if (field.charAt(8) == 'b') {
+            else if (field.charAt(8) == 'b') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getDiscountPercent).reversed());
                 DiscountCode.setCurrentSort("Discount Code Percent - Descending");
             }
@@ -385,7 +385,7 @@ public class ManagerBoss {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getMaximumAvailableAmount));
                 DiscountCode.setCurrentSort("Discount Code Maximum Amount - Ascending");
             }
-            if (field.charAt(8) == 'b') {
+            else if (field.charAt(8) == 'b') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getMaximumAvailableAmount).reversed());
                 DiscountCode.setCurrentSort("Discount Code Maximum Amount - Descending");
             }
@@ -396,7 +396,7 @@ public class ManagerBoss {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getAvailableUseFrequent));
                 DiscountCode.setCurrentSort("Discount Code Available Frequent - Ascending");
             }
-            if (field.charAt(9) == 'b') {
+            else if (field.charAt(9) == 'b') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getAvailableUseFrequent).reversed());
                 DiscountCode.setCurrentSort("Discount Code Available Frequent - Descending");
             }
@@ -407,7 +407,7 @@ public class ManagerBoss {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::startDateToString));
                 DiscountCode.setCurrentSort("Discount Code Start Date - Ascending");
             }
-            if (field.charAt(10) == 'b') {
+            else if (field.charAt(10) == 'b') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::startDateToString).reversed());
                 DiscountCode.setCurrentSort("Discount Code Start Date - Descending");
             }
@@ -417,7 +417,7 @@ public class ManagerBoss {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::expireDateToString));
                 DiscountCode.setCurrentSort("Discount Code Final Date - Ascending");
             }
-            if (field.charAt(10) == 'b') {
+            else if (field.charAt(10) == 'b') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::expireDateToString).reversed());
                 DiscountCode.setCurrentSort("Discount Code Final Date - Descending");
             }
