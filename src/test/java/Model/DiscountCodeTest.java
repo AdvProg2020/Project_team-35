@@ -38,7 +38,7 @@ public class DiscountCodeTest {
 
     @Test
     public void getDiscountCodeWithCode() {
-        Assert.assertEquals(DiscountCode.getDiscountCodeWithCode("code"), discountCode);
+        Assert.assertEquals(DiscountCode.getDiscountCodeWithCode("code").getId(), discountCode.getId());
     }
 
     @Test
