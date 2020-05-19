@@ -1,5 +1,7 @@
 package Controller;
 
+import Controller.Exceptions.NullProduct;
+import Controller.Exceptions.ProductIsFinished;
 import Model.Customer;
 import Model.DiscountCode;
 import Model.Product;
@@ -48,5 +50,14 @@ public class CustomerBossTest extends TestCase {
     public void testShowMoney() {
         customer.setMoney(10.0);
         Assert.assertEquals(10.0, CustomerBoss.showMoney(customer), 0);
+    }
+
+    @Test
+    public void testIncreaseNumber() {
+        try {
+            Assert.assertTrue(CustomerBoss.increaseNumber(product.getProductId(), customer, 1));
+        } catch (NullProduct | ProductIsFinished e) {
+            e.printStackTrace();
+        }
     }
 }
