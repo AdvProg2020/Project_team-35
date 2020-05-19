@@ -11,6 +11,7 @@ public class Rate {
         this.rater = rater;
         this.rate = rate;
         this.product = product;
+        product.getRatesList().add(this);
     }
 
     public Customer getRater() {

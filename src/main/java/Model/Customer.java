@@ -89,6 +89,9 @@ public class Customer extends Account {
     }
 
 
+    public ArrayList<BuyLog> getBuyLogs() {
+        return buyLogs;
+    }
 
     @Override
     public String getPersonalInfo() {
