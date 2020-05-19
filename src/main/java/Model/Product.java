@@ -176,24 +176,34 @@ public class Product {
         this.productStatus = productStatus;
     }
 
-    public void setName(String name) {
+    public boolean setName(String name) {
         this.name = name;
+        return true;
     }
 
-    public void setCompany(String company) {
+    public boolean setCompany(String company) {
         this.company = company;
+        return true;
     }
 
-    public void setPrice(double price) {
+    public boolean setPrice(double price) {
+        if (price<=0)
+            return false;
         this.price = price;
+        return true;
     }
 
-    public void setInventory(int inventory) {
+    public boolean setInventory(int inventory) {
+        if (inventory<=0)
+            return false;
         this.inventory = inventory;
+
+        return true;
     }
 
-    public void setCategory(Category category) {
+    public boolean setCategory(Category category) {
         this.category = category;
+        return true;
     }
 
     public void setSpecialAttributes(HashMap<String, String> specialAttributes) {
@@ -250,7 +260,7 @@ public class Product {
     }
 
     public String showSummeryDetailsOfProduct() {
-        String result = "description :\n" + description + "\n" + "price :\n" + price + "\n" + "discount :\n" + "category :\n" + category.getCategoryName() + "\n" + "seller :\n" + seller.getUsername() + "\n" + "average :\n" + getAverageOfRates();
+        String result = "description :\n" + description + "\n" + "price :\n" + price + "\n" + "category :\n" + category.getCategoryName() + "\n" + "seller :\n" + seller.getUsername() + "\n" + "average :\n" + getAverageOfRates();
         return result;
     }
 
@@ -345,8 +355,11 @@ public class Product {
         return reviewNumber;
     }
 
-    public void setReviewNumber(int reviewNumber) {
+    public boolean setReviewNumber(int reviewNumber) {
+        if (reviewNumber<=0)
+            return false;
         this.reviewNumber = reviewNumber;
+        return true;
     }
     public ArrayList<Customer> sortBuyers(String field){
         if (field.equalsIgnoreCase("username")){
