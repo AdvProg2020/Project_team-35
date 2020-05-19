@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class OffBoss {
     private static ArrayList<ProductFilter> fields = new ArrayList<>();
     public static Product ProductPageTransfer(int id) throws NullProduct, ProductIsNotConfirmed {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Product product = Product.getProductWithId(id);
         if (product==null){
             throw new NullProduct("this is not existed",1);
@@ -28,13 +29,16 @@ public class OffBoss {
 
     }
     public static ArrayList<Off> sortOff(String field){
+        Boss.removeExpiredOffsAndDiscountCodes();
         return Off.sorting(field);
     }
     public static ArrayList<Product> sortProducts(String field){
+        Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<Product> a = Off.sortAllProducts(field);
         return a;
     }
     public static Category checkCategory(String name) throws CategoryNull {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Category category = Category.getCategoryByName(name);
         if (category==null)
             throw new CategoryNull("null category",1);
@@ -42,6 +46,7 @@ public class OffBoss {
     }
 
     public static Seller checkSeller(String username) throws ExistenceOfUserWithUsername, SellerShouldJustBe {
+        Boss.removeExpiredOffsAndDiscountCodes();
      Account account = Account.getAccountWithUsername(username);
      if (account==null){
          throw new ExistenceOfUserWithUsername("this is not a user",1);
@@ -51,6 +56,7 @@ public class OffBoss {
      return (Seller) account;
     }
     public static void addFieldToFilterFields(String field,String amount1 , String amount2) throws CategoryNull, InvalidNumber, MaxMinReplacement, SellerShouldJustBe {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (field.equalsIgnoreCase("Name")){
                 fields.add(new NameFilter(amount1));
         }else if (field.equalsIgnoreCase("Category")){
@@ -83,6 +89,7 @@ public class OffBoss {
         }
     }
     public static ArrayList<Product> filterFields(ArrayList<Product> listOfProducts){
+        Boss.removeExpiredOffsAndDiscountCodes();
         for (ProductFilter field : fields) {
             listOfProducts = field.doThisFilterOnList(listOfProducts);
         }
@@ -93,6 +100,7 @@ public class OffBoss {
         return fields;
     }
     public static boolean disableFilter(String field){
+        Boss.removeExpiredOffsAndDiscountCodes();
         for (ProductFilter filter : fields) {
             if (filter.getFilterName().equalsIgnoreCase(field)) {
                 fields.remove(filter);
@@ -102,6 +110,7 @@ public class OffBoss {
         return false;
     }
     public static ArrayList<Product> getProducts(){
+        Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<Product> a = new ArrayList<>();
         for (Off activeOff : Off.allActiveOffs) {
             for (Product product : activeOff.getIncludedProducts()) {

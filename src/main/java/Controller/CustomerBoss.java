@@ -12,13 +12,14 @@ public class CustomerBoss {
     }
 
     public static ArrayList<String> showDiscountCodes(Customer customer) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<String> discountCodesInformation = new ArrayList<>();
         for (DiscountCode discountCode : customer.discountCodes) {
             discountCodesInformation.add("id: " + discountCode.getId());
             discountCodesInformation.add("final date: " + discountCode.getFinalDate());
             discountCodesInformation.add("discount percent: " + discountCode.getDiscountPercent());
             discountCodesInformation.add("maximum amount: " + discountCode.getMaximumAvailableAmount());
-            discountCodesInformation.add("available use frequents: " + discountCode.getAvailableUseFrequent());
+            discountCodesInformation.add("available use frequents: " + discountCode.getAvailableUseFrequent() + "\n");
         }
         return discountCodesInformation;
     }
@@ -33,6 +34,7 @@ public class CustomerBoss {
      * @throws ProductIsFinished
      */
     public static boolean increaseNumber(int id, Customer customer, int increase) throws NullProduct, ProductIsFinished {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Product product = Product.getProductWithId(id);
         if (product == null) {
             throw new NullProduct("this product does not exist", 1);
@@ -59,6 +61,7 @@ public class CustomerBoss {
      * @return
      */
     public static String showProductsInCart(Customer customer) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         String result = "";
         for (Product product : customer.getListOFProductsAtCart().keySet()) {
             result += product.getName() + "\nwith id : " + product.getProductId() + "\nwith number : " + customer.getListOFProductsAtCart().get(product) + "\n";
@@ -67,10 +70,12 @@ public class CustomerBoss {
     }
 
     public static double showTotalCartPrice(Customer customer) {
-            return customer.getTotalPriceOFCart();
+        Boss.removeExpiredOffsAndDiscountCodes();
+        return customer.getTotalPriceOFCart();
     }
 
     public static boolean hasDiscountCodeWithId(Customer customer, String id) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         for (DiscountCode discountCode : customer.discountCodes) {
             if (id.equals(discountCode.getId()))
                 return true;
@@ -79,24 +84,38 @@ public class CustomerBoss {
     }
 
     public static double getDiscountAmount(DiscountCode discountCode, double totalPriceOfCart) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         return totalPriceOfCart * discountCode.getDiscountPercent() / 100.0;
     }
 
-    public static void useDiscountCode(Customer customer, String id) {
+    public static void useDiscountCode(Customer customer, String id) throws DiscountNotExist, DiscountIsNotForYou, DontHaveMinimumPriceOfCartForDiscount {
+        Boss.removeExpiredOffsAndDiscountCodes();
         DiscountCode discountCode = DiscountCode.getDiscountCodeWithCode(id);
-        double discountAmount = getDiscountAmount(discountCode, customer.getTotalPriceOFCart());
-        if (discountAmount > discountCode.getMaximumAvailableAmount()) {
-            customer.setPaymentAmount(customer.getTotalPriceOFCart() - discountCode.getMaximumAvailableAmount());
+        if (!DiscountCode.isThereDiscountCodeWithCode(id)) {
+            throw new DiscountNotExist("invalid discount code!");
         }
-        else customer.setPaymentAmount(customer.getTotalPriceOFCart() - discountAmount);
-        discountCode.includedBuyersAndUseFrequency.put(customer, discountCode.includedBuyersAndUseFrequency.get(customer) - 1);
+        else if (!CustomerBoss.hasDiscountCodeWithId((Customer) Account.getOnlineAccount(), id)) {
+            throw new DiscountIsNotForYou("this discount code isn't available for you.");
+        }
+        else if (discountCode.getMinimumTotalPriceForUse() != -1 && customer.getTotalPriceOFCart() < discountCode.getMinimumTotalPriceForUse()) {
+            throw new DontHaveMinimumPriceOfCartForDiscount("sorry! your cart price is not enough for this discount.");
+        }
+        else {
+            double discountAmount = getDiscountAmount(discountCode, customer.getTotalPriceOFCart());
+            if (discountAmount > discountCode.getMaximumAvailableAmount()) {
+                customer.setPaymentAmount(customer.getTotalPriceOFCart() - discountCode.getMaximumAvailableAmount());
+            } else customer.setPaymentAmount(customer.getTotalPriceOFCart() - discountAmount);
+            discountCode.includedBuyersAndUseFrequency.put(customer, discountCode.includedBuyersAndUseFrequency.get(customer) - 1);
+        }
     }
 
     public static void dontUseDiscountCode(Customer customer) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         customer.setPaymentAmount(customer.getTotalPriceOFCart());
     }
 
     public static boolean doPayment(Customer customer) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<Product> products = new ArrayList<>();
         if (customer.getMoney() < customer.getPaymentAmount())
             return false;
@@ -108,18 +127,31 @@ public class CustomerBoss {
                         products.add(product);
                     }
 
-                   // new SellLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, customer.getUsername());
+                    // new SellLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, customer.getUsername());
                     //new BuyLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, seller.getUsername());
                 }
             }
             return true;
         }
     }
-    public static ArrayList<BuyLog> showBuyResume(Customer customer){
+
+    public static ArrayList<BuyLog> showBuyResume(Customer customer) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         return customer.getBuyLogs();
     }
 
-    public static HashMap<Product,Integer> showProductsOfALog(BuyLog buyLog){
+    public static HashMap<Product, Integer> showProductsOfALog(BuyLog buyLog) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         return buyLog.historyOfBuys();
+    }
+
+    public static void rateProduct(Customer customer, int productId, int rate) throws ProductIsNotBought {
+        Boss.removeExpiredOffsAndDiscountCodes();
+        if (!customer.hasBoughtProductWithId(productId)) {
+            throw new ProductIsNotBought("you can't rate this product because you haven't bought it!");
+        }
+        else {
+            new Rate(customer, rate, Product.getProductWithId(productId));
+        }
     }
 }

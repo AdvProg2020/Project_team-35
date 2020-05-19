@@ -3,11 +3,11 @@ package Model;
 public class Rate {
     private int rateId;
     private Customer rater;
-    private double rate;
+    private int rate;
     private static int allRatesNumber;
     private Product product;
 
-    public Rate(Customer rater, double rate, Product product) {
+    public Rate(Customer rater, int rate, Product product) {
         this.rater = rater;
         this.rate = rate;
         this.product = product;
@@ -18,7 +18,7 @@ public class Rate {
         return rater;
     }
 
-    public double getRate() {
+    public int getRate() {
         return rate;
     }
 

@@ -250,8 +250,7 @@ public class ManagerPage extends Page {
                         }
                     }
                     catch (java.time.format.DateTimeParseException e) {
-                        int index = e.getMessage().indexOf("Invalid date");
-                        System.err.println(e.getMessage().substring(index));
+                        System.err.println(e.getMessage());
                     }
 
                 }

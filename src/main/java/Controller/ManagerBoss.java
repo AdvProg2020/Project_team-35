@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 public class ManagerBoss {
     public static boolean acceptRequestWithId(int requestId) throws NotValidRequestIdException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (Manager.isThereNewRequestWithId(requestId)) {
             Request request = Manager.getNewRequestWithId(requestId);
             request.execute();
@@ -23,6 +24,7 @@ public class ManagerBoss {
         }
     }
     public static boolean declineRequestWithId(int requestId) throws NotValidRequestIdException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (Manager.isThereNewRequestWithId(requestId)) {
             Request request = Manager.getNewRequestWithId(requestId);
             Manager.newRequests.remove(request);
@@ -35,6 +37,7 @@ public class ManagerBoss {
         }
     }
     public static String getDetailsOfRequestWithId(int requestId) throws NotValidRequestIdException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (Manager.isThereNewRequestWithId(requestId) || Manager.isThereCheckedRequestWithId(requestId)) {
             if (Manager.isThereNewRequestWithId(requestId)) {
                 return Manager.getNewRequestWithId(requestId).getDetails();
@@ -49,6 +52,7 @@ public class ManagerBoss {
     }
 
     public static boolean sortRequestsWithField(String field) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (field.startsWith("id")) {
             if (field.charAt(3) == 'a') {
                 Collections.sort(Manager.newRequests, Comparator.comparing(Request::getRequestId));
@@ -67,6 +71,7 @@ public class ManagerBoss {
 
 
     public static String  getDetailsOfAccountWithUserName(String username) throws NotValidUserNameException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (Account.isThereActiveAccountWithUserName(username)) {
             return Account.getActiveAccountWithUserName(username).getPersonalInfo();
         }
@@ -84,6 +89,7 @@ public class ManagerBoss {
     }
 
     public static int deleteAccountWithUsername(String username) throws NotValidUserNameException, CantRemoveYourAccountException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (Account.isThereActiveAccountWithUserName(username)) {
             Account toRemove = Account.getActiveAccountWithUserName(username);
             if (Account.getOnlineAccount().equals(toRemove)) {
@@ -107,10 +113,8 @@ public class ManagerBoss {
             throw new NotValidUserNameException("This username does'nt exist or has'nt accepted already.");
         }
     }
-
-
-
     public static boolean removeProductWithId(int productId) throws ThereISNotProductWithIdException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (Product.isThereProductWithId(productId)) {
             Product toRemove = Product.getProductWithId(productId);
             Category category = toRemove.getCategory();
@@ -126,6 +130,7 @@ public class ManagerBoss {
     }
 
     public static int addNewCategory (String categoryName, ArrayList<String> specialAttributes) throws RepeatedCategoryNameException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (Category.isThereCategoryWithName(categoryName)) {
             throw new RepeatedCategoryNameException("This name is repeated. Use another.");
         }
@@ -134,8 +139,8 @@ public class ManagerBoss {
             return 0;
         }
     }
-
     public static int startDeleteCategoryWithName(String categoryName) throws ThereIsNotCategoryWithNameException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (Category.isThereCategoryWithName(categoryName)) {
             Category toDelete = Category.getCategoryByName(categoryName);
             Category.getAllCategories().remove(toDelete);
@@ -179,7 +184,8 @@ public class ManagerBoss {
     }
 
     public static boolean checkNewManagerUserName(String username) throws RepeatedUserName {
-        if (Account.isThereActiveAccountWithUserName(username)) {
+        Boss.removeExpiredOffsAndDiscountCodes();
+        if (Account.getAllAccounts().contains(Account.getAccountWithUsername(username))) {
             throw new RepeatedUserName("This username exist. Try another one.");
         }
         return true;
@@ -187,6 +193,7 @@ public class ManagerBoss {
 
 
     public static boolean checkCategoryExistence(String categoryName) throws ThereIsNotCategoryWithNameException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (Category.isThereCategoryWithName(categoryName)) {
             return true;
         }
@@ -197,12 +204,14 @@ public class ManagerBoss {
 
 
     public static boolean editCategoryName(String previousName, String newName) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Category.getCategoryByName(previousName).setCategoryName(newName);
         return true;
     }
 
 
     public static boolean addAttributeToCategory(String categoryName, String attribute) throws RepeatedCategoryAttributeException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Category category = Category.getCategoryByName(categoryName);
         if (category.specialAttributes.contains(attribute)) {
             throw new RepeatedCategoryAttributeException("The requested attribute is repeated. Try again.");
@@ -214,6 +223,7 @@ public class ManagerBoss {
     }
 
     public static boolean deleteAttributeFromCategory(String categoryName, String attribute) throws FieldDoesNotExist {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Category category = Category.getCategoryByName(categoryName);
         if (category.getSpecialAttributes().contains(attribute)) {
             category.getSpecialAttributes().remove(attribute);
@@ -230,9 +240,8 @@ public class ManagerBoss {
         }
         return true;
     }
-
-
     public static boolean editAttributeName(String categoryName, String previousAttributeName, String newAttributeName) throws FieldDoesNotExist, RepeatedCategoryAttributeException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Category category = Category.getCategoryByName(categoryName);
         ArrayList<String> specialAttributes = category.getSpecialAttributes();
         if (specialAttributes.contains(previousAttributeName)) {
@@ -263,6 +272,7 @@ public class ManagerBoss {
 
 
     public static boolean checkExistenceOfCustomerUsername(String customerUsername) throws NotExistCustomerWithUserNameException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (!Customer.isThereCustomerWithUsername(customerUsername)) {
             throw new NotExistCustomerWithUserNameException("There is'nt any customer with requested username. Enter a customer username:");
         }
@@ -270,6 +280,7 @@ public class ManagerBoss {
     }
 
     public static boolean createDiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<String> includedCustomersUserNames, double minimumPriceForUse) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<Customer> includedCustomers = new ArrayList<>();
         if (includedCustomersUserNames.contains("-all")) {
             includedCustomers.addAll(Customer.getAllCustomers());
@@ -287,6 +298,7 @@ public class ManagerBoss {
     }
 
     public static String checkAndGetDiscountCodeDetailsWithCode(String code) throws DiscountNotExist {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (DiscountCode.isThereDiscountCodeWithCode(code)) {
             return DiscountCode.getDiscountCodeWithCode(code).getDetails();
         }
@@ -296,6 +308,7 @@ public class ManagerBoss {
     }
 
     public static boolean deleteDiscountCodeWithCode(String code) throws DiscountNotExist {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (DiscountCode.isThereDiscountCodeWithCode(code)) {
             DiscountCode discountCode = DiscountCode.getDiscountCodeWithCode(code);
             DiscountCode.getAllDiscountCodes().remove(discountCode);
@@ -309,10 +322,9 @@ public class ManagerBoss {
         }
     }
 
-
-
     public static boolean sortCategoryWithField(String field) {
-            if (field.charAt(5) == 'a') {
+        Boss.removeExpiredOffsAndDiscountCodes();
+        if (field.charAt(5) == 'a') {
                 if (field.startsWith("name")) {
                     Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName));
                     Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName));
@@ -341,6 +353,7 @@ public class ManagerBoss {
         return false;
     }
     public static boolean sortAccountWithField(String field) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (field.startsWith("name")) {
             if (field.charAt(5) == 'a') {
                 Collections.sort(Account.allAccounts, Comparator.comparing(Account::getFullName));
@@ -369,6 +382,7 @@ public class ManagerBoss {
 
 
     public static boolean sortDiscountCodesWithField(String field) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (field.startsWith("percent")) {
             if (field.charAt(8) == 'a') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getDiscountPercent));
@@ -428,6 +442,7 @@ public class ManagerBoss {
 
 
     public static boolean checkStartDateAndFinalDateForDiscountCode(LocalDateTime start, LocalDateTime end) throws DateException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (end.isBefore(LocalDateTime.now())) {
             throw new DateException("The end time is before now! Are you OK?! :)");
         }

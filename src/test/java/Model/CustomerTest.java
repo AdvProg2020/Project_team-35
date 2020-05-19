@@ -3,6 +3,8 @@ package Model;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.Assert.*;
@@ -20,7 +22,7 @@ private Product product = new Product("a","s",23,new Seller("a","s","ds","fd","s
         HashMap<Product,Integer> cart = new HashMap<>();
         cart.put(product,3);
         customer.setCart(cart);
-        Assert.assertEquals(66,customer.getTotalPriceOFCart(),1);
+        Assert.assertEquals(69,customer.getTotalPriceOFCart(),1);
     }
     @Test
     public void getListOFProductsAtCart() {
@@ -32,7 +34,7 @@ private Product product = new Product("a","s",23,new Seller("a","s","ds","fd","s
     @Test
     public void getPaymentAmount() {
         customer.setPaymentAmount(10.0);
-        Assert.assertEquals(10.0, 1);
+        Assert.assertEquals(10.0, customer.getPaymentAmount(), 1);
     }
     @Test
     public void isThereCustomerWithUsername() {
@@ -40,7 +42,7 @@ private Product product = new Product("a","s",23,new Seller("a","s","ds","fd","s
         Assert.assertFalse(Customer.isThereCustomerWithUsername("b"));
     }
     @Test
-    public  void getCustomerWithName(String username) {
+    public  void getCustomerWithName() {
         Assert.assertEquals(customer, Customer.getCustomerWithName("a"));
         Assert.assertNull(Customer.getCustomerWithName("b"));
     }

@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class ProductBoss {
 
     public static GoodPage goToGoodPage(int id) throws NullProduct {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Product product = Product.getProductWithId(id);
         GoodPage goodPage = GoodPage.getGoodPage(product);
         if (goodPage == null) {
@@ -24,7 +25,7 @@ public class ProductBoss {
     }
 
     public static ArrayList<Product> sortProduct(String field)  {
-
+        Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<Product> confirmedProducts = new ArrayList<>();
         for (Product product : Product.getProductFieldForSort(field)) {
             if (product.getProductStatus().equals(ProductAndOffStatus.CONFIRMED))
@@ -38,6 +39,7 @@ public class ProductBoss {
     }
 
     public static StringBuilder compare(String id, Product product2) throws ProductsCompareNotSameCategories, ProductIsFinished, NullProduct {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Product product = Product.getProductWithId(Integer.parseInt(id));
         if (product == null) {
                 throw new NullProduct("null product",1);
@@ -69,13 +71,15 @@ public class ProductBoss {
     }
 
     public static void makeComment(String comment,String title , Product product , Customer customer){
-                Comment comment1 = new Comment(product,comment,customer,title);
+        Boss.removeExpiredOffsAndDiscountCodes();
+        Comment comment1 = new Comment(product,comment,customer,title);
     }
     public static String showSummeryOfProductDetails(Product product) {
         return product.showSummeryDetailsOfProduct();
     }
 
     public static HashMap<String , String> showComments(Product product){
+        Boss.removeExpiredOffsAndDiscountCodes();
         HashMap<String , String> comments = new HashMap<>();
         for (Comment comment : product.getCommentsList()) {
             comments.put(comment.getCommenter().getUsername(),comment.getCommentText());
@@ -83,6 +87,7 @@ public class ProductBoss {
         return comments;
     }
     public static void updateReviewNumberOfAProductPage(Product product){
+        Boss.removeExpiredOffsAndDiscountCodes();
         product.setReviewNumber(product.getReviewNumber()+1);
     }
 }

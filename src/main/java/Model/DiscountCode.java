@@ -37,6 +37,7 @@ public class DiscountCode {
         this.minimumTotalPriceForUse = minimumTotalPriceForUse;
         for (Customer customer : includedCustomers) {
             this.includedBuyersAndUseFrequency.put(customer, 0);
+            customer.discountCodes.add(this);
         }
         allDiscountCodes.add(this);
         DiscountCode.setCurrentSort("Nothing");
