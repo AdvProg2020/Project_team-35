@@ -69,4 +69,11 @@ public class CategoryTest {
         Assert.assertEquals(Category.getAllCategories().get(0), bbb);
 
     }
+
+    @Test
+    public void getCurrentSort() {
+        Assert.assertEquals(Category.getCurrentSort(), "Nothing");
+        ManagerBoss.sortCategoryWithField("name-a");
+        Assert.assertEquals(Category.getCurrentSort(), "Category Name - Ascending");
+    }
 }

@@ -385,4 +385,36 @@ public class ManagerBossTest {
     @Test
     public void testEditAttributeName() {
     }
+
+    @Test
+    public void checkCategoryExistence() throws ThereIsNotCategoryWithNameException {
+        ArrayList<String> attributes = new ArrayList<>();
+        attributes.add("salam");
+        Category category1 = new Category("gggg", attributes);
+        Assert.assertEquals( ManagerBoss.checkCategoryExistence("gggg"), true);
+        try {
+            Assert.assertEquals( ManagerBoss.checkCategoryExistence("ffff"), true);
+        }
+        catch (ThereIsNotCategoryWithNameException e) {
+            Assert.assertTrue(true);
+        }
+    }
+
+    @Test
+    public void editCategoryName() {
+        Category category1 = new Category("gggg", new ArrayList<>());
+        Assert.assertEquals(ManagerBoss.editCategoryName("gggg", "hhh"), true);
+
+    }
+
+    @Test
+    public void checkNewManagerUserName() throws RepeatedUserName {
+        Assert.assertEquals(ManagerBoss.checkNewManagerUserName("ccc"), true);
+        try {
+            ManagerBoss.checkNewManagerUserName("cccccc");
+        }
+        catch (RepeatedUserName e) {
+            Assert.assertTrue(true);
+        }
+    }
 }

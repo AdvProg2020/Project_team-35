@@ -321,7 +321,7 @@ public class ManagerBoss {
                 else if (field.startsWith("size")) {
                     Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize));
                     Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize));
-                    Category.setCurrentSort("Category Size - Aescending");
+                    Category.setCurrentSort("Category Size - Ascending");
                 }
                 return true;
             }
