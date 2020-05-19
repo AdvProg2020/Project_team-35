@@ -19,7 +19,7 @@ public class CustomerBoss {
             discountCodesInformation.add("final date: " + discountCode.getFinalDate());
             discountCodesInformation.add("discount percent: " + discountCode.getDiscountPercent());
             discountCodesInformation.add("maximum amount: " + discountCode.getMaximumAvailableAmount());
-            discountCodesInformation.add("available use frequents: " + discountCode.getAvailableUseFrequent());
+            discountCodesInformation.add("available use frequents: " + discountCode.getAvailableUseFrequent() + "\n");
         }
         return discountCodesInformation;
     }

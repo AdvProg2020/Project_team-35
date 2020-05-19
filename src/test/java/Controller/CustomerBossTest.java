@@ -1,12 +1,15 @@
 package Controller;
 
 import Model.Customer;
+import Model.DiscountCode;
 import Model.Product;
 import Model.Seller;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CustomerBossTest extends TestCase {
@@ -25,5 +28,25 @@ public class CustomerBossTest extends TestCase {
         cart.put(product,2);
         customer.setCart(cart);
         Assert.assertEquals(46.0,CustomerBoss.showTotalCartPrice(customer),1);
+    }
+
+    @Test
+    public void testShowDiscountCodes() {
+        ArrayList<Customer> customers = new ArrayList<>();
+        customers.add(customer);
+        DiscountCode discountCode = new DiscountCode("1", LocalDateTime.MAX, LocalDateTime.MIN, 30, 40, 5, customers, -1);
+        ArrayList<String> details = new ArrayList<>();
+        details.add("id: 1");
+        details.add("final date: " + LocalDateTime.MAX);
+        details.add("discount percent: 30");
+        details.add("maximum amount: 40");
+        details.add("available use frequents: 5\n");
+        Assert.assertEquals(details, CustomerBoss.showDiscountCodes(customer));
+    }
+
+    @Test
+    public void testShowMoney() {
+        customer.setMoney(10.0);
+        Assert.assertEquals(10.0, CustomerBoss.showMoney(customer), 0);
     }
 }
