@@ -341,4 +341,48 @@ public class ManagerBossTest {
 
 
     }
+
+    @Test
+    public void addAttributeToCategory() {
+        ArrayList<String> attributes = new ArrayList<>();
+        attributes.add("salam");
+        Category category1 = new Category("a", attributes);
+        try {
+            ManagerBoss.addAttributeToCategory("a", "salam");
+        } catch (RepeatedCategoryAttributeException e) {
+            Assert.assertTrue(true);
+        }
+        try {
+            ManagerBoss.addAttributeToCategory("a", "hello");
+            Assert.assertEquals(category1.specialAttributes.contains("hello"), false);
+            Assert.assertEquals(ManagerBoss.addAttributeToCategory("a", "hey"), true);
+        } catch (RepeatedCategoryAttributeException e) {
+            fail();
+        }
+
+
+    }
+
+    @Test
+    public void deleteAttributeFromCategory() {
+        ArrayList<String> attributes = new ArrayList<>();
+        attributes.add("salam");
+        Category category1 = new Category("gggg", attributes);
+        try {
+            ManagerBoss.deleteAttributeFromCategory("gggg", "hey");
+        } catch (FieldDoesNotExist e) {
+            Assert.assertTrue(true);
+        }
+        try {
+            Assert.assertEquals(ManagerBoss.deleteAttributeFromCategory("gggg", "salam"), true);
+        } catch (FieldDoesNotExist fieldDoesNotExist) {
+            fail();
+        }
+
+
+    }
+
+    @Test
+    public void testEditAttributeName() {
+    }
 }
