@@ -10,10 +10,6 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class Boss {
-    private static Date date;
-    public void updateDateForDiscountCodesAndOffs() {
-            date = new Date();
-    }
 
     public static boolean removeExpiredOffsAndDiscountCodes() {
         LocalDateTime now = LocalDateTime.now();

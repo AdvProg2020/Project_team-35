@@ -386,4 +386,8 @@ public class Product {
     public ArrayList<Rate> getRatesList() {
         return ratesList;
     }
+
+    public static void resetProductNumberToZero() {
+        Product.productNumber = 0;
+    }
 }
