@@ -12,13 +12,11 @@ import static org.junit.Assert.*;
 
 public class CategoryTest {
 
-    Seller seller1 = new Seller("a","a","s","sd","ds","sad","asd");
-    Category category = new Category("labaniat",null);
-    Product product = new Product("a","mihan",23,seller1,10,category,null,null);
 
 
     @Test
     public void getCategoryByName() {
+        Category category = new Category("labaniat",null);
         Assert.assertEquals(Category.getCategoryByName("labaniat"), category);
         Assert.assertEquals(Category.getCategoryByName("sdsd"), null);
     }
@@ -34,12 +32,14 @@ public class CategoryTest {
 
     @Test
     public void getShortInfo() {
+        Category category = new Category("labaniat",null);
         Assert.assertEquals("CategoryName : " + "labaniat" + " --- " + "ProductsNumber : " + 0, category.getShortInfo());
 
     }
 
     @Test
     public void isThisAttributesForThisCategory() {
+        Category category = new Category("labaniat",null);
         Assert.assertEquals(category.isThisAttributesForThisCategory(new HashMap<>()), true);
         HashMap<String,String> attributes = new HashMap<>();
         attributes.put("hello", "5");

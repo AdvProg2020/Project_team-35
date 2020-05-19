@@ -30,7 +30,7 @@ public class AddOffRequestTest {
 
     @Test
     public void getRequestInfo() {
-        Assert.assertEquals(request.getRequestInfo(), "  Add Off Request --- Requester Username: " + off.getSeller().getUsername() + " --- RQId: " + 1);
+        Assert.assertEquals(request.getRequestInfo(), "  Add Off Request --- Requester Username: " + off.getSeller().getUsername() + " --- RQId: " + 3);
     }
 
     @Test

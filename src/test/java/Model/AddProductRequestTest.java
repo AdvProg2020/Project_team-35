@@ -27,7 +27,7 @@ public class AddProductRequestTest {
 
     @Test
     public void getRequestInfo() {
-        Assert.assertEquals("  Add Product Request --- UserName: " + "a" + " --- RQId: " + 1, addProductRequest.getRequestInfo());
+        Assert.assertEquals("  Add Product Request --- UserName: " + "a" + " --- RQId: " + 3, addProductRequest.getRequestInfo());
 
     }
 }
