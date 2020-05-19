@@ -53,7 +53,11 @@ public class BuyerPage extends Page {
                             }
                         } else if (command.equalsIgnoreCase("back")) {
                             nextPage = parentPage;
-                        } else {
+                        }
+                        else if (command.equalsIgnoreCase("help")) {
+                            System.out.println("view product [product id] *** back");
+                        }
+                        else {
                             System.err.println("invalid command");
                             nextPage = this;
                         }
@@ -79,7 +83,11 @@ public class BuyerPage extends Page {
 
                         } else if (command.equalsIgnoreCase("back")) {
                             nextPage = parentPage;
-                        } else {
+                        }
+                        else if (command.equalsIgnoreCase("help")) {
+                            System.out.println("increase [product id] *** back");
+                        }
+                        else {
                             System.err.println("invalid command");
                             nextPage = this;
                         }
@@ -104,7 +112,11 @@ public class BuyerPage extends Page {
 
                         } else if (command.equalsIgnoreCase("back")) {
                             nextPage = parentPage;
-                        } else {
+                        }
+                        else if (command.equalsIgnoreCase("help")) {
+                            System.out.println("decrease [product id] *** help");
+                        }
+                        else {
                             System.err.println("invalid command");
                             nextPage = this;
                         }
