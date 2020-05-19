@@ -14,6 +14,7 @@ public class Category {
         this.specialAttributes = specialAttributes;
         categoryProducts = new ArrayList<>();
         Category.setCurrentSort("Nothing");
+        allCategories.add(this);
     }
 
 

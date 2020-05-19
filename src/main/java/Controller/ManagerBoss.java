@@ -131,7 +131,6 @@ public class ManagerBoss {
         }
         else {
             Category category = new Category(categoryName, specialAttributes);
-            Category.allCategories.add(category);
             return 0;
         }
     }
@@ -324,6 +323,7 @@ public class ManagerBoss {
                     Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize));
                     Category.setCurrentSort("Category Size - Aescending");
                 }
+                return true;
             }
         if (field.charAt(5) == 'b') {
             if (field.startsWith("name")) {
