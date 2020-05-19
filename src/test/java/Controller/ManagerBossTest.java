@@ -26,6 +26,7 @@ public class ManagerBossTest {
     Category category2 = new Category("b",new ArrayList<>());
     private Customer customer = new Customer("a","a","a","a@a.a","1","1");
     Product product1 = new Product("a","a",23,seller1,10,category1,null,null);
+    Manager manager = new Manager("cccccc", "c", "c", "mail@e.ir", "09100577581", "09100577581");
 
 
     @Test
@@ -224,5 +225,102 @@ public class ManagerBossTest {
         } catch (ThereIsNotCategoryWithNameException e) {
             fail();
         }
+    }
+
+    @Test
+    public void deleteAccountWithUsername() {
+        try {
+            ManagerBoss.deleteAccountWithUsername("dfgd");
+        } catch (NotValidUserNameException e) {
+            Assert.assertTrue(true);
+        } catch (CantRemoveYourAccountException e) {
+            fail();
+        }
+        Seller.getAllSellers().add(seller1);
+        Seller.getAllSellers().add(seller2);
+        Account.setOnlineAccount(seller2);
+        try {
+            ManagerBoss.deleteAccountWithUsername("aaaaaa");
+            Assert.assertEquals(Seller.getAllSellers().size(), 1);
+        } catch (NotValidUserNameException | CantRemoveYourAccountException e) {
+            fail();
+        }
+        try {
+            ManagerBoss.deleteAccountWithUsername("a");
+            Assert.assertEquals(Customer.getAllCustomers().size(), 0);
+        } catch (NotValidUserNameException | CantRemoveYourAccountException e) {
+            fail();
+        }
+        try {
+            ManagerBoss.deleteAccountWithUsername("cccccc");
+            Assert.assertEquals(Manager.getAllManagers().size(), 0);
+        } catch (NotValidUserNameException | CantRemoveYourAccountException e) {
+            fail();
+        }
+
+
+    }
+
+    @Test
+    public void addNewCategory() {
+        try {
+            ManagerBoss.addNewCategory("a", new ArrayList<>());
+        } catch (RepeatedCategoryNameException e) {
+            Assert.assertTrue(true);
+        }
+        try {
+            ManagerBoss.addNewCategory("aa", new ArrayList<>());
+            Assert.assertEquals(Category.getAllCategories().size(), 3);
+            Assert.assertEquals(ManagerBoss.addNewCategory("f", new ArrayList<>()), 0);
+        } catch (RepeatedCategoryNameException e) {
+            fail();
+        }
+
+    }
+
+    @Test
+    public void editAttributeName() {
+        ArrayList<String> attributes = new ArrayList<>();
+        attributes.add("one");
+        attributes.add("two");
+        Category category2 = new Category("fff", new ArrayList<>());
+        Category category1 = new Category("onee", attributes);
+        try {
+            ManagerBoss.editAttributeName("fff", "s", "f");
+        } catch (FieldDoesNotExist fieldDoesNotExist) {
+            Assert.assertTrue(true);
+        } catch (RepeatedCategoryAttributeException e) {
+            fail();
+        }
+
+        try {
+            ManagerBoss.editAttributeName("onee", "one", "two");
+        } catch (FieldDoesNotExist fieldDoesNotExist) {
+            fail();
+        } catch (RepeatedCategoryAttributeException e) {
+            Assert.assertTrue(true);
+        }
+
+        try {
+            ManagerBoss.editAttributeName("onee", "one", "sdkjfsj");
+        } catch (FieldDoesNotExist | RepeatedCategoryAttributeException fieldDoesNotExist) {
+            fail();
+        }
+
+
+    }
+
+    @Test
+    public void createDiscountCode() {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("a");
+        ManagerBoss.createDiscountCode("code", localDateTime2, localDateTime, 1, 1, 1, list, 1);
+        Assert.assertEquals(DiscountCode.getAllDiscountCodes().size(), 3);
+        list.add("-all");
+        ManagerBoss.createDiscountCode("klsd", localDateTime2, localDateTime, 1, 1, 1, list, 1);
+        Assert.assertEquals(DiscountCode.getAllDiscountCodes().size(), 4);
+        Assert.assertEquals(ManagerBoss.createDiscountCode("sdsds", localDateTime2, localDateTime, 1, 1, 1, list, 1), true);
+
+
     }
 }
