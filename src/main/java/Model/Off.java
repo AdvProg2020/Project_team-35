@@ -146,8 +146,10 @@ public class Off {
     }
     public static boolean isThereProduct(Product product){
         for (Off activeOff : allActiveOffs) {
-            if (activeOff.getIncludedProducts().contains(product))
-                return true;
+            if (activeOff!=null && activeOff.includedProducts!=null) {
+                if (activeOff.getIncludedProducts().contains(product))
+                    return true;
+            }
         }
         return false;
     }

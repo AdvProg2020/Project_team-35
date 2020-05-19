@@ -63,7 +63,11 @@ public abstract class Account {
      */
     public static void setOnlineAccount(Account onlineAccount) {
         Account.onlineAccount = onlineAccount;
-        setIsThereOnlineUser(true);
+        if (onlineAccount!=null)
+            setIsThereOnlineUser(true);
+        else {
+            setIsThereOnlineUser(false);
+        }
     }
 
     public static ArrayList<Account> getAllLoggedAccounts() {

@@ -140,6 +140,10 @@ public class SellerBossTest {
         id.add(product.getProductId());
         try {
 
+            ArrayList<Product> as = new ArrayList<>();
+            Product product1 = new Product("asd","sad",123,seller,12,new Category("asd",null),null,null);
+            as.add(product1);
+            Off off1 = new Off(null,null,null,343,12,seller);
             Assert.assertTrue(SellerBoss.addOff(id, seller, "2201-10-23T12:23:10", "2202-10-12T22:23:44", "23", "233"));
         } catch (NullProduct nullProduct) {
             nullProduct.printStackTrace();
@@ -330,7 +334,10 @@ public class SellerBossTest {
         product.getWhoBoughtThisGood().add(customer1);
         Product product1 = new Product("sad","asd",23,new Seller("asd","asd","asd","dsf","sdf","gf","dgf"),3,new Category("lkdsa",null),null,"");
         try {
-            Assert.assertEquals(SellerBoss.showBuyers("2",seller),null);
+            ArrayList<String> a = new ArrayList<>();
+            a.add(customer.getUsername());
+            a.add(customer1.getUsername());
+            Assert.assertEquals(SellerBoss.showBuyers("2",seller),a);
         } catch (ThisIsNotYours thisIsNotYours) {
           Assert.assertEquals( thisIsNotYours.getId(),2);
         } catch (NullProduct nullProduct) {
@@ -642,8 +649,17 @@ a.add(product);
 
     @Test
     public void sortOffs() {
-        Off off = new Off(null,null,null,233,22,seller);
-        Assert.assertEquals(SellerBoss.sortOffs("name",seller),null);
+        Product product = new Product("a","asd",23,seller,2,new Category("sad",null),null,null);
+        Product product1 = new Product("b","asd",23,seller,2,new Category("sad",null),null,null);
+        Product product2 = new Product("c","asd",23,seller,2,new Category("sad",null),null,null);
+
+        ArrayList<Product> s = new ArrayList<>();
+        s.add(product);
+        Off off = new Off(null,null,s,233,22,seller);
+        Off off1 = new Off(null,null,null,344,23,seller);
+       ArrayList<Off> a = new ArrayList<>();
+       Off.allActiveOffs = new ArrayList<>();
+        Assert.assertEquals(SellerBoss.sortOffs("StartDate",seller),null);
     }
 
     @Test
@@ -664,8 +680,9 @@ a.add(product);
     @Test
     public void editOff() {
         HashMap<String, String> a = new HashMap<>();
-        a.put("startDate", "");
+        a.put("startDate", "2200-12-13T22");
         a.put("percent", "29");
+        a.put("maximumAmountOfOff","88");
         Off off = new Off(null, null, null, 23, 12, seller);
         off.setOffStatus(ProductAndOffStatus.CONFIRMED);
         try {

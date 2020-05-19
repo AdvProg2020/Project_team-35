@@ -137,9 +137,12 @@ public class Product {
 
     public static boolean deleteProduct(Product product) {
         for (Off allActiveOff : Off.allActiveOffs) {
-            if (allActiveOff.getIncludedProducts().contains(product)) {
-                allActiveOff.getIncludedProducts().remove(product);
-                break;
+            if (allActiveOff!=null && allActiveOff.getIncludedProducts()!=null) {
+                if (allActiveOff.getIncludedProducts().contains(product)) {
+                    allActiveOff.getIncludedProducts().remove(product);
+                    break;
+
+                }
             }
         }
         allProducts.remove(product);
