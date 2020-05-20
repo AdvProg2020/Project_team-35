@@ -12,6 +12,7 @@ public class CustomerBoss {
     }
 
     public static ArrayList<String> showDiscountCodes(Customer customer) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<String> discountCodesInformation = new ArrayList<>();
         for (DiscountCode discountCode : customer.discountCodes) {
             discountCodesInformation.add("id: " + discountCode.getId());
@@ -33,6 +34,7 @@ public class CustomerBoss {
      * @throws ProductIsFinished
      */
     public static boolean increaseNumber(int id, Customer customer, int increase) throws NullProduct, ProductIsFinished {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Product product = Product.getProductWithId(id);
         if (product == null) {
             throw new NullProduct("this product does not exist", 1);
@@ -59,6 +61,7 @@ public class CustomerBoss {
      * @return
      */
     public static String showProductsInCart(Customer customer) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         String result = "";
         for (Product product : customer.getListOFProductsAtCart().keySet()) {
             result += product.getName() + "\nwith id : " + product.getProductId() + "\nwith number : " + customer.getListOFProductsAtCart().get(product) + "\n";
@@ -67,10 +70,12 @@ public class CustomerBoss {
     }
 
     public static double showTotalCartPrice(Customer customer) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         return customer.getTotalPriceOFCart();
     }
 
     public static boolean hasDiscountCodeWithId(Customer customer, String id) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         for (DiscountCode discountCode : customer.discountCodes) {
             if (id.equals(discountCode.getId()))
                 return true;
@@ -79,10 +84,12 @@ public class CustomerBoss {
     }
 
     public static double getDiscountAmount(DiscountCode discountCode, double totalPriceOfCart) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         return totalPriceOfCart * discountCode.getDiscountPercent() / 100.0;
     }
 
     public static void useDiscountCode(Customer customer, String id) throws DiscountNotExist, DiscountIsNotForYou, DontHaveMinimumPriceOfCartForDiscount {
+        Boss.removeExpiredOffsAndDiscountCodes();
         DiscountCode discountCode = DiscountCode.getDiscountCodeWithCode(id);
         if (!DiscountCode.isThereDiscountCodeWithCode(id)) {
             throw new DiscountNotExist("invalid discount code!");
@@ -103,10 +110,12 @@ public class CustomerBoss {
     }
 
     public static void dontUseDiscountCode(Customer customer) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         customer.setPaymentAmount(customer.getTotalPriceOFCart());
     }
 
     public static boolean doPayment(Customer customer) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<Product> products = new ArrayList<>();
         if (customer.getMoney() < customer.getPaymentAmount())
             return false;
@@ -127,14 +136,17 @@ public class CustomerBoss {
     }
 
     public static ArrayList<BuyLog> showBuyResume(Customer customer) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         return customer.getBuyLogs();
     }
 
     public static HashMap<Product, Integer> showProductsOfALog(BuyLog buyLog) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         return buyLog.historyOfBuys();
     }
 
     public static void rateProduct(Customer customer, int productId, int rate) throws ProductIsNotBought {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (!customer.hasBoughtProductWithId(productId)) {
             throw new ProductIsNotBought("you can't rate this product because you haven't bought it!");
         }

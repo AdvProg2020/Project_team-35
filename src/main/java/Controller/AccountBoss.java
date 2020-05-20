@@ -15,6 +15,7 @@ public class AccountBoss {
      * @throws RepeatedUserName
      */
     public static void firstStepOfRegistering(String type, String username) throws MoreThanOneManagerException, RepeatedUserName, RequestProblemNotExistManager {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (Manager.isThereAnyManager() && type.equals("manager")) {
             throw new MoreThanOneManagerException("only one manager could register\nplease send a request to manager for adding you");
         }
@@ -32,6 +33,7 @@ public class AccountBoss {
      * @param allPersonalInfo
      */
     public static void makeAccount(HashMap<String, String> allPersonalInfo) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         StringBuilder request = new StringBuilder();
         String type = null;
         String email = null;
@@ -86,11 +88,8 @@ public class AccountBoss {
 
     }
 
-    public void startDeleteAccount(String username) {
-
-    }
-
     public static String showPersonalInfoInUserPage(Account account) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (Account.getTypeOfAccount(account) == 1) {
             Manager manager = (Manager) account;
             return manager.getPersonalInfo();
@@ -115,6 +114,7 @@ public class AccountBoss {
      * @param username
      */
     public static void checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername, LoginWithoutLogout {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (Account.isIsThereOnlineUser()) {
             throw new LoginWithoutLogout("first you should logout");
         }
@@ -134,6 +134,7 @@ public class AccountBoss {
      * @throws PasswordValidity
      */
     public static void checkPasswordValidity(String username, String password) throws PasswordValidity {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (!Account.getAccountWithUsername(username).validatePassword(password)) {
             throw new PasswordValidity("this password is invalid");
         }
@@ -146,6 +147,7 @@ public class AccountBoss {
      * @param password
      */
     public static void startLogin(String username, String password) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Account account = Account.getAccountWithUsername(username);
         account.setThisAccountLogged(true);
         Account.getAllLoggedAccounts().add(account);
@@ -154,6 +156,7 @@ public class AccountBoss {
     }
 
     public static void startEditPersonalField(String fieldName, String newValue,Account account) throws NotValidFieldException, InvalidNumber {
+        Boss.removeExpiredOffsAndDiscountCodes();
         if (fieldName.equalsIgnoreCase("firstName")) {
             Account.getOnlineAccount().setFirstName(newValue);
         } else if (fieldName.equalsIgnoreCase("lastName")) {
@@ -189,6 +192,7 @@ public class AccountBoss {
     }
 
     public static void logout(Account account) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Account.setIsThereOnlineUser(false);
         Account.setOnlineAccount(null);
     }

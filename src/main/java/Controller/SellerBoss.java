@@ -15,6 +15,7 @@ public class SellerBoss {
     }
 
     public static ArrayList<String> showCategories() {
+        Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<String> categories = new ArrayList<>();
         for (Category category : Category.allCategories) {
             categories.add(category.getCategoryName());
@@ -26,6 +27,7 @@ public class SellerBoss {
     }
 
     public static ArrayList<String> showHistoryOfSales(Seller seller) {
+        Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<String> sales = new ArrayList<>();
         for (SellLog log : seller.getSellLogs()) {
             for (Product soldProduct : log.getSoldProducts()) {
@@ -36,6 +38,7 @@ public class SellerBoss {
     }
 
     public static String showProduct(String id, Seller seller) throws ThisIsNotYours, NullProduct {
+        Boss.removeExpiredOffsAndDiscountCodes();
         int productId = Integer.parseInt(id);
         Product product = Product.getProductWithId(productId);
         if (product == null) {
@@ -48,6 +51,7 @@ public class SellerBoss {
     }
 
     public static ArrayList<String> getWithNameOfCategoryItsSpecials(String categoryName) throws ThereIsNotCategoryWithNameException {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Category category = Category.getCategoryByName(categoryName);
         if (category==null){
             throw new ThereIsNotCategoryWithNameException("null",1);
@@ -55,7 +59,7 @@ public class SellerBoss {
         return category.getSpecialAttributes();
     }
     public static boolean addRequestProduct(String name, String price, String inventory, HashMap<String, String> attributes, String company, String category1, Seller seller,String description) {
-
+        Boss.removeExpiredOffsAndDiscountCodes();
         Category category = Category.getCategoryByName(category1);
         double productPrice = Double.parseDouble(price);
         int number = Integer.parseInt(inventory);
@@ -69,6 +73,7 @@ public class SellerBoss {
     }
 
     public static ArrayList<String> showBuyers(String id, Seller seller) throws ThisIsNotYours, NullProduct {
+        Boss.removeExpiredOffsAndDiscountCodes();
         int iD = Integer.parseInt(id);
         Product product = getProduct(id, seller);
         ArrayList<String> buyers = new ArrayList<>();
@@ -79,6 +84,7 @@ public class SellerBoss {
     }
 
     public static ArrayList<Product> sortProductForSpecialSeller(String field,Seller seller){
+        Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<Product>         result = Product.getProductFieldForSort(field);
        ArrayList<Product> sorted = new ArrayList<>();
         for (Product product : result) {
@@ -88,11 +94,13 @@ public class SellerBoss {
         return sorted;
     }
     public static ArrayList<Customer>  sortBuyers(String id , Seller seller,String field) throws ThisIsNotYours, NullProduct {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Product product = getProduct(id, seller);
         return product.sortBuyers(field);
     }
 
     private static Product getProduct(String id, Seller seller) throws ThisIsNotYours, NullProduct {
+        Boss.removeExpiredOffsAndDiscountCodes();
         int iD = Integer.parseInt(id);
         Product product = Product.getProductWithId(iD);
         if (product==null){
@@ -117,6 +125,7 @@ public class SellerBoss {
      * @throws SoldProductsCanNotHaveChange
      */
     public static boolean removeProduct(String id, Seller seller) throws ThisIsNotYours, SoldProductsCanNotHaveChange, NullProduct {
+        Boss.removeExpiredOffsAndDiscountCodes();
         int iD = Integer.parseInt(id);
         Product product = Product.getProductWithId(iD);
         if (product == null) {
@@ -135,6 +144,7 @@ public class SellerBoss {
     }
 
     public static boolean editProduct(HashMap<String, String> allChanges, String id, Seller seller) throws ThisIsNotYours, SoldProductsCanNotHaveChange, ThisAttributeIsNotForThisProduct, NoMatchBetweenCategoryAndAttributes, ThereIsNotCategoryWithNameException, NullProduct, InvalidNumber {
+        Boss.removeExpiredOffsAndDiscountCodes();
         int iD = Integer.parseInt(id);
         Product product = Product.getProductWithId(iD);
         if (product == null) {
@@ -226,6 +236,7 @@ if (product.getSpecialAttributes()!=null) {
     }
 
     public static ArrayList<Off> sortOffs(String field  , Seller seller){
+        Boss.removeExpiredOffsAndDiscountCodes();
        ArrayList<Off> totalSorted =  OffBoss.sortOff(field);
        ArrayList<Off> result  = new ArrayList<>();
         for (Off off : totalSorted) {
@@ -236,6 +247,7 @@ if (product.getSpecialAttributes()!=null) {
     }
 
     public static String viewOff(Seller seller, String id) throws ThisIsNotYours, ThisOffNotExist {
+        Boss.removeExpiredOffsAndDiscountCodes();
         Off off = Off.getOffById(Integer.parseInt(id));
         if (off == null) {
             throw new ThisOffNotExist("this does not exist", 1);
@@ -247,6 +259,7 @@ if (product.getSpecialAttributes()!=null) {
     }
 
     public static boolean editOff(Seller seller, Off off, HashMap<String, String> changes) throws   TimeLimit, InputStringExceptNumber, ThisIsNotReadyForEdit {
+        Boss.removeExpiredOffsAndDiscountCodes();
         String date = null;
         double maximum = -1.0;
         double percent = -1.0;
@@ -292,6 +305,7 @@ if (product.getSpecialAttributes()!=null) {
     }
 
     public static boolean addOff(ArrayList<Integer> id, Seller seller, String startDate, String finalDate, String percents, String maxs) throws ParseException, ThisIsNotYours, TimeLimit, InvalidNumber, InputStringExceptNumber, NullProduct, JustOneOffForEveryProduct {
+        Boss.removeExpiredOffsAndDiscountCodes();
         LocalDateTime start = LocalDateTime.parse(startDate);
         LocalDateTime finalDates = LocalDateTime.parse(finalDate);
 
