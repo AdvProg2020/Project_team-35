@@ -24,6 +24,13 @@ public class ManagerBossTest {
 
     @Test
     public void sortDiscountCodesWithField() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -35,7 +42,7 @@ public class ManagerBossTest {
 
         ManagerBoss.sortDiscountCodesWithField("percent-a");
         Assert.assertEquals(DiscountCode.getCurrentSort(), "Discount Code Percent - Ascending");
-        Assert.assertEquals(DiscountCode.getAllDiscountCodes().get(0), discountCode1);
+        Assert.assertEquals(DiscountCode.getAllDiscountCodes().get(0).getId(), discountCode1.getId());
         ManagerBoss.sortDiscountCodesWithField("percent-b");
         Assert.assertEquals(DiscountCode.getCurrentSort(), "Discount Code Percent - Descending");
         Assert.assertEquals(DiscountCode.getAllDiscountCodes().get(0), discountCode2);
@@ -65,22 +72,17 @@ public class ManagerBossTest {
         Assert.assertEquals(DiscountCode.getAllDiscountCodes().get(0), discountCode2);
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
-
     }
 
     @Test
     public void checkStartDateAndFinalDateForDiscountCode() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -112,23 +114,17 @@ public class ManagerBossTest {
         }
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
-
-
     }
 
     @Test
     public void sortCategoryWithField() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -152,23 +148,17 @@ public class ManagerBossTest {
         Assert.assertEquals(ManagerBoss.sortCategoryWithField("asasa-a"), false);
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
-
-
     }
 
     @Test
     public void sortAccountWithField() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -182,7 +172,7 @@ public class ManagerBossTest {
         Assert.assertEquals(Account.getCurrentSort(), "Nothing");
         ManagerBoss.sortAccountWithField("name-a");
         Assert.assertEquals(Account.getCurrentSort(), "Account FullName - Ascending");
-        Assert.assertEquals(Account.getAllAccounts().get(0), seller2);
+        Assert.assertEquals(Account.getAllAccounts().get(0), seller1);
         ManagerBoss.sortAccountWithField("name-b");
         Assert.assertEquals(Account.getCurrentSort(), "Account FullName - Descending");
         Assert.assertEquals(Account.getAllAccounts().get(0), manager);
@@ -194,24 +184,19 @@ public class ManagerBossTest {
         Assert.assertEquals(Account.getAllAccounts().get(0), manager);
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(seller2);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
-
     }
 
 
     @Test
     public void deleteDiscountCodeWithCode() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -235,22 +220,18 @@ public class ManagerBossTest {
         }
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
     }
 
     @Test
     public void checkExistenceOfCustomerUsername() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -273,23 +254,19 @@ public class ManagerBossTest {
         }
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
-
 
     }
 
     @Test
     public void acceptRequestWithId() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -311,22 +288,19 @@ public class ManagerBossTest {
         }
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
 
     }
 
     @Test
     public void declineRequestWithId() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -347,22 +321,18 @@ public class ManagerBossTest {
         }
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
-
     }
 
     @Test
     public void sortRequestsWithField() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -383,24 +353,18 @@ public class ManagerBossTest {
         Assert.assertEquals(ManagerBoss.sortRequestsWithField("df"), false);
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(seller2);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
-
-
     }
 
     @Test
     public void getAllActiveUsers() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -415,23 +379,17 @@ public class ManagerBossTest {
         Assert.assertEquals(ManagerBoss.getAllActiveUsers().size(), 3);
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Manager.getAllManagers().remove(manager1);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
-
     }
 
     @Test
     public void removeProductWithId() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
 
 
         try {
@@ -451,6 +409,14 @@ public class ManagerBossTest {
 
     @Test
     public void startDeleteCategoryWithName() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
         Seller seller2 = new Seller("bbbbbb", "b", "b", "mail@e.ir", "09100577581", "09100577581", "company");
         Category category1 = new Category("a",new ArrayList<>());
@@ -470,17 +436,19 @@ public class ManagerBossTest {
             fail();
         }
 
-        Seller.getAllSellers().remove(seller1);
-        Seller.getAllSellers().remove(seller2);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(seller2);
-        Category.getAllCategories().remove(category1);
-
 
     }
 
     @Test
     public void deleteAccountWithUsername() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
         Seller seller2 = new Seller("bbbbbb", "b", "b", "mail@e.ir", "09100577581", "09100577581", "company");
         Customer customer = new Customer("a","a","a","a@a.a","1","1");
@@ -514,21 +482,20 @@ public class ManagerBossTest {
         } catch (NotValidUserNameException | CantRemoveYourAccountException e) {
             fail();
         }
-        Seller.getAllSellers().remove(seller1);
-        Seller.getAllSellers().remove(seller2);
-        Manager.getAllManagers().remove(manager);
-        Customer.getAllCustomers().remove(customer);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
-
 
 
     }
 
     @Test
     public void addNewCategory() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         try {
             ManagerBoss.addNewCategory("a", new ArrayList<>());
         } catch (RepeatedCategoryNameException e) {
@@ -536,7 +503,7 @@ public class ManagerBossTest {
         }
         try {
             ManagerBoss.addNewCategory("aa", new ArrayList<>());
-            Assert.assertEquals(Category.getAllCategories().size(), 5);
+            Assert.assertEquals(Category.getAllCategories().size(), 2);
             Assert.assertEquals(ManagerBoss.addNewCategory("f", new ArrayList<>()), 0);
         } catch (RepeatedCategoryNameException e) {
             fail();
@@ -548,6 +515,14 @@ public class ManagerBossTest {
 
     @Test
     public void editAttributeName() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
         Category category1 = new Category("a",new ArrayList<>());
         HashMap<String, String> hashMap = new HashMap<>();
@@ -584,18 +559,19 @@ public class ManagerBossTest {
 
 
 
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Category.getAllCategories().remove(category3);
-        Product.getAllProducts().remove(product1);
-        Account.getAllAccounts().remove(seller1);
-
-
 
     }
 
     @Test
     public void createDiscountCode() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -616,20 +592,18 @@ public class ManagerBossTest {
 
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-    }
+   }
 
     @Test
     public void addAttributeToCategory() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -657,24 +631,19 @@ public class ManagerBossTest {
 
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Category.getAllCategories().remove(category3);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
-
 
     }
 
     @Test
     public void deleteAttributeFromCategory() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -701,19 +670,6 @@ public class ManagerBossTest {
 
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Category.getAllCategories().remove(category3);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
-
     }
 
     @Test
@@ -722,6 +678,14 @@ public class ManagerBossTest {
 
     @Test
     public void checkCategoryExistence() throws ThereIsNotCategoryWithNameException {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -743,23 +707,19 @@ public class ManagerBossTest {
         }
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Category.getAllCategories().remove(category3);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
 
     }
 
     @Test
     public void editCategoryName() {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -774,23 +734,19 @@ public class ManagerBossTest {
 
 
 
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Category.getAllCategories().remove(category3);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
-
 
     }
 
     @Test
     public void checkNewManagerUserName() throws RepeatedUserName {
+        Account.getAllAccounts().clear();
+        Manager.getAllManagers().clear();
+        Customer.getAllCustomers().clear();
+        Seller.getAllSellers().clear();
+        DiscountCode.getAllDiscountCodes().clear();
+        Category.getAllCategories().clear();
+        Product.getAllProducts().clear();
+
         DiscountCode discountCode1 = new DiscountCode("code1", localDateTime2, localDateTime, 1, 1, 1, new ArrayList<>(), 1);
         DiscountCode discountCode2 = new DiscountCode("code2", localDateTime4, localDateTime3, 2, 2, 2, new ArrayList<>(), 2);
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
@@ -807,18 +763,6 @@ public class ManagerBossTest {
         catch (RepeatedUserName e) {
             Assert.assertTrue(true);
         }
-
-
-        DiscountCode.getAllDiscountCodes().remove(discountCode1);
-        DiscountCode.getAllDiscountCodes().remove(discountCode2);
-        Customer.getAllCustomers().remove(customer);
-        Category.getAllCategories().remove(category1);
-        Category.getAllCategories().remove(category2);
-        Product.getAllProducts().remove(product1);
-        Manager.getAllManagers().remove(manager);
-        Account.getAllAccounts().remove(seller1);
-        Account.getAllAccounts().remove(manager);
-        Account.getAllAccounts().remove(customer);
 
     }
 }
