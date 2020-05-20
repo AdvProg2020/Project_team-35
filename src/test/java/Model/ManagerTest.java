@@ -12,6 +12,10 @@ public class ManagerTest {
 
     @Test
     public void getNewRequests() {
+        Request.resetRetRequestIdNumberToZero();
+        Manager.getNewRequests().clear();
+        Manager.getCheckedRequests().clear();
+        Seller.getAllSellers().clear();
         Seller seller1 = new Seller("a","a","s","sd","ds","sad","asd");
         SellerRegisterRequest request = new SellerRegisterRequest(seller1);
         Manager.newRequests.add(request);
@@ -23,6 +27,9 @@ public class ManagerTest {
 
     @Test
     public void getCheckedRequests() {
+        Request.resetRetRequestIdNumberToZero();
+        Manager.getNewRequests().clear();
+        Manager.getCheckedRequests().clear();
         Seller seller1 = new Seller("a","a","s","sd","ds","sad","asd");
         SellerRegisterRequest request = new SellerRegisterRequest(seller1);
         Manager.checkedRequests.add(request);
@@ -52,6 +59,9 @@ public class ManagerTest {
 
     @Test
     public void getCheckedRequestWithId() {
+        Request.resetRetRequestIdNumberToZero();
+        Manager.getNewRequests().clear();
+        Manager.getCheckedRequests().clear();
         Assert.assertEquals(Manager.getCheckedRequestWithId(1), null);
         Seller seller1 = new Seller("a","a","s","sd","ds","sad","asd");
         SellerRegisterRequest request = new SellerRegisterRequest(seller1);
@@ -61,6 +71,9 @@ public class ManagerTest {
 
     @Test
     public void isThereNewRequestWithId() {
+        Request.resetRetRequestIdNumberToZero();
+        Manager.getNewRequests().clear();
+        Manager.getCheckedRequests().clear();
         Assert.assertEquals(Manager.isThereNewRequestWithId(1), false);
         Seller seller1 = new Seller("a","a","s","sd","ds","sad","asd");
         SellerRegisterRequest request = new SellerRegisterRequest(seller1);
@@ -70,6 +83,9 @@ public class ManagerTest {
 
     @Test
     public void isThereCheckedRequestWithId() {
+        Request.resetRetRequestIdNumberToZero();
+        Manager.getNewRequests().clear();
+        Manager.getCheckedRequests().clear();
         Assert.assertEquals(Manager.isThereCheckedRequestWithId(1), false);
         Seller seller1 = new Seller("a","a","s","sd","ds","sad","asd");
         SellerRegisterRequest request = new SellerRegisterRequest(seller1);
@@ -95,6 +111,8 @@ public class ManagerTest {
 
     @Test
     public void getAllManagers() {
+        Manager.getAllManagers().clear();
+        Manager.getAllManagers().add(manager);
         ArrayList<Manager> a = new ArrayList<>();
         a.add(manager);
         Assert.assertEquals(Manager.getAllManagers(), a);
