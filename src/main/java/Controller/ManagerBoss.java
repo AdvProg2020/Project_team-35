@@ -179,7 +179,7 @@ public class ManagerBoss {
     }
 
     public static boolean checkNewManagerUserName(String username) throws RepeatedUserName {
-        if (Account.isThereActiveAccountWithUserName(username)) {
+        if (Account.getAllAccounts().contains(Account.getAccountWithUsername(username))) {
             throw new RepeatedUserName("This username exist. Try another one.");
         }
         return true;
