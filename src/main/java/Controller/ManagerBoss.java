@@ -113,9 +113,6 @@ public class ManagerBoss {
             throw new NotValidUserNameException("This username does'nt exist or has'nt accepted already.");
         }
     }
-
-
-
     public static boolean removeProductWithId(int productId) throws ThereISNotProductWithIdException {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (Product.isThereProductWithId(productId)) {
@@ -142,7 +139,6 @@ public class ManagerBoss {
             return 0;
         }
     }
-
     public static int startDeleteCategoryWithName(String categoryName) throws ThereIsNotCategoryWithNameException {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (Category.isThereCategoryWithName(categoryName)) {
@@ -244,8 +240,6 @@ public class ManagerBoss {
         }
         return true;
     }
-
-
     public static boolean editAttributeName(String categoryName, String previousAttributeName, String newAttributeName) throws FieldDoesNotExist, RepeatedCategoryAttributeException {
         Boss.removeExpiredOffsAndDiscountCodes();
         Category category = Category.getCategoryByName(categoryName);
@@ -327,8 +321,6 @@ public class ManagerBoss {
             throw new DiscountNotExist("The requested discount code does'nt exist or expired.");
         }
     }
-
-
 
     public static boolean sortCategoryWithField(String field) {
         Boss.removeExpiredOffsAndDiscountCodes();

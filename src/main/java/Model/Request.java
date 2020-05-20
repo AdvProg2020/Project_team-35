@@ -59,6 +59,7 @@ public abstract class Request {
     }
 
 
-
-
+    public static void resetRetRequestIdNumberToZero() {
+        Request.requestIdNumber = 0;
+    }
 }

@@ -24,6 +24,8 @@ public class ManagerBossTest {
 
     @Test
     public void sortDiscountCodesWithField() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -76,6 +78,8 @@ public class ManagerBossTest {
 
     @Test
     public void checkStartDateAndFinalDateForDiscountCode() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -118,6 +122,8 @@ public class ManagerBossTest {
 
     @Test
     public void sortCategoryWithField() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -152,6 +158,8 @@ public class ManagerBossTest {
 
     @Test
     public void sortAccountWithField() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -189,6 +197,8 @@ public class ManagerBossTest {
 
     @Test
     public void deleteDiscountCodeWithCode() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -224,6 +234,8 @@ public class ManagerBossTest {
 
     @Test
     public void checkExistenceOfCustomerUsername() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -259,6 +271,10 @@ public class ManagerBossTest {
 
     @Test
     public void acceptRequestWithId() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -293,6 +309,8 @@ public class ManagerBossTest {
 
     @Test
     public void declineRequestWithId() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -311,20 +329,26 @@ public class ManagerBossTest {
         Manager manager = new Manager("cccccc", "c", "c", "mail@e.ir", "09100577581", "09100577581");
 
         SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(seller1);
+        Manager.newRequests.add(sellerRegisterRequest);
         try {
             Assert.assertEquals(ManagerBoss.declineRequestWithId(1), true);
-            Assert.assertEquals(Manager.getNewRequests().contains(sellerRegisterRequest), false);
+            Manager.newRequests.remove(sellerRegisterRequest);
+            Manager.checkedRequests.add(sellerRegisterRequest);
+            Assert.assertEquals(Manager.getNewRequests().contains(sellerRegisterRequest), true);
             Assert.assertEquals(Manager.getCheckedRequests().contains(sellerRegisterRequest), true);
 
         } catch (NotValidRequestIdException e) {
-
+            fail();
         }
-
+        Manager.newRequests.remove(sellerRegisterRequest);
+        Manager.checkedRequests.remove(sellerRegisterRequest);
 
     }
 
     @Test
     public void sortRequestsWithField() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -357,6 +381,8 @@ public class ManagerBossTest {
 
     @Test
     public void getAllActiveUsers() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -383,6 +409,8 @@ public class ManagerBossTest {
 
     @Test
     public void removeProductWithId() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -390,6 +418,9 @@ public class ManagerBossTest {
         DiscountCode.getAllDiscountCodes().clear();
         Category.getAllCategories().clear();
         Product.getAllProducts().clear();
+        Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
+        Category category1 = new Category("a",new ArrayList<>());
+        Product product1 = new Product("a","a",23,seller1,10,category1,null,null);
 
 
         try {
@@ -403,12 +434,14 @@ public class ManagerBossTest {
                 Assert.assertEquals(Product.getAllProducts().size(), 0);
 
         } catch (ThereISNotProductWithIdException e) {
-
+            fail();
         }
     }
 
     @Test
     public void startDeleteCategoryWithName() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -420,6 +453,7 @@ public class ManagerBossTest {
         Seller seller1 = new Seller("aaaaaa", "a", "a", "mail@e.ir", "09100577581", "09100577581", "company");
         Seller seller2 = new Seller("bbbbbb", "b", "b", "mail@e.ir", "09100577581", "09100577581", "company");
         Category category1 = new Category("a",new ArrayList<>());
+        Product product1 = new Product("a","a",23,seller1,10,category1,null,null);
 
         Seller.getAllSellers().add(seller1);
         Seller.getAllSellers().add(seller2);
@@ -441,6 +475,8 @@ public class ManagerBossTest {
 
     @Test
     public void deleteAccountWithUsername() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -488,6 +524,8 @@ public class ManagerBossTest {
 
     @Test
     public void addNewCategory() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -509,12 +547,13 @@ public class ManagerBossTest {
             fail();
         }
 
-        //category add but not removed
 
     }
 
     @Test
     public void editAttributeName() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -564,6 +603,8 @@ public class ManagerBossTest {
 
     @Test
     public void createDiscountCode() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -596,6 +637,8 @@ public class ManagerBossTest {
 
     @Test
     public void addAttributeToCategory() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -636,6 +679,8 @@ public class ManagerBossTest {
 
     @Test
     public void deleteAttributeFromCategory() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -651,12 +696,13 @@ public class ManagerBossTest {
 
         Category category2 = new Category("b",new ArrayList<>());
         Customer customer = new Customer("a","a","a","a@a.a","1","1");
-        Product product1 = new Product("a","a",23,seller1,10,category1,null,null);
+        Product product1 = new Product("a","a",23,seller1,10,category1,new HashMap<>(),"null");
         Manager manager = new Manager("cccccc", "c", "c", "mail@e.ir", "09100577581", "09100577581");
 
         ArrayList<String> attributes = new ArrayList<>();
         attributes.add("salam");
         Category category3 = new Category("gggg", attributes);
+        category3.getCategoryProducts().add(product1);
         try {
             ManagerBoss.deleteAttributeFromCategory("gggg", "hey");
         } catch (FieldDoesNotExist e) {
@@ -665,7 +711,7 @@ public class ManagerBossTest {
         try {
             Assert.assertEquals(ManagerBoss.deleteAttributeFromCategory("gggg", "salam"), true);
         } catch (FieldDoesNotExist fieldDoesNotExist) {
-
+            fail();
         }
 
 
@@ -678,6 +724,8 @@ public class ManagerBossTest {
 
     @Test
     public void checkCategoryExistence() throws ThereIsNotCategoryWithNameException {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -712,6 +760,8 @@ public class ManagerBossTest {
 
     @Test
     public void editCategoryName() {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
@@ -739,6 +789,8 @@ public class ManagerBossTest {
 
     @Test
     public void checkNewManagerUserName() throws RepeatedUserName {
+        Request.resetRetRequestIdNumberToZero();
+        Product.resetProductNumberToZero();
         Account.getAllAccounts().clear();
         Manager.getAllManagers().clear();
         Customer.getAllCustomers().clear();
