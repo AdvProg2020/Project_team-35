@@ -3,8 +3,7 @@ package Controller;
 import Controller.Exceptions.*;
 import Model.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class CustomerBoss {
     public static double showMoney(Customer customer) {
@@ -53,7 +52,6 @@ public class CustomerBoss {
         }
         return true;
     }
-
     /**
      * alireza add it
      *
@@ -93,14 +91,11 @@ public class CustomerBoss {
         DiscountCode discountCode = DiscountCode.getDiscountCodeWithCode(id);
         if (!DiscountCode.isThereDiscountCodeWithCode(id)) {
             throw new DiscountNotExist("invalid discount code!");
-        }
-        else if (!CustomerBoss.hasDiscountCodeWithId((Customer) Account.getOnlineAccount(), id)) {
+        } else if (!CustomerBoss.hasDiscountCodeWithId((Customer) Account.getOnlineAccount(), id)) {
             throw new DiscountIsNotForYou("this discount code isn't available for you.");
-        }
-        else if (discountCode.getMinimumTotalPriceForUse() != -1 && customer.getTotalPriceOFCart() < discountCode.getMinimumTotalPriceForUse()) {
+        } else if (discountCode.getMinimumTotalPriceForUse() != -1 && customer.getTotalPriceOFCart() < discountCode.getMinimumTotalPriceForUse()) {
             throw new DontHaveMinimumPriceOfCartForDiscount("sorry! your cart price is not enough for this discount.");
-        }
-        else {
+        } else {
             double discountAmount = getDiscountAmount(discountCode, customer.getTotalPriceOFCart());
             if (discountAmount > discountCode.getMaximumAvailableAmount()) {
                 customer.setPaymentAmount(customer.getTotalPriceOFCart() - discountCode.getMaximumAvailableAmount());
@@ -114,9 +109,10 @@ public class CustomerBoss {
         customer.setPaymentAmount(customer.getTotalPriceOFCart());
     }
 
-    public static boolean doPayment(Customer customer) {
+    public static boolean doPayment(Customer customer) throws NoMoneyInCustomerPocket {
         Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<Product> products = new ArrayList<>();
+        Set <Seller> sellersOfCart = new HashSet<>();
         if (customer.getMoney() < customer.getPaymentAmount())
             return false;
         else {
@@ -125,11 +121,15 @@ public class CustomerBoss {
                 for (Product product : customer.cart.keySet()) {
                     if (product.getSeller() == seller) {
                         products.add(product);
+                        sellersOfCart.add(product.getSeller());
                     }
-
-                    // new SellLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, customer.getUsername());
-                    //new BuyLog(customer.getPaymentAmount(), customer.getTotalPriceOFCart() - customer.getPaymentAmount(), products, seller.getUsername());
                 }
+            }
+            for (Seller seller : sellersOfCart) {
+              Product[] productsOfSpecialSeller =  customer.cart.keySet().stream().filter(product ->  product.getSeller().equals(seller)).toArray(Product[]::new);
+              ArrayList<Product> listOfCartProductsWhichIsForSpecialSeller = new ArrayList<Product>(Arrays.asList(productsOfSpecialSeller));
+                SellLog sellLog = new SellLog(listOfCartProductsWhichIsForSpecialSeller,customer,seller);
+                BuyLog buyLog = new BuyLog(customer.getPaymentAmount(),listOfCartProductsWhichIsForSpecialSeller,seller,customer);
             }
             return true;
         }
@@ -149,9 +149,10 @@ public class CustomerBoss {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (!customer.hasBoughtProductWithId(productId)) {
             throw new ProductIsNotBought("you can't rate this product because you haven't bought it!");
-        }
-        else {
+        } else {
             new Rate(customer, rate, Product.getProductWithId(productId));
         }
     }
+
+
 }

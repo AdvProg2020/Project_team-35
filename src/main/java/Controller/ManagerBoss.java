@@ -18,11 +18,11 @@ public class ManagerBoss {
             Manager.newRequests.remove(request);
             Manager.checkedRequests.add(request);
             return true;
-        }
-        else {
+        } else {
             throw new NotValidRequestIdException("requestId is not Valid or is Checked");
         }
     }
+
     public static boolean declineRequestWithId(int requestId) throws NotValidRequestIdException {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (Manager.isThereNewRequestWithId(requestId)) {
@@ -31,22 +31,20 @@ public class ManagerBoss {
             Manager.checkedRequests.add(request);
             request.decline();
             return true;
-        }
-        else {
+        } else {
             throw new NotValidRequestIdException("requestId is not Valid or is Checked");
         }
     }
+
     public static String getDetailsOfRequestWithId(int requestId) throws NotValidRequestIdException {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (Manager.isThereNewRequestWithId(requestId) || Manager.isThereCheckedRequestWithId(requestId)) {
             if (Manager.isThereNewRequestWithId(requestId)) {
                 return Manager.getNewRequestWithId(requestId).getDetails();
-            }
-            else {
+            } else {
                 return Manager.getCheckedRequestWithId(requestId).getDetails();
             }
-        }
-        else {
+        } else {
             throw new NotValidRequestIdException("requestId is not valid");
         }
     }
@@ -67,15 +65,14 @@ public class ManagerBoss {
             return true;
         }
         return false;
-      }
+    }
 
 
-    public static String  getDetailsOfAccountWithUserName(String username) throws NotValidUserNameException {
+    public static String getDetailsOfAccountWithUserName(String username) throws NotValidUserNameException {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (Account.isThereActiveAccountWithUserName(username)) {
             return Account.getActiveAccountWithUserName(username).getPersonalInfo();
-        }
-        else {
+        } else {
             throw new NotValidUserNameException("This username is not valid or has'nt accepted.");
         }
     }
@@ -94,25 +91,22 @@ public class ManagerBoss {
             Account toRemove = Account.getActiveAccountWithUserName(username);
             if (Account.getOnlineAccount().equals(toRemove)) {
                 throw new CantRemoveYourAccountException("You can not remove your account !");
-            }
-            else {
+            } else {
                 Account.getAllAccounts().remove(toRemove);
                 if (toRemove instanceof Manager) {
                     Manager.getAllManagers().remove(toRemove);
-                }
-                else if (toRemove instanceof Seller) {
+                } else if (toRemove instanceof Seller) {
                     Seller.getAllSellers().remove(toRemove);
-                }
-                else if (toRemove instanceof Customer) {
+                } else if (toRemove instanceof Customer) {
                     Customer.getAllCustomers().remove(toRemove);
                 }
                 return 0;
             }
-        }
-        else {
+        } else {
             throw new NotValidUserNameException("This username does'nt exist or has'nt accepted already.");
         }
     }
+
     public static boolean removeProductWithId(int productId) throws ThereISNotProductWithIdException {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (Product.isThereProductWithId(productId)) {
@@ -123,22 +117,21 @@ public class ManagerBoss {
             seller.getSalableProducts().remove(toRemove);
             Product.getAllProducts().remove(toRemove);
             return true;
-        }
-        else {
+        } else {
             throw new ThereISNotProductWithIdException("There isn't product with requested id.");
         }
     }
 
-    public static int addNewCategory (String categoryName, ArrayList<String> specialAttributes) throws RepeatedCategoryNameException {
+    public static int addNewCategory(String categoryName, ArrayList<String> specialAttributes) throws RepeatedCategoryNameException {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (Category.isThereCategoryWithName(categoryName)) {
             throw new RepeatedCategoryNameException("This name is repeated. Use another.");
-        }
-        else {
+        } else {
             Category category = new Category(categoryName, specialAttributes);
             return 0;
         }
     }
+
     public static int startDeleteCategoryWithName(String categoryName) throws ThereIsNotCategoryWithNameException {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (Category.isThereCategoryWithName(categoryName)) {
@@ -147,15 +140,14 @@ public class ManagerBoss {
             deleteProductsOfCategoryAtProductClass(toDelete);
             deleteProductsOfCategoryAtSellerClass(toDelete);
             return 0;
-        }
-        else {
-            throw new ThereIsNotCategoryWithNameException("There isn't any category with requested name.",1);
+        } else {
+            throw new ThereIsNotCategoryWithNameException("There isn't any category with requested name.", 1);
         }
     }
 
     private static boolean deleteProductsOfCategoryAtProductClass(Category toDelete) {
         int size = Product.getAllProducts().size();
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             Product product = Product.getAllProducts().get(i);
             if (product.getCategory().equals(toDelete)) {
                 Product.getAllProducts().remove(product);
@@ -196,9 +188,8 @@ public class ManagerBoss {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (Category.isThereCategoryWithName(categoryName)) {
             return true;
-        }
-        else {
-            throw new ThereIsNotCategoryWithNameException("There is'nt any category with requested name.Try again.",1);
+        } else {
+            throw new ThereIsNotCategoryWithNameException("There is'nt any category with requested name.Try again.", 1);
         }
     }
 
@@ -215,8 +206,7 @@ public class ManagerBoss {
         Category category = Category.getCategoryByName(categoryName);
         if (category.specialAttributes.contains(attribute)) {
             throw new RepeatedCategoryAttributeException("The requested attribute is repeated. Try again.");
-        }
-        else {
+        } else {
             category.specialAttributes.add(attribute);
             return true;
         }
@@ -229,17 +219,18 @@ public class ManagerBoss {
             category.getSpecialAttributes().remove(attribute);
             deleteAttributeFromProducts(category, attribute);
             return true;
-        }
-        else {
+        } else {
             throw new FieldDoesNotExist("The requested attribute does'nt exist. Try again.");
         }
     }
+
     private static boolean deleteAttributeFromProducts(Category category, String attribute) {
         for (Product product : category.getCategoryProducts()) {
             product.getSpecialAttributes().remove(attribute);
         }
         return true;
     }
+
     public static boolean editAttributeName(String categoryName, String previousAttributeName, String newAttributeName) throws FieldDoesNotExist, RepeatedCategoryAttributeException {
         Boss.removeExpiredOffsAndDiscountCodes();
         Category category = Category.getCategoryByName(categoryName);
@@ -252,8 +243,7 @@ public class ManagerBoss {
             specialAttributes.add(newAttributeName);
             editAttributeNameAtProducts(category, previousAttributeName, newAttributeName);
             return true;
-        }
-        else {
+        } else {
             throw new FieldDoesNotExist("This category has no attribute with requested name.");
         }
     }
@@ -284,8 +274,7 @@ public class ManagerBoss {
         ArrayList<Customer> includedCustomers = new ArrayList<>();
         if (includedCustomersUserNames.contains("-all")) {
             includedCustomers.addAll(Customer.getAllCustomers());
-        }
-        else {
+        } else {
             for (String userName : includedCustomersUserNames) {
                 includedCustomers.add(Customer.getCustomerWithName(userName));
             }
@@ -301,8 +290,7 @@ public class ManagerBoss {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (DiscountCode.isThereDiscountCodeWithCode(code)) {
             return DiscountCode.getDiscountCodeWithCode(code).getDetails();
-        }
-        else {
+        } else {
             throw new DiscountNotExist("The requested discount code does'nt exist or expired.");
         }
     }
@@ -316,8 +304,7 @@ public class ManagerBoss {
                 customer.discountCodes.remove(discountCode);
             }
             return true;
-        }
-        else {
+        } else {
             throw new DiscountNotExist("The requested discount code does'nt exist or expired.");
         }
     }
@@ -325,25 +312,23 @@ public class ManagerBoss {
     public static boolean sortCategoryWithField(String field) {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (field.charAt(5) == 'a') {
-                if (field.startsWith("name")) {
-                    Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName));
-                    Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName));
-                    Category.setCurrentSort("Category Name - Ascending");
-                }
-                else if (field.startsWith("size")) {
-                    Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize));
-                    Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize));
-                    Category.setCurrentSort("Category Size - Ascending");
-                }
-                return true;
+            if (field.startsWith("name")) {
+                Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName));
+                Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName));
+                Category.setCurrentSort("Category Name - Ascending");
+            } else if (field.startsWith("size")) {
+                Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize));
+                Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize));
+                Category.setCurrentSort("Category Size - Ascending");
             }
+            return true;
+        }
         if (field.charAt(5) == 'b') {
             if (field.startsWith("name")) {
                 Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName).reversed());
                 Collections.sort(Category.allCategories, Comparator.comparing(Category::getCategoryName).reversed());
                 Category.setCurrentSort("Category Name - Descending");
-            }
-            else if (field.startsWith("size")) {
+            } else if (field.startsWith("size")) {
                 Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize).reversed());
                 Collections.sort(Category.allCategories, Comparator.comparing(Category::getSize).reversed());
                 Category.setCurrentSort("Category Size - Descending");
@@ -352,14 +337,14 @@ public class ManagerBoss {
         }
         return false;
     }
+
     public static boolean sortAccountWithField(String field) {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (field.startsWith("name")) {
             if (field.charAt(5) == 'a') {
                 Collections.sort(Account.allAccounts, Comparator.comparing(Account::getFullName));
                 Account.setCurrentSort("Account FullName - Ascending");
-            }
-            else if (field.charAt(5) == 'b') {
+            } else if (field.charAt(5) == 'b') {
                 Collections.sort(Account.allAccounts, Comparator.comparing(Account::getFullName).reversed());
                 Account.setCurrentSort("Account FullName - Descending");
             }
@@ -369,8 +354,7 @@ public class ManagerBoss {
             if (field.charAt(9) == 'a') {
                 Collections.sort(Account.allAccounts, Comparator.comparing(Account::getUsername));
                 Account.setCurrentSort("Account Username - Ascending");
-            }
-            else if (field.charAt(9) == 'b') {
+            } else if (field.charAt(9) == 'b') {
                 Collections.sort(Account.allAccounts, Comparator.comparing(Account::getUsername).reversed());
                 Account.setCurrentSort("Account Username - Descending");
             }
@@ -380,15 +364,13 @@ public class ManagerBoss {
     }
 
 
-
     public static boolean sortDiscountCodesWithField(String field) {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (field.startsWith("percent")) {
             if (field.charAt(8) == 'a') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getDiscountPercent));
                 DiscountCode.setCurrentSort("Discount Code Percent - Ascending");
-            }
-            else if (field.charAt(8) == 'b') {
+            } else if (field.charAt(8) == 'b') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getDiscountPercent).reversed());
                 DiscountCode.setCurrentSort("Discount Code Percent - Descending");
             }
@@ -398,8 +380,7 @@ public class ManagerBoss {
             if (field.charAt(8) == 'a') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getMaximumAvailableAmount));
                 DiscountCode.setCurrentSort("Discount Code Maximum Amount - Ascending");
-            }
-            else if (field.charAt(8) == 'b') {
+            } else if (field.charAt(8) == 'b') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getMaximumAvailableAmount).reversed());
                 DiscountCode.setCurrentSort("Discount Code Maximum Amount - Descending");
             }
@@ -409,8 +390,7 @@ public class ManagerBoss {
             if (field.charAt(9) == 'a') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getAvailableUseFrequent));
                 DiscountCode.setCurrentSort("Discount Code Available Frequent - Ascending");
-            }
-            else if (field.charAt(9) == 'b') {
+            } else if (field.charAt(9) == 'b') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::getAvailableUseFrequent).reversed());
                 DiscountCode.setCurrentSort("Discount Code Available Frequent - Descending");
             }
@@ -420,8 +400,7 @@ public class ManagerBoss {
             if (field.charAt(10) == 'a') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::startDateToString));
                 DiscountCode.setCurrentSort("Discount Code Start Date - Ascending");
-            }
-            else if (field.charAt(10) == 'b') {
+            } else if (field.charAt(10) == 'b') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::startDateToString).reversed());
                 DiscountCode.setCurrentSort("Discount Code Start Date - Descending");
             }
@@ -430,8 +409,7 @@ public class ManagerBoss {
             if (field.charAt(10) == 'a') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::expireDateToString));
                 DiscountCode.setCurrentSort("Discount Code Final Date - Ascending");
-            }
-            else if (field.charAt(10) == 'b') {
+            } else if (field.charAt(10) == 'b') {
                 Collections.sort(DiscountCode.allDiscountCodes, Comparator.comparing(DiscountCode::expireDateToString).reversed());
                 DiscountCode.setCurrentSort("Discount Code Final Date - Descending");
             }

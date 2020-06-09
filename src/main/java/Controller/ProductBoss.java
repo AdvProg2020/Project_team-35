@@ -24,12 +24,12 @@ public class ProductBoss {
         return goodPage;
     }
 
-    public static ArrayList<Product> sortProduct(String field)  {
+    public static ArrayList<Product> sortProduct(String field) {
         Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<Product> confirmedProducts = new ArrayList<>();
         for (Product product : Product.getProductFieldForSort(field)) {
             if (product.getProductStatus().equals(ProductAndOffStatus.CONFIRMED))
-            confirmedProducts.add(product);
+                confirmedProducts.add(product);
         }
         return confirmedProducts;
     }
@@ -42,26 +42,26 @@ public class ProductBoss {
         Boss.removeExpiredOffsAndDiscountCodes();
         Product product = Product.getProductWithId(Integer.parseInt(id));
         if (product == null) {
-                throw new NullProduct("null product",1);
+            throw new NullProduct("null product", 1);
         } else if (product.getInventory() == 0) {
-                throw new ProductIsFinished(2,"finished");
-        }else if (!product.getCategory().equals(product2.getCategory())){
-                throw new ProductsCompareNotSameCategories(3,"not same category");
+            throw new ProductIsFinished(2, "finished");
+        } else if (!product.getCategory().equals(product2.getCategory())) {
+            throw new ProductsCompareNotSameCategories(3, "not same category");
         }
         HashMap<String, String> a1 = product2.attributeShow();
         HashMap<String, String> a2 = product.attributeShow();
         StringBuilder result = new StringBuilder();
-        result.append(product2.getName()+"**********"+product.getName()+"\n");
+        result.append(product2.getName() + "**********" + product.getName() + "\n");
         for (String s : a1.keySet()) {
             for (String s1 : a2.keySet()) {
                 if (a2.get(s1).equals(a1.get(s))) {
                     result.append(a1.get(s) + ":\n");
-                    if (s!=null && s1!=null) {
+                    if (s != null && s1 != null) {
                         result.append(s + "**********" + s1 + "\n");
-                    }else if (s==null){
-                        result.append(" "+"**********"+s1+"\n");
-                    }else if (s1==null){
-                        result.append(s+"**********"+" "+"\n");
+                    } else if (s == null) {
+                        result.append(" " + "**********" + s1 + "\n");
+                    } else if (s1 == null) {
+                        result.append(s + "**********" + " " + "\n");
                     }
 
                 }
@@ -70,24 +70,26 @@ public class ProductBoss {
         return result;
     }
 
-    public static void makeComment(String comment,String title , Product product , Customer customer){
+    public static void makeComment(String comment, String title, Product product, Customer customer) {
         Boss.removeExpiredOffsAndDiscountCodes();
-        Comment comment1 = new Comment(product,comment,customer,title);
+        Comment comment1 = new Comment(product, comment, customer, title);
     }
+
     public static String showSummeryOfProductDetails(Product product) {
         return product.showSummeryDetailsOfProduct();
     }
 
-    public static HashMap<String , String> showComments(Product product){
+    public static HashMap<String, String> showComments(Product product) {
         Boss.removeExpiredOffsAndDiscountCodes();
-        HashMap<String , String> comments = new HashMap<>();
+        HashMap<String, String> comments = new HashMap<>();
         for (Comment comment : product.getCommentsList()) {
-            comments.put(comment.getCommenter().getUsername(),comment.getCommentText());
+            comments.put(comment.getCommenter().getUsername(), comment.getCommentText());
         }
         return comments;
     }
-    public static void updateReviewNumberOfAProductPage(Product product){
+
+    public static void updateReviewNumberOfAProductPage(Product product) {
         Boss.removeExpiredOffsAndDiscountCodes();
-        product.setReviewNumber(product.getReviewNumber()+1);
+        product.setReviewNumber(product.getReviewNumber() + 1);
     }
 }

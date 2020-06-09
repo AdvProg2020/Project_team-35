@@ -8,8 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class Page {
-    protected String name;
 
+    protected String name;
     protected HashMap<String , Page> subPages;
     protected   Page parentPage;
     protected Account account;
@@ -106,5 +106,4 @@ public abstract class Page {
         }
         return true;
     }
-
 }

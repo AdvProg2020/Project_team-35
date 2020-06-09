@@ -1,9 +1,7 @@
 package Model;
 
 import Controller.ManagerBoss;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Account {
     public static ArrayList<Account> allAccounts = new ArrayList<Account>();

@@ -41,7 +41,11 @@ public class Customer extends Account {
     public double getTotalPriceOFCart() {
         double totalPrice = 0.0;
         for (Product product : cart.keySet()) {
+            if (product.getPriceWithOffEffect()==-1)
             totalPrice += product.getPrice() * cart.get(product);
+            else {
+                totalPrice += product.getPriceWithOffEffect() * cart.get(product);
+            }
         }
         return totalPrice;
     }

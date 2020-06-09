@@ -61,7 +61,8 @@ public class SellerTest {
         Product product = new Product("as","asd",23,seller,2,new Category("ad",null),null,"");
        ArrayList<Product> s = new ArrayList<>();
        s.add(product);
-        SellLog sellLog = new SellLog(s,null);
+       Customer customer = new Customer("asd","sad","sda","sad","sda","sad");
+        SellLog sellLog = new SellLog(s,customer,seller);
         a.put(product,sellLog.getNumberOfProducts(product));
         seller.getSellLogs().add(sellLog);
         Assert.assertEquals(seller.getSalesHistory(),a);
@@ -142,7 +143,8 @@ public class SellerTest {
 
     @Test
     public void getSellLogs() {
-        SellLog sellLog = new SellLog(null,null);
+        Customer customer = new Customer("as","asd","sad","sad","sad","asd");
+        SellLog sellLog = new SellLog(null,customer,seller);
         seller.getSellLogs().add(sellLog);
         ArrayList<SellLog> sellLogs = new ArrayList<>();
         sellLogs.add(sellLog);

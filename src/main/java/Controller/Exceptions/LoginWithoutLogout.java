@@ -1,7 +1,14 @@
 package Controller.Exceptions;
 
 public class LoginWithoutLogout extends Exception {
-    public LoginWithoutLogout(String message) {
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public LoginWithoutLogout(String message,int id) {
         super(message);
+        this.id = id;
     }
 }

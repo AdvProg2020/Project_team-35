@@ -13,15 +13,12 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 public class ManagerBossTest {
-
     LocalDateTime localDateTimeo = LocalDateTime.parse("2010-10-19T22:02:23");
     LocalDateTime localDateTimeoo = LocalDateTime.parse("2021-10-19T22:02:23");
     LocalDateTime localDateTime = LocalDateTime.parse("2120-10-19T22:02:23");
     LocalDateTime localDateTime2 = LocalDateTime.parse("2220-10-19T22:02:23");
     LocalDateTime localDateTime3 = LocalDateTime.parse("2320-10-19T22:02:23");
     LocalDateTime localDateTime4 = LocalDateTime.parse("2420-10-19T22:02:23");
-
-
     @Test
     public void sortDiscountCodesWithField() {
         Request.resetRetRequestIdNumberToZero();
