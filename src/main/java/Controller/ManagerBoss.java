@@ -430,4 +430,13 @@ public class ManagerBoss {
         return true;
     }
 
+    public static boolean weHaveManagerOrNot(){
+        if (Manager.getAllManagers().size()==0){
+            return false;
+
+        }
+        else {
+            return true;
+        }
+    }
 }

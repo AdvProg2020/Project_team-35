@@ -11,4 +11,23 @@
     -fx-font-weight: bold;
     -fx-font-size: 20px;
     -fx-padding: 10 20 10 20;
+    -fx-pref-height: 100px;
+    -fx-pref-width: 100px;
+}
+.MyButton{
+    -fx-background-color:
+            #44b13c,
+            linear-gradient(#fafdfe, #e8f5fc),
+            linear-gradient(#90235b 0%, #d9f0fc 49%, #bee6fd 50%, #f2f5a7 100%);
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-padding: 3 30 3 30;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-pref-width: 150px;
+    -fx-pref-height: 50px;
+    -fx-background-radius: 30px;
+}
+.StartPage{
+    -fx-background-image: url("../startPage.jpg");
 }

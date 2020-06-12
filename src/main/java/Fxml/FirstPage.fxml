@@ -3,8 +3,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane style="-fx-background-color: green;" stylesheets="@../Resources/styles.css" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.FirstPageController">
-   <children>
-      <Button layoutX="106.0" layoutY="42.0" mnemonicParsing="false" text="1234" />
+
+<?import java.net.URL?>
+<GridPane  styleClass="StartPage" alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="ViewControllers.FirstPageController">
+   <stylesheets>
+      <URL value="@../Resources/LoginAndRegisterPanel.css"/>
+      <URL value="@../Resources/styles.css"/>
+   </stylesheets>
+   <children >
+
+      <Button styleClass="MyButton" GridPane.rowIndex="0" mnemonicParsing="false" text="start" onMouseClicked="#start"/>
+      <Button styleClass="MyButton" GridPane.rowIndex="1" mnemonicParsing="false" text="end" onMouseClicked="#end" />
    </children>
-</AnchorPane>
+</GridPane>
