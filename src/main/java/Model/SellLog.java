@@ -8,12 +8,39 @@ public class SellLog extends Log {
     private double offDiscountAmount;
     private ArrayList<Product> soldProducts;
 
-    private String buyerName;
+    private Seller seller;
+    private Customer buyer;
     private boolean isReceived;
 
-    public SellLog(ArrayList<Product> soldProducts, String buyerName) {
+    public SellLog(ArrayList<Product> soldProducts, Customer buyer,Seller seller) {
         this.soldProducts = soldProducts;
-        this.buyerName = buyerName;
+        this.buyer = buyer;
+        this.seller = seller;
+        seller.getSellLogs().add(this);
+        offDiscountAmount = 0;
+        addMoneyToSeller();
+
+    }
+    public void addMoneyToSeller(){
+        for (Product product : soldProducts) {
+            if (Off.isThereProduct(product)){
+                if (seller.getSalableProducts().contains(product)){
+                    Off off = seller.findOffWithAProduct(product);
+                    offDiscountAmount+= off.countOff(product);
+                    seller.setMoney(seller.getMoney()+off.countOff(product));
+                }
+            }
+            else {
+                if (seller.getSalableProducts().contains(product)){
+                    offDiscountAmount+=product.getPrice();
+                    seller.setMoney(seller.getMoney()+product.getPrice());
+                }
+            }
+        }
+    }
+
+    public double getOffDiscountAmount() {
+        return offDiscountAmount;
     }
 
     public void setReceived(boolean received) {

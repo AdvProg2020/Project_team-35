@@ -1,10 +1,5 @@
 package Model;
 
-import Views.MainPage;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-
 public abstract class Request {
     protected Seller seller;
     public Request(Seller seller) {

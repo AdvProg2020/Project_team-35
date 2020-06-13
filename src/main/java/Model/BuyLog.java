@@ -4,19 +4,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BuyLog extends Log{
-    private double purchasedMoney;
+    private double purchaseAmount;
     private double OffDiscountMoney;
     public ArrayList<Product> boughtProducts;
-    private String sellerName;
     private boolean isDelivered;
+    private Customer customer;
+    private Seller seller;
 
-    public BuyLog(double purchasedMoney, double offDiscountMoney, ArrayList<Product> boughtProducts, String sellerName) {
-        this.purchasedMoney = purchasedMoney;
-        OffDiscountMoney = offDiscountMoney;
+    public BuyLog( double purchaseAmount,ArrayList<Product> boughtProducts, Seller seller , Customer customer) throws NoMoneyInCustomerPocket {
+       this.purchaseAmount = purchaseAmount;
         this.boughtProducts = boughtProducts;
-        this.sellerName = sellerName;
+        this.customer = customer;
+        this.seller = seller;
         numberOfLogs++;
         orderNumber = numberOfLogs;
+        customer.getBuyLogs().add(this);
+        reduceMoneyOfCustomerPocket();
+
+    }
+    public void reduceMoneyOfCustomerPocket() throws NoMoneyInCustomerPocket {
+        double result = customer.getMoney()- purchaseAmount;
+        if (result>0)
+        customer.setMoney(result);
+        else {
+            throw new NoMoneyInCustomerPocket("no money");
+        }
     }
 
     public boolean isDelivered() {

@@ -1,13 +1,11 @@
 package Views;
 
 import Controller.Exceptions.*;
-import Controller.MaxMinReplacement;
+import Controller.Exceptions.MaxMinReplacement;
 import Controller.OffBoss;
-import Model.Category;
 import Model.Off;
 import Model.Product;
 import Model.ProductFilters.*;
-import Model.Seller;
 
 import java.util.ArrayList;
 import java.util.HashMap;

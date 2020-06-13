@@ -1,6 +1,5 @@
 package Model;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -133,5 +132,25 @@ public class Seller extends Account {
     }
     public static ArrayList<Seller> getAllSellers() {
         return allSellers;
+    }
+    public double countPriceOfOffsProduct(Product product){
+        Off productsOff = null;
+        for (Off sellerOff : getSellerOffs()) {
+            if (sellerOff.getIncludedProducts().contains(product)){
+                productsOff = sellerOff;
+            }
+        }
+        if (productsOff==null){
+            return product.getPrice();
+        }else {
+            return productsOff.countOff(product);
+        }
+    }
+    public Off findOffWithAProduct(Product product){
+        for (Off off : getSellerOffs()) {
+            if (off.getIncludedProducts().contains(product))
+                return off;
+        }
+        return null;
     }
 }

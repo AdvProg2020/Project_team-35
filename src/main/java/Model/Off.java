@@ -30,6 +30,12 @@ public class Off {
         offIdNumber+=1;
         offId = offIdNumber;
         this.offStatus = ProductAndOffStatus.FORMAKE;
+        setPriceWithOffEffectsInProducts();
+    }
+    public void setPriceWithOffEffectsInProducts(){
+        for (Product product : includedProducts) {
+            product.setPriceWithOffEffect(countOff(product));
+        }
     }
     public Seller getSeller() {
         return seller;
@@ -146,8 +152,10 @@ public class Off {
     }
     public static boolean isThereProduct(Product product){
         for (Off activeOff : allActiveOffs) {
-            if (activeOff.getIncludedProducts().contains(product))
-                return true;
+            if (activeOff!=null && activeOff.includedProducts!=null) {
+                if (activeOff.getIncludedProducts().contains(product))
+                    return true;
+            }
         }
         return false;
     }
@@ -174,5 +182,12 @@ public class Off {
             Collections.sort(a,Comparator.comparing(Product::getInventory));
         }
         return a;
+    }
+    public double countOff(Product product){
+        if (product.getPrice()>maximumAmountOfOff)
+            return product.getPrice()-maximumAmountOfOff;
+        else{
+            return product.getPrice()*(1-(getOffPercent()/100));
+        }
     }
 }

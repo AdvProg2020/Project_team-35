@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.HashMap;
-
 public class AddProductRequest extends Request {
    private Product product;
 

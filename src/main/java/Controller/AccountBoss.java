@@ -77,7 +77,7 @@ public class AccountBoss {
             Manager manager = new Manager(username, name, family, email, phone, password);
         }
         if (type.equals("seller")) {
-            Seller seller = new Seller(username,name,family,email,phone,password,company);
+            Seller seller = new Seller(username, name, family, email, phone, password, company);
             SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(seller);
 
         }
@@ -113,17 +113,18 @@ public class AccountBoss {
      *
      * @param username
      */
-    public static void checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername, LoginWithoutLogout {
+    public static boolean checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername, LoginWithoutLogout {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (Account.isIsThereOnlineUser()) {
-            throw new LoginWithoutLogout("first you should logout");
+            throw new LoginWithoutLogout("first you should logout", 1);
         }
         if (!Account.isThereAccountWithUserName(username)) {
-            throw new ExistenceOfUserWithUsername("this username doesn't exist.",2);
+            throw new ExistenceOfUserWithUsername("this username doesn't exist.", 2);
         }
-        if (Account.getAccountWithUsername(username) instanceof Seller && !Seller.getAllSellers().contains((Seller) Account.getAccountWithUsername(username))){
-            throw new ExistenceOfUserWithUsername("this username doesn't exist",2);
+        if (Account.getAccountWithUsername(username) instanceof Seller && !Seller.getAllSellers().contains((Seller) Account.getAccountWithUsername(username))) {
+            throw new ExistenceOfUserWithUsername("this username doesn't exist", 2);
         }
+        return true;
     }
 
     /**
@@ -133,11 +134,12 @@ public class AccountBoss {
      * @param password
      * @throws PasswordValidity
      */
-    public static void checkPasswordValidity(String username, String password) throws PasswordValidity {
+    public static boolean checkPasswordValidity(String username, String password) throws PasswordValidity {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (!Account.getAccountWithUsername(username).validatePassword(password)) {
-            throw new PasswordValidity("this password is invalid");
+            throw new PasswordValidity("this password is invalid", 1);
         }
+        return true;
     }
 
     /**
@@ -146,16 +148,17 @@ public class AccountBoss {
      * @param username
      * @param password
      */
-    public static void startLogin(String username, String password) {
+    public static boolean startLogin(String username, String password) {
         Boss.removeExpiredOffsAndDiscountCodes();
         Account account = Account.getAccountWithUsername(username);
         account.setThisAccountLogged(true);
         Account.getAllLoggedAccounts().add(account);
         account.setIsThereOnlineUser(true);
         Account.setOnlineAccount(account);
+        return true;
     }
 
-    public static void startEditPersonalField(String fieldName, String newValue,Account account) throws NotValidFieldException, InvalidNumber {
+    public static void startEditPersonalField(String fieldName, String newValue, Account account) throws NotValidFieldException, InvalidNumber {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (fieldName.equalsIgnoreCase("firstName")) {
             Account.getOnlineAccount().setFirstName(newValue);
@@ -167,20 +170,18 @@ public class AccountBoss {
             Account.getOnlineAccount().setPhoneNumber(newValue);
         } else if (fieldName.equalsIgnoreCase("password")) {
             Account.getOnlineAccount().setPassword(newValue);
-        }else if (fieldName.equalsIgnoreCase("money")){
-            if (account instanceof Customer){
+        } else if (fieldName.equalsIgnoreCase("money")) {
+            if (account instanceof Customer) {
                 Customer customer = (Customer) account;
                 if (newValue.matches("^\\d+.?\\d+$")) {
                     customer.setMoney(Double.parseDouble(newValue));
+                } else {
+                    throw new InvalidNumber("invalid format for money", 4);
                 }
-                else {
-                    throw new InvalidNumber("invalid format for money",4);
-                }
-            }else {
-                throw new  NotValidFieldException("money is valid just for customer");
+            } else {
+                throw new NotValidFieldException("money is valid just for customer");
             }
-        }
-        else if (fieldName.equalsIgnoreCase("companyName")) {
+        } else if (fieldName.equalsIgnoreCase("companyName")) {
             if (Account.getOnlineAccount() instanceof Seller) {
                 ((Seller) Account.getOnlineAccount()).setCompanyName(newValue);
             } else
@@ -191,9 +192,10 @@ public class AccountBoss {
 
     }
 
-    public static void logout(Account account) {
+    public static boolean logout(Account account) {
         Boss.removeExpiredOffsAndDiscountCodes();
-        Account.setIsThereOnlineUser(false);
+        //  Account.setIsThereOnlineUser(false);
         Account.setOnlineAccount(null);
+        return true;
     }
 }

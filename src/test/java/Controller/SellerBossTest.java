@@ -55,8 +55,51 @@ public class SellerBossTest {
     @Test
     public void removeProduct() {
         int identifier = 0;
+        Product product = new Product("Ads","Asd",3,new Seller("sad","ads","asd","Asd","sd","Asd","asd"),3,new Category("asd",null),null,"asd");
+
         try {
-            Assert.assertTrue(SellerBoss.removeProduct("2", seller));
+            Assert.assertTrue(SellerBoss.removeProduct("992", seller));
+        } catch (ThisIsNotYours thisIsNotYours) {
+            System.out.println(thisIsNotYours.getMessage());
+            Assert.assertEquals(2, thisIsNotYours.getId());
+        } catch (SoldProductsCanNotHaveChange soldProductsCanNotHaveChange) {
+            System.out.println(soldProductsCanNotHaveChange.getMessage());
+            Assert.assertEquals(3, soldProductsCanNotHaveChange.getId());
+        } catch (NullProduct nullProduct) {
+            System.out.println(nullProduct.getMessage());
+            Assert.assertEquals(1, nullProduct.getId());
+        }
+
+        try {
+            Assert.assertTrue(SellerBoss.removeProduct(String.valueOf(product.getProductId()), seller));
+        } catch (ThisIsNotYours thisIsNotYours) {
+            System.out.println(thisIsNotYours.getMessage());
+            Assert.assertEquals(2, thisIsNotYours.getId());
+        } catch (SoldProductsCanNotHaveChange soldProductsCanNotHaveChange) {
+            System.out.println(soldProductsCanNotHaveChange.getMessage());
+            Assert.assertEquals(3, soldProductsCanNotHaveChange.getId());
+        } catch (NullProduct nullProduct) {
+            System.out.println(nullProduct.getMessage());
+            Assert.assertEquals(1, nullProduct.getId());
+        }
+        try {
+            Product product1 = new Product("ad","Ad",23,seller,2,new Category("ads",null),null,null);
+            seller.getSalableProducts().remove(product1);
+            Assert.assertTrue(SellerBoss.removeProduct(String.valueOf(product1.getProductId()), seller));
+        } catch (ThisIsNotYours thisIsNotYours) {
+            System.out.println(thisIsNotYours.getMessage());
+            Assert.assertEquals(2, thisIsNotYours.getId());
+        } catch (SoldProductsCanNotHaveChange soldProductsCanNotHaveChange) {
+            System.out.println(soldProductsCanNotHaveChange.getMessage());
+            Assert.assertEquals(3, soldProductsCanNotHaveChange.getId());
+        } catch (NullProduct nullProduct) {
+            System.out.println(nullProduct.getMessage());
+            Assert.assertEquals(1, nullProduct.getId());
+        }
+        try {
+            Product product1 = new Product("ad","Ad",23,seller,2,new Category("ads",null),null,null);
+           // seller.getSalableProducts().remove(product1);
+            Assert.assertTrue(SellerBoss.removeProduct(String.valueOf(product1.getProductId()), seller));
         } catch (ThisIsNotYours thisIsNotYours) {
             System.out.println(thisIsNotYours.getMessage());
             Assert.assertEquals(2, thisIsNotYours.getId());
@@ -97,6 +140,10 @@ public class SellerBossTest {
         id.add(product.getProductId());
         try {
 
+            ArrayList<Product> as = new ArrayList<>();
+            Product product1 = new Product("asd","sad",123,seller,12,new Category("asd",null),null,null);
+            as.add(product1);
+            Off off1 = new Off(null,null,null,343,12,seller);
             Assert.assertTrue(SellerBoss.addOff(id, seller, "2201-10-23T12:23:10", "2202-10-12T22:23:44", "23", "233"));
         } catch (NullProduct nullProduct) {
             nullProduct.printStackTrace();
@@ -287,7 +334,10 @@ public class SellerBossTest {
         product.getWhoBoughtThisGood().add(customer1);
         Product product1 = new Product("sad","asd",23,new Seller("asd","asd","asd","dsf","sdf","gf","dgf"),3,new Category("lkdsa",null),null,"");
         try {
-            Assert.assertEquals(SellerBoss.showBuyers("2",seller),null);
+            ArrayList<String> a = new ArrayList<>();
+            a.add(customer.getUsername());
+            a.add(customer1.getUsername());
+            Assert.assertEquals(SellerBoss.showBuyers("2",seller),a);
         } catch (ThisIsNotYours thisIsNotYours) {
           Assert.assertEquals( thisIsNotYours.getId(),2);
         } catch (NullProduct nullProduct) {
@@ -298,9 +348,63 @@ public class SellerBossTest {
 
     @Test
     public void testTestEditProduct() {
+        try {
+            Assert.assertEquals(SellerBoss.editProduct(null,"213213",seller),null);
+        } catch (ThisIsNotYours thisIsNotYours) {
+            thisIsNotYours.printStackTrace();
+        } catch (SoldProductsCanNotHaveChange soldProductsCanNotHaveChange) {
+            soldProductsCanNotHaveChange.printStackTrace();
+        } catch (ThisAttributeIsNotForThisProduct thisAttributeIsNotForThisProduct) {
+            thisAttributeIsNotForThisProduct.printStackTrace();
+        } catch (NoMatchBetweenCategoryAndAttributes noMatchBetweenCategoryAndAttributes) {
+            noMatchBetweenCategoryAndAttributes.printStackTrace();
+        } catch (ThereIsNotCategoryWithNameException e) {
+            e.printStackTrace();
+        } catch (NullProduct nullProduct) {
+            nullProduct.printStackTrace();
+        } catch (InvalidNumber invalidNumber) {
+            invalidNumber.printStackTrace();
+        }
+        Product product23=new Product("asd","Asd",23,seller,2,new Category("As",null),null,null);
+        product23.setProductStatus(ProductAndOffStatus.FOREDIT);
+        try {
+            Assert.assertEquals(SellerBoss.editProduct(null,String.valueOf(product23.getProductId()),seller),null);
+        } catch (ThisIsNotYours thisIsNotYours) {
+            thisIsNotYours.printStackTrace();
+        } catch (SoldProductsCanNotHaveChange soldProductsCanNotHaveChange) {
+            soldProductsCanNotHaveChange.printStackTrace();
+        } catch (ThisAttributeIsNotForThisProduct thisAttributeIsNotForThisProduct) {
+            thisAttributeIsNotForThisProduct.printStackTrace();
+        } catch (NoMatchBetweenCategoryAndAttributes noMatchBetweenCategoryAndAttributes) {
+            noMatchBetweenCategoryAndAttributes.printStackTrace();
+        } catch (ThereIsNotCategoryWithNameException e) {
+            e.printStackTrace();
+        } catch (NullProduct nullProduct) {
+            nullProduct.printStackTrace();
+        } catch (InvalidNumber invalidNumber) {
+            invalidNumber.printStackTrace();
+        }
+        Product product = new Product("asd","Asd",23,new Seller("asd","Ad","Asd","Ads",",aasd","asd","asd"),3,new Category("asd",null),null,null);
+        try {
+            Assert.assertEquals(SellerBoss.editProduct(null,String.valueOf(product.getProductId()),seller),null);
+        } catch (ThisIsNotYours thisIsNotYours) {
+            thisIsNotYours.printStackTrace();
+        } catch (SoldProductsCanNotHaveChange soldProductsCanNotHaveChange) {
+            soldProductsCanNotHaveChange.printStackTrace();
+        } catch (ThisAttributeIsNotForThisProduct thisAttributeIsNotForThisProduct) {
+            thisAttributeIsNotForThisProduct.printStackTrace();
+        } catch (NoMatchBetweenCategoryAndAttributes noMatchBetweenCategoryAndAttributes) {
+            noMatchBetweenCategoryAndAttributes.printStackTrace();
+        } catch (ThereIsNotCategoryWithNameException e) {
+            e.printStackTrace();
+        } catch (NullProduct nullProduct) {
+            nullProduct.printStackTrace();
+        } catch (InvalidNumber invalidNumber) {
+            invalidNumber.printStackTrace();
+        }
         HashMap<String, String> changes = new HashMap<>();
         changes.put("kmlm", "22");
-       Product product = new Product("milk", "mihan", 2200.0, seller, 3, new Category("labaniat", null), null, null);
+       Product product11 = new Product("milk", "mihan", 2200.0, seller, 3, new Category("labaniat", null), null, null);
 
         seller.getSalableProducts().remove(product);
         Product product1 = new Product("asd", "asd", 23, new Seller("asd", "asd", "ads", "asd", "sad", "ads", "asd"), 2, product.getCategory(), null, "");
@@ -362,6 +466,31 @@ public class SellerBossTest {
 
     @Test
     public void showHistoryOfSales() {
+        Customer customer = new Customer("asd","sad","sad","das","das","adasd");
+        Product product = new Product("asd","das",23,seller,2,new Category("asd",null),null,null);
+        ArrayList<Product> a = new ArrayList<>();
+        Product product2 = new Product("sda","Asd",231,seller,2,new Category("asd",null),null,null);
+        a.add(product);
+        a.add(product2);
+        a.add(product);
+        Product product1 = new Product("asd","ads",34,seller,4,new Category("asd",null),null,null);
+        SellLog sellLog = new SellLog(a,customer,seller);
+        seller.getSellLogs().add(sellLog);
+        ArrayList<String >b = new ArrayList<>();
+        for (Product product3 : a) {
+            b.add(product3.getName());
+        }
+        Assert.assertEquals(SellerBoss.showHistoryOfSales(seller),b);
+        a.add(product1);
+        SellLog sellLog1 = new SellLog(a,customer,seller);
+       seller.getSellLogs().add(sellLog1);
+       b.clear();
+        for (SellLog log : seller.getSellLogs()) {
+            for (Product soldProduct : log.getSoldProducts()) {
+                b.add(soldProduct.getName());
+            }
+        }
+        Assert.assertEquals(SellerBoss.showHistoryOfSales(seller),b);
     }
 
     @Test
@@ -369,10 +498,27 @@ public class SellerBossTest {
         try {
             Assert.assertEquals(SellerBoss.showProduct("1", seller), "laklak");
         } catch (ThisIsNotYours thisIsNotYours) {
-            Assert.assertEquals(thisIsNotYours.getId(), 1);
+            Assert.assertEquals(thisIsNotYours.getId(), 2);
         } catch (NullProduct nullProduct) {
-            Assert.assertEquals(nullProduct.getId(), 2);
+            Assert.assertEquals(nullProduct.getId(), 1);
         }
+        try {
+        Assert.assertEquals(SellerBoss.showProduct("111", seller), "laklak");
+    } catch (ThisIsNotYours thisIsNotYours) {
+        Assert.assertEquals(thisIsNotYours.getId(), 2);
+    } catch (NullProduct nullProduct) {
+        Assert.assertEquals(nullProduct.getId(), 1);
+    }
+        try {
+            Product product = new Product("asd","asd",23,seller,2,new Category("asd",null),null,"");
+            System.out.println(product.getProductId());
+            Assert.assertEquals(SellerBoss.showProduct("1", seller), product.toString());
+        } catch (ThisIsNotYours thisIsNotYours) {
+            Assert.assertEquals(thisIsNotYours.getId(), 2);
+        } catch (NullProduct nullProduct) {
+            Assert.assertEquals(nullProduct.getId(), 1);
+        }
+
     }
 
     @Test
@@ -384,6 +530,12 @@ public class SellerBossTest {
             Assert.assertEquals(SellerBoss.getWithNameOfCategoryItsSpecials("ali"),null);
         } catch (ThereIsNotCategoryWithNameException e) {
             e.printStackTrace();
+        }
+        try {
+
+            Assert.assertEquals(SellerBoss.getWithNameOfCategoryItsSpecials("gholam"),null);
+        } catch (ThereIsNotCategoryWithNameException e) {
+            Assert.assertEquals(e.getId(),1);
         }
     }
 
@@ -402,9 +554,14 @@ public class SellerBossTest {
         product.setProductStatus(ProductAndOffStatus.CONFIRMED);
         product.getWhoBoughtThisGood().add(customer);
         product.getWhoBoughtThisGood().add(customer1);
+        System.out.println(product.getProductId());
         Product product1 = new Product("sad","asd",23,new Seller("asd","asd","asd","dsf","sdf","gf","dgf"),3,new Category("lkdsa",null),null,"");
         try {
-            Assert.assertEquals(SellerBoss.showBuyers("2",seller),null);
+            ArrayList<String> a = new ArrayList<>();
+            for (Customer customer2 : product.getWhoBoughtThisGood()) {
+                a.add(customer2.getUsername());
+            }
+            Assert.assertEquals(SellerBoss.showBuyers(String.valueOf(product.getProductId()),seller),a);
         } catch (ThisIsNotYours thisIsNotYours) {
             Assert.assertEquals( thisIsNotYours.getId(),2);
         } catch (NullProduct nullProduct) {
@@ -425,7 +582,33 @@ public class SellerBossTest {
     }
 
     @Test
-    public void sortBuyers() {
+    public void sortBuyers() throws NoMoneyInCustomerPocket {
+        Product product = new Product("asd","sad",23,seller,2,new Category("asd",null),null,null);
+
+        Customer customer = new Customer( "asd1","sad","asd","asd","ASd","dsa");
+        Customer customer1 = new Customer( "asd2","sad","asd","asd","ASd","dsa");
+        Customer customer2 = new Customer( "asd3","sad","asd","asd","ASd","dsa");
+ArrayList<Product> a = new ArrayList<>();
+a.add(product);
+        BuyLog buyLog = new BuyLog(233,a,seller,customer);
+        BuyLog buyLog1 = new BuyLog(233,a,seller,customer1);
+        BuyLog buyLog2 = new BuyLog(233,a,seller,customer2);
+
+        product.getWhoBoughtThisGood().add(customer);
+        product.getWhoBoughtThisGood().add(customer1);
+        product.getWhoBoughtThisGood().add(customer2);
+        String field = "username";
+        ArrayList<Customer> s = new ArrayList<>();
+        s.add(customer);
+        s.add(customer1);
+        s.add(customer2);
+        try {
+            Assert.assertEquals(SellerBoss.sortBuyers(String.valueOf(product.getProductId()),seller,field),s);
+        } catch (ThisIsNotYours thisIsNotYours) {
+            thisIsNotYours.printStackTrace();
+        } catch (NullProduct nullProduct) {
+            nullProduct.printStackTrace();
+        }
     }
 
 
@@ -466,8 +649,17 @@ public class SellerBossTest {
 
     @Test
     public void sortOffs() {
-        Off off = new Off(null,null,null,233,22,seller);
-        Assert.assertEquals(SellerBoss.sortOffs("name",seller),null);
+        Product product = new Product("a","asd",23,seller,2,new Category("sad",null),null,null);
+        Product product1 = new Product("b","asd",23,seller,2,new Category("sad",null),null,null);
+        Product product2 = new Product("c","asd",23,seller,2,new Category("sad",null),null,null);
+
+        ArrayList<Product> s = new ArrayList<>();
+        s.add(product);
+        Off off = new Off(null,null,s,233,22,seller);
+        Off off1 = new Off(null,null,null,344,23,seller);
+       ArrayList<Off> a = new ArrayList<>();
+       Off.allActiveOffs = new ArrayList<>();
+        Assert.assertEquals(SellerBoss.sortOffs("StartDate",seller),null);
     }
 
     @Test
@@ -488,8 +680,9 @@ public class SellerBossTest {
     @Test
     public void editOff() {
         HashMap<String, String> a = new HashMap<>();
-        a.put("startDate", "");
+        a.put("startDate", "2200-12-13T22");
         a.put("percent", "29");
+        a.put("maximumAmountOfOff","88");
         Off off = new Off(null, null, null, 23, 12, seller);
         off.setOffStatus(ProductAndOffStatus.CONFIRMED);
         try {
@@ -521,6 +714,31 @@ public class SellerBossTest {
             Assert.assertEquals(inputStringExceptNumber.getId(), 2);
         } catch (JustOneOffForEveryProduct justOneOffForEveryProduct) {
             Assert.assertEquals(justOneOffForEveryProduct.getId(),6);
+        }
+    }
+
+    @Test
+    public void testEditProduct3(){
+        Product product = new Product("ads","ad",34,seller,2,new Category("asd",null),null,null);
+        product.setProductStatus(ProductAndOffStatus.CONFIRMED);
+        HashMap<String , String> a = new HashMap<>();
+        a.put("name","ali");
+        try {
+            Assert.assertTrue(SellerBoss.editProduct(a,String.valueOf(product.getProductId()),seller));
+        } catch (ThisIsNotYours thisIsNotYours) {
+            thisIsNotYours.printStackTrace();
+        } catch (SoldProductsCanNotHaveChange soldProductsCanNotHaveChange) {
+            soldProductsCanNotHaveChange.printStackTrace();
+        } catch (ThisAttributeIsNotForThisProduct thisAttributeIsNotForThisProduct) {
+            thisAttributeIsNotForThisProduct.printStackTrace();
+        } catch (NoMatchBetweenCategoryAndAttributes noMatchBetweenCategoryAndAttributes) {
+            noMatchBetweenCategoryAndAttributes.printStackTrace();
+        } catch (ThereIsNotCategoryWithNameException e) {
+            e.printStackTrace();
+        } catch (NullProduct nullProduct) {
+            nullProduct.printStackTrace();
+        } catch (InvalidNumber invalidNumber) {
+            invalidNumber.printStackTrace();
         }
     }
 }

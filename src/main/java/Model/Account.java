@@ -1,9 +1,7 @@
 package Model;
 
 import Controller.ManagerBoss;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Account {
     public static ArrayList<Account> allAccounts = new ArrayList<Account>();
@@ -63,7 +61,11 @@ public abstract class Account {
      */
     public static void setOnlineAccount(Account onlineAccount) {
         Account.onlineAccount = onlineAccount;
-        setIsThereOnlineUser(true);
+        if (onlineAccount!=null)
+            setIsThereOnlineUser(true);
+        else {
+            setIsThereOnlineUser(false);
+        }
     }
 
     public static ArrayList<Account> getAllLoggedAccounts() {

@@ -307,7 +307,7 @@ public class ProductTest {
     }
 
     @Test
-    public void sortBuyers() {
+    public void sortBuyers() throws NoMoneyInCustomerPocket {
         ArrayList<Customer> a = new ArrayList<>();
         a.add(customer);
         Customer customer1 = new Customer("mohammadzzz", "moli", "molis", "sad@sad.s", "2323", "pass");
@@ -319,7 +319,7 @@ public class ProductTest {
         b.add(product);
         b.add(product);
         b.add(product);
-       BuyLog buyLog = new BuyLog(233,12,b,seller.getUsername());
+       BuyLog buyLog = new BuyLog(233,b,seller,customer);
        buyLog.setDelivered(true);
         customer1.getBuyLogs().add(buyLog);
 
@@ -339,7 +339,7 @@ public class ProductTest {
         n.add(product);
         n.add(product);
 
-      BuyLog buyLog1 = new BuyLog(213,23,n,seller.getUsername());
+      BuyLog buyLog1 = new BuyLog(213,n,seller,customer1);
       customer2.getBuyLogs().add(buyLog1);
         a.remove(customer1);
         a.remove(customer2);

@@ -4,10 +4,7 @@ package Views;
 import Controller.CustomerBoss;
 import Controller.Exceptions.*;
 import Controller.ProductBoss;
-import Model.Account;
-import Model.BuyLog;
-import Model.Customer;
-import Model.Product;
+import Model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -358,10 +355,14 @@ public class BuyerPage extends Page {
         return new Page("payment", this) {
             @Override
             public void execute() {
-                if (!CustomerBoss.doPayment((Customer) Account.getOnlineAccount()))
-                    System.err.println("your money is not enough! the purchase wasn't successful.");
-                else
-                    System.out.println("purchase successfully done!");
+                try {
+                    if (!CustomerBoss.doPayment((Customer) Account.getOnlineAccount()))
+                        System.err.println("your money is not enough! the purchase wasn't successful.");
+                    else
+                        System.out.println("purchase successfully done!");
+                } catch (NoMoneyInCustomerPocket noMoneyInCustomerPocket) {
+                    noMoneyInCustomerPocket.printStackTrace();
+                }
                 parentPage.execute();
             }
         };

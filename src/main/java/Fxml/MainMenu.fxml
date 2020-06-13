@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Button?>
+<GridPane alignment="center" hgap="10"  vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.MainMenuController">
+  <Button text="User Page" GridPane.rowIndex="0" onMouseClicked="#userPageEntrance"></Button>
+  <Button text="Products" GridPane.rowIndex="1" onMouseClicked="#productsPageEntrance"></Button>
+  <Button text="Offs" GridPane.rowIndex="2" onMouseClicked="#offsEntrance"/>
+  <Button text="back" GridPane.rowIndex="3" onMouseClicked="#back"></Button>
+</GridPane>

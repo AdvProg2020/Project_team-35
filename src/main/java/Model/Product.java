@@ -22,6 +22,7 @@ public class Product {
     private ArrayList<Rate> ratesList;
     private HashMap<String, String> specialAttributes;
     private Product onlineProduct;
+    private double priceWithOffEffect;
     private ArrayList<Customer> whoBoughtThisGood;
     //when the page of product is open.
 
@@ -30,6 +31,7 @@ public class Product {
         this.name = name;
         this.description = description;
         this.company = company;
+        priceWithOffEffect = -1;
         this.price = price;
         this.seller = seller;
         this.inventory = inventory;
@@ -137,9 +139,12 @@ public class Product {
 
     public static boolean deleteProduct(Product product) {
         for (Off allActiveOff : Off.allActiveOffs) {
-            if (allActiveOff.getIncludedProducts().contains(product)) {
-                allActiveOff.getIncludedProducts().remove(product);
-                break;
+            if (allActiveOff!=null && allActiveOff.getIncludedProducts()!=null) {
+                if (allActiveOff.getIncludedProducts().contains(product)) {
+                    allActiveOff.getIncludedProducts().remove(product);
+                    break;
+
+                }
             }
         }
         allProducts.remove(product);
@@ -389,5 +394,13 @@ public class Product {
 
     public static void resetProductNumberToZero() {
         Product.productNumber = 0;
+    }
+
+    public void setPriceWithOffEffect(double priceWithOffEffect) {
+        this.priceWithOffEffect = priceWithOffEffect;
+    }
+
+    public double getPriceWithOffEffect() {
+        return priceWithOffEffect;
     }
 }

@@ -1,15 +1,13 @@
 package Views;
 
 import Controller.Exceptions.CategoryNull;
-import Controller.Exceptions.InvalidFieldForSort;
 import Controller.Exceptions.InvalidNumber;
 import Controller.Exceptions.SellerShouldJustBe;
-import Controller.MaxMinReplacement;
+import Controller.Exceptions.MaxMinReplacement;
 import Controller.OffBoss;
 import Controller.ProductBoss;
 import Controller.SellerBoss;
 import Model.Category;
-import Model.Off;
 import Model.Product;
 import Model.ProductFilters.ProductFilter;
 
