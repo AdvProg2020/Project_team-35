@@ -7,6 +7,7 @@ import Controller.Exceptions.PasswordValidity;
 import Main.Main;
 import Model.Account;
 import Model.Manager;
+import Model.Seller;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -38,6 +39,9 @@ public class LoginPage {
         AccountBoss.startLogin(username.getText(),password.getText());
         if (Account.getAccountWithUsername(username.getText()) instanceof Manager) {
             Main.setRoot("ManagerAccountPage", "Manager Account Page");
+        }
+        else if (Account.getAccountWithUsername(username.getText()) instanceof Seller){
+            Main.setRoot("SellerPage","seller page");
         }
         else
         Main.setRoot("MainMenu","main menu");
