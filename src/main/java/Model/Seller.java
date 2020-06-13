@@ -153,4 +153,11 @@ public class Seller extends Account {
         }
         return null;
     }
+    public SellLog findSellLogForGraphic(String name){
+        for (SellLog log : getSellLogs()) {
+            if (log.toString().equalsIgnoreCase(name))
+                return log;
+        }
+        return null;
+    }
 }
