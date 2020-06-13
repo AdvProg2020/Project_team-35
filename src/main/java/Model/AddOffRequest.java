@@ -4,7 +4,7 @@ public class AddOffRequest extends Request {
    private Off off;
 
     public AddOffRequest(Seller seller, Off off) {
-        super(seller);
+        super(seller, "Add Off");
         this.off = off;
     }
 

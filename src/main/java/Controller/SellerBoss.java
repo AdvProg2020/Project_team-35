@@ -36,6 +36,12 @@ public class SellerBoss {
         }
         return sales;
     }
+    public static ArrayList<SellLog> showHistoryOfSalesForGraphic(Seller seller) {
+        Boss.removeExpiredOffsAndDiscountCodes();
+        ArrayList<String> sales = new ArrayList<>();
+        return seller.getSellLogs();
+
+    }
 
     public static String showProduct(String id, Seller seller) throws ThisIsNotYours, NullProduct {
         Boss.removeExpiredOffsAndDiscountCodes();

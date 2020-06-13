@@ -10,7 +10,7 @@ public class EditOffRequest extends Request {
     private LocalDateTime newFinalDate;
 
     public EditOffRequest(Seller seller, Off toEdit, double newMaximumAmountOfOff, double newOffPercent, LocalDateTime newDate , LocalDateTime newFinalDate) {
-        super(seller);
+        super(seller, "Edit Off");
         this.toEdit = toEdit;
         this.newMaximumAmountOfOff = newMaximumAmountOfOff;
         this.newOffPercent = newOffPercent;

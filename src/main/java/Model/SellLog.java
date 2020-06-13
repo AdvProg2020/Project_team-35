@@ -20,6 +20,7 @@ public class SellLog extends Log {
         offDiscountAmount = 0;
         addMoneyToSeller();
 
+
     }
     public void addMoneyToSeller(){
         for (Product product : soldProducts) {
@@ -58,4 +59,5 @@ public class SellLog extends Log {
     public ArrayList<Product> getSoldProducts() {
         return soldProducts;
     }
+
 }

@@ -35,6 +35,11 @@ public class RegisterPageController {
             problem.setTextFill(Paint.valueOf("red"));
             return;
         }
+        if (!type.getText().matches("^(customer|seller)$")){
+            problem.setTextFill(Paint.valueOf("red"));
+            problem.setText("invalid type");
+            return;
+        }
         createAllPersonalInfo(allPersonalInfo);
         if (checkValidityOfData(allPersonalInfo)) {
             AccountBoss.makeAccount(allPersonalInfo);

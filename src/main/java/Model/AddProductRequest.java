@@ -4,7 +4,7 @@ public class AddProductRequest extends Request {
    private Product product;
 
     public AddProductRequest(Seller seller, Product product) {
-        super(seller);
+        super(seller, "Add Product");
         this.product = product;
     }
 

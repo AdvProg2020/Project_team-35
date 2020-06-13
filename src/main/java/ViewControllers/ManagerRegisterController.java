@@ -46,7 +46,7 @@ public class ManagerRegisterController {
         }
         return true;
     }
-    public boolean checkValidity(String type,String input){
+    public  boolean checkValidity(String type,String input){
         if (type.equals("email address")|| type.equalsIgnoreCase("email")) {
             if (! input.matches("^(\\w+)@(\\w+).(\\w+)$")){
                 problem.setTextFill(Paint.valueOf("red"));
