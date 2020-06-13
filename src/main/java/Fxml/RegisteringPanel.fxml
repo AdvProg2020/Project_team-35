@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.RegisteringPanelController">
+   <Button text="login" onMouseClicked="#startLogin" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="1"></Button>
+    <Button text="register" onMouseClicked="#startRegister" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="1"></Button>
+</GridPane>
