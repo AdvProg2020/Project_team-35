@@ -24,13 +24,13 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("../Fxml/FirstPage.fxml"));
         primaryStage.setTitle("Hello World");
-        Main.scene = new Scene(root, 800, 600);
+        Main.scene = new Scene(root, 1500, 900);
         primaryStage.setScene(scene);
         Main.stage = primaryStage;
         primaryStage.show();
     }
 
-    public static void setRoot(String fxml,String newTitle) throws IOException {
+    public static void setRoot(String fxml, String newTitle) throws IOException {
         stage.setTitle(newTitle);
         scene.setRoot(loadFXML(fxml));
         stage.setScene(scene);
