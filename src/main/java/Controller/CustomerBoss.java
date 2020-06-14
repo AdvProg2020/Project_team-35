@@ -130,7 +130,9 @@ public class CustomerBoss {
               ArrayList<Product> listOfCartProductsWhichIsForSpecialSeller = new ArrayList<Product>(Arrays.asList(productsOfSpecialSeller));
                 SellLog sellLog = new SellLog(listOfCartProductsWhichIsForSpecialSeller,customer,seller);
                 BuyLog buyLog = new BuyLog(customer.getPaymentAmount(),listOfCartProductsWhichIsForSpecialSeller,seller,customer);
+                sellLog.setOrderNumber(Log.numberOfLogs);
             }
+            Log.setNumberOfLogs(Log.getNumberOfLogs()+1);
             return true;
         }
     }
