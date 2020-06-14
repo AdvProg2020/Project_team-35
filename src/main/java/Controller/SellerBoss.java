@@ -42,6 +42,9 @@ public class SellerBoss {
         return seller.getSellLogs();
 
     }
+    public static ArrayList<Product> salableProducts(Seller seller){
+        return seller.getSalableProducts();
+    }
 
     public static String showProduct(String id, Seller seller) throws ThisIsNotYours, NullProduct {
         Boss.removeExpiredOffsAndDiscountCodes();

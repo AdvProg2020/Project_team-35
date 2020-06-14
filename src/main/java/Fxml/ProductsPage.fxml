@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ProductsPageController">
+    <Button layoutX="450.0" layoutY="349.0" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="back to main menu" />
+
+                    <TableView fx:id="table" layoutX="542.0" layoutY="24.0" onMouseClicked="#click" prefHeight="290.0" prefWidth="271.0">
+                        <columns>
+                            <TableColumn fx:id="categoryProductsNum" prefWidth="132.3333282470703" text="number of products" />
+                            <TableColumn fx:id="categoryName" prefWidth="137.33336385091144" text="category name" />
+                        </columns>
+                    </TableView>
+                
+
+
+        <TableView fx:id="tableProducts" layoutX="18.0" layoutY="24.0" prefHeight="290.0" prefWidth="522.0">
+            <columns>
+                <TableColumn fx:id="productName" prefWidth="69.3333740234375" text="name" />
+                <TableColumn fx:id="price" prefWidth="35.666656494140625" text="price" />
+                <TableColumn fx:id="image" prefWidth="362.33331298828125" text="image" />
+                <TableColumn fx:id="rate" prefWidth="51.666656494140625" text="rate" />
+            </columns>
+        </TableView>
+   
+</AnchorPane>
