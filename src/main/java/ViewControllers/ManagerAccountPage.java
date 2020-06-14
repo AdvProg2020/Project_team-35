@@ -3,6 +3,7 @@ package ViewControllers;
 import Controller.AccountBoss;
 import Controller.Exceptions.InvalidNumber;
 import Controller.Exceptions.NotValidFieldException;
+import Main.Main;
 import Model.Account;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
@@ -59,5 +61,11 @@ public class ManagerAccountPage implements Initializable {
         information.setTextFill(Color.GREEN);
         information.setText("Successful :)");
         this.updateValuesOnScreen();
+    }
+
+    public void logoutClick(MouseEvent mouseEvent) throws IOException {
+        AccountBoss.logout(Account.getOnlineAccount());
+        Main.tree.pop();
+        Main.setRoot(Main.tree.peek(), Main.tree.peek());
     }
 }

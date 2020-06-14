@@ -7,10 +7,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Stack;
 
 public class Main extends Application {
     public static Scene scene;
     public static Stage stage;
+    public static Stack<String> tree = new Stack<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -27,12 +29,14 @@ public class Main extends Application {
         Main.scene = new Scene(root, 1500, 900);
         primaryStage.setScene(scene);
         Main.stage = primaryStage;
+        tree.push("FirstPage");
         primaryStage.show();
     }
 
     public static void setRoot(String fxml, String newTitle) throws IOException {
         stage.setTitle(newTitle);
         scene.setRoot(loadFXML(fxml));
+        tree.push(fxml);
         stage.setScene(scene);
     }
 
