@@ -1,17 +1,20 @@
 package Model;
 
 import Controller.ManagerBoss;
+import javafx.beans.property.SimpleStringProperty;
+
 import java.util.ArrayList;
 
 public abstract class Account {
     public static ArrayList<Account> allAccounts = new ArrayList<Account>();
     private static ArrayList<Account> allLoggedAccounts = new ArrayList<>();
-    private String username;
+    private SimpleStringProperty username = new SimpleStringProperty();
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
-    private String password;
+    private SimpleStringProperty password = new SimpleStringProperty();
+    private SimpleStringProperty type = new SimpleStringProperty();
     private static Account onlineAccount;
     private static boolean isThereOnlineUser;
     protected boolean isThisAccountLogged;
@@ -27,15 +30,24 @@ public abstract class Account {
      * @param password
      */
     public Account(String username, String firstName, String lastName, String email, String phoneNumber, String password , int typeOfAccount) {
-        this.username = username;
+        this.username.set(username);
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.password = password;
+        this.password.set(password);
         this.typeOfAccount = typeOfAccount;
         allAccounts.add(this);
         Account.setCurrentSort("Nothing");
+        if (this instanceof Manager){
+            type.set("Manager");
+        }
+        else if (this instanceof Seller){
+            type.set("Seller");
+        }
+        else if (this instanceof Customer){
+            type.set("Customer");
+        }
     }
 
     public static boolean isIsThereOnlineUser() {
@@ -88,7 +100,7 @@ public abstract class Account {
      */
     public static Account getAccountWithUsername(String username) {
         for (Account account : allAccounts) {
-            if (account.username.equals(username))
+            if (account.username.get().equals(username))
                 return account;
         }
         return null;
@@ -101,7 +113,7 @@ public abstract class Account {
      */
     public static boolean isThereAccountWithUserName(String username) {
         for (Account account : allAccounts) {
-            if (account.username.equals(username))
+            if (account.username.get().equals(username))
                 return true;
         }
         return false;
@@ -118,7 +130,7 @@ public abstract class Account {
      * @return
      */
     public boolean validatePassword(String userPassword) {
-        if (userPassword.equals(password))
+        if (userPassword.equals(password.get()))
             return true;
         return false;
     }
@@ -131,7 +143,7 @@ public abstract class Account {
     }
 
     public String getUsername() {
-        return username;
+        return username.get();
     }
 
     public String getFirstName() {
@@ -151,7 +163,7 @@ public abstract class Account {
     }
 
     public String getPassword() {
-        return password;
+        return password.get();
     }
 
     public void setFirstName(String firstName) {
@@ -171,7 +183,7 @@ public abstract class Account {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password.set(password);
     }
 
     public static boolean isThereActiveAccountWithUserName(String username) {

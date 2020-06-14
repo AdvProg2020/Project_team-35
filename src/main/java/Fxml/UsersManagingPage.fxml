@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.UsersManagingPage">
+   <children>
+      <TableView fx:id="usersTable" layoutX="36.0" layoutY="30.0" onMouseClicked="#clickUsersTable" prefHeight="200.0" prefWidth="513.0">
+        <columns>
+          <TableColumn fx:id="usernameCol" prefWidth="193.20003128051758" text="Username" />
+          <TableColumn fx:id="passwordCol" minWidth="0.0" prefWidth="170.3999786376953" text="Password" />
+            <TableColumn fx:id="typeCol" minWidth="0.0" prefWidth="145.0" text="Type" />
+
+        </columns>
+      </TableView>
+      <Label fx:id="userInfo" layoutX="42.0" layoutY="264.0" prefHeight="179.0" prefWidth="444.0" text="UserInfo" />
+      <Button layoutX="646.0" layoutY="90.0" mnemonicParsing="false" onMouseClicked="#removeUserClick" prefHeight="38.0" prefWidth="148.0" text="Remove User" />
+      <Label fx:id="actionInfo" layoutX="661.0" layoutY="176.0" prefHeight="38.0" prefWidth="120.0" text="Action Info" />
+      <Button layoutX="106.0" layoutY="496.0" mnemonicParsing="false" onMouseClicked="#backClick" prefHeight="26.0" prefWidth="103.0" text="Back" />
+   </children>
+</AnchorPane>

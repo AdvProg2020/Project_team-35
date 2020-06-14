@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ManagerAccountPage implements Initializable {
+public class CustomerPage implements Initializable {
     public Label usernameLabel;
     public TextField nameField;
     public TextField lastNameField;
@@ -29,7 +29,6 @@ public class ManagerAccountPage implements Initializable {
     public TextField emailField;
     public PasswordField passwordField;
     public Label information;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,13 +66,5 @@ public class ManagerAccountPage implements Initializable {
         AccountBoss.logout(Account.getOnlineAccount());
         Main.tree.pop();
         Main.setRoot(Main.tree.peek(), Main.tree.peek());
-    }
-
-    public void goToRequestsPage(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("RequestsPage", "RequestsPage");
-    }
-
-    public void goToUsersPage(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("UsersManagingPage", "Users Managing Page");
     }
 }

@@ -13,7 +13,7 @@ public class EditProductRequest extends Request {
     public HashMap<String, String> newSpecialAttributes;
 
     public EditProductRequest(Seller seller, Product toEdit, String newName, String newCompany, double newPrice, int newInventory, HashMap<String, String> newSpecialAttributes ,Category newCategory) {
-        super(seller);
+        super(seller, "Edit Product");
         this.toEdit = toEdit;
         this.newName = newName;
         this.newCompany = newCompany;

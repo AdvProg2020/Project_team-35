@@ -1,12 +1,15 @@
 package Model;
 
+import javafx.beans.property.SimpleStringProperty;
+
 public class SellerRegisterRequest extends Request {
 
 
     public SellerRegisterRequest(Seller seller) {
-        super(seller);
+        super(seller, "Seller Register");
     }
 
+    public static SimpleStringProperty requestType = new SimpleStringProperty("Seller Register");
     public String getRequestInfo () {
         return "  Seller Register Request --- username: "+seller.getUsername()+" --- RQId: " + this.getRequestId();
     }

@@ -15,6 +15,7 @@ public class ManagerBoss {
         if (Manager.isThereNewRequestWithId(requestId)) {
             Request request = Manager.getNewRequestWithId(requestId);
             request.execute();
+            request.setSituation("Accepted");
             Manager.newRequests.remove(request);
             Manager.checkedRequests.add(request);
             return true;
@@ -30,6 +31,7 @@ public class ManagerBoss {
             Manager.newRequests.remove(request);
             Manager.checkedRequests.add(request);
             request.decline();
+            request.setSituation("Declined");
             return true;
         } else {
             throw new NotValidRequestIdException("requestId is not Valid or is Checked");
