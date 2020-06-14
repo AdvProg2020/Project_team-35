@@ -6,6 +6,7 @@ import Controller.Exceptions.LoginWithoutLogout;
 import Controller.Exceptions.PasswordValidity;
 import Main.Main;
 import Model.Account;
+import Model.Manager;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -35,6 +36,10 @@ public class LoginPage {
             return;
         }
         AccountBoss.startLogin(username.getText(),password.getText());
+        if (Account.getAccountWithUsername(username.getText()) instanceof Manager) {
+            Main.setRoot("ManagerAccountPage", "Manager Account Page");
+        }
+        else
         Main.setRoot("MainMenu","main menu");
     }
 }
