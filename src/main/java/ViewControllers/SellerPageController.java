@@ -156,7 +156,8 @@ public class SellerPageController implements Initializable {
         errorAlert.showAndWait();
     }
 
-    public void viewCategory(MouseEvent mouseEvent) {
+    public void viewCategory(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("ProductsPage","products page");
 
     }
 }
