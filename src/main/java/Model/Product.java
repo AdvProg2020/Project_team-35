@@ -1,7 +1,8 @@
 package Model;
 
-import Views.GoodPage;
-import Views.ProductsPage;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.util.*;
 
@@ -50,8 +51,14 @@ public class Product {
         ratesList = new ArrayList<>();
         allProducts.add(this);
         seller.getSalableProducts().add(this);
+        this.nameForTable.set(name);
+        this.idForTable.set(productId);
+        this.priceForTable.set(price);
     }
 
+    private SimpleStringProperty nameForTable = new SimpleStringProperty();
+    private SimpleIntegerProperty idForTable = new SimpleIntegerProperty();
+    private SimpleDoubleProperty priceForTable = new SimpleDoubleProperty();
 
     public ArrayList<Customer> getWhoBoughtThisGood() {
         return whoBoughtThisGood;

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ManagingProducts">
+   <children>
+      <TableView fx:id="productsTable" layoutX="36.0" layoutY="71.0" onMouseClicked="#clickProductsTable" prefHeight="200.0" prefWidth="395.0">
+        <columns>
+          <TableColumn fx:id="PIDCol" prefWidth="75.0" text="PID" />
+          <TableColumn fx:id="nameCol" prefWidth="153.7999725341797" text="Name" />
+            <TableColumn fx:id="priceCol" prefWidth="158.80001831054688" text="Price" />
+
+        </columns>
+      </TableView>
+      <Button layoutX="609.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#removeProductClick" prefHeight="26.0" prefWidth="133.0" text="Remove" />
+      <Label fx:id="actionInfo" layoutX="551.0" layoutY="182.0" prefHeight="80.0" prefWidth="197.0" text="Action Info" />
+      <Label fx:id="productInfo" layoutX="114.0" layoutY="324.0" prefHeight="106.0" prefWidth="300.0" text="Product Info" />
+      <Button onMouseClicked="#clickBack" layoutX="130.0" layoutY="521.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="108.0" text="Back" />
+   </children>
+</AnchorPane>
