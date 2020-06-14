@@ -68,4 +68,8 @@ public class ManagerAccountPage implements Initializable {
         Main.tree.pop();
         Main.setRoot(Main.tree.peek(), Main.tree.peek());
     }
+
+    public void goToRequestsPage(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("RequestsPage", "RequestsPage");
+    }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.RequestsPage">
+   <children>
+      <TableView fx:id="requestsTable" layoutX="14.0" layoutY="9.0" onMouseClicked="#newRequestsTableClick" prefHeight="200.0" prefWidth="587.0">
+        <columns>
+          <TableColumn fx:id="requestIdCol" prefWidth="75.0" text="RQID" />
+          <TableColumn fx:id="requesterUsernameCol" prefWidth="201.5999984741211" text="Requester Username" />
+            <TableColumn fx:id="typeOfRequestCol" prefWidth="167.0" text="Type Of Request" />
+            <TableColumn fx:id="situationCol" prefWidth="125.80001831054688" text="Situation" />
+
+
+        </columns>
+      </TableView>
+
+       <TableView fx:id="checkedTable" layoutX="14.0" layoutY="308.0" onMouseClicked="#checkedRequestsTableClick" prefHeight="200.0" prefWidth="587.0">
+           <columns>
+               <TableColumn fx:id="checkedRequestIdCol" prefWidth="75.0" text="RQID" />
+               <TableColumn fx:id="checkedRequesterUsernameCol" prefWidth="189.60006713867188" text="Requester Username" />
+               <TableColumn fx:id="checkedTypeOfRequestCol" prefWidth="158.0" text="Type Of Request" />
+               <TableColumn fx:id="checkedSituationCol" prefWidth="128.5999755859375" text="Situation" />
+
+
+           </columns>
+       </TableView>
+      <Label fx:id="newRequestsInfo" layoutX="37.0" layoutY="222.0" prefHeight="67.0" prefWidth="527.0" text="New Requests Info" />
+      <Label fx:id="checkedRequestsInfo" layoutX="12.0" layoutY="511.0" prefHeight="76.0" prefWidth="574.0" text="Checked Request Info" />
+      <Button layoutX="663.0" layoutY="84.0" mnemonicParsing="false" onMouseClicked="#acceptRequest" prefHeight="26.0" prefWidth="126.0" text="Accept" />
+      <Button layoutX="663.0" layoutY="129.0" mnemonicParsing="false" onMouseClicked="#declineRequest" prefHeight="26.0" prefWidth="126.0" text="Decline" />
+      <Label fx:id="actionInfo" layoutX="668.0" layoutY="191.0" prefHeight="36.0" prefWidth="193.0" text="Action Info" />
+   </children>
+</AnchorPane>
