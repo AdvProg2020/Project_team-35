@@ -22,7 +22,8 @@ public class MainMenuController {
         Main.setRoot("ProductsPage","products page");
     }
 
-    public void offsEntrance(MouseEvent mouseEvent) {
+    public void offsEntrance(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("OffsPage","offs");
     }
 
 

@@ -21,17 +21,7 @@ public class OffBoss {
         return product;
     }
 
-    public void startCreateOff(ArrayList<Integer> includedProductsIds, double percent, double maximum, char date) {
 
-    }
-
-    public void startEditOff(int offId, ArrayList<Integer> newIncludedProducts, double newPercent, double newMaximum, char newDate) {
-
-    }
-
-    public void startRemoveOff(int OffId) {
-
-    }
 
     public static ArrayList<Off> sortOff(String field) {
         Boss.removeExpiredOffsAndDiscountCodes();

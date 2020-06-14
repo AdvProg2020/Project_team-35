@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.OffsPageController">
+   <children>
+      <Button layoutX="624.0" layoutY="333.0" mnemonicParsing="false" onMouseClicked="#goToMainMenu" text="main menu" />
+      <TableView fx:id="table" layoutX="311.0" layoutY="68.0" prefHeight="200.0" prefWidth="680.0">
+        <columns>
+          <TableColumn fx:id="name" prefWidth="67.33334350585938" text="name" />
+          <TableColumn fx:id="image" prefWidth="157.33334350585938" text="image" />
+            <TableColumn fx:id="rate" prefWidth="44.0" text="rate" />
+            <TableColumn fx:id="price" prefWidth="33.333251953125" text="price" />
+            <TableColumn fx:id="sTime" prefWidth="75.0" text="start time" />
+            <TableColumn fx:id="fTime" prefWidth="104.3333740234375" text="finish time" />
+            <TableColumn fx:id="time" prefWidth="92.33331298828125" text="time remined" />
+            <TableColumn fx:id="discount" prefWidth="105.33331298828125" text="dsicount amount" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
