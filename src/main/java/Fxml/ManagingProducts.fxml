@@ -13,8 +13,9 @@
 
         </columns>
       </TableView>
-      <Button onMouseClicked="#removeProductClick" layoutX="609.0" layoutY="110.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="133.0" text="Remove" />
+      <Button layoutX="609.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#removeProductClick" prefHeight="26.0" prefWidth="133.0" text="Remove" />
       <Label fx:id="actionInfo" layoutX="551.0" layoutY="182.0" prefHeight="80.0" prefWidth="197.0" text="Action Info" />
       <Label fx:id="productInfo" layoutX="114.0" layoutY="324.0" prefHeight="106.0" prefWidth="300.0" text="Product Info" />
+      <Button onMouseClicked="#clickBack" layoutX="130.0" layoutY="521.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="108.0" text="Back" />
    </children>
 </AnchorPane>

@@ -3,6 +3,7 @@ package ViewControllers;
 import Controller.Exceptions.ProductIsFinished;
 import Controller.Exceptions.ThereISNotProductWithIdException;
 import Controller.ManagerBoss;
+import Main.Main;
 import Model.Product;
 import Model.Request;
 import javafx.collections.FXCollections;
@@ -15,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -62,5 +64,10 @@ public class ManagingProducts implements Initializable {
             actionInfo.setText("Not Selected.");
             actionInfo.setTextFill(Color.RED);
         }
+    }
+
+    public void clickBack(MouseEvent mouseEvent) throws IOException {
+        Main.tree.pop();
+        Main.setRoot(Main.tree.peek(), Main.tree.peek());
     }
 }
