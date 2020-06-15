@@ -8,6 +8,7 @@ public class Category {
     public ArrayList<Product> categoryProducts;
     public ArrayList<String> specialAttributes;
     private static String currentSort = "Nothing";
+    private int size;
 
     public Category(String categoryName, ArrayList<String> specialAttributes) {
         this.categoryName = categoryName;
@@ -15,6 +16,7 @@ public class Category {
         categoryProducts = new ArrayList<>();
         Category.setCurrentSort("Nothing");
         allCategories.add(this);
+        size=0;
     }
 
 
@@ -70,6 +72,7 @@ public class Category {
         return true;
     }
     public int getSize() {
+        size = this.categoryProducts.size();
         return this.categoryProducts.size();
     }
     public void setCategoryName(String categoryName) {
@@ -104,6 +107,13 @@ public class Category {
         }
         return allCategories;
 
+    }
+    public static Category categoryFinder(Object object){
+        for (Category category : Category.getAllCategories()) {
+            if (category.equals(object))
+                return category;
+        }
+        return null;
     }
 }
 

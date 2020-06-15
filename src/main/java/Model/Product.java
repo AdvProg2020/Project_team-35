@@ -12,6 +12,8 @@ public class Product {
     private static int productNumber;
     private ProductAndOffStatus productStatus;
     private String name;
+
+    private double averageOfProduct;
     private int reviewNumber;
     private String description;
     private String company;
@@ -25,6 +27,7 @@ public class Product {
     private Product onlineProduct;
     private double priceWithOffEffect;
     private ArrayList<Customer> whoBoughtThisGood;
+    private String sellerName;
     //when the page of product is open.
 
 
@@ -34,7 +37,9 @@ public class Product {
         this.company = company;
         priceWithOffEffect = -1;
         this.price = price;
+        averageOfProduct=0;
         this.seller = seller;
+        sellerName = seller.getUsername();
         this.inventory = inventory;
         this.category = category;
         reviewNumber = 0;
@@ -141,6 +146,8 @@ public class Product {
             average += rate.getRate();
             number += 1;
         }
+
+        averageOfProduct = average / number;
         return average / number;
     }
 
@@ -220,6 +227,10 @@ public class Product {
 
     public void setSpecialAttributes(HashMap<String, String> specialAttributes) {
         this.specialAttributes = specialAttributes;
+    }
+
+    public double getAverageOfProduct() {
+        return averageOfProduct;
     }
 
     public static ArrayList<Product> getProductFieldForSort(String field) {

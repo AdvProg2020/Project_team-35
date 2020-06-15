@@ -1,8 +1,10 @@
 package ViewControllers;
 
 import Controller.AccountBoss;
+import Controller.SellerBoss;
 import Main.Main;
 import Model.Account;
+import Model.Product;
 import Model.Seller;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -128,6 +130,34 @@ public class SellerPageController implements Initializable {
         Seller seller = (Seller) Account.getOnlineAccount();
         errorAlert.setContentText(String.valueOf(seller.getMoney()));
         errorAlert.showAndWait();
+    }
+
+    public void showListOfSoldProducts(MouseEvent mouseEvent) {
+        Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
+        errorAlert.setHeaderText("sold products");
+        String result = "";
+        Seller seller = (Seller) Account.getOnlineAccount();
+        for (String sale : SellerBoss.showHistoryOfSales(seller)) {
+            result+=sale+"\n";
+        }
+        errorAlert.setContentText(result);
+        errorAlert.showAndWait();
+    }
+
+    public void listOfSalableProducts(MouseEvent mouseEvent) {
+        Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
+        errorAlert.setHeaderText("salable products");
+        Seller seller = (Seller) Account.getOnlineAccount();
+        String result = "";
+        for (Product product : SellerBoss.salableProducts(seller)) {
+            result+=product.getName()+" with id "+product.getProductId()+"\n";
+        }
+        errorAlert.setContentText(result);
+        errorAlert.showAndWait();
+    }
+
+    public void viewCategory(MouseEvent mouseEvent) {
+
     }
 }
 /*

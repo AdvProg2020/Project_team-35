@@ -18,7 +18,8 @@ public class MainMenuController {
         }
     }
 
-    public void productsPageEntrance(MouseEvent mouseEvent) {
+    public void productsPageEntrance(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("ProductsPage","products page");
     }
 
     public void offsEntrance(MouseEvent mouseEvent) {
