@@ -85,4 +85,8 @@ public class ManagerAccountPage implements Initializable {
     public void goToCreateNewManagerPage(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("CreateNewManagerPage", "Create Manager Account");
     }
+
+    public void goToManageCategoriesPage(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("ManageCategoriesPage", "Manage Categories");
+    }
 }

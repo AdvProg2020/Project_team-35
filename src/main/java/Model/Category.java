@@ -1,17 +1,19 @@
 package Model;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import java.util.*;
 
 public class Category {
     public static ArrayList<Category> allCategories = new ArrayList<>();
-    private String categoryName;
+    private SimpleStringProperty categoryName = new SimpleStringProperty();
     public ArrayList<Product> categoryProducts;
     public ArrayList<String> specialAttributes;
     private static String currentSort = "Nothing";
     private int size;
 
     public Category(String categoryName, ArrayList<String> specialAttributes) {
-        this.categoryName = categoryName;
+        this.categoryName.set(categoryName);
         this.specialAttributes = specialAttributes;
         categoryProducts = new ArrayList<>();
         Category.setCurrentSort("Nothing");
@@ -31,7 +33,7 @@ public class Category {
         return getCategoryByName(categoryName) != null;
     }
     public String getCategoryName() {
-        return categoryName;
+        return categoryName.get();
     }
 
     public ArrayList<String> getSpecialAttributes() {
@@ -45,6 +47,8 @@ public class Category {
     public String getShortInfo() {
         return "CategoryName : " + this.getCategoryName() + " --- " + "ProductsNumber : " + this.categoryProducts.size();
     }
+
+
 
     public ArrayList<Product> getCategoryProducts() {
         return categoryProducts;
@@ -76,7 +80,7 @@ public class Category {
         return this.categoryProducts.size();
     }
     public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+        this.categoryName.set(categoryName);
     }
 
     public static void setCurrentSort(String currentSort) {
