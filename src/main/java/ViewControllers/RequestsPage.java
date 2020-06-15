@@ -2,6 +2,7 @@ package ViewControllers;
 
 import Controller.Exceptions.NotValidRequestIdException;
 import Controller.ManagerBoss;
+import Main.Main;
 import Model.Manager;
 import Model.Request;
 import javafx.collections.FXCollections;
@@ -14,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -127,4 +129,8 @@ public class RequestsPage implements Initializable {
         updateNewRequestsTableScreen();
     }
 
+    public void backClick(MouseEvent mouseEvent) throws IOException {
+        Main.tree.pop();
+        Main.setRoot(Main.tree.peek(), Main.tree.peek());
+    }
 }

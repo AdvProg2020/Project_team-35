@@ -22,7 +22,7 @@
       <Label fx:id="information" layoutX="241.0" layoutY="471.0" prefHeight="18.0" prefWidth="118.0" />
       <Button layoutX="41.0" layoutY="545.0" mnemonicParsing="false" onMouseClicked="#logoutClick" text="Logout" />
       <Button onMouseClicked="#goToRequestsPage" layoutX="584.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="Requests Managing" />
-      <Button layoutX="589.0" layoutY="92.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="192.0" text="Users Managing" />
+      <Button onMouseClicked="#goToUsersPage" layoutX="589.0" layoutY="92.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="192.0" text="Users Managing" />
       <Button layoutX="596.0" layoutY="141.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="178.0" text="Products Managing" />
       <Button layoutX="585.0" layoutY="192.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="185.0" text="Discount Codes Managing" />
       <Button layoutX="596.0" layoutY="250.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="164.0" text="Create New Manager" />
