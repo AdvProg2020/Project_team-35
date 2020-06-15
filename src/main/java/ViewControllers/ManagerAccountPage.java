@@ -76,4 +76,8 @@ public class ManagerAccountPage implements Initializable {
     public void goToUsersPage(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("UsersManagingPage", "Users Managing Page");
     }
+
+    public void goToProductsManagingPage(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("ManagingProducts", "Managing Products");
+    }
 }
