@@ -1,6 +1,8 @@
 package ViewControllers;
 
+import Controller.Exceptions.RepeatedCategoryAttributeException;
 import Controller.Exceptions.RepeatedCategoryNameException;
+import Controller.Exceptions.ThereIsNotCategoryWithNameException;
 import Controller.ManagerBoss;
 import Main.Main;
 import Model.Account;
@@ -93,13 +95,38 @@ public class ManageCategoriesPage implements Initializable {
     }
 
     public void deleteCategoryClick(MouseEvent mouseEvent) {
-
+        try {
+            ManagerBoss.startDeleteCategoryWithName(categoryAddDeleteName.getText());
+            setActionInfo("Category Successfully Removed :)", false);
+            updateScreen();
+            freeTextFields();
+        } catch (ThereIsNotCategoryWithNameException e) {
+            setActionInfo(e.getMessage(), true);
+        }
     }
 
     public void renameCategoryClick(MouseEvent mouseEvent) {
+        try {
+            ManagerBoss.checkCategoryExistence(selectedCategoryName.getText());
+            ManagerBoss.editCategoryName(selectedCategoryName.getText(), categoryNewNameForRename.getText());
+            setActionInfo("Category Successfully Renamed :)", false);
+            updateScreen();
+            freeTextFields();
+        } catch (ThereIsNotCategoryWithNameException e) {
+            setActionInfo(e.getMessage(), true);
+        }
     }
 
     public void addAttributeToCategoryClick(MouseEvent mouseEvent) {
+        try {
+            ManagerBoss.checkCategoryExistence(selectedCategoryName.getText());
+            ManagerBoss.addAttributeToCategory(selectedCategoryName.getText(), attributeNameForAddOrDeleteAttribute.getText());
+            setActionInfo("Attribute Successfully Added To Category :)", false);
+            updateScreen();
+            freeTextFields();
+        } catch (Exception e) {
+            setActionInfo(e.getMessage(), true);
+        }
     }
 
     public void deleteAttributeFromCategoryClick(MouseEvent mouseEvent) {
