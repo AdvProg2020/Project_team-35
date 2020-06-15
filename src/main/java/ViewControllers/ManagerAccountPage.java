@@ -5,6 +5,7 @@ import Controller.Exceptions.InvalidNumber;
 import Controller.Exceptions.NotValidFieldException;
 import Main.Main;
 import Model.Account;
+import Model.Manager;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -79,5 +80,9 @@ public class ManagerAccountPage implements Initializable {
 
     public void goToProductsManagingPage(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("ManagingProducts", "Managing Products");
+    }
+
+    public void goToCreateNewManagerPage(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("CreateNewManagerPage", "Create Manager Account");
     }
 }
