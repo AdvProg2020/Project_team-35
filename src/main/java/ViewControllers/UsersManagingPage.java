@@ -65,6 +65,7 @@ public class UsersManagingPage implements Initializable {
     }
 
     private void updateDataOnTheScreen(){
+        selectedAccount = null;
         observableList.clear();
         userInfo.setText("");
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("Username"));
