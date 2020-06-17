@@ -5,6 +5,7 @@ import Model.Category;
 import Model.Off;
 import Model.Product;
 import Model.Seller;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -42,7 +43,13 @@ public class OffsPageController implements Initializable {
         Product product = new Product("ads","a",213,seller,2,new Category("asd",null),null,"");
        a.add(product);
         Off off = new Off(LocalDateTime.parse("2021-12-23T23:23:23"),LocalDateTime.now(),a,32,12,seller);
-       Off.getAllActiveOffs().add(off);
+        Product product1 = new Product("ad232s","a",213,seller,2,new Category("asd",null),null,"");
+
+        a.add(product1);
+        a.remove(product);
+        Off off1 = new Off(LocalDateTime.parse("2021-12-23T23:23:23"),LocalDateTime.now(),a,32,12,seller);
+
+
         update();
     }
     public void update(){

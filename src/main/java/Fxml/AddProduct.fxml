@@ -5,7 +5,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.AddProductController">
    <children>
-      <Button layoutX="293.0" layoutY="341.0" mnemonicParsing="false" onMouseClicked="#confirm" text="confirm" />
+      <Button layoutX="506.0" layoutY="341.0" mnemonicParsing="false" onMouseClicked="#confirm" text="confirm" />
       <Label layoutX="150.0" layoutY="21.0" text="name" />
       <Label layoutX="140.0" layoutY="55.0" text="inventory" />
       <Label layoutX="152.0" layoutY="92.0" text="price" />
@@ -16,9 +16,15 @@
       <TextField layoutX="219.0" layoutY="17.0" promptText="name" />
       <TextField layoutX="219.0" layoutY="51.0" promptText="inventory" />
       <TextField layoutX="219.0" layoutY="88.0" promptText="price" />
-      <TextField layoutX="219.0" layoutY="123.0" promptText="conmpany name" />
-      <TextField layoutX="219.0" layoutY="159.0" promptText="category name" />
+      <TextField layoutX="219.0" layoutY="123.0" promptText="company name" />
+      <TextField fx:id="categoryName" layoutX="219.0" layoutY="159.0" promptText="category name" />
       <CheckBox fx:id="check" layoutX="428.0" layoutY="21.0" mnemonicParsing="false" onAction="#select" text="show me category special attributes" />
       <Label fx:id="problem" layoutX="445.0" layoutY="345.0" prefHeight="17.0" prefWidth="391.0" />
+      <TableView fx:id="table" layoutX="141.0" layoutY="215.0" prefHeight="226.0" prefWidth="229.0">
+        <columns>
+          <TableColumn fx:id="nameOfSpecialAttributes" prefWidth="75.0" text="NAME" />
+            <TableColumn fx:id="specialId" prefWidth="75.0" text="id" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

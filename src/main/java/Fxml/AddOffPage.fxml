@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.AddOff">
+   <children>
+      <TextField fx:id="startDate" layoutX="300.0" layoutY="40.0" />
+      <TextField fx:id="finalDate" layoutX="300.0" layoutY="91.0" />
+      <TextField fx:id="percentage" layoutX="300.0" layoutY="146.0" />
+      <TextField fx:id="maximum" layoutX="300.0" layoutY="200.0" />
+      <TextArea fx:id="productsIds" layoutX="289.0" layoutY="250.0" prefHeight="200.0" prefWidth="200.0" />
+      <Label layoutX="146.0" layoutY="44.0" text="start date" />
+      <Label layoutX="146.0" layoutY="95.0" text="final date" />
+      <Label layoutX="146.0" layoutY="150.0" text="percentage" />
+      <Label layoutX="140.0" layoutY="204.0" text="maximum amount" />
+      <Label layoutX="138.0" layoutY="270.0" prefHeight="17.0" prefWidth="89.0" text="products id" />
+      <Button layoutX="560.0" layoutY="338.0" mnemonicParsing="false" onMouseClicked="#confirm" text="confirm" />
+      <Label fx:id="problem" layoutX="515.0" layoutY="383.0" prefHeight="17.0" prefWidth="149.0" />
+   </children>
+</AnchorPane>

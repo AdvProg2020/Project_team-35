@@ -165,6 +165,10 @@ public class SellerPageController implements Initializable {
         Main.setRoot("AddProduct","add");
 
     }
+
+    public void viewOffs(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("ViewOffs","view off");
+    }
 }
 /*
  subPages.put("2", viewCompanyInformation());

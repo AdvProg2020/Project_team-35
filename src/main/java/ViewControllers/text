@@ -1,0 +1,13 @@
+System.out.println("enter data of off:");
+                    System.out.println("start date:(yyyy-MM-ddThh:mm:ss)");
+                    String startDate = scanner.nextLine();
+                    System.out.println("final Date:(yyyy-MM-ddThh:mm:ss)");
+                    String finalDate = scanner.nextLine();
+                    System.out.println("percent:");
+                    String percent = scanner.nextLine();
+                    System.out.println("maximum:");
+                    String max = scanner.nextLine();
+                    System.out.println("products:(end add product | [productId])");
+                    ArrayList<Integer> id = new ArrayList<>();
+                    String command = null;
+                    while (true) {
