@@ -24,7 +24,7 @@ public class Product {
     private ArrayList<Comment> commentsList;
     private ArrayList<Rate> ratesList;
     private HashMap<String, String> specialAttributes;
-    private Product onlineProduct;
+    private static Product onlineProduct;
     private double priceWithOffEffect;
     private ArrayList<Customer> whoBoughtThisGood;
     private String sellerName;
@@ -420,5 +420,20 @@ public class Product {
 
     public double getPriceWithOffEffect() {
         return priceWithOffEffect;
+    }
+    public static Product productFinder(Object product){
+        for (Product allProduct : allProducts) {
+            if (allProduct.equals(product))
+                return allProduct;
+        }
+        return null;
+    }
+
+    public static void setOnlineProduct(Product onlineProduct) {
+        Product.onlineProduct = onlineProduct;
+    }
+
+    public static Product getOnlineProduct() {
+        return onlineProduct;
     }
 }

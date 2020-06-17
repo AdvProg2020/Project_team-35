@@ -15,7 +15,7 @@
                 
 
 
-        <TableView fx:id="tableProducts" layoutX="18.0" layoutY="24.0" prefHeight="290.0" prefWidth="522.0">
+        <TableView onMouseClicked="#productPage" fx:id="tableProducts" layoutX="18.0" layoutY="24.0" prefHeight="290.0" prefWidth="522.0">
             <columns>
                 <TableColumn fx:id="productName" prefWidth="69.3333740234375" text="name" />
                 <TableColumn fx:id="price" prefWidth="35.666656494140625" text="price" />

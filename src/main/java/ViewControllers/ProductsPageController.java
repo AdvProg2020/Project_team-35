@@ -30,57 +30,57 @@ public class ProductsPageController implements Initializable {
     public TableColumn rate;
 
     public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("MainMenu","main menu");
+        Main.setRoot("MainMenu", "main menu");
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        /*
-        ArrayList<String > a = new ArrayList<>();
-        a.add("sad");
-        Category category = new Category("asd",a);
-        Category category1 = new Category("alal",a);
-        for (int i = 0; i <100 ; i++) {
-
-
-            Product product = new Product("das", "Ads", 123, new Seller("dsa", "Asd", "Asd", "ads", "ads", "ASd", "da"), 3, category, null, "");
-            category.getCategoryProducts().add(product);
-        }
-
-         */
         update();
     }
-    public void update(){
+
+    public void update() {
         final ObservableList<Category> data = FXCollections.observableArrayList(Category.getAllCategories());
         categoryName.setCellValueFactory(new PropertyValueFactory<Category, String>("categoryName"));
-        categoryProductsNum.setCellValueFactory(new PropertyValueFactory<Category,String>("size"));
+        categoryProductsNum.setCellValueFactory(new PropertyValueFactory<Category, String>("size"));
         table.setItems(data);
 
     }
 
     public void click(MouseEvent mouseEvent) {
-        Object object =  table.getSelectionModel().selectedItemProperty().get();
+        Object object = table.getSelectionModel().selectedItemProperty().get();
         int index = table.getSelectionModel().selectedIndexProperty().get();
         Category category = Category.categoryFinder(object);
         Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
-        errorAlert.setHeaderText(category.getCategoryName()+" information");
-        String result="attributes : \n";
+        errorAlert.setHeaderText(category.getCategoryName() + " information");
+        String result = "attributes : \n";
         for (String attribute : category.getSpecialAttributes()) {
-            result+=attribute+"\n";
+            result += attribute + "\n";
         }
         errorAlert.setContentText(result);
         errorAlert.showAndWait();
         createProductsTable(category);
 
     }
-    public void createProductsTable(Category category){
+
+    public void createProductsTable(Category category) {
 
         final ObservableList<Product> data = FXCollections.observableArrayList(category.getCategoryProducts());
         productName.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
-        price.setCellValueFactory(new PropertyValueFactory<Product,String>("price"));
-        rate.setCellValueFactory(new PropertyValueFactory<Product,String>("averageOfProduct"));
+        price.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
+        rate.setCellValueFactory(new PropertyValueFactory<Product, String>("averageOfProduct"));
         image.setCellValueFactory(new PropertyValueFactory<Product, Image>("image"));
         tableProducts.setItems(data);
 
+    }
+
+    public void productPage(MouseEvent mouseEvent) throws IOException {
+        Object object = table.getSelectionModel().selectedItemProperty().get();
+        int index = table.getSelectionModel().selectedIndexProperty().get();
+        Product product = Product.productFinder(object);
+
+        if (product != null) {
+            Product.setOnlineProduct(product);
+            Main.setRoot("ProductPage", "product page");
+        }
     }
 }
