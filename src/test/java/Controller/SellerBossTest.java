@@ -693,6 +693,8 @@ a.add(product);
             Assert.assertEquals(inputStringExceptNumber.getId(),3);
         } catch (ThisIsNotReadyForEdit thisIsNotReadyForEdit) {
             Assert.assertEquals(thisIsNotReadyForEdit.getId(),1);
+        } catch (ThisIsNotYours thisIsNotYours) {
+            thisIsNotYours.printStackTrace();
         }
     }
 

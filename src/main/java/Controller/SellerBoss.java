@@ -267,8 +267,11 @@ public class SellerBoss {
         return off.showOff();
     }
 
-    public static boolean editOff(Seller seller, Off off, HashMap<String, String> changes) throws TimeLimit, InputStringExceptNumber, ThisIsNotReadyForEdit {
+    public static boolean editOff(Seller seller, Off off, HashMap<String, String> changes) throws TimeLimit, InputStringExceptNumber, ThisIsNotReadyForEdit, ThisIsNotYours {
         Boss.removeExpiredOffsAndDiscountCodes();
+        if (!seller.getSellerOffs().contains(off)){
+            throw new ThisIsNotYours("this off is not yours",10);
+        }
         String date = null;
         double maximum = -1.0;
         double percent = -1.0;
@@ -347,5 +350,15 @@ public class SellerBoss {
         off.setOffStatus(ProductAndOffStatus.FORMAKE);
         AddOffRequest addOffRequest = new AddOffRequest(seller, off);
         return true;
+    }
+    public static void checkOffOfSeller(Seller seller,int offId) throws ThisOffNotExist, ThisIsNotYours {
+        Off off = Off.getOffById(offId);
+        if (off==null){
+            throw new ThisOffNotExist("not existed",2);
+        }
+        if (!seller.getSellerOffs().contains(off)){
+            throw new ThisIsNotYours("this is not yours",1);
+        }
+
     }
 }

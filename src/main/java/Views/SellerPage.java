@@ -100,7 +100,7 @@ public class SellerPage extends Page {
                             System.out.println("send request successfully");
 
 
-                        } catch (ThisIsNotReadyForEdit | InputStringExceptNumber | TimeLimit itIsNotCorrect) {
+                        } catch (ThisIsNotReadyForEdit | InputStringExceptNumber | TimeLimit | ThisIsNotYours itIsNotCorrect) {
                             System.out.println(itIsNotCorrect.getMessage());
                             nextPage = this;
                         }
