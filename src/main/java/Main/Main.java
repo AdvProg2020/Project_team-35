@@ -45,4 +45,9 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource( "Fxml//" + fxml + ".fxml"));
         return fxmlLoader.load();
     }
+
+    public static void doBack() throws IOException {
+        Main.tree.pop();
+        Main.setRoot(Main.tree.peek(), Main.tree.peek());
+    }
 }
