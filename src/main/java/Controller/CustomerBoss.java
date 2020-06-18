@@ -156,5 +156,8 @@ public class CustomerBoss {
         }
     }
 
+    public static boolean findOutSpecialProductThatIsForACustomerOrNot(Product product,Customer customer){
+        return customer.hasBoughtProductWithId(product.getProductId());
+    }
 
 }
