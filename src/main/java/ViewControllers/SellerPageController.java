@@ -1,9 +1,13 @@
 package ViewControllers;
 
 import Controller.AccountBoss;
+import Controller.Exceptions.NullProduct;
+import Controller.Exceptions.SoldProductsCanNotHaveChange;
+import Controller.Exceptions.ThisIsNotYours;
 import Controller.SellerBoss;
 import Main.Main;
 import Model.Account;
+import Model.Category;
 import Model.Product;
 import Model.Seller;
 import javafx.fxml.Initializable;
@@ -34,6 +38,8 @@ public class SellerPageController implements Initializable {
     public TextField company;
     public Label typeLabel;
     public Label errorLabel;
+    public TextField productIdForRemoveThat;
+    public Label problemOfRemovingProduct;
 
 
     @Override
@@ -169,15 +175,36 @@ public class SellerPageController implements Initializable {
     public void viewOffs(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("ViewOffs","view off");
     }
+
+    public void removeProduct(MouseEvent mouseEvent) {
+        Seller seller = (Seller)Account.getOnlineAccount();
+        if (!productIdForRemoveThat.isVisible()){
+
+            if (seller.getSalableProducts().size()==0){
+                problemOfRemovingProduct.setText("you dont have any thing yet");
+                problemOfRemovingProduct.setTextFill(Paint.valueOf("pink"));
+                return;
+            }
+            productIdForRemoveThat.setVisible(true);
+            return;
+        }else {
+            if (!productIdForRemoveThat.getText().matches("^\\d+$")){
+                problemOfRemovingProduct.setText("invalid format");
+                problemOfRemovingProduct.setTextFill(Paint.valueOf("red"));
+                return;
+            }
+            try {
+                SellerBoss.removeProduct(productIdForRemoveThat.getText(),(Seller)Account.getOnlineAccount());
+                problemOfRemovingProduct.setTextFill(Paint.valueOf("green"));
+                problemOfRemovingProduct.setText("successfully deleted");
+                if (seller.getSalableProducts().size()==0){
+                    productIdForRemoveThat.setVisible(false);
+                }
+            } catch (ThisIsNotYours | SoldProductsCanNotHaveChange | NullProduct thisIsNotYours) {
+                problemOfRemovingProduct.setTextFill(Paint.valueOf("red"));
+                problemOfRemovingProduct.setText(thisIsNotYours.getMessage());
+                return;
+            }
+        }
+    }
 }
-/*
- subPages.put("2", viewCompanyInformation());
-        subPages.put("3", viewSalesHistory());
-        subPages.put("4", viewCredit());
-        subPages.put("5", viewCategory());
-        subPages.put("6", manageProducts());
-        subPages.put("7", addProduct());
-        subPages.put("8", removeProduct());
-        subPages.put("9", viewOffs());
-        subPages.put("1", new RegisteringPanel("registering panel", this));
- */
