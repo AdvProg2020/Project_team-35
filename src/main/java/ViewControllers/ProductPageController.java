@@ -5,12 +5,10 @@ import Controller.ProductBoss;
 import Model.Account;
 import Model.Customer;
 import Model.Product;
-import Model.Seller;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 

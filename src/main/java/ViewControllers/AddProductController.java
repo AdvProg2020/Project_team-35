@@ -1,6 +1,8 @@
 package ViewControllers;
 
+import Controller.Exceptions.ThereIsNotCategoryWithNameException;
 import Controller.SellerBoss;
+import Main.Main;
 import Model.Account;
 import Model.Category;
 import Model.SellLog;
@@ -17,89 +19,85 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class AddProductController implements Initializable {
-    public CheckBox check;
+public class AddProductController  {
     public Label problem;
-    public Label specialAttributes;
+    
     public TextField categoryName;
-    public TableView table;
-    public TableColumn nameOfSpecialAttributes;
-    public TableColumn specialId;
+   
+    public TextArea attributes;
+    public ListView listOfAttributesName;
+    public TextArea decription;
+    public TextField name;
+    public TextField inventory;
+    public TextField price;
+    public TextField company;
+    private boolean userSawCategoriesAttributesList;
 
-    public void confirm(MouseEvent mouseEvent) {
-        if (!check.isSelected()){
-            problem.setText("you should check maybe this category has special attributes");
+
+    public void confirm(MouseEvent mouseEvent) throws IOException {
+        if (!userSawCategoriesAttributesList){
             problem.setTextFill(Paint.valueOf("red"));
+            problem.setText("you should have a true category");
             return;
         }
-    }
-    static class tableOfSpecials{
-        private SimpleStringProperty fName;
-        private SimpleStringProperty fValue;
-
-        private String name;
-        private String id;
-        private static ArrayList<tableOfSpecials> allTablesOfSpecials = new ArrayList<>();
-        public tableOfSpecials(String fName, String fValue) {
-            this.fName = new SimpleStringProperty(fName);
-            this.fValue = new SimpleStringProperty(fValue);
-            name = fValue;
-            id = fName;
-            allTablesOfSpecials.add(this);
+        if (!checkValidityOfInputs()){
+            return;
         }
 
-        public String getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getfName() {
-            return fName.get();
-        }
-
-        public String getfValue() {
-            return fValue.get();
-        }
-
-        public static ArrayList<tableOfSpecials> getAllTablesOfSpecials() {
-            return allTablesOfSpecials;
-        }
-    }
-
-    public void select(ActionEvent actionEvent) {
-
-        ArrayList<String> a = new ArrayList<>();
-        a.add("ads");
-        a.add("asdd");
-        Category category = new Category("asd",a);
-        int i =0;
-        for (String attribute :category.getSpecialAttributes()) {
-            System.out.println(attribute);
-            SimpleStringProperty simpleStringProperty = new SimpleStringProperty(attribute);
-            SimpleStringProperty simpleStringProperty1 = new SimpleStringProperty(String.valueOf(i));
-            tableOfSpecials tableOfSpecials = new tableOfSpecials(String.valueOf(i),attribute);
-        }
-        final ObservableList<tableOfSpecials> data = FXCollections.observableArrayList(tableOfSpecials.getAllTablesOfSpecials());
-       nameOfSpecialAttributes.setCellValueFactory(new PropertyValueFactory<tableOfSpecials, String>("name"));
-
-       specialId.setCellValueFactory(new PropertyValueFactory<tableOfSpecials,String>("id"));
-        table.setItems(data);
-
-
+        HashMap<String , String> attributesOfProduct = getSpecialInputs();
+        SellerBoss.addRequestProduct(name.getText(),price.getText(),inventory.getText(),attributesOfProduct,company.getText(),categoryName.getText(),(Seller)Account.getOnlineAccount(),decription.getText());
+        Main.setRoot("SellerPage","seller page");
 
     }
+    private HashMap<String,String> getSpecialInputs(){
+        String input = attributes.getText();
+        String[] arrayOfInputs = input.split("\n");
+        HashMap<String,String> result = new HashMap<>();
+        int numberOfAttributes = listOfAttributesName.getItems().size();
+        for (int i = 0; i < arrayOfInputs.length; i++) {
+            if (i==numberOfAttributes)
+                break;
+            String type = (String) listOfAttributesName.getItems().get(i);
+            result.put(type,arrayOfInputs[i]);
+        }
+        return result;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    }
+    private boolean checkValidityOfInputs(){
+        if (!price.getText().matches("^(\\d+)(.?)(\\d*)$")){
+            problem.setTextFill(Paint.valueOf("red"));
 
+            problem.setText("invalid format of price");
+            return false;
+        }else if (!inventory.getText().matches("^(\\d+)(.?)(\\d*)$")){
+            problem.setTextFill(Paint.valueOf("red"));
+
+            problem.setText("invalid format of inventory");
+            return false;
+        }
+        return true;
+    }
+
+    public void showAttributes(ActionEvent actionEvent) {
+        try {
+           ArrayList<String> specials =  SellerBoss.getWithNameOfCategoryItsSpecials(categoryName.getText());
+            listOfAttributesName.getItems().addAll(specials);
+            userSawCategoriesAttributesList = true;
+        } catch (ThereIsNotCategoryWithNameException e) {
+            problem.setText(e.getMessage());
+            problem.setTextFill(Paint.valueOf("red"));
+
+            listOfAttributesName.getItems().clear();
+            userSawCategoriesAttributesList = false;
+            return;
+        }
     }
 }
