@@ -1,13 +1,16 @@
 package Model;
 
+import java.time.LocalDateTime;
+
 public abstract class Log {
     public static int numberOfLogs;
     protected int logId;
-    //date;
+    protected LocalDateTime dateAndTime;
     protected  int orderNumber;
     public Log() {
         numberOfLogs+=1;
-       logId = numberOfLogs;
+        logId = numberOfLogs;
+        dateAndTime = LocalDateTime.now();
     }
 
     public static void setNumberOfLogs(int numberOfLogs) {
