@@ -12,6 +12,8 @@ public class Product {
     private static int productNumber;
     private ProductAndOffStatus productStatus;
     private String name;
+    private String startDate;
+    private String finalDate;
 
     private double averageOfProduct;
     private int reviewNumber;
@@ -26,6 +28,8 @@ public class Product {
     private HashMap<String, String> specialAttributes;
     private static Product onlineProduct;
     private double priceWithOffEffect;
+
+    private String daysRemind;
     private ArrayList<Customer> whoBoughtThisGood;
     private String sellerName;
     //when the page of product is open.
@@ -435,5 +439,29 @@ public class Product {
 
     public static Product getOnlineProduct() {
         return onlineProduct;
+    }
+
+    public void setFinalDate(String finalDate) {
+        this.finalDate = finalDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getFinalDate() {
+        return finalDate;
+    }
+
+    public String getDaysRemind() {
+        return daysRemind;
+    }
+
+    public void setDaysRemind(String daysRemind) {
+        this.daysRemind = daysRemind;
     }
 }

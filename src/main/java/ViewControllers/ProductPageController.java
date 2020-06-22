@@ -11,6 +11,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,6 +23,7 @@ public class ProductPageController implements Initializable {
     public TextField score;
     public TextArea review;
     public TextField title;
+    public Label offPriceOfProduct;
     private Product product;
     private Customer customer;
 
@@ -37,7 +39,10 @@ public class ProductPageController implements Initializable {
                 score.setVisible(true);
             }
         }
-        productNameLabel.setText(Product.getOnlineProduct().getName());
+        Product product = Product.getOnlineProduct();
+        productNameLabel.setText(product.getName());
+        offPriceOfProduct.setText(String.valueOf(product.getPriceWithOffEffect()));
+        offPriceOfProduct.setTextFill(Paint.valueOf("blue"));
 
 
     }

@@ -1,5 +1,6 @@
 package Model;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +22,7 @@ public class Off {
     public Off(LocalDateTime finalDate, LocalDateTime startDate, ArrayList<Product> includedProducts, double maximumAmountOfOff, double offPercent, Seller seller) {
         this.finalDate = finalDate;
         this.startDate = startDate;
+
         this.includedProducts = includedProducts;
         this.maximumAmountOfOff = maximumAmountOfOff;
         this.offPercent = offPercent;
@@ -31,6 +33,15 @@ public class Off {
         offId = offIdNumber;
         this.offStatus = ProductAndOffStatus.FORMAKE;
         setPriceWithOffEffectsInProducts();
+        setDatesOfIncludeProducts();
+    }
+    private void setDatesOfIncludeProducts(){
+        for (Product product : includedProducts) {
+            product.setStartDate(String.valueOf(startDate));
+            product.setFinalDate(String.valueOf(finalDate));
+            Duration duration  = Duration.between(startDate,finalDate);
+            product.setDaysRemind(String.valueOf(duration.toDays()));
+        }
     }
     public void setPriceWithOffEffectsInProducts(){
         for (Product product : includedProducts) {

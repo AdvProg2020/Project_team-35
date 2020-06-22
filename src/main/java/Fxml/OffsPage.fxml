@@ -18,5 +18,15 @@
             <TableColumn fx:id="discount" prefWidth="105.33331298828125" text="dsicount amount" />
         </columns>
       </TableView>
+      <VBox layoutX="91.0" layoutY="68.0" prefHeight="200.0" prefWidth="209.0">
+         <children>
+            <TextField fx:id="companyFilterField" onAction="#filterCompany" prefHeight="75.0" prefWidth="209.0" promptText="company" />
+            <TextField fx:id="nameFilterField" onAction="#filterName" prefHeight="132.0" prefWidth="209.0" promptText="name" />
+            <TextField fx:id="categoryFilterField" onAction="#filterCategory" prefHeight="131.0" prefWidth="209.0" promptText="category" />
+            <TextField fx:id="inventoryFilterField" onAction="#filterInventory" prefHeight="124.0" prefWidth="209.0" promptText="inventory" />
+            <TextField fx:id="PriceFilterField" onAction="#filterPrice" prefHeight="100.0" prefWidth="209.0" promptText="max Price - min Price" />
+         </children>
+      </VBox>
+      <Separator layoutX="297.0" layoutY="68.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="13.0" />
    </children>
 </AnchorPane>
