@@ -5,8 +5,20 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ViewOffsController">
    <children>
-      <Button layoutX="173.0" layoutY="95.0" mnemonicParsing="false" onMouseClicked="#viewOff" text="view off" />
-      <Button layoutX="173.0" layoutY="166.0" mnemonicParsing="false" onMouseClicked="#addOff" text="add off" />
-      <Button layoutX="173.0" layoutY="247.0" mnemonicParsing="false" onMouseClicked="#editOff" text="edit off" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#viewOff" text="view off" />
+      <Button layoutX="16.0" layoutY="65.0" mnemonicParsing="false" onMouseClicked="#addOff" text="add off" />
+      <Button layoutX="16.0" layoutY="127.0" mnemonicParsing="false" onMouseClicked="#editOff" text="edit off" />
+      <TextField fx:id="offIdOfView" layoutX="115.0" layoutY="14.0" promptText="off id" visible="false" />
+      <TextField fx:id="offEditId" layoutX="115.0" layoutY="127.0" promptText="off id" visible="false" />
+      <Label fx:id="problem" layoutX="18.0" layoutY="199.0" prefHeight="17.0" prefWidth="149.0" />
+      <TextArea fx:id="dataOfOff" layoutX="328.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" visible="false" />
+      <AnchorPane fx:id="editOffPagePart" layoutX="291.0" layoutY="12.0" prefHeight="378.0" prefWidth="519.0" visible="false">
+         <children>
+            <Button layoutX="42.0" layoutY="339.0" mnemonicParsing="false" onMouseClicked="#confirmEditing" text="confirm edit" />
+            <TextField fx:id="startDate" layoutX="29.0" layoutY="25.0" promptText="start date" />
+            <TextField fx:id="finalDate" layoutX="29.0" layoutY="68.0" promptText="final date" />
+            <TextField fx:id="percentage" layoutX="29.0" layoutY="116.0" promptText="percentage" />
+            <TextField fx:id="max" layoutX="29.0" layoutY="164.0" promptText="max" />
+         </children></AnchorPane>
    </children>
 </AnchorPane>
