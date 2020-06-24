@@ -113,7 +113,7 @@ public class SellerPageController implements Initializable {
     }
 
     public void viewSalesHistory(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("SalesHistory", "sales history");
+        Main.setRoot("SalesHistory", "sales history", false);
     }
 
     public void companyInfo(MouseEvent mouseEvent) {
@@ -125,7 +125,7 @@ public class SellerPageController implements Initializable {
     }
 
     public void goToMain(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("MainMenu", "main menu");
+        Main.setRoot("MainMenu", "main menu", false);
     }
 
     public void creditShow(MouseEvent mouseEvent) {
@@ -161,17 +161,17 @@ public class SellerPageController implements Initializable {
     }
 
     public void viewCategory(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("ProductsPage","products page");
+        Main.setRoot("ProductsPage","products page", false);
 
     }
 
     public void addProduct(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("AddProduct","add");
+        Main.setRoot("AddProduct","add", false);
 
     }
 
     public void viewOffs(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("ViewOffs","view off");
+        Main.setRoot("ViewOffs","view off", false);
     }
 
     public void removeProduct(MouseEvent mouseEvent) {

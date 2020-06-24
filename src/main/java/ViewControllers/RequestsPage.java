@@ -130,7 +130,6 @@ public class RequestsPage implements Initializable {
     }
 
     public void backClick(MouseEvent mouseEvent) throws IOException {
-        Main.tree.pop();
-        Main.setRoot(Main.tree.peek(), Main.tree.peek());
+        Main.doBack();
     }
 }

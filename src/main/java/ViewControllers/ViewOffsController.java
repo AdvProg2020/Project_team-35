@@ -63,7 +63,7 @@ public class ViewOffsController {
     }
 
     public void addOff(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("AddOffPage","add off");
+        Main.setRoot("AddOffPage","add off", false);
     }
 
     public void editOff(MouseEvent mouseEvent) {

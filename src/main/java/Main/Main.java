@@ -1,6 +1,6 @@
 package Main;
 
-import Model.Manager;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,20 +34,27 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void setRoot(String fxml, String newTitle) throws IOException {
+    public static void setRoot(String fxml, String newTitle ,boolean isForBack) throws IOException {
         stage.setTitle(newTitle);
         scene.setRoot(loadFXML(fxml));
-        tree.push(fxml);
         stage.setScene(scene);
+        if (!isForBack) {
+            tree.push(fxml);
+        }
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource( "Fxml//" + fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource( "Fxml/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
+
+    public static void doBack(String title) throws IOException {
+        Main.tree.pop();
+        Main.setRoot(Main.tree.peek(), title, true);
+    }
     public static void doBack() throws IOException {
         Main.tree.pop();
-        Main.setRoot(Main.tree.peek(), Main.tree.peek());
+        Main.setRoot(Main.tree.peek(), Main.tree.peek(), true);
     }
 }

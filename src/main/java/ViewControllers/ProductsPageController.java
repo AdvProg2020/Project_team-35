@@ -30,7 +30,7 @@ public class ProductsPageController implements Initializable {
     public TableColumn rate;
 
     public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("MainMenu", "main menu");
+        Main.setRoot("MainMenu", "main menu", true);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class ProductsPageController implements Initializable {
 
         if (product != null) {
             Product.setOnlineProduct(product);
-            Main.setRoot("ProductPage", "product page");
+            Main.setRoot("ProductPage", "product page", false);
         }
     }
 }

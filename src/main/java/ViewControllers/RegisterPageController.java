@@ -43,7 +43,7 @@ public class RegisterPageController {
         createAllPersonalInfo(allPersonalInfo);
         if (checkValidityOfData(allPersonalInfo)) {
             AccountBoss.makeAccount(allPersonalInfo);
-            Main.setRoot("MainMenu","main menu");
+            Main.setRoot("MainMenu","main menu", false);
         }
     }
     public boolean checkValidityOfData(HashMap<String , String> allPersonalInfo){
@@ -88,7 +88,7 @@ public class RegisterPageController {
 
 
     public void back(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("RegisteringPanel","register or login");
+        Main.doBack("register or login");
     }
 
 

@@ -38,12 +38,12 @@ public class LoginPage {
         }
         AccountBoss.startLogin(username.getText(),password.getText());
         if (Account.getAccountWithUsername(username.getText()) instanceof Manager) {
-            Main.setRoot("ManagerAccountPage", "Manager Account Page");
+            Main.setRoot("ManagerAccountPage", "Manager Account Page", false);
         }
         else if (Account.getAccountWithUsername(username.getText()) instanceof Seller){
-            Main.setRoot("SellerPage","seller page");
+            Main.setRoot("SellerPage","seller page", false);
         }
         else
-        Main.setRoot("MainMenu","main menu");
+        Main.setRoot("MainMenu","main menu", false);
     }
 }

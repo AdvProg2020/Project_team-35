@@ -46,7 +46,7 @@ public class AddOff {
 
         try {
             SellerBoss.addOff(ids,(Seller) Account.getOnlineAccount(),startDate.getText(),finalDate.getText(),percentage.getText(),maximum.getText());
-            Main.setRoot("SellerPage","seller page");
+            Main.setRoot("SellerPage","seller page", false);
         } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber | InputStringExceptNumber | NullProduct | JustOneOffForEveryProduct e) {
             problem.setText(e.getMessage());
             problem.setTextFill(Paint.valueOf("red"));

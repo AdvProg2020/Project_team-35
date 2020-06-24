@@ -35,7 +35,7 @@ public class ManagerRegisterController {
         createAllPersonalInfo(allPersonalInfo);
         if (checkValidityOfData(allPersonalInfo)) {
             AccountBoss.makeAccount(allPersonalInfo);
-           Main.setRoot("MainMenu","main menu");
+           Main.setRoot("MainMenu","main menu", false);
         }
 
     }
@@ -69,7 +69,7 @@ public class ManagerRegisterController {
 
     public void back(MouseEvent mouseEvent) throws IOException {
 
-            Main.setRoot("FirstPage","start Page");
+            Main.setRoot("FirstPage","start Page", false);
 
     }
 }
