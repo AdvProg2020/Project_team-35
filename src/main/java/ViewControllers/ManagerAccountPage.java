@@ -65,28 +65,27 @@ public class ManagerAccountPage implements Initializable {
     }
 
     public void logoutClick(MouseEvent mouseEvent) throws IOException {
+        Main.doBack();
         AccountBoss.logout(Account.getOnlineAccount());
-        Main.tree.pop();
-        Main.setRoot(Main.tree.peek(), Main.tree.peek());
     }
 
     public void goToRequestsPage(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("RequestsPage", "RequestsPage");
+        Main.setRoot("RequestsPage", "RequestsPage", false);
     }
 
     public void goToUsersPage(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("UsersManagingPage", "Users Managing Page");
+        Main.setRoot("UsersManagingPage", "Users Managing Page", false);
     }
 
     public void goToProductsManagingPage(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("ManagingProducts", "Managing Products");
+        Main.setRoot("ManagingProducts", "Managing Products", false);
     }
 
     public void goToCreateNewManagerPage(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("CreateNewManagerPage", "Create Manager Account");
+        Main.setRoot("CreateNewManagerPage", "Create Manager Account", false);
     }
 
     public void goToManageCategoriesPage(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("ManageCategoriesPage", "Manage Categories");
+        Main.setRoot("ManageCategoriesPage", "Manage Categories", false);
     }
 }

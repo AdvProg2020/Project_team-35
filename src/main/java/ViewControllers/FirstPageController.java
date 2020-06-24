@@ -13,14 +13,14 @@ public class FirstPageController {
         if (ManagerBoss.weHaveManagerOrNot()){
             String fxml = "MainMenu";
             try {
-                Main.setRoot(fxml,"main menu");
+                Main.setRoot(fxml,"main menu", false);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }else {
             String fxml = "ManagerRegister";
             try {
-                Main.setRoot(fxml,"manager registering part");
+                Main.setRoot(fxml,"manager registering part", false);
             } catch (IOException e) {
                 e.printStackTrace();
             }

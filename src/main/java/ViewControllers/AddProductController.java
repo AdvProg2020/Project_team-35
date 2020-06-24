@@ -54,7 +54,7 @@ public class AddProductController  {
 
         HashMap<String , String> attributesOfProduct = getSpecialInputs();
         SellerBoss.addRequestProduct(name.getText(),price.getText(),inventory.getText(),attributesOfProduct,company.getText(),categoryName.getText(),(Seller)Account.getOnlineAccount(),decription.getText());
-        Main.setRoot("SellerPage","seller page");
+        Main.setRoot("SellerPage","seller page", false);
 
     }
     private HashMap<String,String> getSpecialInputs(){

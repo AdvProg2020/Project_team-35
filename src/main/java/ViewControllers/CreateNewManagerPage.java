@@ -73,7 +73,6 @@ public class CreateNewManagerPage {
     }
 
     public void back(MouseEvent mouseEvent) throws IOException {
-        Main.tree.pop();
-        Main.setRoot(Main.tree.peek(), Main.tree.peek());
+        Main.doBack();
     }
 }

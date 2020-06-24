@@ -14,7 +14,7 @@ public class UserPageController {
     public Button button;
 
     public void registerOrLogin(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("RegisteringPanel","register/login");
+        Main.setRoot("RegisteringPanel","register/login", false);
     }
 
     public void showRegisterAndLoginButton(ActionEvent actionEvent) {

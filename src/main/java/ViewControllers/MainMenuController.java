@@ -11,24 +11,24 @@ public class MainMenuController {
     public void userPageEntrance(MouseEvent mouseEvent) throws IOException {
         if (Account.isIsThereOnlineUser()) {
           if (Account.getOnlineAccount() instanceof Seller){
-              Main.setRoot("SellerPage","seller page");
+              Main.setRoot("SellerPage","seller page", false);
           }
         } else {
-            Main.setRoot("UserPage", "user page");
+            Main.setRoot("UserPage", "user page", false);
         }
     }
 
     public void productsPageEntrance(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("ProductsPage","products page");
+        Main.setRoot("ProductsPage","products page",false);
     }
 
     public void offsEntrance(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("OffsPage","offs");
+        Main.setRoot("OffsPage","offs", false);
     }
 
 
 
     public void back(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("FirstPage","FirstPage");
+        Main.doBack("First Page");
     }
 }

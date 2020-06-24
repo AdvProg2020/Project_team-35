@@ -65,6 +65,6 @@ public class CustomerPage implements Initializable {
     public void logoutClick(MouseEvent mouseEvent) throws IOException {
         AccountBoss.logout(Account.getOnlineAccount());
         Main.tree.pop();
-        Main.setRoot(Main.tree.peek(), Main.tree.peek());
+        Main.setRoot(Main.tree.peek(), Main.tree.peek(), true);
     }
 }

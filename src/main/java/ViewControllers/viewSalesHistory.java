@@ -24,7 +24,7 @@ public class viewSalesHistory implements Initializable {
     public GridPane pane;
 
     public void back(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("SellerPage","seller page");
+        Main.doBack();
     }
 
     @Override

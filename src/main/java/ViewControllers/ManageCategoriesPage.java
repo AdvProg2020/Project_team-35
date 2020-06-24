@@ -95,8 +95,12 @@ public class ManageCategoriesPage implements Initializable {
     }
 
     public void deleteCategoryClick(MouseEvent mouseEvent) {
+        if (selectedCategory == null) {
+            setActionInfo("Not Selected", true);
+            return;
+        }
         try {
-            ManagerBoss.startDeleteCategoryWithName(categoryAddDeleteName.getText());
+            ManagerBoss.startDeleteCategoryWithName(selectedCategory.getCategoryName());
             setActionInfo("Category Successfully Removed :)", false);
             updateScreen();
             freeTextFields();

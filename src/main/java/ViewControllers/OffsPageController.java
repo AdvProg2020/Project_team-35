@@ -45,7 +45,7 @@ public class OffsPageController implements Initializable {
     public TextField PriceFilterField;
 
     public void goToMainMenu(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("MainMenu","main menu");
+        Main.setRoot("MainMenu","main menu", false);
     }
 
     @Override

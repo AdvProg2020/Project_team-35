@@ -67,7 +67,6 @@ public class ManagingProducts implements Initializable {
     }
 
     public void clickBack(MouseEvent mouseEvent) throws IOException {
-        Main.tree.pop();
-        Main.setRoot(Main.tree.peek(), Main.tree.peek());
+        Main.doBack();
     }
 }

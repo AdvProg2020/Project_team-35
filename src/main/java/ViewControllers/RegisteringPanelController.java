@@ -10,11 +10,11 @@ import java.io.IOException;
 public class RegisteringPanelController {
 
     public void startLogin(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("LoginPage", "login");
+        Main.setRoot("LoginPage", "login", false);
     }
 
     public void startRegister(MouseEvent mouseEvent) throws IOException {
 
-        Main.setRoot("RegisterPage","register");
+        Main.setRoot("RegisterPage","register", false);
     }
 }
