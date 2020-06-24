@@ -10,7 +10,6 @@ import Model.Category;
 import Model.Off;
 import Model.Product;
 import Model.Seller;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -95,7 +94,11 @@ public class OffsPageController implements Initializable {
 
     public void filterCompany(ActionEvent actionEvent) {
         try {
-            OffBoss.addFieldToFilterFields("Company",companyFilterField.getText(),"");
+          if (!companyFilterField.getText().equalsIgnoreCase("")) {
+              OffBoss.disableFilter("Company");
+              OffBoss.addFieldToFilterFields("Company", companyFilterField.getText(), "");
+
+          }
         } catch (CategoryNull | InvalidNumber | MaxMinReplacement | SellerShouldJustBe categoryNull) {
             categoryNull.printStackTrace();
         }
