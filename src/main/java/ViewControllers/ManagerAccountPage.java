@@ -121,4 +121,8 @@ public class ManagerAccountPage implements Initializable {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input);
     }
+
+    public void goToCreateDiscountCodePage(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("ManagerCreateDiscountCode", "Create Discount Code", false);
+    }
 }
