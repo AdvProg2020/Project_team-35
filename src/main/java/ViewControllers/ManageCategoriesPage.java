@@ -1,5 +1,6 @@
 package ViewControllers;
 
+import Controller.Exceptions.FieldDoesNotExist;
 import Controller.Exceptions.RepeatedCategoryAttributeException;
 import Controller.Exceptions.RepeatedCategoryNameException;
 import Controller.Exceptions.ThereIsNotCategoryWithNameException;
@@ -134,10 +135,33 @@ public class ManageCategoriesPage implements Initializable {
     }
 
     public void deleteAttributeFromCategoryClick(MouseEvent mouseEvent) {
+        if (categoriesTable.getSelectionModel().getSelectedItem() == null) {
+            setActionInfo("Not Selected.", true);
+            return;
+        }
+        try {
+            ManagerBoss.deleteAttributeFromCategory(categoriesTable.getSelectionModel().getSelectedItem().getCategoryName(), attributeNameForAddOrDeleteAttribute.getText());
+            setActionInfo("Attribute Successfully Deleted :)", false);
+            updateScreen();
+            freeTextFields();
+        } catch (FieldDoesNotExist fieldDoesNotExist) {
+            setActionInfo(fieldDoesNotExist.getMessage(), true);
+        }
     }
 
     public void renameAttributeClick(MouseEvent mouseEvent) {
-
+        if (categoriesTable.getSelectionModel().getSelectedItem() == null) {
+            setActionInfo("Not Selected.", true);
+            return;
+        }
+        try {
+            ManagerBoss.editAttributeName(categoriesTable.getSelectionModel().getSelectedItem().getCategoryName(), attributeNameForRename.getText(), attributeNewNameForRename.getText());
+            setActionInfo("Attribute Successfully Renamed :)", false);
+            updateScreen();
+            freeTextFields();
+        } catch (FieldDoesNotExist | RepeatedCategoryAttributeException e) {
+            setActionInfo(e.getMessage(), true);
+        }
     }
 
 
