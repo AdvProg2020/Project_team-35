@@ -34,8 +34,13 @@ public class UsersManagingPage implements Initializable {
     private Account selectedAccount;
 
     public void clickUsersTable(MouseEvent mouseEvent) {
-        userInfo.setText(usersTable.getSelectionModel().getSelectedItem().getPersonalInfo());
-        selectedAccount = usersTable.getSelectionModel().getSelectedItem();
+        if(usersTable.getSelectionModel().getSelectedItem() != null) {
+            userInfo.setText(usersTable.getSelectionModel().getSelectedItem().getPersonalInfo());
+            selectedAccount = usersTable.getSelectionModel().getSelectedItem();
+        }
+        else {
+            userInfo.setText("Not Selected.");
+        }
     }
 
     public void removeUserClick(MouseEvent mouseEvent) {

@@ -245,4 +245,12 @@ public abstract class Account {
     public static void setCurrentSort(String currentSort) {
         Account.currentSort = currentSort;
     }
+
+    public String getType() {
+        return type.get();
+    }
+
+    public SimpleStringProperty typeProperty() {
+        return type;
+    }
 }
