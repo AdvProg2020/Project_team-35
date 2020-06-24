@@ -35,9 +35,17 @@ public class ViewOffsController {
             problem.setText("you dont have off");
             return;
         }
+        if (editOffPagePart.isVisible() || offEditId.isVisible()){
+            editOffPagePart.setVisible(false);
+            offEditId.setVisible(false);
+            offIdOfView.setVisible(true);
+            return;
+        }
         if (!offIdOfView.isVisible()){
             offIdOfView.setVisible(true);
-        }else {
+            return;
+        }
+       else {
             if (!offIdOfView.getText().matches("^\\d+$")){
                 problem.setTextFill(Paint.valueOf("red"));
                 problem.setText("invalid format of id");
@@ -73,8 +81,15 @@ public class ViewOffsController {
             problem.setTextFill(Paint.valueOf("red"));
             return;
         }
+
         if (!offEditId.isVisible()){
             offEditId.setVisible(true);
+            offIdOfView.setVisible(false);
+            return;
+        }
+        if (!editOffPagePart.isVisible()){
+            dataOfOff.setVisible(false);
+            editOffPagePart.setVisible(true);
             return;
         }
         if (!offEditId.getText().matches("^\\d+$")){
@@ -127,6 +142,5 @@ public class ViewOffsController {
         return true;
     }
 
-    public void confirmEditing(MouseEvent mouseEvent) {
-    }
+
 }

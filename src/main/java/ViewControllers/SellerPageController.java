@@ -109,7 +109,7 @@ public class SellerPageController implements Initializable {
 
     public void logoutClick(MouseEvent mouseEvent) throws IOException {
         AccountBoss.logout(Account.getOnlineAccount());
-        Main.setRoot("LoginPage","login page");
+        Main.setRoot("LoginPage","login page",false);
     }
 
     public void viewSalesHistory(MouseEvent mouseEvent) throws IOException {
