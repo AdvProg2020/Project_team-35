@@ -50,6 +50,7 @@ public class ViewOffsController {
               editOffPagePart.setVisible(false);
               offEditId.setVisible(false);
               dataOfOff.setVisible(true);
+                System.out.println(offInfo);
               dataOfOff.setText(offInfo);
             } catch (ThisIsNotYours | ThisOffNotExist thisIsNotYours) {
                 problem.setText(thisIsNotYours.getMessage());
