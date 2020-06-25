@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 
@@ -37,6 +38,9 @@ public class ProductsPageController implements Initializable {
     public CheckBox inventoryFilter;
     public Label problemOfPublicFilter;
     public TextArea privateAttributes;
+    public ImageView imageView;
+    public Label imageLabel;
+    public TableColumn imageC;
 
     public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("MainMenu", "main menu", true);
@@ -78,7 +82,7 @@ public class ProductsPageController implements Initializable {
         productName.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
         price.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
         rate.setCellValueFactory(new PropertyValueFactory<Product, String>("averageOfProduct"));
-        image.setCellValueFactory(new PropertyValueFactory<Product, Image>("image"));
+        imageC.setCellValueFactory(new PropertyValueFactory<Product,ImageView>("imageView"));
         tableProducts.setItems(data);
 
     }
@@ -89,7 +93,12 @@ public class ProductsPageController implements Initializable {
         Product product = Product.productFinder(object);
         if (product != null) {
             Product.setOnlineProduct(product);
-            Main.setRoot("ProductPage", "product page", false);
+           if (imageLabel.isVisible()) {
+               Main.setRoot("ProductPage", "product page", false);
+           }else {
+               imageLabel.setVisible(true);
+               imageView.setImage(product.getProductImage());
+           }
         }
     }
 
@@ -119,7 +128,7 @@ public class ProductsPageController implements Initializable {
         productName.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
         price.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
         rate.setCellValueFactory(new PropertyValueFactory<Product, String>("averageOfProduct"));
-        image.setCellValueFactory(new PropertyValueFactory<Product, Image>("image"));
+        imageC.setCellValueFactory(new PropertyValueFactory<Product,ImageView>("imageView"));
         tableProducts.setItems(data);
 
     }
@@ -140,7 +149,7 @@ public class ProductsPageController implements Initializable {
         productName.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
         price.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
         rate.setCellValueFactory(new PropertyValueFactory<Product, String>("averageOfProduct"));
-        image.setCellValueFactory(new PropertyValueFactory<Product, Image>("image"));
+        imageC.setCellValueFactory(new PropertyValueFactory<Product,ImageView>("imageView"));
         tableProducts.setItems(data);
 
     }

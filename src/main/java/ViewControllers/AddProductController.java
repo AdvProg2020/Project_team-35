@@ -4,6 +4,7 @@ import Controller.Exceptions.ThereIsNotCategoryWithNameException;
 import Controller.SellerBoss;
 import Main.Main;
 import Model.Account;
+import Model.Product;
 import Model.Seller;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
@@ -46,7 +47,8 @@ public class AddProductController  {
 
         HashMap<String , String> attributesOfProduct = getSpecialInputs();
         SellerBoss.addRequestProduct(name.getText(),price.getText(),inventory.getText(),attributesOfProduct,company.getText(),categoryName.getText(),(Seller)Account.getOnlineAccount(),decription.getText());
-        Main.setRoot("SellerPage","seller page", false);
+        Product.setWhoWantsPic(Product.findProduct(Account.getOnlineAccount().getUsername(),name.getText(),Integer.parseInt(price.getText()),Integer.parseInt(inventory.getText())));
+        Main.setRoot("AddPicForProduct","add pic", false);
 
     }
     private HashMap<String,String> getSpecialInputs(){
