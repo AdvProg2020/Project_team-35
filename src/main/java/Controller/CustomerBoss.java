@@ -10,17 +10,9 @@ public class CustomerBoss {
         return customer.getMoney();
     }
 
-    public static ArrayList<String> showDiscountCodes(Customer customer) {
+    public static ArrayList<DiscountCode> showDiscountCodes(Customer customer) {
         Boss.removeExpiredOffsAndDiscountCodes();
-        ArrayList<String> discountCodesInformation = new ArrayList<>();
-        for (DiscountCode discountCode : customer.discountCodes) {
-            discountCodesInformation.add("id: " + discountCode.getId());
-            discountCodesInformation.add("final date: " + discountCode.getFinalDate());
-            discountCodesInformation.add("discount percent: " + discountCode.getDiscountPercent());
-            discountCodesInformation.add("maximum amount: " + discountCode.getMaximumAvailableAmount());
-            discountCodesInformation.add("available use frequents: " + discountCode.getAvailableUseFrequent() + "\n");
-        }
-        return discountCodesInformation;
+        return customer.discountCodes;
     }
 
     /**
