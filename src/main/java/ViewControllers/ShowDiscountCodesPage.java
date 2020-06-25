@@ -1,6 +1,9 @@
 package ViewControllers;
 
+import Controller.CustomerBoss;
 import Main.Main;
+import Model.Account;
+import Model.Customer;
 import Model.DiscountCode;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
@@ -13,19 +16,16 @@ import javax.swing.table.TableColumn;
 import javax.swing.text.TableView;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class ShowDiscountCodesPage implements Initializable {
     public TableView discountsCodesTable;
-    public TableColumn idCol;
-    public TableColumn dateCol;
-    public TableColumn percentCol;
-    public TableColumn maxCol;
-    public TableColumn freqCol;
-
-    public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("MainMenu", "main menu", true);
-    }
+    public javafx.scene.control.TableColumn<DiscountCode, String> idCol;
+    public javafx.scene.control.TableColumn<DiscountCode, LocalDateTime> dateCol;
+    public javafx.scene.control.TableColumn<DiscountCode, Double> percentCol;
+    public javafx.scene.control.TableColumn<DiscountCode, Double> maxCol;
+    public javafx.scene.control.TableColumn<DiscountCode, Integer> freqCol;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -33,12 +33,12 @@ public class ShowDiscountCodesPage implements Initializable {
     }
 
     public void update() {
-        ObservableList<DiscountCode> observableList = FXCollections.observableArrayList(DiscountCode.getAllDiscountCodes());
+        ObservableList<DiscountCode> observableList = FXCollections.observableArrayList(CustomerBoss.showDiscountCodes((Customer) Account.getOnlineAccount()));
         observableList.clear();
-        idCol.setCallValueFactory(new PropertyValueFactory<>("code"));
-        dateCol.setCallValueFactory(new PropertyValueFactory<>("finalDate"));
-        percentCol.setCallValueFatory(new PropertyValueFactory<>("discountPercent"));
-
-
+        idCol.setCellValueFactory(new PropertyValueFactory<>("code"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("finalDate"));
+        percentCol.setCellValueFactory(new PropertyValueFactory<>("discountPercent"));
+        maxCol.setCellValueFactory(new PropertyValueFactory<>("maximumAvailableAmount"));
+        freqCol.setCellValueFactory(new PropertyValueFactory<>("availableUseFrequent"));
     }
 }
