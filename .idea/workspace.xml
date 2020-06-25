@@ -22,6 +22,7 @@
     <list default="true" id="22a8972d-0158-477b-901a-9c04baa7ad15" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controller/CustomerBoss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/CustomerBoss.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Fxml/ShowDiscountCodesPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Fxml/ShowDiscountCodesPage.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ViewControllers/ShowDiscountCodesPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ViewControllers/ShowDiscountCodesPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -232,7 +233,7 @@
       <workItem from="1592985653373" duration="586000" />
       <workItem from="1593028127656" duration="1103000" />
       <workItem from="1593042040804" duration="107000" />
-      <workItem from="1593085206425" duration="1211000" />
+      <workItem from="1593085206425" duration="2444000" />
     </task>
     <task id="LOCAL-00001" summary="add maven project and java files">
       <created>1587386984402</created>
@@ -542,7 +543,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592984824441</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="add discount code table items">
+      <created>1593086458737</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1593086458737</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -563,7 +571,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="complete Product View method (to string) in models" />
     <MESSAGE value="first step of add product." />
     <MESSAGE value="add show buyers of a Product." />
     <MESSAGE value="add viewBuyersOfProduct and add showBuyers to SellerPage and SellerBoss" />
@@ -588,7 +595,8 @@
     <MESSAGE value="add some tests in CustomerBossTest" />
     <MESSAGE value="add CustomerPage.fxml and CustomerPage controller" />
     <MESSAGE value="add ShowDiscountCodesPage.fxml" />
-    <option name="LAST_COMMIT_MESSAGE" value="add ShowDiscountCodesPage.fxml" />
+    <MESSAGE value="add discount code table items" />
+    <option name="LAST_COMMIT_MESSAGE" value="add discount code table items" />
   </component>
   <component name="WindowStateProjectService">
     <state x="485" y="75" width="617" height="680" key="#Main" timestamp="1588105443782">
@@ -644,11 +652,11 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="321" y="0" key="#com.intellij.unscramble.UnscrambleDialog/0.0.1280.680@0.0.1280.680" timestamp="1587735909805" />
-    <state x="474" y="0" key="CommitChangelistDialog2" timestamp="1592984821303">
+    <state x="474" y="0" key="CommitChangelistDialog2" timestamp="1593087897238">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="320" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1587566123059" />
-    <state x="474" y="0" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1592984821303" />
+    <state x="474" y="0" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1593087897238" />
     <state width="344" height="438" key="DebuggerActiveHint" timestamp="1587712767245">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -771,12 +779,12 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1587578704067" />
-    <state x="476" y="206" key="git4idea.merge.GitPullDialog" timestamp="1592984856450">
+    <state x="476" y="206" key="git4idea.merge.GitPullDialog" timestamp="1593086539714">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="397" y="168" key="git4idea.merge.GitPullDialog/0.0.1280.680@0.0.1280.680" timestamp="1587999972959" />
     <state x="476" y="204" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1587578711739" />
-    <state x="476" y="206" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1592984856450" />
+    <state x="476" y="206" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1593086539714" />
     <state x="91" y="2" key="new project wizard" timestamp="1587996498862">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

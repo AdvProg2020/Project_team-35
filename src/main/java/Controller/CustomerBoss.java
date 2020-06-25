@@ -12,16 +12,7 @@ public class CustomerBoss {
 
     public static ArrayList<DiscountCode> showDiscountCodes(Customer customer) {
         Boss.removeExpiredOffsAndDiscountCodes();
-        ArrayList<DiscountCode> discountCodesInformation = new ArrayList<>();
-        discountCodesInformation = customer.discountCodes;
-        /*for (DiscountCode discountCode : customer.discountCodes) {
-            discountCodesInformation.add("id: " + discountCode.getId());
-            discountCodesInformation.add("final date: " + discountCode.getFinalDate());
-            discountCodesInformation.add("discount percent: " + discountCode.getDiscountPercent());
-            discountCodesInformation.add("maximum amount: " + discountCode.getMaximumAvailableAmount());
-            discountCodesInformation.add("available use frequents: " + discountCode.getAvailableUseFrequent() + "\n");
-        }*/
-        return discountCodesInformation;
+        return customer.discountCodes;
     }
 
     /**

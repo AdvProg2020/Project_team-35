@@ -7,11 +7,11 @@
    <children>
       <TableView fx:id="discountsCodeTable" layoutX="121.0" layoutY="40.0" prefHeight="400.0" prefWidth="455.0">
         <columns>
-          <TableColumn  fx:idCol="id" minWidth="5.20001220703125" prefWidth="23.599998474121094" text="ID" />
-          <TableColumn  fx:idCol="date" prefWidth="65.20001220703125" text="Final Date" />
-            <TableColumn fx:idCol="percent" prefWidth="101.99996948242188" text="Discount Percent" />
-            <TableColumn fx:idCol="max" prefWidth="111.20001220703125" text="Maximum Amount" />
-            <TableColumn fx:idCol="freq" prefWidth="150.3999816894531" text="Available Use Frequent" />
+          <TableColumn fx:id="id" minWidth="5.20001220703125" prefWidth="23.599998474121094" text="ID" />
+          <TableColumn fx:id="date" prefWidth="65.20001220703125" text="Final Date" />
+            <TableColumn fx:id="percent" prefWidth="101.99996948242188" text="Discount Percent" />
+            <TableColumn fx:id="max" prefWidth="111.20001220703125" text="Maximum Amount" />
+            <TableColumn fx:id="freq" prefWidth="150.3999816894531" text="Available Use Frequent" />
         </columns>
       </TableView>
    </children>
