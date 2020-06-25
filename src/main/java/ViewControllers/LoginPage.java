@@ -46,4 +46,8 @@ public class LoginPage {
         else
         Main.setRoot("MainMenu","main menu", false);
     }
+
+    public void backClick(MouseEvent mouseEvent) throws IOException {
+        Main.doBack();
+    }
 }

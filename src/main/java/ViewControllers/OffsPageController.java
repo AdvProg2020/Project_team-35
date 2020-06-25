@@ -14,17 +14,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class OffsPageController implements Initializable {
@@ -41,7 +41,9 @@ public class OffsPageController implements Initializable {
     public TextField nameFilterField;
     public TextField categoryFilterField;
     public TextField inventoryFilterField;
-    public TextField PriceFilterField;
+    public TextField priceFilterField;
+    public Label problem;
+    public CheckBox inventoryFilter;
 
     public void goToMainMenu(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("MainMenu","main menu", false);
@@ -92,48 +94,48 @@ public class OffsPageController implements Initializable {
 
 
 
-    public void filterCompany(ActionEvent actionEvent) {
-        try {
-          if (!companyFilterField.getText().equalsIgnoreCase("")) {
-              OffBoss.disableFilter("Company");
-              OffBoss.addFieldToFilterFields("Company", companyFilterField.getText(), "");
 
-          }
-        } catch (CategoryNull | InvalidNumber | MaxMinReplacement | SellerShouldJustBe categoryNull) {
-            categoryNull.printStackTrace();
+
+
+
+    public void filtering(MouseEvent mouseEvent) {
+        HashMap<String,String> filterFields = new HashMap<>();
+        if (!companyFilterField.getText().isEmpty())
+            filterFields.put("Company",companyFilterField.getText());
+        if (!categoryFilterField.getText().isEmpty()){
+            filterFields.put("Category",categoryFilterField.getText());
+
         }
-        ArrayList<Product> all = new ArrayList<>();
-        for (Off activeOff : Off.getAllActiveOffs()) {
-            for (Product product : activeOff.getIncludedProducts()) {
-                all.add(product);
-            }
+        if (inventoryFilter.isSelected()){
+            filterFields.put("Inventory","");
+
         }
-        updateTableOfProducts(OffBoss.filterFields(all));
+        if (!nameFilterField.getText().isEmpty()){
+
+            filterFields.put("Name",nameFilterField.getText());
+
+        }
+        if (priceFilterField.getText()!=null && priceFilterField.getText().matches("^\\d+\\s*-\\s*\\d+$")){
+            filterFields.put("Price",priceFilterField.getText());
+        }
 
 
-    }
-    private void updateTableOfProducts(ArrayList<Product> products){
-        table.getItems().clear();
-        final ObservableList<Product> data = FXCollections.observableArrayList(products);
+
+            ArrayList<Product> newProducts = new ArrayList<>();
+           newProducts =  OffBoss.filtering(OffBoss.getProducts(),filterFields);
+           table.getItems().clear();
+        final ObservableList<Product> data = FXCollections.observableArrayList(newProducts);
         name.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
         price.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
         rate.setCellValueFactory(new PropertyValueFactory<Product, String>("averageOfProduct"));
-        sTime.setCellValueFactory(new PropertyValueFactory<Off,String>("startDate"));
-        fTime.setCellValueFactory(new PropertyValueFactory<Off,String>("finalDate"));
+        sTime.setCellValueFactory(new PropertyValueFactory<Product,String>("startDate"));
+        fTime.setCellValueFactory(new PropertyValueFactory<Product,String>("finalDate"));
         image.setCellValueFactory(new PropertyValueFactory<Product, Image>("image"));
+        discount.setCellValueFactory(new PropertyValueFactory<Product,Double>("priceWithOffEffect"));
+        time.setCellValueFactory(new PropertyValueFactory<Product,String>("daysRemind"));
 
         table.setItems(data);
+        }
+
     }
 
-    public void filterName(ActionEvent actionEvent) {
-    }
-
-    public void filterCategory(ActionEvent actionEvent) {
-    }
-
-    public void filterInventory(ActionEvent actionEvent) {
-    }
-
-    public void filterPrice(ActionEvent actionEvent) {
-    }
-}
