@@ -6,6 +6,7 @@ import Controller.Exceptions.LoginWithoutLogout;
 import Controller.Exceptions.PasswordValidity;
 import Main.Main;
 import Model.Account;
+import Model.Customer;
 import Model.Manager;
 import Model.Seller;
 import javafx.scene.control.Label;
@@ -42,6 +43,8 @@ public class LoginPage {
         }
         else if (Account.getAccountWithUsername(username.getText()) instanceof Seller){
             Main.setRoot("SellerPage","seller page", false);
+        }else if (Account.getAccountWithUsername(username.getText()) instanceof Customer){
+            Main.setRoot("CustomerPage","customer page",false);
         }
         else
         Main.setRoot("MainMenu","main menu", false);

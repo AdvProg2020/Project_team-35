@@ -5,6 +5,7 @@ import Controller.Exceptions.MoreThanOneManagerException;
 import Controller.Exceptions.RepeatedUserName;
 import Controller.Exceptions.RequestProblemNotExistManager;
 import Main.Main;
+import Model.Account;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -43,7 +44,8 @@ public class RegisterPageController {
         createAllPersonalInfo(allPersonalInfo);
         if (checkValidityOfData(allPersonalInfo)) {
             AccountBoss.makeAccount(allPersonalInfo);
-            Main.setRoot("MainMenu","main menu", false);
+            Account.setWhoWantsToHavePic(Account.getAccountWithUsername(username.getText()));
+            Main.setRoot("AddPicInRegisteringPanel","add pic", false);
         }
     }
     public boolean checkValidityOfData(HashMap<String , String> allPersonalInfo){
@@ -100,4 +102,6 @@ public class RegisterPageController {
             company.setDisable(true);
         }
     }
+
+
 }

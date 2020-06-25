@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -40,6 +41,7 @@ public class SellerPageController implements Initializable {
     public Label errorLabel;
     public TextField productIdForRemoveThat;
     public Label problemOfRemovingProduct;
+    public ImageView image;
 
 
     @Override
@@ -59,6 +61,9 @@ public class SellerPageController implements Initializable {
         passwordField.setText(onlineAccount.getPassword());
         Seller seller = (Seller) Account.getOnlineAccount();
         company.setText(seller.getCompanyName());
+        if (Account.getOnlineAccount().getAccountImage()!=null){
+            image.setImage(Account.getOnlineAccount().getAccountImage());
+        }
     }
 
     public boolean checkValidity(String type, String input) {
@@ -204,5 +209,9 @@ public class SellerPageController implements Initializable {
                 return;
             }
         }
+    }
+
+    public void changePic(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("AddPic","picture of account",false);
     }
 }

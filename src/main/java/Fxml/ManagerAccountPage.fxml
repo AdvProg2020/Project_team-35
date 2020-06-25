@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ManagerAccountPage">
@@ -27,6 +28,7 @@
       <Button layoutX="596.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#goToCreateNewManagerPage" prefHeight="26.0" prefWidth="164.0" text="Create New Manager" />
       <Button layoutX="602.0" layoutY="307.0" mnemonicParsing="false" onMouseClicked="#goToManageCategoriesPage" prefHeight="26.0" prefWidth="150.0" text="Categories Managing" />
       <Button layoutX="610.0" layoutY="367.0" mnemonicParsing="false" onMouseClicked="#goToCreateDiscountCodePage" prefHeight="26.0" prefWidth="149.0" text="Create Discount Code" />
+      <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="877.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
 
    </children>
 </AnchorPane>

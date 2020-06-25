@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -33,6 +34,7 @@ public class ManagerAccountPage implements Initializable {
     public TextField emailField;
     public PasswordField passwordField;
     public Label information;
+    public ImageView image;
 
 
     @Override
@@ -48,6 +50,9 @@ public class ManagerAccountPage implements Initializable {
         phoneNumberField.setText(onlineAccount.getPhoneNumber());
         emailField.setText(onlineAccount.getEmail());
         passwordField.setText(onlineAccount.getPassword());
+        if (onlineAccount.getAccountImage()!=null){
+            image.setImage(onlineAccount.getAccountImage());
+        }
     }
 
     public void updateProfileDate(MouseEvent mouseEvent) {
