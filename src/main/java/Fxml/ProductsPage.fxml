@@ -15,7 +15,7 @@
                 
 
 
-        <TableView onMouseClicked="#productPage" fx:id="tableProducts" layoutX="18.0" layoutY="24.0" prefHeight="290.0" prefWidth="522.0">
+        <TableView fx:id="tableProducts" layoutX="18.0" layoutY="24.0" onMouseClicked="#productPage" prefHeight="290.0" prefWidth="522.0">
             <columns>
                 <TableColumn fx:id="productName" prefWidth="69.3333740234375" text="name" />
                 <TableColumn fx:id="price" prefWidth="35.666656494140625" text="price" />
@@ -23,5 +23,19 @@
                 <TableColumn fx:id="rate" prefWidth="51.666656494140625" text="rate" />
             </columns>
         </TableView>
+   <Label layoutX="861.0" layoutY="16.0" prefHeight="17.0" prefWidth="181.0" text="filter public treats of products" />
+   <CheckBox fx:id="inventoryFilter" layoutX="861.0" layoutY="45.0" mnemonicParsing="false" text="inventory" />
+   <VBox layoutX="861.0" layoutY="79.0" prefHeight="200.0" prefWidth="100.0">
+      <children>
+         <TextField fx:id="nameFilter" prefHeight="122.0" prefWidth="100.0" promptText="name" />
+         <TextField fx:id="companyFilter" prefHeight="113.0" prefWidth="100.0" promptText="company" />
+         <TextField fx:id="priceFilter" prefHeight="124.0" prefWidth="100.0" promptText="min-max(price)" />
+      </children>
+   </VBox>
+   <Label fx:id="problemOfPublicFilter" layoutX="861.0" layoutY="332.0" prefHeight="17.0" prefWidth="162.0" />
+   <Button layoutX="861.0" layoutY="288.0" mnemonicParsing="false" onMouseClicked="#filterPublics" text="filter" />
+   <TextArea fx:id="privateAttributes" layoutX="1070.0" layoutY="79.0" prefHeight="200.0" prefWidth="200.0" />
+   <Label layoutX="1070.0" layoutY="22.0" prefHeight="32.0" prefWidth="125.0" text="filter private attributes" />
+   <Button layoutX="1070.0" layoutY="288.0" mnemonicParsing="false" onMouseClicked="#filterPrivate" text="filter" />
    
 </AnchorPane>

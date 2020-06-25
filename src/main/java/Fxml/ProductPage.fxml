@@ -24,5 +24,7 @@
       <Button layoutX="650.0" layoutY="465.0" mnemonicParsing="false" onMouseClicked="#compare" text="compare" />
       <TextField fx:id="compareProductId" layoutX="589.0" layoutY="424.0" visible="false" />
       <TextField fx:id="numberOfAddingtoCart" layoutX="14.0" layoutY="386.0" visible="false" />
+      <TextArea fx:id="attributes" layoutX="241.0" layoutY="424.0" prefHeight="200.0" prefWidth="200.0" promptText="attributes of a product" />
+      <Label layoutX="128.0" layoutY="441.0" text="attributes" />
    </children>
 </AnchorPane>

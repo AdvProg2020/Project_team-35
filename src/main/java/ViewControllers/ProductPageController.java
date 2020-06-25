@@ -34,6 +34,7 @@ public class ProductPageController implements Initializable {
     public TextArea compareResult;
     public TextField compareProductId;
     public TextField numberOfAddingtoCart;
+    public TextArea attributes;
     private Product product;
     private Customer customer;
 
@@ -57,6 +58,12 @@ public class ProductPageController implements Initializable {
             offPriceOfProduct.setText(String.valueOf(product.getPrice()));
         }
         offPriceOfProduct.setTextFill(Paint.valueOf("blue"));
+        HashMap<String,String> attri = ProductBoss.showAttributes(product);
+        String result = "";
+        for (String s : attri.keySet()) {
+            result+= s+"            -->         "+attri.get(s)+"\n";
+        }
+        attributes.setText(result);
 
 
     }
