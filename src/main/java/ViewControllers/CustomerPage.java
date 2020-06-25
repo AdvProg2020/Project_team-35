@@ -5,6 +5,7 @@ import Controller.Exceptions.InvalidNumber;
 import Controller.Exceptions.NotValidFieldException;
 import Main.Main;
 import Model.Account;
+import MusicPlayer.MusicPlayer;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -51,6 +52,7 @@ public class CustomerPage implements Initializable {
     }
 
     public void updateProfileDate(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         List<String> parameters = Arrays.asList("firstName", "lastName", "email", "phoneNumber", "password");
         List<String> values = Arrays.asList(nameField.getText(), lastNameField.getText(), emailField.getText(), phoneNumberField.getText(), passwordField.getText());
         for (int i = 0; i < 5; i++) {
@@ -68,6 +70,7 @@ public class CustomerPage implements Initializable {
     }
 
     public void logoutClick(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         AccountBoss.logout(Account.getOnlineAccount());
         Main.tree.pop();
         Main.setRoot(Main.tree.peek(), Main.tree.peek(), true);

@@ -5,6 +5,7 @@ import Controller.ManagerBoss;
 import Main.Main;
 import Model.Manager;
 import Model.Request;
+import MusicPlayer.MusicPlayer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -49,6 +50,7 @@ public class RequestsPage implements Initializable {
     }
 
     public void newRequestsTableClick(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         selectedRequest = requestsTable.getSelectionModel().getSelectedItem();
         if (selectedRequest != null) {
             newRequestsInfo.setText(selectedRequest.getDetails());
@@ -57,11 +59,13 @@ public class RequestsPage implements Initializable {
     }
 
     public void checkedRequestsTableClick(MouseEvent mouseEvent) {
-            checkedRequestsInfo.setText(checkedTable.getSelectionModel().getSelectedItem().getDetails());
-            checkedRequestsInfo.setTextFill(Color.GREEN);
+        MusicPlayer.getInstance().playButtonMusic();
+        checkedRequestsInfo.setText(checkedTable.getSelectionModel().getSelectedItem().getDetails());
+        checkedRequestsInfo.setTextFill(Color.GREEN);
     }
 
     public void acceptRequest(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (selectedRequest != null) {
             try {
                 ManagerBoss.acceptRequestWithId(selectedRequest.getRequestId());
@@ -81,6 +85,7 @@ public class RequestsPage implements Initializable {
     }
 
     public void declineRequest(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (selectedRequest != null) {
             try {
                 ManagerBoss.declineRequestWithId(selectedRequest.getRequestId());
@@ -130,6 +135,7 @@ public class RequestsPage implements Initializable {
     }
 
     public void backClick(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.doBack();
     }
 }

@@ -4,6 +4,7 @@ import Controller.AccountBoss;
 import Controller.Exceptions.RepeatedUserName;
 import Controller.ManagerBoss;
 import Main.Main;
+import MusicPlayer.MusicPlayer;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -24,6 +25,7 @@ public class CreateNewManagerPage {
     public Label actionInfo;
 
     public void createButtonClick(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         HashMap<String, String> data = new HashMap<>();
         data.put("type", "manager");
         data.put("username", username.getText());
@@ -73,6 +75,7 @@ public class CreateNewManagerPage {
     }
 
     public void back(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.doBack();
     }
 }

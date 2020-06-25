@@ -2,6 +2,7 @@ package ViewControllers;
 
 import Main.Main;
 import Model.Account;
+import MusicPlayer.MusicPlayer;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,36 +22,42 @@ import java.util.ResourceBundle;
 
         private Account account;
         public void image1Choose(MouseEvent mouseEvent) throws IOException {
+            MusicPlayer.getInstance().playButtonMusic();
             account.setAccountImage(image1.getImage());
             Main.setRoot("MainMenu","main menu",false);
 
         }
 
         public void image3Choose(MouseEvent mouseEvent) throws IOException {
+            MusicPlayer.getInstance().playButtonMusic();
             account.setAccountImage(image3.getImage());
             Main.setRoot("MainMenu","main menu",false);
 
         }
 
         public void image2Choose(MouseEvent mouseEvent) throws IOException {
+            MusicPlayer.getInstance().playButtonMusic();
             account.setAccountImage(image2.getImage());
             Main.setRoot("MainMenu","main menu",false);
 
         }
 
         public void image4Choose(MouseEvent mouseEvent) throws IOException {
+            MusicPlayer.getInstance().playButtonMusic();
             account.setAccountImage(image4.getImage());
             Main.setRoot("MainMenu","main menu",false);
 
         }
 
         public void image6Choose(MouseEvent mouseEvent) throws IOException {
+            MusicPlayer.getInstance().playButtonMusic();
             account.setAccountImage(image6.getImage());
             Main.setRoot("MainMenu","main menu",false);
 
         }
 
         public void image5Choose(MouseEvent mouseEvent) throws IOException {
+            MusicPlayer.getInstance().playButtonMusic();
             account.setAccountImage(image5.getImage());
             Main.setRoot("MainMenu","main menu",false);
 

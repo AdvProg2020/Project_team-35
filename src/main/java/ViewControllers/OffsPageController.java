@@ -4,6 +4,7 @@ import Controller.OffBoss;
 import Main.Main;
 import Model.Off;
 import Model.Product;
+import MusicPlayer.MusicPlayer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -37,6 +38,7 @@ public class OffsPageController implements Initializable {
     public CheckBox inventoryFilter;
 
     public void goToMainMenu(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("MainMenu","main menu", false);
     }
 
@@ -78,6 +80,7 @@ public class OffsPageController implements Initializable {
 
 
     public void filtering(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         HashMap<String,String> filterFields = new HashMap<>();
         if (!companyFilterField.getText().isEmpty())
             filterFields.put("Company",companyFilterField.getText());

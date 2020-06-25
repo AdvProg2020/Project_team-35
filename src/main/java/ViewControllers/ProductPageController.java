@@ -8,6 +8,7 @@ import Controller.ProductBoss;
 import Model.Account;
 import Model.Customer;
 import Model.Product;
+import MusicPlayer.MusicPlayer;
 import Views.RegisteringPanel;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -69,6 +70,7 @@ public class ProductPageController implements Initializable {
     }
 
     public void addToCart(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (!numberOfAddingtoCart.isVisible()){
             numberOfAddingtoCart.setVisible(true);
             return;
@@ -103,6 +105,7 @@ public class ProductPageController implements Initializable {
     }
 
     public void confirmReview(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (customer==null){
             problem.setTextFill(Paint.valueOf("red"));
             problem.setText("just customers can add comment");
@@ -116,6 +119,7 @@ public class ProductPageController implements Initializable {
     }
 
     public void showListOfReviews(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         System.out.println(product.getName());
         HashMap<String,String> listOfComments = ProductBoss.showComments(product);
         String result = "";
@@ -126,6 +130,7 @@ public class ProductPageController implements Initializable {
     }
 
     public void compare(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (!compareProductId.isVisible()){
             compareProductId.setVisible(true);
             compareResult.clear();

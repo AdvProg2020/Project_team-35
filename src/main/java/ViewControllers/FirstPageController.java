@@ -3,6 +3,7 @@ package ViewControllers;
 import Controller.AccountBoss;
 import Controller.ManagerBoss;
 import Main.Main;
+import MusicPlayer.MusicPlayer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
 
 public class FirstPageController {
     public void start(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (ManagerBoss.weHaveManagerOrNot()){
             String fxml = "MainMenu";
             try {
@@ -29,6 +31,7 @@ public class FirstPageController {
     }
 
     public void end(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         System.exit(0);
     }
 }

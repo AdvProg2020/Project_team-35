@@ -7,6 +7,7 @@ import Controller.ManagerBoss;
 import Main.Main;
 import Model.Account;
 import Model.Request;
+import MusicPlayer.MusicPlayer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -34,6 +35,7 @@ public class UsersManagingPage implements Initializable {
     private Account selectedAccount;
 
     public void clickUsersTable(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if(usersTable.getSelectionModel().getSelectedItem() != null) {
             userInfo.setText(usersTable.getSelectionModel().getSelectedItem().getPersonalInfo());
             selectedAccount = usersTable.getSelectionModel().getSelectedItem();
@@ -44,6 +46,7 @@ public class UsersManagingPage implements Initializable {
     }
 
     public void removeUserClick(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (selectedAccount != null) {
             try {
                 ManagerBoss.deleteAccountWithUsername(selectedAccount.getUsername());
@@ -82,6 +85,7 @@ public class UsersManagingPage implements Initializable {
     }
 
     public void backClick(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.doBack();
     }
 }

@@ -6,6 +6,7 @@ import Main.Main;
 import Model.Account;
 import Model.Off;
 import Model.Seller;
+import MusicPlayer.MusicPlayer;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -29,6 +30,7 @@ public class ViewOffsController {
     public TextField max;
 
     public void viewOff(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         Seller seller = (Seller)Account.getOnlineAccount();
         if (seller.getSellerOffs()==null){
             problem.setTextFill(Paint.valueOf("red"));
@@ -71,10 +73,12 @@ public class ViewOffsController {
     }
 
     public void addOff(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("AddOffPage","add off", false);
     }
 
     public void editOff(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         Seller seller = (Seller) Account.getOnlineAccount();
         if (seller.getSellerOffs()==null){
             problem.setText("you dont have off");
