@@ -48,6 +48,6 @@ public class LoginPage {
     }
 
     public void backClick(MouseEvent mouseEvent) throws IOException {
-        Main.doBack();
+        Main.setRoot("MainMenu","main menu",false);
     }
 }

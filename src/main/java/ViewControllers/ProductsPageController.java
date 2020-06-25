@@ -74,10 +74,9 @@ public class ProductsPageController implements Initializable {
     }
 
     public void productPage(MouseEvent mouseEvent) throws IOException {
-        Object object = table.getSelectionModel().selectedItemProperty().get();
-        int index = table.getSelectionModel().selectedIndexProperty().get();
+        Object object = tableProducts.getSelectionModel().selectedItemProperty().get();
+        int index = tableProducts.getSelectionModel().selectedIndexProperty().get();
         Product product = Product.productFinder(object);
-
         if (product != null) {
             Product.setOnlineProduct(product);
             Main.setRoot("ProductPage", "product page", false);
