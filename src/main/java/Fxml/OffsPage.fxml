@@ -20,13 +20,15 @@
       </TableView>
       <VBox layoutX="91.0" layoutY="68.0" prefHeight="200.0" prefWidth="209.0">
          <children>
-            <TextField fx:id="companyFilterField" onAction="#filterCompany" prefHeight="75.0" prefWidth="209.0" promptText="company" />
-            <TextField fx:id="nameFilterField" onAction="#filterName" prefHeight="132.0" prefWidth="209.0" promptText="name" />
-            <TextField fx:id="categoryFilterField" onAction="#filterCategory" prefHeight="131.0" prefWidth="209.0" promptText="category" />
-            <TextField fx:id="inventoryFilterField" onAction="#filterInventory" prefHeight="124.0" prefWidth="209.0" promptText="inventory" />
-            <TextField fx:id="PriceFilterField" onAction="#filterPrice" prefHeight="100.0" prefWidth="209.0" promptText="max Price - min Price" />
+            <TextField fx:id="companyFilterField" prefHeight="75.0" prefWidth="209.0" promptText="company" />
+            <TextField fx:id="nameFilterField" prefHeight="132.0" prefWidth="209.0" promptText="name" />
+            <TextField fx:id="categoryFilterField" prefHeight="131.0" prefWidth="209.0" promptText="category" />
+            <TextField fx:id="priceFilterField" prefHeight="100.0" prefWidth="209.0" promptText="max Price - min Price" />
          </children>
       </VBox>
       <Separator layoutX="297.0" layoutY="68.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="13.0" />
+      <Button layoutX="144.0" layoutY="286.0" mnemonicParsing="false" onMouseClicked="#filtering" text="filtering" />
+      <Label fx:id="problem" layoutX="194.0" layoutY="337.0" prefHeight="17.0" prefWidth="421.0" />
+      <CheckBox fx:id="inventoryFilter" layoutX="91.0" layoutY="39.0" mnemonicParsing="false" text="inventory" />
    </children>
 </AnchorPane>

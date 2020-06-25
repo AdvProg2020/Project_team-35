@@ -5,6 +5,7 @@ import Model.*;
 import Model.ProductFilters.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class OffBoss {
     private static ArrayList<ProductFilter> fields = new ArrayList<>();
@@ -93,6 +94,42 @@ public class OffBoss {
             listOfProducts = field.doThisFilterOnList(listOfProducts);
         }
         return listOfProducts;
+    }
+    public static ArrayList<Product> filtering (ArrayList<Product> listOfProducts, HashMap<String,String> filterFields){
+        ArrayList<Product> newProducts = listOfProducts;
+        for (String s : filterFields.keySet()) {
+            System.out.println(s);
+            if (s.equalsIgnoreCase("Name")){
+                    NameFilter nameFilter = new NameFilter(filterFields.get(s));
+                    newProducts = nameFilter.doThisFilterOnList(newProducts);
+            }
+            if (s.equalsIgnoreCase("Category")){
+                Category category = Category.getCategoryByName(filterFields.get(s));
+                if (category!=null) {
+                    CategoryFilter categoryFilter = new CategoryFilter(category);
+                   newProducts =  categoryFilter.doThisFilterOnList(newProducts);
+                }
+
+
+
+            }
+            if (s.equalsIgnoreCase("Price")){
+                int min = Integer.parseInt(filterFields.get(s).substring(0,filterFields.get(s).indexOf("-")));
+                int max = Integer.parseInt(filterFields.get(s).substring(filterFields.get(s).indexOf("-")+1));
+                PriceFilter priceFilter = new PriceFilter(min,max);
+                newProducts = priceFilter.doThisFilterOnList(newProducts);
+
+            }
+            if (s.equalsIgnoreCase("Inventory")){
+                InventoryFilter inventoryFilter = new InventoryFilter();
+             newProducts = inventoryFilter.doThisFilterOnList(newProducts);
+            }
+            if (s.equalsIgnoreCase("Company")){
+                CompanyFilter companyFilter = new CompanyFilter(filterFields.get(s));
+             newProducts =    companyFilter.doThisFilterOnList(newProducts);
+            }
+        }
+        return newProducts;
     }
 
     public static ArrayList<ProductFilter> getFields() {

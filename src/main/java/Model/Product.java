@@ -3,6 +3,7 @@ package Model;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.image.Image;
 
 import java.util.*;
 
@@ -15,6 +16,7 @@ public class Product {
     private String startDate;
     private String finalDate;
 
+    private Image productImage;
     private double averageOfProduct;
     private int reviewNumber;
     private String description;
@@ -58,6 +60,14 @@ public class Product {
         this.nameForTable.set(name);
         this.idForTable.set(productId);
         this.priceForTable.set(price);
+    }
+
+    public void setProductImage(Image productImage) {
+        this.productImage = productImage;
+    }
+
+    public Image getProductImage() {
+        return productImage;
     }
 
     private SimpleStringProperty nameForTable = new SimpleStringProperty();

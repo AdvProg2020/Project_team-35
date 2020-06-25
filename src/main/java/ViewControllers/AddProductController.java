@@ -4,28 +4,19 @@ import Controller.Exceptions.ThereIsNotCategoryWithNameException;
 import Controller.SellerBoss;
 import Main.Main;
 import Model.Account;
-import Model.Category;
-import Model.SellLog;
 import Model.Seller;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
-import javafx.util.Callback;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.ResourceBundle;
 
 public class AddProductController  {
     public Label problem;
@@ -39,6 +30,7 @@ public class AddProductController  {
     public TextField inventory;
     public TextField price;
     public TextField company;
+    public ImageView image;
     private boolean userSawCategoriesAttributesList;
 
 
@@ -94,7 +86,6 @@ public class AddProductController  {
         } catch (ThereIsNotCategoryWithNameException e) {
             problem.setText(e.getMessage());
             problem.setTextFill(Paint.valueOf("red"));
-
             listOfAttributesName.getItems().clear();
             userSawCategoriesAttributesList = false;
             return;

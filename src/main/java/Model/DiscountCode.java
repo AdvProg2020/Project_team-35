@@ -1,15 +1,20 @@
 package Model;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DiscountCode {
     public static ArrayList<DiscountCode> allDiscountCodes = new ArrayList<>();
-    private String code;
+    private SimpleStringProperty code = new SimpleStringProperty();
     private LocalDateTime finalDate;
     private LocalDateTime startDate;
-    private double discountPercent;
+    private SimpleStringProperty startDateSimpleString = new SimpleStringProperty();
+    private SimpleStringProperty finalDateSimpleString = new SimpleStringProperty();
+    private SimpleDoubleProperty discountPercent = new SimpleDoubleProperty();
     private double maximumAvailableAmount;
     private int availableUseFrequent;
     private static String currentSort = "Nothing";
@@ -17,20 +22,20 @@ public class DiscountCode {
     private double minimumTotalPriceForUse;
 
     public String getDetails() {
-        String toReturn =  "Code: " + this.code + "\nStart Date: " + this.startDate.toString() + "\nExpire Date: " + this.finalDate.toString()
-                + "\nDiscount Percent: " + this.getDiscountPercent() + "\nMaximum Discount: " + this.getMaximumAvailableAmount()
+        String toReturn =  "Code: " + this.code.get() + "\nStart Date: " + this.startDate.toString() + "     Expire Date: " + this.finalDate.toString()
+                + "\nDiscount Percent: " + this.getDiscountPercent() + "     Maximum Discount: " + this.getMaximumAvailableAmount()
                 +"\nMinimum Total Price For Use (-1 means it hasn't minimum): " + this.getMinimumTotalPriceForUse()
-                + "\nUsable Rate: " + this.getAvailableUseFrequent() + "\nIncluded Customers | Use Rates: \n";
+                + "    Usable Rate: " + this.getAvailableUseFrequent() + "   Included Customers | Use Rates:";
         for (Customer customer : this.includedBuyersAndUseFrequency.keySet()) {
-            toReturn += " ** UserName: " + customer.getUsername() + " | Use Number: " + includedBuyersAndUseFrequency.get(customer);
+            toReturn += "\n ** UserName: " + customer.getUsername() + " | Use Number: " + includedBuyersAndUseFrequency.get(customer);
         }
         return toReturn;
     }
     public DiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<Customer> includedCustomers, double minimumTotalPriceForUse) {
-        this.code = code;
+        this.code.set(code);
         this.finalDate = finalDate;
         this.startDate = startDate;
-        this.discountPercent = discountPercent;
+        this.discountPercent.set(discountPercent);
         this.maximumAvailableAmount = maximumAvailableAmount;
         this.availableUseFrequent = availableUseFrequent;
         this.includedBuyersAndUseFrequency = new HashMap<>();
@@ -41,6 +46,8 @@ public class DiscountCode {
         }
         allDiscountCodes.add(this);
         DiscountCode.setCurrentSort("Nothing");
+        startDateSimpleString.set(startDate.toString());
+        finalDateSimpleString.set(finalDate.toString());
     }
     public String expireDateToString() {
         return finalDate.getYear() + "-" + finalDate.getMonthValue() + "-" + finalDate.getDayOfMonth();
@@ -54,14 +61,14 @@ public class DiscountCode {
 
     public static boolean isThereDiscountCodeWithCode(String code) {
         for (DiscountCode discountCode : allDiscountCodes) {
-            if (discountCode.code.equals(code))
+            if (discountCode.code.get().equals(code))
                 return true;
         }
         return false;
     }
     public static DiscountCode getDiscountCodeWithCode(String code) {
         for (DiscountCode discountCode : allDiscountCodes) {
-            if (discountCode.code.equals(code))
+            if (discountCode.code.get().equals(code))
                 return discountCode;
         }
         return null;
@@ -78,7 +85,7 @@ public class DiscountCode {
 //    }
 
     public String getId() {
-        return code;
+        return code.get();
     }
 
 
@@ -87,7 +94,7 @@ public class DiscountCode {
     }
 
     public double getDiscountPercent() {
-        return discountPercent;
+        return discountPercent.get();
     }
 
     public double getMaximumAvailableAmount() {
@@ -115,4 +122,36 @@ public class DiscountCode {
         return minimumTotalPriceForUse;
     }
 
+
+    public String getCode() {
+        return code.get();
+    }
+
+    public SimpleStringProperty codeProperty() {
+        return code;
+    }
+
+    public String getStartDateSimpleString() {
+        return startDateSimpleString.get();
+    }
+
+    public SimpleStringProperty startDateSimpleStringProperty() {
+        return startDateSimpleString;
+    }
+
+    public String getFinalDateSimpleString() {
+        return finalDateSimpleString.get();
+    }
+
+    public SimpleStringProperty finalDateSimpleStringProperty() {
+        return finalDateSimpleString;
+    }
+
+    public SimpleDoubleProperty discountPercentProperty() {
+        return discountPercent;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
 }

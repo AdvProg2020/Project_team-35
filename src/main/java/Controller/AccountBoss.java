@@ -78,9 +78,6 @@ public class AccountBoss {
         }
         if (type.equals("seller")) {
             Seller seller = new Seller(username, name, family, email, phone, password, company);
-            //this should delete
-            Seller.allSellers.add(seller);
-            //end part
             SellerRegisterRequest sellerRegisterRequest = new SellerRegisterRequest(seller);
 
         }
