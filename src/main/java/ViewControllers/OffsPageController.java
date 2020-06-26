@@ -1,28 +1,19 @@
 package ViewControllers;
 
-import Controller.Exceptions.CategoryNull;
-import Controller.Exceptions.InvalidNumber;
-import Controller.Exceptions.MaxMinReplacement;
-import Controller.Exceptions.SellerShouldJustBe;
 import Controller.OffBoss;
 import Main.Main;
-import Model.Category;
 import Model.Off;
 import Model.Product;
-import Model.Seller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -51,18 +42,6 @@ public class OffsPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ArrayList<Product > a = new ArrayList<>();
-        Seller seller = new Seller("asd","sad","asd","asd","asd","asd","asd");
-        Product product = new Product("ads","a",213,seller,2,new Category("asd",null),null,"");
-       a.add(product);
-        Off off = new Off(LocalDateTime.parse("2021-12-23T23:23:23"),LocalDateTime.now(),a,32,12,seller);
-        Product product1 = new Product("ad232s","a",213,seller,2,new Category("asd",null),null,"");
-
-        a.add(product1);
-        a.remove(product);
-        Off off1 = new Off(LocalDateTime.parse("2021-12-23T23:23:23"),LocalDateTime.now(),a,32,12,seller);
-
-
         update();
     }
     public void update(){

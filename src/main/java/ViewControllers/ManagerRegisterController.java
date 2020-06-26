@@ -5,6 +5,7 @@ import Controller.Exceptions.MoreThanOneManagerException;
 import Controller.Exceptions.RepeatedUserName;
 import Controller.Exceptions.RequestProblemNotExistManager;
 import Main.Main;
+import Model.Account;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -35,7 +36,8 @@ public class ManagerRegisterController {
         createAllPersonalInfo(allPersonalInfo);
         if (checkValidityOfData(allPersonalInfo)) {
             AccountBoss.makeAccount(allPersonalInfo);
-           Main.setRoot("MainMenu","main menu", false);
+            Account.setWhoWantsToHavePic(Account.getAccountWithUsername(username.getText()));
+           Main.setRoot("AddPicInRegisteringPanel","add pic", false);
         }
 
     }

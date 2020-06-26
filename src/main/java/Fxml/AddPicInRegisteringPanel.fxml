@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.AddPicInRegisterPanelController">
+    <children>
+        <ImageView fx:id="image1" fitHeight="150.0" fitWidth="200.0" layoutX="58.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="image3" fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="image2" fitHeight="150.0" fitWidth="200.0" layoutX="58.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="image4" fitHeight="150.0" fitWidth="200.0" layoutX="307.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="image5" fitHeight="150.0" fitWidth="200.0" layoutX="520.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="image6" fitHeight="150.0" fitWidth="200.0" layoutX="507.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true" />
+        <RadioButton layoutX="71.0" layoutY="174.0" mnemonicParsing="false" onMouseClicked="#image1Choose" text="image1" />
+        <RadioButton layoutX="335.0" layoutY="174.0" mnemonicParsing="false" onMouseClicked="#image3Choose" text="image3" />
+        <RadioButton layoutX="71.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#image2Choose" text="image2" />
+        <RadioButton layoutX="335.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#image4Choose" text="image4" />
+        <RadioButton layoutX="548.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#image6Choose" text="image6" />
+        <RadioButton layoutX="548.0" layoutY="174.0" mnemonicParsing="false" onMouseClicked="#image5Choose" text="image5" />
+    </children>
+</AnchorPane>

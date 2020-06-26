@@ -2,7 +2,9 @@ package Model;
 
 import Controller.ManagerBoss;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.image.Image;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Account {
@@ -13,13 +15,24 @@ public abstract class Account {
     private String lastName;
     private String email;
     private String phoneNumber;
+    protected Image accountImage;
     private SimpleStringProperty password = new SimpleStringProperty();
     private SimpleStringProperty type = new SimpleStringProperty();
     private static Account onlineAccount;
+    private static Account whoWantsToHavePic;
     private static boolean isThereOnlineUser;
     protected boolean isThisAccountLogged;
     protected int typeOfAccount;
     private static String currentSort = "Nothing";
+
+    public static Account getWhoWantsToHavePic() {
+        return whoWantsToHavePic;
+    }
+
+    public static void setWhoWantsToHavePic(Account whoWantsToHavePic) {
+        Account.whoWantsToHavePic = whoWantsToHavePic;
+    }
+
     /**
      * account constructor
      * @param username
@@ -57,6 +70,14 @@ public abstract class Account {
     public static boolean setIsThereOnlineUser(boolean isThereOnlineUser) {
         Account.isThereOnlineUser = isThereOnlineUser;
         return true;
+    }
+
+    public void setAccountImage(Image accountImage) {
+        this.accountImage = accountImage;
+    }
+
+    public Image getAccountImage() {
+        return accountImage;
     }
 
     /**

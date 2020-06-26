@@ -105,10 +105,9 @@ public class OffBoss {
             }
             if (s.equalsIgnoreCase("Category")){
                 Category category = Category.getCategoryByName(filterFields.get(s));
-                if (category!=null) {
                     CategoryFilter categoryFilter = new CategoryFilter(category);
                    newProducts =  categoryFilter.doThisFilterOnList(newProducts);
-                }
+
 
 
 

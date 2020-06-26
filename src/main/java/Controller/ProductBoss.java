@@ -7,6 +7,7 @@ import Model.Comment;
 import Model.Customer;
 import Model.Product;
 import Model.ProductAndOffStatus;
+import Model.ProductFilters.ProductPrivateFilter;
 import Views.GoodPage;
 
 import java.util.ArrayList;
@@ -91,5 +92,16 @@ public class ProductBoss {
     public static void updateReviewNumberOfAProductPage(Product product) {
         Boss.removeExpiredOffsAndDiscountCodes();
         product.setReviewNumber(product.getReviewNumber() + 1);
+    }
+    public static ArrayList<Product> filterPrivates(HashMap<String,String> filterFields , ArrayList<Product> products){
+        ArrayList<Product> newProducts = new ArrayList<>();
+        for (String s : filterFields.keySet()) {
+          newProducts =  ProductPrivateFilter.filter(products,s,filterFields.get(s));
+          break;
+        }
+        for (String s : filterFields.keySet()) {
+            newProducts = ProductPrivateFilter.filter(newProducts,s,filterFields.get(s));
+        }
+        return newProducts;
     }
 }
