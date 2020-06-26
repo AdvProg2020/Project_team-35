@@ -5,6 +5,7 @@ import Controller.Exceptions.NullProduct;
 import Controller.Exceptions.ProductIsFinished;
 import Controller.Exceptions.ProductsCompareNotSameCategories;
 import Controller.ProductBoss;
+import Main.Main;
 import Model.Account;
 import Model.Customer;
 import Model.Product;
@@ -19,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.paint.Paint;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -164,5 +166,9 @@ public class ProductPageController implements Initializable {
 
     public void zoom(ZoomEvent zoomEvent) {
         System.out.println("salam");
+    }
+
+    public void login(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("LoginPage","login page",false);
     }
 }

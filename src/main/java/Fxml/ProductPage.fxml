@@ -28,5 +28,6 @@
       <Label layoutX="96.0" layoutY="428.0" prefHeight="17.0" prefWidth="133.0" text="attributes" />
       <TextArea fx:id="same" layoutX="968.0" layoutY="41.0" prefHeight="200.0" prefWidth="200.0" />
       <Label layoutX="976.0" layoutY="20.0" prefHeight="17.0" prefWidth="182.0" text="same products" />
+      <Button layoutX="1041.0" layoutY="538.0" mnemonicParsing="false" onMouseClicked="#login" text="login" />
    </children>
 </AnchorPane>
