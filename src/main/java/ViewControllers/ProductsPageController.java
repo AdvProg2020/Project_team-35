@@ -51,6 +51,8 @@ public class ProductsPageController implements Initializable {
     public ImageView star3;
     public ImageView star4;
     public ImageView star5;
+    public ListView listOfFilterSubs;
+    private Category category;
 
     public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
@@ -69,7 +71,7 @@ public class ProductsPageController implements Initializable {
         table.setItems(data);
 
     }
-    private Category category;
+
 
     public void click(MouseEvent mouseEvent) {
         MusicPlayer.getInstance().playButtonMusic();
@@ -86,7 +88,13 @@ public class ProductsPageController implements Initializable {
         errorAlert.setContentText(result);
         errorAlert.showAndWait();
         createProductsTable(category);
+        prepareListOfFilterSubs();
 
+    }
+    private void prepareListOfFilterSubs(){
+        for (String s : category.getSpecialAttributes()) {
+            listOfFilterSubs.getItems().add(s);
+        }
     }
 
     public void createProductsTable(Category category) {
@@ -111,10 +119,6 @@ public class ProductsPageController implements Initializable {
                imageLabel.setVisible(true);
                imageLabel.setText("image of product status");
                imageView.setImage(product.getStatusImage());
-               //
-               Rate rate = new Rate(new Customer("s","d","d","d","s","s"),76,product);
-               product.getRatesList().add(rate);
-                       //
                prepareScoresGraphicMode(product);
            }
         }

@@ -147,4 +147,8 @@ public class ViewOffsController {
     }
 
 
+    public void back(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
+        Main.doBack();
+    }
 }

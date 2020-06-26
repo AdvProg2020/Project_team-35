@@ -34,6 +34,10 @@ public class MainMenuController {
 
     public void back(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
-        Main.doBack("First Page");
+        Main.doBack();
+    }
+
+    public void startPage(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("FirstPage","first page",false);
     }
 }

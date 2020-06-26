@@ -228,4 +228,6 @@ public class SellerPageController implements Initializable {
         MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("AddPic","picture of account",false);
     }
+
+
 }

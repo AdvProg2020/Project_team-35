@@ -3,13 +3,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane  stylesheets="@../Resources/styles.css"  prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ViewOffsController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../Resources/styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ViewOffsController">
    <children>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#viewOff" text="view off" />
       <Button layoutX="16.0" layoutY="65.0" mnemonicParsing="false" onMouseClicked="#addOff" text="add off" />
       <Button layoutX="16.0" layoutY="127.0" mnemonicParsing="false" onMouseClicked="#editOff" text="edit off" />
-      <TextField fx:id="offIdOfView" layoutX="115.0" layoutY="14.0" promptText="off id" visible="false" onAction="#viewOff" />
-      <TextField fx:id="offEditId" layoutX="115.0" layoutY="127.0" promptText="off id" visible="false" onAction="#editOff" />
+      <TextField fx:id="offIdOfView" layoutX="115.0" layoutY="14.0" onAction="#viewOff" promptText="off id" visible="false" />
+      <TextField fx:id="offEditId" layoutX="115.0" layoutY="127.0" onAction="#editOff" promptText="off id" visible="false" />
       <Label fx:id="problem" layoutX="18.0" layoutY="199.0" prefHeight="17.0" prefWidth="149.0" />
       <TextArea fx:id="dataOfOff" layoutX="328.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" visible="false" />
       <AnchorPane fx:id="editOffPagePart" layoutX="291.0" layoutY="12.0" prefHeight="378.0" prefWidth="519.0" visible="false">
@@ -20,5 +20,6 @@
             <TextField fx:id="percentage" layoutX="29.0" layoutY="116.0" promptText="percentage" />
             <TextField fx:id="max" layoutX="29.0" layoutY="164.0" promptText="max" />
          </children></AnchorPane>
+      <Button onMouseClicked="#back" layoutX="17.0" layoutY="195.0" mnemonicParsing="false" text="back" />
    </children>
 </AnchorPane>

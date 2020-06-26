@@ -40,7 +40,7 @@ public class Product {
     private String daysRemind;
     private ArrayList<Customer> whoBoughtThisGood;
     private String sellerName;
-    //when the page of product is open.
+
 
 
     public Product(String name, String company, double price, Seller seller, int inventory, Category category, HashMap<String, String> specialAttributes, String description) {
@@ -110,12 +110,7 @@ public class Product {
         return false;
     }
 
-    /**
-     * this is updated.
-     *
-     * @param productId
-     * @return
-     */
+
     public static Product getProductWithId(int productId) {
         for (Product product : allProducts) {
             if (product.productId == productId)
@@ -123,18 +118,6 @@ public class Product {
         }
         return null;
     }
-/*
-    private void updateProductAverageRate(int productId) {
-        Product product = Product.getProductWithId(productId);
-        double average = 0.0;
-        for (Rate rate : product.getRatesList()) {
-            average+=rate.getRate();
-        }
-        }
-
- */
-
-
 
     public int getProductId() {
         return productId;
@@ -325,11 +308,6 @@ public class Product {
         return result;
     }
 
-    /**
-     * maybe it has mistake
-     *
-     * @return
-     */
     public HashMap<String, String> attributeShow() {
         HashMap<String, String> attributes = new HashMap<>();
         attributes.put(String.valueOf(getProductId()), "id");
@@ -369,29 +347,17 @@ public class Product {
         this.description = description;
     }
 
-    /**
-     * just for test
-     *
-     * @param commentsList
-     */
+
     public void setCommentsList(ArrayList<Comment> commentsList) {
         this.commentsList = commentsList;
     }
 
-    /**
-     * just for test
-     *
-     * @param ratesList
-     */
+
     public void setRatesList(ArrayList<Rate> ratesList) {
         this.ratesList = ratesList;
     }
 
-    /**
-     * just for test
-     *
-     * @param whoBoughtThisGood
-     */
+
     public void setWhoBoughtThisGood(ArrayList<Customer> whoBoughtThisGood) {
         this.whoBoughtThisGood = whoBoughtThisGood;
     }
@@ -457,7 +423,11 @@ public class Product {
     }
 
     public double getPriceWithOffEffect() {
-        return priceWithOffEffect;
+        if (Off.isThereProduct(this)){
+            return priceWithOffEffect;
+        }else
+            return price;
+
     }
     public static Product productFinder(Object product){
         for (Product allProduct : allProducts) {

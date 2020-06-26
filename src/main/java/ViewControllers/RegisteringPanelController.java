@@ -19,4 +19,9 @@ public class RegisteringPanelController {
         MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("RegisterPage","register", false);
     }
+
+    public void back(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
+        Main.doBack();
+    }
 }

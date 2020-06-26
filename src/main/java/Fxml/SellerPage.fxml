@@ -26,15 +26,13 @@
         <Button layoutX="551.0" layoutY="73.0" mnemonicParsing="false" onMouseClicked="#viewSalesHistory" prefHeight="26.0" prefWidth="202.0" text="view sales history" />
         <Button layoutX="555.0" layoutY="127.0" mnemonicParsing="false" onMouseClicked="#creditShow" prefHeight="26.0" prefWidth="192.0" text="view credit" />
         <Button layoutX="562.0" layoutY="187.0" mnemonicParsing="false" onMouseClicked="#viewOffs" prefHeight="26.0" prefWidth="178.0" text="view offs" />
-        <Button layoutX="566.0" layoutY="250.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="185.0" text="manage products" />
-        <Button layoutX="577.0" layoutY="307.0" mnemonicParsing="false" onMouseClicked="#addProduct" prefHeight="26.0" prefWidth="164.0" text="add product" />
+        <Button layoutX="569.0" layoutY="263.0" mnemonicParsing="false" onMouseClicked="#addProduct" prefHeight="26.0" prefWidth="164.0" text="add product" />
         <Button layoutX="584.0" layoutY="359.0" mnemonicParsing="false" onMouseClicked="#removeProduct" prefHeight="26.0" prefWidth="150.0" text="remove product" />
-        <Button layoutX="576.0" layoutY="411.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="149.0" text="user page" />
-        <Button layoutX="583.0" layoutY="519.0" onMouseClicked="#showListOfSoldProducts" text="list of sold products" />
+        <Button layoutX="583.0" layoutY="499.0" onMouseClicked="#showListOfSoldProducts" text="list of sold products" />
 
         <Button layoutX="575.0" layoutY="14.0" onMouseClicked="#listOfSalableProducts" text="salable products list" />
         <Button layoutX="138.0" layoutY="537.0" onMouseClicked="#goToMain" text="main menu" />
-        <Button layoutX="585.0" layoutY="470.0" onMouseClicked="#companyInfo" text="view Company info" />
+        <Button layoutX="584.0" layoutY="424.0" onMouseClicked="#companyInfo" text="view Company info" />
         <Label fx:id="typeLabel" layoutX="158.0" layoutY="58.0" text="type ---------&gt;&gt;&gt;&gt; seller" />
       <TextField fx:id="productIdForRemoveThat" layoutX="768.0" layoutY="360.0" promptText="product id" visible="false" />
       <Label fx:id="problemOfRemovingProduct" layoutX="411.0" layoutY="372.0" prefHeight="17.0" prefWidth="164.0" />

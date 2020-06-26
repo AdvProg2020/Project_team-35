@@ -26,6 +26,9 @@
     -fx-pref-height: 50px;
     -fx-background-radius: 30px;
 }
+.Pages{
+    -fx-background-image: url("../Resources/page2.jpg");
+}
 .StartPage{
     -fx-background-image: url("../startPage.jpg");
 }
