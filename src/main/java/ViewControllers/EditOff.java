@@ -5,6 +5,7 @@ import Controller.Exceptions.ThisOffNotExist;
 import Controller.SellerBoss;
 import Model.Account;
 import Model.Seller;
+import MusicPlayer.MusicPlayer;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,6 +18,7 @@ public class EditOff {
     public Label problem;
 
     public void showData(ActionEvent actionEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (!offId.getText().matches("^\\d+$")){
             problem.setTextFill(Paint.valueOf("red"));
             problem.setText("invalid off id format");

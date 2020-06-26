@@ -6,6 +6,7 @@ import Controller.Exceptions.RepeatedUserName;
 import Controller.Exceptions.RequestProblemNotExistManager;
 import Main.Main;
 import Model.Account;
+import MusicPlayer.MusicPlayer;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -25,6 +26,7 @@ public class ManagerRegisterController {
     public Label problem;
 
     public void confirm(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         HashMap<String,String> allPersonalInfo = new HashMap<>();
         try {
             AccountBoss.firstStepOfRegistering("manager",username.getText());
@@ -70,8 +72,8 @@ public class ManagerRegisterController {
     }
 
     public void back(MouseEvent mouseEvent) throws IOException {
-
-            Main.setRoot("FirstPage","start Page", false);
+        MusicPlayer.getInstance().playButtonMusic();
+        Main.setRoot("FirstPage","start Page", false);
 
     }
 }

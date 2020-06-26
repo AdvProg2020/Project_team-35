@@ -9,6 +9,7 @@ import Model.Account;
 import Model.Customer;
 import Model.Manager;
 import Model.Seller;
+import MusicPlayer.MusicPlayer;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -23,6 +24,7 @@ public class LoginPage {
     public Label problem;
 
     public void confirm(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         try {
             AccountBoss.checkUsernameExistenceInLogin(username.getText());
         } catch (ExistenceOfUserWithUsername | LoginWithoutLogout existenceOfUserWithUsername) {
@@ -51,6 +53,7 @@ public class LoginPage {
     }
 
     public void backClick(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("MainMenu","main menu",false);
     }
 }

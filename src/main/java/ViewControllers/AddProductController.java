@@ -5,6 +5,7 @@ import Controller.SellerBoss;
 import Main.Main;
 import Model.Account;
 import Model.Seller;
+import MusicPlayer.MusicPlayer;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -35,6 +36,7 @@ public class AddProductController  {
 
 
     public void confirm(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         if (!userSawCategoriesAttributesList){
             problem.setTextFill(Paint.valueOf("red"));
             problem.setText("you should have a true category");
@@ -79,6 +81,7 @@ public class AddProductController  {
     }
 
     public void showAttributes(ActionEvent actionEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         try {
            ArrayList<String> specials =  SellerBoss.getWithNameOfCategoryItsSpecials(categoryName.getText());
             listOfAttributesName.getItems().addAll(specials);

@@ -5,6 +5,7 @@ import Controller.ProductBoss;
 import Main.Main;
 import Model.Category;
 import Model.Product;
+import MusicPlayer.MusicPlayer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -39,6 +40,7 @@ public class ProductsPageController implements Initializable {
     public TextArea privateAttributes;
 
     public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("MainMenu", "main menu", true);
     }
 
@@ -57,6 +59,7 @@ public class ProductsPageController implements Initializable {
     private Category category;
 
     public void click(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         Object object = table.getSelectionModel().selectedItemProperty().get();
         int index = table.getSelectionModel().selectedIndexProperty().get();
          category = Category.categoryFinder(object);
@@ -84,6 +87,7 @@ public class ProductsPageController implements Initializable {
     }
 
     public void productPage(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Object object = tableProducts.getSelectionModel().selectedItemProperty().get();
         int index = tableProducts.getSelectionModel().selectedIndexProperty().get();
         Product product = Product.productFinder(object);
@@ -94,7 +98,7 @@ public class ProductsPageController implements Initializable {
     }
 
     public void filterPublics(MouseEvent mouseEvent) {
-
+        MusicPlayer.getInstance().playButtonMusic();
         if (tableProducts.getItems().isEmpty()){
             problemOfPublicFilter.setText("you need products to filter");
             problemOfPublicFilter.setTextFill(Paint.valueOf("red"));
@@ -125,6 +129,7 @@ public class ProductsPageController implements Initializable {
     }
 
     public void filterPrivate(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         String[] inputsForFilter = privateAttributes.getText().split("\n");
         String[] fields = new String[category.getSpecialAttributes().size()];
         HashMap<String,String> filterFields = new HashMap<>();

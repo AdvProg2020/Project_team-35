@@ -8,6 +8,7 @@ import Main.Main;
 
 import Model.Category;
 import Model.DiscountCode;
+import MusicPlayer.MusicPlayer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -61,6 +62,7 @@ public class ManagerCreateDiscountCode implements Initializable {
 
 
     public void createDiscountCode(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (!checkInputs()) {
             return;
         }
@@ -100,6 +102,7 @@ public class ManagerCreateDiscountCode implements Initializable {
     }
 
     public void clickNoMinimumCheckBox(ActionEvent actionEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         minimumTotalPrice.setDisable(noMinimumCheckBox.isSelected());
     }
 
@@ -208,6 +211,7 @@ public class ManagerCreateDiscountCode implements Initializable {
 
 
     public void removeDiscountCodeClick(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (discountCodesTable.getSelectionModel().getSelectedItem() != null) {
             try {
                 ManagerBoss.deleteDiscountCodeWithCode(discountCodesTable.getSelectionModel().getSelectedItem().getCode());
@@ -219,6 +223,7 @@ public class ManagerCreateDiscountCode implements Initializable {
     }
 
     public void editDiscountCodeClick(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (!checkInputs()) {
             return;
         }
@@ -258,6 +263,7 @@ public class ManagerCreateDiscountCode implements Initializable {
     }
 
     public void back(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.doBack();
     }
 }

@@ -8,6 +8,7 @@ import Controller.ManagerBoss;
 import Main.Main;
 import Model.Account;
 import Model.Category;
+import MusicPlayer.MusicPlayer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -54,6 +55,7 @@ public class ManageCategoriesPage implements Initializable {
     }
 
     public void clickCategoriesTable(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         selectedCategory = categoriesTable.getSelectionModel().getSelectedItem();
         if (selectedCategory != null) {
             categoryInfo.setText(selectedCategory.getSpecialAttributes().toString());
@@ -79,10 +81,12 @@ public class ManageCategoriesPage implements Initializable {
     }
 
     public void back(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.doBack();
     }
 
     public void addCategoryClick(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         ArrayList<String> attributes = new ArrayList<>();
         Collections.addAll(attributes, addCategoryAttributes.getText().split("\\n"));
         try {
@@ -96,6 +100,7 @@ public class ManageCategoriesPage implements Initializable {
     }
 
     public void deleteCategoryClick(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (selectedCategory == null) {
             setActionInfo("Not Selected", true);
             return;
@@ -111,6 +116,7 @@ public class ManageCategoriesPage implements Initializable {
     }
 
     public void renameCategoryClick(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         try {
             ManagerBoss.checkCategoryExistence(selectedCategoryName.getText());
             ManagerBoss.editCategoryName(selectedCategoryName.getText(), categoryNewNameForRename.getText());
@@ -123,6 +129,7 @@ public class ManageCategoriesPage implements Initializable {
     }
 
     public void addAttributeToCategoryClick(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         try {
             ManagerBoss.checkCategoryExistence(selectedCategoryName.getText());
             ManagerBoss.addAttributeToCategory(selectedCategoryName.getText(), attributeNameForAddOrDeleteAttribute.getText());
@@ -135,6 +142,7 @@ public class ManageCategoriesPage implements Initializable {
     }
 
     public void deleteAttributeFromCategoryClick(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (categoriesTable.getSelectionModel().getSelectedItem() == null) {
             setActionInfo("Not Selected.", true);
             return;
@@ -150,6 +158,7 @@ public class ManageCategoriesPage implements Initializable {
     }
 
     public void renameAttributeClick(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (categoriesTable.getSelectionModel().getSelectedItem() == null) {
             setActionInfo("Not Selected.", true);
             return;

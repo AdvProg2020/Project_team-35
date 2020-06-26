@@ -5,6 +5,7 @@ import Main.Main;
 import Model.Account;
 import Model.Customer;
 import Model.DiscountCode;
+import MusicPlayer.MusicPlayer;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -45,6 +46,7 @@ public class ShowDiscountCodesPage implements Initializable {
     }
 
     public void clickBack(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.doBack();
     }
 }

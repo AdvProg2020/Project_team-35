@@ -4,6 +4,7 @@ import Controller.Exceptions.ThereIsNotCategoryWithNameException;
 import Controller.SellerBoss;
 import Model.Category;
 import Model.Product;
+import MusicPlayer.MusicPlayer;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -28,6 +29,7 @@ public class EditProductPage implements Initializable {
     public TextField inventory;
 
     public void categoryAttributesShower(ActionEvent actionEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         ArrayList<String> attributes = new ArrayList<>();
         try {
            attributes = SellerBoss.getWithNameOfCategoryItsSpecials(categoryName.getText());
@@ -69,6 +71,7 @@ public class EditProductPage implements Initializable {
     }
 
     public void confirm(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         HashMap<String,String> allChanges = new HashMap<>();
         Product product = Product.getOnlineProduct();
         if (!checkValidityOfInputs()){

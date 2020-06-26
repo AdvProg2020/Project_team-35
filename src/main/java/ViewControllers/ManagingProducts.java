@@ -6,6 +6,7 @@ import Controller.ManagerBoss;
 import Main.Main;
 import Model.Product;
 import Model.Request;
+import MusicPlayer.MusicPlayer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -49,6 +50,7 @@ public class ManagingProducts implements Initializable {
     }
 
     public void clickProductsTable(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (productsTable.getSelectionModel().getSelectedItem() != null) {
             selectedProduct = productsTable.getSelectionModel().getSelectedItem();
             productInfo.setText(selectedProduct.getName());
@@ -56,6 +58,7 @@ public class ManagingProducts implements Initializable {
     }
 
     public void removeProductClick(MouseEvent mouseEvent) throws ThereISNotProductWithIdException {
+        MusicPlayer.getInstance().playButtonMusic();
         if (selectedProduct != null) {
             ManagerBoss.removeProductWithId(selectedProduct.getProductId());
             actionInfo.setTextFill(Color.GREEN);
@@ -69,6 +72,7 @@ public class ManagingProducts implements Initializable {
     }
 
     public void clickBack(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.doBack();
     }
 }
