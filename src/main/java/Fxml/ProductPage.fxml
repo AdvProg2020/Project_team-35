@@ -32,5 +32,6 @@
       <Button layoutX="1041.0" layoutY="538.0" mnemonicParsing="false" onMouseClicked="#login" text="login" />
       <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" layoutX="1010.0" layoutY="299.0" onMouseClicked="#play" />
       <Slider fx:id="slider" layoutX="27.0" layoutY="170.0" prefHeight="14.0" prefWidth="160.0" />
+      <Button onMouseClicked="#back" layoutX="1118.0" layoutY="538.0" mnemonicParsing="false" text="back" />
    </children>
 </AnchorPane>

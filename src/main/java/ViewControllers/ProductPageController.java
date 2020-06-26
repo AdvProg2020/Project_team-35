@@ -186,4 +186,8 @@ public class ProductPageController implements Initializable {
             mediaView.getMediaPlayer().stop();
         }
     }
+
+    public void back(MouseEvent mouseEvent) throws IOException {
+        Main.doBack();
+    }
 }
