@@ -206,7 +206,17 @@ public class ManagerCreateDiscountCode implements Initializable {
     }
 
 
+    public void removeDiscountCodeClick(MouseEvent mouseEvent) {
+        if (discountCodesTable.getSelectionModel().getSelectedItem() != null) {
+            try {
+                ManagerBoss.deleteDiscountCodeWithCode(discountCodesTable.getSelectionModel().getSelectedItem().getCode());
+                updateScreen();
+            } catch (DiscountNotExist discountNotExist) {
+                setInformation(discountNotExist.getMessage(), true);
+            }
+        }
+    }
 
-
-
+    public void editDiscountCodeClick(MouseEvent mouseEvent) {
+    }
 }
