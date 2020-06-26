@@ -17,6 +17,7 @@ public class Product {
     private String startDate;
     private String finalDate;
 
+    private Image statusImage;
     private Image productImage;
     private ImageView imageView;
     private double averageOfProduct;
@@ -501,5 +502,13 @@ public class Product {
                 return product;
         }
         return null;
+    }
+
+    public void setStatusImage(Image statusImage) {
+        this.statusImage = statusImage;
+    }
+
+    public Image getStatusImage() {
+        return statusImage;
     }
 }

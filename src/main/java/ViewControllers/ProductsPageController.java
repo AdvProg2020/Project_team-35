@@ -4,7 +4,9 @@ import Controller.OffBoss;
 import Controller.ProductBoss;
 import Main.Main;
 import Model.Category;
+import Model.Customer;
 import Model.Product;
+import Model.Rate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -13,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 
 import java.io.IOException;
@@ -41,6 +44,12 @@ public class ProductsPageController implements Initializable {
     public ImageView imageView;
     public Label imageLabel;
     public TableColumn imageC;
+    public HBox tableOfStars;
+    public ImageView star1;
+    public ImageView star2;
+    public ImageView star3;
+    public ImageView star4;
+    public ImageView star5;
 
     public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("MainMenu", "main menu", true);
@@ -97,8 +106,39 @@ public class ProductsPageController implements Initializable {
                Main.setRoot("ProductPage", "product page", false);
            }else {
                imageLabel.setVisible(true);
-               imageView.setImage(product.getProductImage());
+               imageLabel.setText("image of product status");
+               imageView.setImage(product.getStatusImage());
+               //
+               Rate rate = new Rate(new Customer("s","d","d","d","s","s"),76,product);
+               product.getRatesList().add(rate);
+                       //
+               prepareScoresGraphicMode(product);
            }
+        }
+    }
+    private void prepareScoresGraphicMode(Product product){
+        Image starYellow = new Image("./Resources/yellow.jpg");
+        Image starBlank = new Image("./Resources/blank.jpg");
+        star1.setImage(starBlank);
+        star2.setImage(starBlank);
+        star3.setImage(starBlank);
+        star4.setImage(starBlank);
+        star5.setImage(starBlank);
+        if (product.getAverageOfRates()>0){
+            star1.setImage(starYellow);
+        }
+        if (product.getAverageOfRates()>20 ){
+            star2.setImage(starYellow);
+
+        }if (product.getAverageOfRates()>40 ){
+            star3.setImage(starYellow);
+
+        }if (product.getAverageOfRates()>60 ){
+            star4.setImage(starYellow);
+
+        } if (product.getAverageOfRates()>80){
+            star5.setImage(starYellow);
+
         }
     }
 

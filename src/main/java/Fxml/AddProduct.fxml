@@ -23,5 +23,6 @@
       <TextArea fx:id="attributes" layoutX="193.0" layoutY="234.0" prefHeight="200.0" prefWidth="200.0" promptText="attributes" />
       <ListView fx:id="listOfAttributesName" layoutX="35.0" layoutY="234.0" prefHeight="200.0" prefWidth="129.0" />
       <ImageView fx:id="image" fitHeight="238.0" fitWidth="270.0" layoutX="660.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="521.0" layoutY="379.0" mnemonicParsing="false" onMouseClicked="#back" text="back" />
    </children>
 </AnchorPane>

@@ -15,6 +15,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ZoomEvent;
 import javafx.scene.paint.Paint;
 
 import java.net.URL;
@@ -64,7 +65,7 @@ public class ProductPageController implements Initializable {
             result+= s+"            -->         "+attri.get(s)+"\n";
         }
         attributes.setText(result);
-
+        imageView.setImage(product.getProductImage());
 
     }
 
@@ -144,5 +145,9 @@ public class ProductPageController implements Initializable {
                 problem.setTextFill(Paint.valueOf("red"));
             }
         }
+    }
+
+    public void zoom(ZoomEvent zoomEvent) {
+        System.out.println("salam");
     }
 }

@@ -9,6 +9,7 @@ import Model.Product;
 import Model.ProductAndOffStatus;
 import Model.ProductFilters.ProductPrivateFilter;
 import Views.GoodPage;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.HashMap;

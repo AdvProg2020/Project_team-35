@@ -85,6 +85,7 @@ public class AddProductController  {
            ArrayList<String> specials =  SellerBoss.getWithNameOfCategoryItsSpecials(categoryName.getText());
             listOfAttributesName.getItems().addAll(specials);
             userSawCategoriesAttributesList = true;
+            problem.setText("");
         } catch (ThereIsNotCategoryWithNameException e) {
             problem.setText(e.getMessage());
             problem.setTextFill(Paint.valueOf("red"));
@@ -92,5 +93,9 @@ public class AddProductController  {
             userSawCategoriesAttributesList = false;
             return;
         }
+    }
+
+    public void back(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("SellerPage","seller page",true);
     }
 }
