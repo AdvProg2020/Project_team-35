@@ -15,6 +15,7 @@ public class MusicPlayer {
     }
 
 
+    private static int musicNumber = 0;
     private static boolean isBGPlaying  = true;
 
     public boolean isBGMusicPlaying() {
@@ -29,12 +30,23 @@ public class MusicPlayer {
 
 
     public void playBGMusic() {
-        String path = "../Resources/sounds/a.m4a";
-        System.out.println(getClass().getResource(""));
+        String path = "../Resources/sounds/b0.m4a";
         AudioClip audioClip = new AudioClip(getClass().getResource(path).toString());
         background = audioClip;
         audioClip.play();
     }
+
+    public void changeBGMusic() {
+        musicNumber++;
+        background.stop();
+        String path = "../Resources/sounds/b" + musicNumber % 5 + ".mp3";
+        System.out.println(path);
+        AudioClip audioClip = new AudioClip(getClass().getResource(path).toString());
+        background = audioClip;
+        audioClip.play();
+    }
+
+
 
     public void stopBGMusic() {
         background.stop();
@@ -53,7 +65,7 @@ public class MusicPlayer {
 
     }
 
-    
+
 
 
 
