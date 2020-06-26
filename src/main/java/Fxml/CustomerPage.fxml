@@ -4,28 +4,28 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CustomerPage">
+<AnchorPane stylesheets="@../Resources/styles.css"  prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CustomerPage">
     <children>
         <TextField fx:id="nameField" layoutX="231.0" layoutY="142.0" promptText="Name" />
         <TextField fx:id="lastNameField" layoutX="231.0" layoutY="193.0" promptText="LastName" />
         <TextField fx:id="phoneNumberField" layoutX="231.0" layoutY="251.0" promptText="Phone Number" />
-        <TextField fx:id="emailField" layoutX="231.0" layoutY="308.0" promptText="EMail" />
+        <TextField fx:id="emailField" layoutX="231.0" layoutY="308.0" promptText="Email" />
         <PasswordField fx:id="passwordField" layoutX="231.0" layoutY="368.0" />
-        <TextField layoutX="231.0" layoutY="430.0" />
-        <Label fx:id="usernameLabel" layoutX="229.0" layoutY="92.0" prefHeight="26.0" prefWidth="149.0" />
-        <Label layoutX="65.0" layoutY="92.0" prefHeight="26.0" prefWidth="110.0" text="Username" />
+        <Label fx:id="usernameLabel" layoutX="234.0" layoutY="92.0" prefHeight="26.0" prefWidth="149.0" />
+        <Label layoutX="113.0" layoutY="92.0" prefHeight="26.0" prefWidth="110.0" text="Username" />
         <Label layoutX="129.0" layoutY="146.0" text="Name" />
-        <Label layoutX="81.0" layoutY="197.0" prefHeight="18.0" prefWidth="103.0" text="LastName" />
-        <Label layoutX="41.0" layoutY="255.0" prefHeight="18.0" prefWidth="149.0" text="PhoneNumber" />
-        <Label layoutX="115.0" layoutY="312.0" prefHeight="18.0" prefWidth="60.0" text="EMail" />
-        <Label layoutX="95.0" layoutY="372.0" prefHeight="18.0" prefWidth="95.0" text="Password" />
-        <Button layoutX="276.0" layoutY="519.0" mnemonicParsing="false" onMouseClicked="#updateProfileDate" text="Update" />
+        <Label layoutX="109.0" layoutY="197.0" prefHeight="18.0" prefWidth="103.0" text="LastName" />
+        <Label layoutX="92.0" layoutY="255.0" prefHeight="18.0" prefWidth="118.0" text="PhoneNumber" />
+        <Label layoutX="120.0" layoutY="312.0" prefHeight="18.0" prefWidth="60.0" text="Email" />
+        <Label layoutX="104.0" layoutY="372.0" prefHeight="18.0" prefWidth="95.0" text="Password" />
+        <Button layoutX="233.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#updateProfileDate" prefHeight="26.0" prefWidth="133.0" text="Update" />
         <Label fx:id="information" layoutX="241.0" layoutY="471.0" prefHeight="18.0" prefWidth="118.0" />
         <Button layoutX="41.0" layoutY="545.0" mnemonicParsing="false" onMouseClicked="#logoutClick" text="Logout" />
-        <Button layoutX="584.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="View Cart" />
-        <Button layoutX="589.0" layoutY="92.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="192.0" text="View Orders" />
-        <Button layoutX="596.0" layoutY="141.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="178.0" text="View Balance" />
-        <Button layoutX="585.0" layoutY="192.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="185.0" text="View Discount Code" />
+        <Button onMouseClicked="#goToCart" layoutX="584.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="View Cart" />
+        <Button onMouseClicked="#goToViewBuyLogs" layoutX="584.0" layoutY="92.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="View Buy Logs" />
+        <Button layoutX="584.0" layoutY="141.0" mnemonicParsing="false" onMouseClicked="#goToCustomerDiscountCodes" prefHeight="26.0" prefWidth="202.0" text="View Discount Codes" />
       <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="970.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="105.0" layoutY="426.0" prefHeight="18.0" prefWidth="54.0" text="Balance" />
+      <Label fx:id="balanceLabel" layoutX="237.0" layoutY="419.0" prefHeight="26.0" prefWidth="95.0" text="Label" />
     </children>
 </AnchorPane>

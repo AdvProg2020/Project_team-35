@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1500.0" stylesheets="@../Resources/styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CustomerCart">
+
+    <TableView fx:id="tableProducts" layoutX="18.0" layoutY="24.0" onMouseClicked="#clickTable" prefHeight="290.0" prefWidth="522.0">
+        <columns>
+            <TableColumn fx:id="productName" prefWidth="69.3333740234375" text="name" />
+            <TableColumn fx:id="price" prefWidth="106.99998474121094" text="price" />
+            <TableColumn fx:id="rate" minWidth="9.000022888183594" prefWidth="70.5999755859375" text="rate" />
+            <TableColumn fx:id="imageC" prefWidth="271.8000183105469" text="image" />
+        </columns>
+    </TableView>
+   <Label fx:id="productInfo" layoutX="24.0" layoutY="423.0" prefHeight="360.0" prefWidth="507.0" text="Product Info" />
+   <Label fx:id="actionInfo" layoutX="564.0" layoutY="427.0" prefHeight="71.0" prefWidth="188.0" text="Action Info" />
+   <Label fx:id="totalPrice" layoutX="704.0" layoutY="323.0" prefHeight="55.0" prefWidth="215.0" />
+   <Button layoutX="642.0" layoutY="69.0" mnemonicParsing="false" onMouseClicked="#increase" prefHeight="26.0" prefWidth="127.0" text="Increase" />
+   <Button layoutX="642.0" layoutY="136.0" mnemonicParsing="false" onMouseClicked="#decrease" prefHeight="26.0" prefWidth="127.0" text="Decline" />
+   <Button layoutX="642.0" layoutY="213.0" mnemonicParsing="false" onMouseClicked="#goToPaymentPage" prefHeight="26.0" prefWidth="127.0" text="Finalize Buy" />
+   <Label layoutX="564.0" layoutY="343.0" prefHeight="18.0" prefWidth="117.0" text="Total Price:" />
+   <Button layoutX="698.0" layoutY="656.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="38.0" prefWidth="152.0" text="Back" />
+   <Button layoutX="108.0" layoutY="333.0" mnemonicParsing="false" text="Number :" />
+   <Label fx:id="number" layoutX="231.0" layoutY="339.0" prefHeight="25.0" prefWidth="74.0" />
+
+</AnchorPane>

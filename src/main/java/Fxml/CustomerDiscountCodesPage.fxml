@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@../Resources/styles.css"  prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CustomerDiscountCodesPage">
+
+    <TableView fx:id="discountCodesTable" layoutX="31.0" layoutY="26.0" onMouseClicked="#clickDiscountCodesTable" prefHeight="222.0" prefWidth="596.0">
+        <columns>
+            <TableColumn fx:id="codeColumn" prefWidth="96.19999885559082" text="Code" />
+            <TableColumn fx:id="percentColumn" prefWidth="63.599998474121094" text="Percent" />
+            <TableColumn fx:id="startDateColumn" prefWidth="215.20004272460938" text="Starts At" />
+            <TableColumn fx:id="finalDateColumn" prefWidth="218.39999389648438" text="Expires At" />
+        </columns>
+    </TableView>
+   <Label fx:id="remainedInfo" layoutX="70.0" layoutY="276.0" prefHeight="48.0" prefWidth="195.0" text="Remained Use :" />
+   <Button layoutX="70.0" layoutY="514.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="26.0" prefWidth="118.0" text="Back" />
+
+</AnchorPane>

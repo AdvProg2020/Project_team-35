@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ProductPageController">
+<AnchorPane   stylesheets="@../Resources/styles.css" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ProductPageController">
    <children>
        <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="7.0" layoutY="8.0" onZoom="#zoom" pickOnBounds="true" preserveRatio="true">
        </ImageView>

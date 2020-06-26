@@ -22,10 +22,10 @@ public class DiscountCode {
     private double minimumTotalPriceForUse;
 
     public String getDetails() {
-        String toReturn = "Code: " + this.code.get() + "\nStart Date: " + this.startDate.toString() + "     Expire Date: " + this.finalDate.toString()
+        String toReturn = "Code: " + this.code.get() + "\nStart Date: " + this.startDate.toString() + "  Expire Date: " + this.finalDate.toString()
                 + "\nDiscount Percent: " + this.getDiscountPercent() + "     Maximum Discount: " + this.getMaximumAvailableAmount()
-                + "\nMinimum Total Price For Use (-1 means it hasn't minimum): " + this.getMinimumTotalPriceForUse()
-                + "    Usable Rate: " + this.getAvailableUseFrequent() + "   Included Customers | Use Rates:";
+                + "\nMinimum Total Price For Use: " + this.getMinimumTotalPriceForUse()
+                + "    Usable Rate: " + this.getAvailableUseFrequent() + "\nIncluded Customers | Use Rates:";
         for (Customer customer : this.includedBuyersAndUseFrequency.keySet()) {
             toReturn += "\n ** UserName: " + customer.getUsername() + " | Use Number: " + includedBuyersAndUseFrequency.get(customer);
         }

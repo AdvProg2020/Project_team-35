@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ManagerCreateDiscountCode">
+<AnchorPane  stylesheets="@../Resources/styles.css" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ManagerCreateDiscountCode">
    <children>
       <TextField fx:id="codeText" layoutX="692.0" layoutY="14.0" promptText="CodeText" />
       <TextField fx:id="percent" layoutX="692.0" layoutY="55.0" promptText="Percent" />
@@ -13,7 +13,7 @@
       <TextField fx:id="startTime" layoutX="498.0" layoutY="187.0" promptText="Start Time" />
       <DatePicker fx:id="finalDate" layoutX="679.0" layoutY="223.0" promptText="FinalDate" />
       <TextField fx:id="finalTime" layoutX="498.0" layoutY="223.0" promptText="Final Time" />
-      <TextArea fx:id="customersUserNames" layoutX="445.0" layoutY="386.0" prefHeight="113.0" prefWidth="200.0" promptText="Involved Customers Username" />
+      <TextArea fx:id="customersUserNames" layoutX="482.0" layoutY="386.0" prefHeight="113.0" prefWidth="200.0" promptText="Involved Customers Username" />
       <TextField fx:id="minimumTotalPrice" layoutX="703.0" layoutY="274.0" promptText="Minimum Total Price" />
       <CheckBox fx:id="noMinimumCheckBox" layoutX="537.0" layoutY="287.0" mnemonicParsing="false" onAction="#clickNoMinimumCheckBox" prefHeight="18.0" prefWidth="126.0" text="No Minimum" />
       <Button fx:id="createButton" layoutX="719.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#createDiscountCode" prefHeight="26.0" prefWidth="126.0" text="Create" />
@@ -28,7 +28,7 @@
         </columns>
       </TableView>
       <Button layoutX="719.0" layoutY="488.0" mnemonicParsing="false" onMouseClicked="#removeDiscountCodeClick" prefHeight="26.0" prefWidth="126.0" text="Remove" />
-      <Label fx:id="selectedCodeData" layoutX="17.0" layoutY="261.0" prefHeight="278.0" prefWidth="416.0" text="Label" />
+      <Label fx:id="selectedCodeData" layoutX="17.0" layoutY="261.0" prefHeight="278.0" prefWidth="432.0" text="Label" />
       <Button layoutX="14.0" layoutY="556.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="26.0" prefWidth="96.0" text="Back" />
    </children>
 </AnchorPane>
