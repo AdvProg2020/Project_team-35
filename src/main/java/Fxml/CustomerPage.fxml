@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane stylesheets="@../Resources/styles.css"  prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CustomerPage">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@../Resources/styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CustomerPage">
     <children>
         <TextField fx:id="nameField" layoutX="231.0" layoutY="142.0" promptText="Name" />
         <TextField fx:id="lastNameField" layoutX="231.0" layoutY="193.0" promptText="LastName" />
@@ -21,11 +21,12 @@
         <Button layoutX="233.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#updateProfileDate" prefHeight="26.0" prefWidth="133.0" text="Update" />
         <Label fx:id="information" layoutX="241.0" layoutY="471.0" prefHeight="18.0" prefWidth="118.0" />
         <Button layoutX="41.0" layoutY="545.0" mnemonicParsing="false" onMouseClicked="#logoutClick" text="Logout" />
-        <Button onMouseClicked="#goToCart" layoutX="584.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="View Cart" />
-        <Button onMouseClicked="#goToViewBuyLogs" layoutX="584.0" layoutY="92.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="View Buy Logs" />
+        <Button layoutX="584.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#goToCart" prefHeight="26.0" prefWidth="202.0" text="View Cart" />
+        <Button layoutX="584.0" layoutY="92.0" mnemonicParsing="false" onMouseClicked="#goToViewBuyLogs" prefHeight="26.0" prefWidth="200.0" text="View Buy Logs" />
         <Button layoutX="584.0" layoutY="141.0" mnemonicParsing="false" onMouseClicked="#goToCustomerDiscountCodes" prefHeight="26.0" prefWidth="202.0" text="View Discount Codes" />
       <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="970.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" />
       <Label layoutX="105.0" layoutY="426.0" prefHeight="18.0" prefWidth="54.0" text="Balance" />
       <Label fx:id="balanceLabel" layoutX="237.0" layoutY="419.0" prefHeight="26.0" prefWidth="95.0" text="Label" />
+      <Button onMouseClicked="#goToProductsPage" layoutX="587.0" layoutY="197.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="202.0" text="Products Page" />
     </children>
 </AnchorPane>

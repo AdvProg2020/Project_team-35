@@ -101,9 +101,9 @@ public class CustomerCart implements Initializable {
 
     }
 
-    public void goToPaymentPage(MouseEvent mouseEvent) {
+    public void goToPaymentPage(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
-
+        Main.setRoot("ReceiveInfoPage", "Receive Info Page", false);
 
     }
 

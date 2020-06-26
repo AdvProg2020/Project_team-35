@@ -88,6 +88,7 @@ public class ProductsPageController implements Initializable {
         errorAlert.setContentText(result);
         errorAlert.showAndWait();
         createProductsTable(category);
+        listOfFilterSubs.getItems().clear();
         prepareListOfFilterSubs();
 
     }
@@ -200,5 +201,10 @@ public class ProductsPageController implements Initializable {
         imageC.setCellValueFactory(new PropertyValueFactory<Product,ImageView>("imageView"));
         tableProducts.setItems(data);
 
+    }
+
+    public void doBack(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
+        Main.doBack();
     }
 }

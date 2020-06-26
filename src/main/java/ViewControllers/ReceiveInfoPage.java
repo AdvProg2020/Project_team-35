@@ -32,6 +32,7 @@ public class ReceiveInfoPage {
 
     public void confirmButtonClick(MouseEvent mouseEvent) throws IOException{
         if (checkValidityOfInputs()) {
+            MusicPlayer.getInstance().playButtonMusic();
             actionInfo.setTextFill(Color.GREEN);
             actionInfo.setText("Successful :)");
             Main.setRoot("CheckDiscountCodePage", "Check Discount Code", false);
