@@ -88,6 +88,7 @@ public class ProductsPageController implements Initializable {
         errorAlert.setContentText(result);
         errorAlert.showAndWait();
         createProductsTable(category);
+        listOfFilterSubs.getItems().clear();
         prepareListOfFilterSubs();
 
     }
