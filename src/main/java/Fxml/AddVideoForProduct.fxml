@@ -4,11 +4,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.media.*?>
 
-<AnchorPane stylesheets="@../Resources/styles.css"  prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.AddVideo">
+<AnchorPane fx:id="pane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../Resources/styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.AddVideo">
    <children>
       <TextField fx:id="url" layoutX="150.0" layoutY="88.0" prefHeight="25.0" prefWidth="313.0" promptText="file:///C://Users//User//Desktop//ronaldinho.MP4" />
       <Button layoutX="274.0" layoutY="148.0" mnemonicParsing="false" onMouseClicked="#confirm" text="confirm" />
       <MediaView fx:id="media" fitHeight="150.0" fitWidth="200.0" layoutX="194.0" layoutY="194.0" onMouseClicked="#play" pickOnBounds="true" />
       <Label fx:id="problem" layoutX="61.0" layoutY="152.0" prefHeight="17.0" prefWidth="200.0" />
+
    </children>
 </AnchorPane>
