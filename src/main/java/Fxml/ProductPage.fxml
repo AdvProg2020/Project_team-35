@@ -9,22 +9,24 @@
        <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="7.0" layoutY="8.0" onZoom="#zoom" pickOnBounds="true" preserveRatio="true">
        </ImageView>
       <Label fx:id="productNameLabel" layoutX="207.0" layoutY="66.0" prefHeight="34.0" prefWidth="174.0" />
-      <Button layoutX="14.0" layoutY="350.0" mnemonicParsing="false" onMouseClicked="#addToCart" text="add to cart" />
+      <Button layoutX="21.0" layoutY="229.0" mnemonicParsing="false" onMouseClicked="#addToCart" text="add to cart" />
       <TextField fx:id="score" layoutX="300.0" layoutY="16.0" promptText="score" visible="false" />
       <TextArea fx:id="review" layoutX="233.0" layoutY="186.0" prefHeight="200.0" prefWidth="200.0" promptText="your review" />
-      <Button layoutX="458.0" layoutY="350.0" mnemonicParsing="false" onMouseClicked="#confirmReview" text="confirm review" />
+      <Button layoutX="135.0" layoutY="350.0" mnemonicParsing="false" onMouseClicked="#confirmReview" text="confirm review" />
       <TextField fx:id="title" layoutX="234.0" layoutY="152.0" prefHeight="25.0" prefWidth="200.0" promptText="title" />
       <Label fx:id="offPriceOfProduct" layoutX="213.0" layoutY="7.0" prefHeight="45.0" prefWidth="174.0" />
-      <TextArea fx:id="reviewsList" layoutX="681.0" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" promptText="reviews list" />
-      <Button layoutX="552.0" layoutY="37.0" mnemonicParsing="false" onMouseClicked="#showListOfReviews" text="show reviews" />
+      <TextArea fx:id="reviewsList" layoutX="726.0" layoutY="20.0" prefHeight="200.0" prefWidth="200.0" promptText="reviews list" />
+      <Button layoutX="726.0" layoutY="229.0" mnemonicParsing="false" onMouseClicked="#showListOfReviews" text="show reviews" />
       <Label fx:id="problem" layoutX="457.0" layoutY="324.0" prefHeight="17.0" prefWidth="94.0" />
-      <Label layoutX="435.0" layoutY="20.0" prefHeight="17.0" prefWidth="87.0" text="price" />
-      <Label layoutX="435.0" layoutY="75.0" prefHeight="17.0" prefWidth="74.0" text="name" />
+      <Label layoutX="405.0" layoutY="21.0" prefHeight="17.0" prefWidth="87.0" text="price" />
+      <Label layoutX="404.0" layoutY="74.0" prefHeight="17.0" prefWidth="74.0" text="name" />
       <TextArea fx:id="compareResult" layoutX="738.0" layoutY="305.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button layoutX="650.0" layoutY="465.0" mnemonicParsing="false" onMouseClicked="#compare" text="compare" />
+      <Button layoutX="763.0" layoutY="538.0" mnemonicParsing="false" onMouseClicked="#compare" text="compare" />
       <TextField fx:id="compareProductId" layoutX="589.0" layoutY="424.0" visible="false" />
       <TextField fx:id="numberOfAddingtoCart" layoutX="14.0" layoutY="386.0" visible="false" />
       <TextArea fx:id="attributes" layoutX="241.0" layoutY="424.0" prefHeight="200.0" prefWidth="200.0" promptText="attributes of a product" />
-      <Label layoutX="21.0" layoutY="440.0" prefHeight="17.0" prefWidth="133.0" text="attributes" />
+      <Label layoutX="96.0" layoutY="428.0" prefHeight="17.0" prefWidth="133.0" text="attributes" />
+      <TextArea fx:id="same" layoutX="968.0" layoutY="41.0" prefHeight="200.0" prefWidth="200.0" />
+      <Label layoutX="976.0" layoutY="20.0" prefHeight="17.0" prefWidth="182.0" text="same products" />
    </children>
 </AnchorPane>

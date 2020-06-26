@@ -9,12 +9,23 @@ import Model.Product;
 import Model.ProductAndOffStatus;
 import Model.ProductFilters.ProductPrivateFilter;
 import Views.GoodPage;
-import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProductBoss {
+    public static ArrayList<Product> showSameProducts(Product product){
+        Boss.removeExpiredOffsAndDiscountCodes();
+
+        ArrayList<Product> same = new ArrayList<>();
+        for (Product allProduct : Product.getAllProducts()) {
+            if (allProduct.getSeller().equals(product.getSeller()) || product.getCategory().equals(allProduct.getCategory())){
+                same.add(allProduct);
+            }
+        }
+        return same;
+
+    }
 
     public static GoodPage goToGoodPage(int id) throws NullProduct {
         Boss.removeExpiredOffsAndDiscountCodes();

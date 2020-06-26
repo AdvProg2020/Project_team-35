@@ -20,6 +20,7 @@ import javafx.scene.input.ZoomEvent;
 import javafx.scene.paint.Paint;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -37,6 +38,7 @@ public class ProductPageController implements Initializable {
     public TextField compareProductId;
     public TextField numberOfAddingtoCart;
     public TextArea attributes;
+    public TextArea same;
     private Product product;
     private Customer customer;
 
@@ -67,6 +69,14 @@ public class ProductPageController implements Initializable {
         }
         attributes.setText(result);
         imageView.setImage(product.getProductImage());
+        if (ProductBoss.showSameProducts(product)!=null) {
+            ArrayList<Product> sameProducts = ProductBoss.showSameProducts(product);
+            String result2 = "";
+            for (Product sameProduct : sameProducts) {
+                result2 += sameProduct.getName() + "       " + sameProduct.getProductId() + "\n";
+            }
+            same.setText(result2);
+        }
 
     }
 
