@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ReceiveInfoPage">
+<AnchorPane stylesheets="@../Resources/styles.css" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ReceiveInfoPage">
    <children>
       <Label layoutX="314.0" layoutY="140.0" text="Phone Number" />
       <TextField fx:id="phoneNumber" layoutX="450.0" layoutY="136.0" promptText="Phone Number" />

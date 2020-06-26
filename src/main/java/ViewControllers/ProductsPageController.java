@@ -203,4 +203,9 @@ public class ProductsPageController implements Initializable {
         tableProducts.setItems(data);
 
     }
+
+    public void doBack(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
+        Main.doBack();
+    }
 }

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../Resources/styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ProductsPageController">
-    <Button layoutX="450.0" layoutY="349.0" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="back to main menu" />
+    <Button layoutX="440.0" layoutY="349.0" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="back to main menu" />
 
                     <TableView fx:id="table" layoutX="542.0" layoutY="24.0" onMouseClicked="#click" prefHeight="290.0" prefWidth="271.0">
                         <columns>
@@ -50,5 +50,6 @@
       </children>
    </HBox>
    <ListView fx:id="listOfFilterSubs" layoutX="1307.0" layoutY="81.0" prefHeight="200.0" prefWidth="200.0" />
+   <Button onMouseClicked="#doBack" layoutX="453.0" layoutY="396.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="126.0" text="back" />
    
 </AnchorPane>

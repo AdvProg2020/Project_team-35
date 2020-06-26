@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CheckDiscountCodePage">
+   <children>
+      <Label layoutX="293.0" layoutY="282.0" text="Enter a valid discount code or type &quot;end&quot; in the field below:" />
+      <TextField fx:id="discountCode" layoutX="376.0" layoutY="357.0" promptText="Discount Code" />
+      <Button layoutX="14.0" layoutY="560.0" mnemonicParsing="false" onMouseClicked="#back" text="Back" />
+      <Button layoutX="581.0" layoutY="534.0" mnemonicParsing="false" onMouseClicked="#doneButtonClick" text="Done" />
+      <Label fx:id="actionInfo" layoutX="281.0" layoutY="435.0" prefHeight="26.0" prefWidth="314.0" />
+   </children>
+</AnchorPane>
