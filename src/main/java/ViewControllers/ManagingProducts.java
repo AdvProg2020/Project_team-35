@@ -49,8 +49,10 @@ public class ManagingProducts implements Initializable {
     }
 
     public void clickProductsTable(MouseEvent mouseEvent) {
-        selectedProduct = productsTable.getSelectionModel().getSelectedItem();
-        productInfo.setText(selectedProduct.getName());
+        if (productsTable.getSelectionModel().getSelectedItem() != null) {
+            selectedProduct = productsTable.getSelectionModel().getSelectedItem();
+            productInfo.setText(selectedProduct.getName());
+        }
     }
 
     public void removeProductClick(MouseEvent mouseEvent) throws ThereISNotProductWithIdException {

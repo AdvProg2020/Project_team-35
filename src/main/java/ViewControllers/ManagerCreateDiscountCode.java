@@ -24,6 +24,7 @@ import javafx.scene.paint.Paint;
 
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.CookieHandler;
 import java.net.URL;
 import java.time.LocalDate;
@@ -218,5 +219,45 @@ public class ManagerCreateDiscountCode implements Initializable {
     }
 
     public void editDiscountCodeClick(MouseEvent mouseEvent) {
+        if (!checkInputs()) {
+            return;
+        }
+        LocalDateTime startFullDate = LocalDateTime.parse(startDate.getValue().toString() + "T" + startTime.getText());
+        LocalDateTime finalFullDate = LocalDateTime.parse(finalDate.getValue().toString() + "T" + finalTime.getText());
+        try {
+            ManagerBoss.checkStartDateAndFinalDateForDiscountCode(startFullDate, finalFullDate);
+        } catch (DateException e) {
+            setInformation(e.getMessage(), true);
+            return;
+        }
+        ArrayList<String> includedCustomers = new ArrayList<>();
+        Collections.addAll(includedCustomers, customersUserNames.getText().split("\\n"));
+        for (String includedCustomer : includedCustomers) {
+            try {
+                ManagerBoss.checkExistenceOfCustomerUsername(includedCustomer);
+            } catch (NotExistCustomerWithUserNameException e) {
+                setInformation("Customer With Username " + includedCustomer + "does'nt exist.", true);
+                return;
+            }
+        }
+        int repeat = Integer.parseInt(repeatRate.getText());
+        double percentage = Double.parseDouble(percent.getText());
+        double minimum;
+        if (!noMinimumCheckBox.isSelected()) {
+            minimum = Double.parseDouble(minimumTotalPrice.getText());
+        }
+        else {
+            minimum = -1;
+        }
+        double maximum = Double.parseDouble(maximumDiscountAmount.getText());
+        String code = codeText.getText();
+        ManagerBoss.editDiscountCode(discountCodesTable.getSelectionModel().getSelectedItem().getCode(), code, finalFullDate, startFullDate, percentage, maximum, repeat, includedCustomers, minimum);
+        setInformation("Successfully Edited :)", false);
+        updateScreen();
+
+    }
+
+    public void back(MouseEvent mouseEvent) throws IOException {
+        Main.doBack();
     }
 }

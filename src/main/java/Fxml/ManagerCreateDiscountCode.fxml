@@ -18,7 +18,7 @@
       <CheckBox fx:id="noMinimumCheckBox" layoutX="537.0" layoutY="287.0" mnemonicParsing="false" onAction="#clickNoMinimumCheckBox" prefHeight="18.0" prefWidth="126.0" text="No Minimum" />
       <Button fx:id="createButton" layoutX="719.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#createDiscountCode" prefHeight="26.0" prefWidth="126.0" text="Create" />
       <Label fx:id="information" layoutX="474.0" layoutY="542.0" prefHeight="26.0" prefWidth="338.0" text="Label" />
-      <Button onMouseClicked="#editDiscountCodeClick" layoutX="719.0" layoutY="432.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="126.0" text="Edit" />
+      <Button layoutX="719.0" layoutY="432.0" mnemonicParsing="false" onMouseClicked="#editDiscountCodeClick" prefHeight="26.0" prefWidth="126.0" text="Edit" />
       <TableView fx:id="discountCodesTable" layoutX="12.0" layoutY="47.0" onMouseClicked="#clickDiscountCodesTable" prefHeight="200.0" prefWidth="438.0">
         <columns>
           <TableColumn fx:id="codeColumn" prefWidth="96.19999885559082" text="Code" />
@@ -27,7 +27,8 @@
            <TableColumn fx:id="finalDateColumn" prefWidth="124.39999389648438" text="Expires At" />
         </columns>
       </TableView>
-      <Button onMouseClicked="#removeDiscountCodeClick" layoutX="719.0" layoutY="488.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="126.0" text="Remove" />
+      <Button layoutX="719.0" layoutY="488.0" mnemonicParsing="false" onMouseClicked="#removeDiscountCodeClick" prefHeight="26.0" prefWidth="126.0" text="Remove" />
       <Label fx:id="selectedCodeData" layoutX="31.0" layoutY="296.0" prefHeight="200.0" prefWidth="331.0" text="Label" />
+      <Button onMouseClicked="#back" layoutX="14.0" layoutY="556.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="66.0" text="Back" />
    </children>
 </AnchorPane>
