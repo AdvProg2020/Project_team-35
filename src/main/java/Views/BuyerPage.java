@@ -238,9 +238,9 @@ public class BuyerPage extends Page {
         return new Page("view discount codes", this) {
             @Override
             public void execute() {
-          //      for (String discountCodeInformation : CustomerBoss.showDiscountCodes((Customer) Account.getOnlineAccount())) {
-               //     System.out.println(discountCodeInformation);
-             //   }
+                /*for (String discountCodeInformation : CustomerBoss.showDiscountCodes((Customer) Account.getOnlineAccount())) {
+                    System.out.println(discountCodeInformation);
+                }*/
             }
         };
     }

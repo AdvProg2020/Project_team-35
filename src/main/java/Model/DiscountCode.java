@@ -22,15 +22,16 @@ public class DiscountCode {
     private double minimumTotalPriceForUse;
 
     public String getDetails() {
-        String toReturn =  "Code: " + this.code.get() + "\nStart Date: " + this.startDate.toString() + "     Expire Date: " + this.finalDate.toString()
+        String toReturn = "Code: " + this.code.get() + "\nStart Date: " + this.startDate.toString() + "     Expire Date: " + this.finalDate.toString()
                 + "\nDiscount Percent: " + this.getDiscountPercent() + "     Maximum Discount: " + this.getMaximumAvailableAmount()
-                +"\nMinimum Total Price For Use (-1 means it hasn't minimum): " + this.getMinimumTotalPriceForUse()
+                + "\nMinimum Total Price For Use (-1 means it hasn't minimum): " + this.getMinimumTotalPriceForUse()
                 + "    Usable Rate: " + this.getAvailableUseFrequent() + "   Included Customers | Use Rates:";
         for (Customer customer : this.includedBuyersAndUseFrequency.keySet()) {
             toReturn += "\n ** UserName: " + customer.getUsername() + " | Use Number: " + includedBuyersAndUseFrequency.get(customer);
         }
         return toReturn;
     }
+
     public DiscountCode(String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<Customer> includedCustomers, double minimumTotalPriceForUse) {
         this.code.set(code);
         this.finalDate = finalDate;
@@ -49,12 +50,15 @@ public class DiscountCode {
         startDateSimpleString.set(startDate.toString());
         finalDateSimpleString.set(finalDate.toString());
     }
+
     public String expireDateToString() {
         return finalDate.getYear() + "-" + finalDate.getMonthValue() + "-" + finalDate.getDayOfMonth();
     }
+
     public String startDateToString() {
         return startDate.getYear() + "-" + startDate.getMonthValue() + "-" + startDate.getDayOfMonth();
     }
+
     public String getDiscountCodeInlineInfo() {
         return "Code: " + this.code + " --- Percent: " + this.discountPercent + " --- ExpireDate: " + this.expireDateToString();
     }
@@ -66,6 +70,7 @@ public class DiscountCode {
         }
         return false;
     }
+
     public static DiscountCode getDiscountCodeWithCode(String code) {
         for (DiscountCode discountCode : allDiscountCodes) {
             if (discountCode.code.get().equals(code))
@@ -73,16 +78,6 @@ public class DiscountCode {
         }
         return null;
     }
-//    public static void deleteDiscountCode () {
-//
-//    }
-//    public static DiscountCode getDiscountCodeById(String id){
-//        for (DiscountCode discountCode : allDiscountCodes) {
-//            if (discountCode.getId().equalsIgnoreCase(id))
-//                return discountCode;
-//        }
-//        return null;
-//    }
 
     public String getId() {
         return code.get();
@@ -153,5 +148,45 @@ public class DiscountCode {
 
     public LocalDateTime getStartDate() {
         return startDate;
+    }
+
+    public void setFinalDate(LocalDateTime finalDate) {
+        this.finalDate = finalDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setStartDateSimpleString(String startDateSimpleString) {
+        this.startDateSimpleString.set(startDateSimpleString);
+    }
+
+    public void setFinalDateSimpleString(String finalDateSimpleString) {
+        this.finalDateSimpleString.set(finalDateSimpleString);
+    }
+
+    public void setDiscountPercent(double discountPercent) {
+        this.discountPercent.set(discountPercent);
+    }
+
+    public void setMaximumAvailableAmount(double maximumAvailableAmount) {
+        this.maximumAvailableAmount = maximumAvailableAmount;
+    }
+
+    public void setAvailableUseFrequent(int availableUseFrequent) {
+        this.availableUseFrequent = availableUseFrequent;
+    }
+
+    public void setIncludedBuyersAndUseFrequency(HashMap<Customer, Integer> includedBuyersAndUseFrequency) {
+        this.includedBuyersAndUseFrequency = includedBuyersAndUseFrequency;
+    }
+
+    public void setMinimumTotalPriceForUse(double minimumTotalPriceForUse) {
+        this.minimumTotalPriceForUse = minimumTotalPriceForUse;
+    }
+
+    public HashMap<Customer, Integer> getIncludedBuyersAndUseFrequency() {
+        return includedBuyersAndUseFrequency;
     }
 }

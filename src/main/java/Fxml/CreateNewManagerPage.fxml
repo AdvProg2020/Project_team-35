@@ -5,20 +5,20 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CreateNewManagerPage">
    <children>
-      <TextField fx:id="username" layoutX="426.0" layoutY="113.0" text="Username" />
-      <TextField fx:id="firstName" layoutX="426.0" layoutY="213.0" text="FirstName" />
-      <PasswordField fx:id="password" layoutX="426.0" layoutY="168.0" text="Password" />
-      <TextField fx:id="lastName" layoutX="426.0" layoutY="275.0" text="LastName" />
-      <TextField fx:id="email" layoutX="426.0" layoutY="342.0" text="Email" />
-      <TextField fx:id="phoneNumber" layoutX="426.0" layoutY="398.0" text="PhoneNumber" />
-      <Button layoutX="433.0" layoutY="500.0" mnemonicParsing="false" onMouseClicked="#createButtonClick" prefHeight="26.0" prefWidth="134.0" text="Create" />
-      <Label fx:id="actionInfo" layoutX="412.0" layoutY="453.0" prefHeight="18.0" prefWidth="180.0" />
+      <TextField fx:id="username" layoutX="426.0" layoutY="113.0" promptText="Username" />
+      <TextField fx:id="firstName" layoutX="426.0" layoutY="213.0" promptText="Firstname" />
+      <PasswordField fx:id="password" layoutX="426.0" layoutY="168.0" promptText="Password" />
+      <TextField fx:id="lastName" layoutX="426.0" layoutY="275.0" promptText="Lastname" />
+      <TextField fx:id="email" layoutX="426.0" layoutY="342.0" promptText="Email" />
+      <TextField fx:id="phoneNumber" layoutX="426.0" layoutY="398.0" promptText="PhoneNumber" />
+      <Button layoutX="433.0" layoutY="520.0" mnemonicParsing="false" onMouseClicked="#createButtonClick" prefHeight="26.0" prefWidth="134.0" text="Create" />
+      <Label fx:id="actionInfo" layoutX="433.0" layoutY="445.0" prefHeight="55.0" prefWidth="314.0" />
       <Label layoutX="228.0" layoutY="117.0" prefHeight="18.0" prefWidth="118.0" text="Usernme" />
       <Label layoutX="236.0" layoutY="172.0" prefHeight="18.0" prefWidth="88.0" text="Password" />
       <Label layoutX="236.0" layoutY="230.0" prefHeight="18.0" prefWidth="88.0" text="FirstName" />
       <Label layoutX="205.0" layoutY="278.0" prefHeight="18.0" prefWidth="118.0" text="LastName" />
       <Label layoutX="228.0" layoutY="334.0" prefHeight="18.0" prefWidth="88.0" text="Email" />
       <Label layoutX="173.0" layoutY="402.0" prefHeight="18.0" prefWidth="118.0" text="Phone Number" />
-      <Button onMouseClicked="#back" layoutX="56.0" layoutY="533.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="88.0" text="Back" />
+      <Button layoutX="56.0" layoutY="533.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="26.0" prefWidth="88.0" text="Back" />
    </children>
 </AnchorPane>

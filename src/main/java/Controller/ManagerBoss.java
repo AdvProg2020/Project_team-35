@@ -441,4 +441,22 @@ public class ManagerBoss {
             return true;
         }
     }
+
+    public static void editDiscountCode(String previousCode, String code, LocalDateTime finalDate, LocalDateTime startDate, double discountPercent, double maximumAvailableAmount, int availableUseFrequent, ArrayList<String> includedCustomersUserNames, double minimumPriceForUse) {
+        DiscountCode toEdit = DiscountCode.getDiscountCodeWithCode(previousCode);
+        toEdit.codeProperty().set(code);
+        toEdit.setFinalDate(finalDate);
+        toEdit.setStartDate(startDate);
+        toEdit.setFinalDateSimpleString(toEdit.getFinalDate().toString());
+        toEdit.setStartDateSimpleString(toEdit.getStartDate().toString());
+        toEdit.setDiscountPercent(discountPercent);
+        toEdit.setMaximumAvailableAmount(maximumAvailableAmount);
+        toEdit.setAvailableUseFrequent(availableUseFrequent);
+        toEdit.setMinimumTotalPriceForUse(minimumPriceForUse);
+        toEdit.setIncludedBuyersAndUseFrequency(new HashMap<>());
+        for (String customersUserName : includedCustomersUserNames) {
+            Customer customer = Customer.getCustomerWithName(customersUserName);
+            toEdit.getIncludedBuyersAndUseFrequency().put(customer, 0);
+        }
+    }
 }

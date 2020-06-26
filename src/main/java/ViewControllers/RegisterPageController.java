@@ -6,6 +6,7 @@ import Controller.Exceptions.RepeatedUserName;
 import Controller.Exceptions.RequestProblemNotExistManager;
 import Main.Main;
 import Model.Account;
+import MusicPlayer.MusicPlayer;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -28,6 +29,7 @@ public class RegisterPageController {
     public Label problem;
 
     public void confirm(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         HashMap<String,String> allPersonalInfo = new HashMap<>();
         try {
             AccountBoss.firstStepOfRegistering(type.getText(),username.getText());
@@ -90,11 +92,13 @@ public class RegisterPageController {
 
 
     public void back(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.doBack("register or login");
     }
 
 
     public void showCompanyOrNot(ActionEvent actionEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (type.getText().equalsIgnoreCase("seller")){
             company.setDisable(false);
         }

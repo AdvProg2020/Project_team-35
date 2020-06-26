@@ -10,6 +10,7 @@ import Model.Account;
 import Model.Category;
 import Model.Product;
 import Model.Seller;
+import MusicPlayer.MusicPlayer;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -84,6 +85,7 @@ public class SellerPageController implements Initializable {
     }
 
     public void updateProfileDate(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         Seller seller = (Seller) Account.getOnlineAccount();
         seller.setCompanyName(company.getText());
         List<String> parameters = Arrays.asList("firstName", "lastName", "email", "phoneNumber", "password");
@@ -113,15 +115,18 @@ public class SellerPageController implements Initializable {
     }
 
     public void logoutClick(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         AccountBoss.logout(Account.getOnlineAccount());
         Main.setRoot("LoginPage","login page",false);
     }
 
     public void viewSalesHistory(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("SalesHistory", "sales history", false);
     }
 
     public void companyInfo(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
         errorAlert.setHeaderText("Company info");
         Seller seller = (Seller) Account.getOnlineAccount();
@@ -130,10 +135,12 @@ public class SellerPageController implements Initializable {
     }
 
     public void goToMain(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("MainMenu", "main menu", false);
     }
 
     public void creditShow(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
         errorAlert.setHeaderText("your credit");
         Seller seller = (Seller) Account.getOnlineAccount();
@@ -142,6 +149,7 @@ public class SellerPageController implements Initializable {
     }
 
     public void showListOfSoldProducts(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
         errorAlert.setHeaderText("sold products");
         String result = "";
@@ -154,6 +162,7 @@ public class SellerPageController implements Initializable {
     }
 
     public void listOfSalableProducts(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
         errorAlert.setHeaderText("salable products");
         Seller seller = (Seller) Account.getOnlineAccount();
@@ -166,20 +175,24 @@ public class SellerPageController implements Initializable {
     }
 
     public void viewCategory(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("ProductsPage","products page", false);
 
     }
 
     public void addProduct(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("AddProduct","add", false);
 
     }
 
     public void viewOffs(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("ViewOffs","view off", false);
     }
 
     public void removeProduct(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         Seller seller = (Seller)Account.getOnlineAccount();
         if (!productIdForRemoveThat.isVisible()){
 
@@ -212,6 +225,7 @@ public class SellerPageController implements Initializable {
     }
 
     public void changePic(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("AddPic","picture of account",false);
     }
 }

@@ -43,6 +43,7 @@ public class Main extends Application {
         if (!isForBack) {
             tree.push(fxml);
         }
+        MusicPlayer.getInstance().changeBGMusic();
     }
 
     private static Parent loadFXML(String fxml) throws IOException {

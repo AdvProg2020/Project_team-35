@@ -3,6 +3,7 @@ package ViewControllers;
 import Controller.SellerBoss;
 import Main.Main;
 import Model.*;
+import MusicPlayer.MusicPlayer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -24,6 +25,7 @@ public class viewSalesHistory implements Initializable {
     public GridPane pane;
 
     public void back(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.doBack();
     }
 
@@ -49,6 +51,7 @@ public class viewSalesHistory implements Initializable {
     }
 
     public void clickItems(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         Object object =  table.getSelectionModel().selectedItemProperty().get();
         int index = table.getSelectionModel().selectedIndexProperty().get();
         String name = table.getSelectionModel().getSelectedItem().toString();

@@ -5,6 +5,7 @@ import Controller.SellerBoss;
 import Main.Main;
 import Model.Account;
 import Model.Seller;
+import MusicPlayer.MusicPlayer;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -27,7 +28,7 @@ public class AddOff {
     public Label problem;
 
     public void confirm(MouseEvent mouseEvent) throws IOException {
-
+        MusicPlayer.getInstance().playButtonMusic();
         ArrayList<Integer> ids = new ArrayList<>();
         if (checkProductsId()){
             for (String s : productsIds.getText().split(" ")) {

@@ -7,6 +7,7 @@ import Main.Main;
 import Model.Account;
 import Model.Manager;
 
+import MusicPlayer.MusicPlayer;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -56,6 +57,7 @@ public class ManagerAccountPage implements Initializable {
     }
 
     public void updateProfileDate(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (!checkEmailAlphabet(emailField.getText())) {
             information.setText("Invalid Email Form.");
             information.setTextFill(Color.RED);
@@ -83,27 +85,33 @@ public class ManagerAccountPage implements Initializable {
     }
 
     public void logoutClick(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.doBack();
         AccountBoss.logout(Account.getOnlineAccount());
     }
 
     public void goToRequestsPage(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("RequestsPage", "RequestsPage", false);
     }
 
     public void goToUsersPage(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("UsersManagingPage", "Users Managing Page", false);
     }
 
     public void goToProductsManagingPage(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("ManagingProducts", "Managing Products", false);
     }
 
     public void goToCreateNewManagerPage(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("CreateNewManagerPage", "Create Manager Account", false);
     }
 
     public void goToManageCategoriesPage(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("ManageCategoriesPage", "Manage Categories", false);
     }
 
@@ -128,6 +136,7 @@ public class ManagerAccountPage implements Initializable {
     }
 
     public void goToCreateDiscountCodePage(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("ManagerCreateDiscountCode", "Create Discount Code", false);
     }
 }
