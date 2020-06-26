@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
 
 import java.util.*;
 
@@ -17,6 +18,7 @@ public class Product {
     private String startDate;
     private String finalDate;
 
+    private Media media;
     private Image statusImage;
     private Image productImage;
     private ImageView imageView;
@@ -514,5 +516,13 @@ public class Product {
 
     public String getProductShortInfo() {
 return null;
+    }
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
     }
 }

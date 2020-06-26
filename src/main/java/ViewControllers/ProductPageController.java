@@ -18,6 +18,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ZoomEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Paint;
 
 import java.io.IOException;
@@ -41,6 +44,7 @@ public class ProductPageController implements Initializable {
     public TextField numberOfAddingtoCart;
     public TextArea attributes;
     public TextArea same;
+    public MediaView mediaView;
     private Product product;
     private Customer customer;
 
@@ -79,6 +83,8 @@ public class ProductPageController implements Initializable {
             }
             same.setText(result2);
         }
+        MediaPlayer mediaPlayer = new MediaPlayer(product.getMedia());
+        mediaView.setMediaPlayer(mediaPlayer);
 
     }
 
@@ -164,11 +170,20 @@ public class ProductPageController implements Initializable {
         }
     }
 
-    public void zoom(ZoomEvent zoomEvent) {
-        System.out.println("salam");
-    }
 
     public void login(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("LoginPage","login page",false);
+    }
+
+    public void play(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
+        if (!mediaView.getMediaPlayer().isAutoPlay()){
+            mediaView.getMediaPlayer().setAutoPlay(true);
+            mediaView.getMediaPlayer().play();
+        }else {
+            mediaView.getMediaPlayer().setAutoPlay(false);
+            mediaView.getMediaPlayer().stop();
+        }
     }
 }

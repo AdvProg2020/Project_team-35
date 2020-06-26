@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane  stylesheets="@../Resources/styles.css"  fx:id="pane" alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.viewSalesHistory">
+<GridPane fx:id="pane" alignment="center" hgap="10" stylesheets="@../Resources/styles.css" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.viewSalesHistory">
     <TableView fx:id="table" onMouseClicked="#clickItems" GridPane.columnSpan="3" GridPane.rowIndex="0" />
     <Button onMouseClicked="#back" text="back" GridPane.rowIndex="1" />
    <Accordion>
@@ -18,7 +18,7 @@
            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
        </TitledPane>
-       <TitledPane animated="false" text="untitled 3">
+       <TitledPane animated="false" prefHeight="109.0" prefWidth="202.0" text="untitled 3">
          <content>
            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>

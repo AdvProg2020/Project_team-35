@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane  stylesheets="@../Resources/styles.css"  prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.SellerPageController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@../Resources/styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.SellerPageController">
     <children>
         <TextField fx:id="nameField" layoutX="225.0" layoutY="141.0" promptText="Name" />
         <TextField fx:id="lastNameField" layoutX="225.0" layoutY="193.0" promptText="LastName" />
@@ -20,25 +20,25 @@
         <Label layoutX="67.0" layoutY="312.0" prefHeight="18.0" prefWidth="60.0" text="EMail" />
         <Label layoutX="95.0" layoutY="372.0" prefHeight="18.0" prefWidth="95.0" text="Password" />
         <Label layoutX="86.0" layoutY="434.0" prefHeight="18" prefWidth="60" text="company" />
-        <Button layoutX="276.0" layoutY="519.0" mnemonicParsing="false" onMouseClicked="#updateProfileDate" text="Update" />
+        <Button layoutX="277.0" layoutY="537.0" mnemonicParsing="false" onMouseClicked="#updateProfileDate" text="Update" />
         <Label fx:id="information" layoutX="241.0" layoutY="471.0" prefHeight="18.0" prefWidth="118.0" />
-        <Button layoutX="41.0" layoutY="545.0" mnemonicParsing="false" onMouseClicked="#logoutClick" text="Logout" />
-        <Button layoutX="558.0" layoutY="105.0" mnemonicParsing="false" onMouseClicked="#viewSalesHistory" prefHeight="26.0" prefWidth="202.0" text="view sales history" />
-        <Button layoutX="563.0" layoutY="150.0" mnemonicParsing="false" onMouseClicked="#creditShow" prefHeight="26.0" prefWidth="192.0" text="view credit" />
-        <Button layoutX="570.0" layoutY="193.0" mnemonicParsing="false" onMouseClicked="#viewOffs" prefHeight="26.0" prefWidth="178.0" text="view offs" />
+        <Button layoutX="27.0" layoutY="537.0" mnemonicParsing="false" onMouseClicked="#logoutClick" text="Logout" />
+        <Button layoutX="551.0" layoutY="73.0" mnemonicParsing="false" onMouseClicked="#viewSalesHistory" prefHeight="26.0" prefWidth="202.0" text="view sales history" />
+        <Button layoutX="555.0" layoutY="127.0" mnemonicParsing="false" onMouseClicked="#creditShow" prefHeight="26.0" prefWidth="192.0" text="view credit" />
+        <Button layoutX="562.0" layoutY="187.0" mnemonicParsing="false" onMouseClicked="#viewOffs" prefHeight="26.0" prefWidth="178.0" text="view offs" />
         <Button layoutX="566.0" layoutY="250.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="185.0" text="manage products" />
         <Button layoutX="577.0" layoutY="307.0" mnemonicParsing="false" onMouseClicked="#addProduct" prefHeight="26.0" prefWidth="164.0" text="add product" />
         <Button layoutX="584.0" layoutY="359.0" mnemonicParsing="false" onMouseClicked="#removeProduct" prefHeight="26.0" prefWidth="150.0" text="remove product" />
-        <Button layoutX="577.0" layoutY="458.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="149.0" text="user page" />
+        <Button layoutX="576.0" layoutY="411.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="149.0" text="user page" />
         <Button layoutX="583.0" layoutY="519.0" onMouseClicked="#showListOfSoldProducts" text="list of sold products" />
 
-        <Button layoutX="566.0" layoutY="62.0" onMouseClicked="#listOfSalableProducts" text="salable products list" />
-        <Button layoutX="108.0" layoutY="545.0" onMouseClicked="#goToMain" text="main menu" />
-        <Button layoutX="584.0" layoutY="489.0" onMouseClicked="#companyInfo" text="view Company info" />
+        <Button layoutX="575.0" layoutY="14.0" onMouseClicked="#listOfSalableProducts" text="salable products list" />
+        <Button layoutX="138.0" layoutY="537.0" onMouseClicked="#goToMain" text="main menu" />
+        <Button layoutX="585.0" layoutY="470.0" onMouseClicked="#companyInfo" text="view Company info" />
         <Label fx:id="typeLabel" layoutX="158.0" layoutY="58.0" text="type ---------&gt;&gt;&gt;&gt; seller" />
       <TextField fx:id="productIdForRemoveThat" layoutX="768.0" layoutY="360.0" promptText="product id" visible="false" />
-      <Label fx:id="problemOfRemovingProduct" layoutX="579.0" layoutY="405.0" prefHeight="17.0" prefWidth="164.0" />
-      <Button layoutX="402.0" layoutY="545.0" mnemonicParsing="false" onMouseClicked="#changePic" text="change pic" />
+      <Label fx:id="problemOfRemovingProduct" layoutX="411.0" layoutY="372.0" prefHeight="17.0" prefWidth="164.0" />
+      <Button layoutX="392.0" layoutY="537.0" mnemonicParsing="false" onMouseClicked="#changePic" text="change pic" />
       <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="871.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
     </children>
 </AnchorPane>

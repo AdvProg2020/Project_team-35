@@ -53,6 +53,7 @@ public class ProductsPageController implements Initializable {
     public ImageView star5;
 
     public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("MainMenu", "main menu", true);
     }
 
@@ -71,6 +72,7 @@ public class ProductsPageController implements Initializable {
     private Category category;
 
     public void click(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         Object object = table.getSelectionModel().selectedItemProperty().get();
         int index = table.getSelectionModel().selectedIndexProperty().get();
          category = Category.categoryFinder(object);
@@ -97,6 +99,7 @@ public class ProductsPageController implements Initializable {
     }
 
     public void productPage(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Object object = tableProducts.getSelectionModel().selectedItemProperty().get();
         int index = tableProducts.getSelectionModel().selectedIndexProperty().get();
         Product product = Product.productFinder(object);

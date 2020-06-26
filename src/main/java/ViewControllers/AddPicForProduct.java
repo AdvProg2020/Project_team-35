@@ -2,6 +2,7 @@ package ViewControllers;
 
 import Main.Main;
 import Model.Product;
+import MusicPlayer.MusicPlayer;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ImageInput;
@@ -20,6 +21,8 @@ public class AddPicForProduct {
     public Label problem;
 
     public void confirm(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
+
         if (imageView.getImage()==null){
             try {
                 FileInputStream fileInputStream = new FileInputStream(address.getText());
@@ -35,7 +38,7 @@ public class AddPicForProduct {
                 return;
             }
         }else {
-            Main.setRoot("SellerPage","seller page",false);
+            Main.setRoot("AddVideoForProduct","add video",true);
         }
     }
 }
