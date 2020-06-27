@@ -12,6 +12,7 @@ import Model.Product;
 import MusicPlayer.MusicPlayer;
 import Views.RegisteringPanel;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -45,6 +46,7 @@ public class ProductPageController implements Initializable {
     public TextArea attributes;
     public TextArea same;
     public MediaView mediaView;
+    public Button loginButton;
     private Product product;
     private Customer customer;
 
@@ -53,6 +55,10 @@ public class ProductPageController implements Initializable {
         update();
     }
     private void update(){
+        if (Account.isIsThereOnlineUser()) {
+            loginButton.setDisable(true);
+            loginButton.setVisible(false);
+        }
         product = Product.getOnlineProduct();
         if (Account.getOnlineAccount() instanceof Customer){
             customer = (Customer) Account.getOnlineAccount();
