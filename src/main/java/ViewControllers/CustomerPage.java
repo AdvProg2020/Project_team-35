@@ -120,4 +120,9 @@ public class CustomerPage implements Initializable {
         MusicPlayer.getInstance().playButtonMusic();
 
     }
+
+    public void goToCart(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
+        Main.setRoot("CustomerCart", "Cart", false);
+    }
 }

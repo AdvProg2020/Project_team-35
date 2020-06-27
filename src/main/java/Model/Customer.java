@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.Exceptions.InventoryException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -84,12 +86,22 @@ public class Customer extends Account {
         return false;
     }
 
-    public void increaseProductAtCart(Product toIncrease) {
+    public void increaseProductAtCart(Product toIncrease) throws InventoryException {
 
+        int initial = cart.get(toIncrease);
+        if (initial >= toIncrease.getInventory()) {
+            throw new InventoryException("Not Enough Inventory :(");
+        }
+        cart.put(toIncrease, initial + 1);
     }
 
-    public void decreaseProductAtCart(Product toIncrease) {
-
+    public void decreaseProductAtCart(Product toDecrease) {
+        int initial = cart.get(toDecrease);
+        if (initial == 1) {
+            cart.remove(toDecrease);
+            return;
+        }
+        cart.put(toDecrease, initial - 1);
     }
 
 
@@ -162,5 +174,10 @@ public class Customer extends Account {
     public ArrayList<DiscountCode> getDiscountCodes() {
         return discountCodes;
     }
+
+    public HashMap<Product, Integer> getCart() {
+        return cart;
+    }
+
 }
 

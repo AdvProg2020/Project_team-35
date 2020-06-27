@@ -88,14 +88,12 @@ public class ProductsPageController implements Initializable {
     }
 
     public void createProductsTable(Category category) {
-
         final ObservableList<Product> data = FXCollections.observableArrayList(category.getCategoryProducts());
         productName.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
         price.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
         rate.setCellValueFactory(new PropertyValueFactory<Product, String>("averageOfProduct"));
         imageC.setCellValueFactory(new PropertyValueFactory<Product,ImageView>("imageView"));
         tableProducts.setItems(data);
-
     }
 
     public void productPage(MouseEvent mouseEvent) throws IOException {

@@ -141,15 +141,15 @@ public class Product {
     @Override
     public String toString() {
         String productInfo = null;
-        productInfo = "name : " + name + "\n"
+        productInfo = "name : " + name + "  "
                 + "company name : " + company + "\n"
-                + "price : " + price + "\n"
+                + "price : " + price + "  "
                 + "seller : " + seller.getUsername() + "\n"
-                + "inventory : " + inventory + "\n";
+                + "inventory : " + inventory + "  ";
         if (category!=null) {
            productInfo +="category : " + category.getCategoryName() + "\n";
         }
-             productInfo+= "product id : " + productId + "\n";
+             productInfo+= "product id : " + productId + "  ";
         productInfo += "special Attributes : \n";
         if (specialAttributes != null) {
             for (String s : specialAttributes.keySet()) {
@@ -510,5 +510,9 @@ public class Product {
 
     public Image getStatusImage() {
         return statusImage;
+    }
+
+    public String getProductShortInfo() {
+return null;
     }
 }
