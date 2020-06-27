@@ -158,5 +158,9 @@ public class Customer extends Account {
         }
         return null;
     }
+
+    public ArrayList<DiscountCode> getDiscountCodes() {
+        return discountCodes;
+    }
 }
 
