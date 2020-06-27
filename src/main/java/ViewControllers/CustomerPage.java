@@ -116,9 +116,9 @@ public class CustomerPage implements Initializable {
         return pattern.matcher(input);
     }
 
-    public void goToViewBuyLogs(MouseEvent mouseEvent) {
+    public void goToViewBuyLogs(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
-
+        Main.setRoot("CustomerViewLogs", "Buy Logs List", false);
     }
 
     public void goToCart(MouseEvent mouseEvent) throws IOException {
@@ -127,6 +127,7 @@ public class CustomerPage implements Initializable {
     }
 
     public void goToProductsPage(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("ProductsPage", "Products Page", false);
     }
 }

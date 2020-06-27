@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane  stylesheets="@../Resources/styles.css"  alignment="center" hgap="10"  vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.UserPageController">
-    <Button fx:id="button" visible="true" text="register or login" GridPane.rowIndex="0"
-            onMouseClicked="#registerOrLogin" onAction="#showRegisterAndLoginButton"/>
+<GridPane alignment="center" hgap="10" stylesheets="@../Resources/styles.css" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.UserPageController">
+    <Button fx:id="button" onAction="#showRegisterAndLoginButton" onMouseClicked="#registerOrLogin" text="register or login" visible="true" GridPane.rowIndex="0" />
+   <Button onMouseClicked="#back" mnemonicParsing="false" prefHeight="38.0" prefWidth="130.0" text="back" GridPane.rowIndex="1" />
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 
 </GridPane>

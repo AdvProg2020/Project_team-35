@@ -18,6 +18,7 @@
                         <include>**/*.mp4</include>
                         <include>**/*.m4a</include>
                         <include>**/*.mp3</include>
+                        <include>**/.ttf</include>
                     </includes>
                 </resource>
             </resources>

@@ -12,6 +12,14 @@
     -fx-padding: 10 20 10 20;
 
 }
+.label{
+    -fx-font-size: 10pt;
+    -fx-font-family: "Verdana";
+}
+
+.root {
+    -fx-background-color: #CAFBFF;
+}
 .MyButton{
     -fx-background-color:
             #44b13c,

@@ -25,4 +25,8 @@ public class UserPageController {
          button.setVisible(false);
         }
     }
+
+    public void back(MouseEvent mouseEvent) throws IOException {
+        Main.doBack();
+    }
 }

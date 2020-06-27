@@ -40,7 +40,6 @@ public class MusicPlayer {
         musicNumber++;
         background.stop();
         String path = "../Resources/sounds/b" + musicNumber % 5 + ".mp3";
-        System.out.println(path);
         AudioClip audioClip = new AudioClip(getClass().getResource(path).toString());
         background = audioClip;
         audioClip.play();
