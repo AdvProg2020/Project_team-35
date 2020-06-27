@@ -57,4 +57,14 @@ public class BuyLog extends Log{
     public void setDelivered(boolean delivered) {
         isDelivered = delivered;
     }
+
+    public String getBuyLogInfo() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Product boughtProduct : boughtProducts) {
+            stringBuilder.append(boughtProduct.getProductId() + " - ");
+        }
+        return "Seller: " + seller.getUsername() + "   Customer: " + customer.getUsername() +
+                "\n Purchased Amount: " + purchaseAmount + "   Bought Products Ids: \n" + stringBuilder.toString();
+
+    }
 }

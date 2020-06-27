@@ -1,15 +1,17 @@
 package Model;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
 import java.time.LocalDateTime;
 
 public abstract class Log {
     public static int numberOfLogs;
-    protected int logId;
+    protected SimpleIntegerProperty logId = new SimpleIntegerProperty();
     protected LocalDateTime dateAndTime;
     protected  int orderNumber;
     public Log() {
         numberOfLogs+=1;
-        logId = numberOfLogs;
+        logId.set(numberOfLogs);
         dateAndTime = LocalDateTime.now();
     }
 
@@ -26,7 +28,7 @@ public abstract class Log {
     }
 
     public int getLogId() {
-        return logId;
+        return logId.get();
     }
     public int getOrderNumber(){
         return orderNumber;

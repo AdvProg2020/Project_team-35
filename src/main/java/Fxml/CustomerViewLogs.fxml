@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@../Resources/styles.css" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CustomerViewLogs">
+
+    <TableView fx:id="logsTable" layoutX="14.0" layoutY="9.0" onMouseClicked="#logsTableClick" prefHeight="200.0" prefWidth="445.0">
+        <columns>
+            <TableColumn fx:id="logIdCol" prefWidth="444.8000246047974" text="logId" />
+        </columns>
+    </TableView>
+   <Label fx:id="info" layoutX="29.0" layoutY="280.0" prefHeight="474.0" prefWidth="430.0" text="Label" />
+   <Button onMouseClicked="#back" layoutX="599.0" layoutY="175.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="116.0" text="back" />
+
+</AnchorPane>

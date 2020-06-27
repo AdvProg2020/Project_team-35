@@ -124,7 +124,6 @@ public class CustomerBoss {
                 BuyLog buyLog = new BuyLog(customer.getPaymentAmount(),listOfCartProductsWhichIsForSpecialSeller,seller,customer);
                 sellLog.setOrderNumber(Log.numberOfLogs);
             }
-            Log.setNumberOfLogs(Log.getNumberOfLogs()+1);
             return true;
         }
     }

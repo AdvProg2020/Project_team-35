@@ -17,7 +17,7 @@
    <Label fx:id="actionInfo" layoutX="564.0" layoutY="427.0" prefHeight="71.0" prefWidth="188.0" text="Action Info" />
    <Label fx:id="totalPrice" layoutX="704.0" layoutY="323.0" prefHeight="55.0" prefWidth="215.0" />
    <Button layoutX="642.0" layoutY="69.0" mnemonicParsing="false" onMouseClicked="#increase" prefHeight="26.0" prefWidth="127.0" text="Increase" />
-   <Button layoutX="642.0" layoutY="136.0" mnemonicParsing="false" onMouseClicked="#decrease" prefHeight="26.0" prefWidth="127.0" text="Decline" />
+   <Button layoutX="642.0" layoutY="136.0" mnemonicParsing="false" onMouseClicked="#decrease" prefHeight="26.0" prefWidth="127.0" text="Decrease" />
    <Button layoutX="642.0" layoutY="213.0" mnemonicParsing="false" onMouseClicked="#goToPaymentPage" prefHeight="26.0" prefWidth="127.0" text="Finalize Buy" />
    <Label layoutX="564.0" layoutY="343.0" prefHeight="18.0" prefWidth="117.0" text="Total Price:" />
    <Button layoutX="698.0" layoutY="656.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="38.0" prefWidth="152.0" text="Back" />
