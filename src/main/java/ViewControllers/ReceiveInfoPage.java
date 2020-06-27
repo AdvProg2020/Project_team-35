@@ -27,6 +27,7 @@ public class ReceiveInfoPage {
     }
 
     public void confirmButtonClick(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         if (checkValidityOfInputs()) {
             actionInfo.setTextFill(Color.GREEN);
             actionInfo.setText("Successful :)");

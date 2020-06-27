@@ -20,16 +20,16 @@ public class Main extends Application {
     public static Stack<String> tree = new Stack<>();
 
     public static void main(String[] args) {
-//        Manager manager = new Manager("manager", "a", "a", "a", "a", "manager");
-//        Category category = new Category("cat", new ArrayList<>());
-//        Seller seller = new Seller("user", "a", "a", "a", "5", "user", "45");
-//        Product product = new Product("product", "sf", 25, seller, 5, category, new HashMap<>(), "ksdgf");
-//
-//        Seller.allSellers.add(seller);
-//        seller.getSalableProducts().add(product);
-//
-//        Customer customer = new Customer("customer", "c", "c", "c", "6", "c");
-//        customer.cart.put(product, 1);
+        Manager manager = new Manager("manager", "a", "a", "a", "a", "manager");
+        Category category = new Category("cat", new ArrayList<>());
+        Seller seller = new Seller("user", "a", "a", "a", "5", "user", "45");
+        Product product = new Product("product", "sf", 25, seller, 5, category, new HashMap<>(), "ksdgf");
+
+        Seller.allSellers.add(seller);
+        seller.getSalableProducts().add(product);
+
+        Customer customer = new Customer("customer", "c", "c", "c", "6", "c");
+        customer.cart.put(product, 1);
         launch(args);
 //        Scanner scanner = new Scanner(System.in);
 //        MainPage mainPage = new MainPage();
