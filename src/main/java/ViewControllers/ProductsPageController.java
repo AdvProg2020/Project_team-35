@@ -7,6 +7,7 @@ import Model.Category;
 import Model.Customer;
 import Model.Product;
 import Model.Rate;
+import MusicPlayer.MusicPlayer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -73,6 +74,7 @@ public class ProductsPageController implements Initializable {
         Object object = table.getSelectionModel().selectedItemProperty().get();
         int index = table.getSelectionModel().selectedIndexProperty().get();
          category = Category.categoryFinder(object);
+         if (category == null) return;
         Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
         errorAlert.setHeaderText(category.getCategoryName() + " information");
         String result = "attributes : \n";
@@ -143,7 +145,7 @@ public class ProductsPageController implements Initializable {
     }
 
     public void filterPublics(MouseEvent mouseEvent) {
-
+        MusicPlayer.getInstance().playButtonMusic();
         if (tableProducts.getItems().isEmpty()){
             problemOfPublicFilter.setText("you need products to filter");
             problemOfPublicFilter.setTextFill(Paint.valueOf("red"));
@@ -174,6 +176,7 @@ public class ProductsPageController implements Initializable {
     }
 
     public void filterPrivate(MouseEvent mouseEvent) {
+        MusicPlayer.getInstance().playButtonMusic();
         String[] inputsForFilter = privateAttributes.getText().split("\n");
         String[] fields = new String[category.getSpecialAttributes().size()];
         HashMap<String,String> filterFields = new HashMap<>();
