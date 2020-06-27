@@ -4,6 +4,7 @@ import Controller.Exceptions.ThereIsNotCategoryWithNameException;
 import Controller.SellerBoss;
 import Main.Main;
 import Model.Account;
+import Model.Product;
 import Model.Seller;
 import MusicPlayer.MusicPlayer;
 import javafx.event.ActionEvent;
@@ -48,7 +49,8 @@ public class AddProductController  {
 
         HashMap<String , String> attributesOfProduct = getSpecialInputs();
         SellerBoss.addRequestProduct(name.getText(),price.getText(),inventory.getText(),attributesOfProduct,company.getText(),categoryName.getText(),(Seller)Account.getOnlineAccount(),decription.getText());
-        Main.setRoot("SellerPage","seller page", false);
+        Product.setWhoWantsPic(Product.findProduct(Account.getOnlineAccount().getUsername(),name.getText(),Integer.parseInt(price.getText()),Integer.parseInt(inventory.getText())));
+        Main.setRoot("AddPicForProduct","add pic", false);
 
     }
     private HashMap<String,String> getSpecialInputs(){
@@ -86,6 +88,7 @@ public class AddProductController  {
            ArrayList<String> specials =  SellerBoss.getWithNameOfCategoryItsSpecials(categoryName.getText());
             listOfAttributesName.getItems().addAll(specials);
             userSawCategoriesAttributesList = true;
+            problem.setText("");
         } catch (ThereIsNotCategoryWithNameException e) {
             problem.setText(e.getMessage());
             problem.setTextFill(Paint.valueOf("red"));
@@ -93,5 +96,9 @@ public class AddProductController  {
             userSawCategoriesAttributesList = false;
             return;
         }
+    }
+
+    public void back(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("SellerPage","seller page",true);
     }
 }

@@ -4,15 +4,18 @@ import Controller.OffBoss;
 import Controller.ProductBoss;
 import Main.Main;
 import Model.Category;
+import Model.Customer;
 import Model.Product;
-import MusicPlayer.MusicPlayer;
+import Model.Rate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 
 import java.io.IOException;
@@ -38,9 +41,17 @@ public class ProductsPageController implements Initializable {
     public CheckBox inventoryFilter;
     public Label problemOfPublicFilter;
     public TextArea privateAttributes;
+    public ImageView imageView;
+    public Label imageLabel;
+    public TableColumn imageC;
+    public HBox tableOfStars;
+    public ImageView star1;
+    public ImageView star2;
+    public ImageView star3;
+    public ImageView star4;
+    public ImageView star5;
 
     public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
-        MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("MainMenu", "main menu", true);
     }
 
@@ -59,7 +70,6 @@ public class ProductsPageController implements Initializable {
     private Category category;
 
     public void click(MouseEvent mouseEvent) {
-        MusicPlayer.getInstance().playButtonMusic();
         Object object = table.getSelectionModel().selectedItemProperty().get();
         int index = table.getSelectionModel().selectedIndexProperty().get();
          category = Category.categoryFinder(object);
@@ -81,24 +91,59 @@ public class ProductsPageController implements Initializable {
         productName.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
         price.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
         rate.setCellValueFactory(new PropertyValueFactory<Product, String>("averageOfProduct"));
-        image.setCellValueFactory(new PropertyValueFactory<Product, Image>("image"));
+        imageC.setCellValueFactory(new PropertyValueFactory<Product,ImageView>("imageView"));
         tableProducts.setItems(data);
 
     }
 
     public void productPage(MouseEvent mouseEvent) throws IOException {
-        MusicPlayer.getInstance().playButtonMusic();
         Object object = tableProducts.getSelectionModel().selectedItemProperty().get();
         int index = tableProducts.getSelectionModel().selectedIndexProperty().get();
         Product product = Product.productFinder(object);
         if (product != null) {
             Product.setOnlineProduct(product);
-            Main.setRoot("ProductPage", "product page", false);
+           if (imageLabel.isVisible()) {
+               Main.setRoot("ProductPage", "product page", false);
+           }else {
+               imageLabel.setVisible(true);
+               imageLabel.setText("image of product status");
+               imageView.setImage(product.getStatusImage());
+               //
+               Rate rate = new Rate(new Customer("s","d","d","d","s","s"),76,product);
+               product.getRatesList().add(rate);
+                       //
+               prepareScoresGraphicMode(product);
+           }
+        }
+    }
+    private void prepareScoresGraphicMode(Product product){
+        Image starYellow = new Image("./Resources/yellow.jpg");
+        Image starBlank = new Image("./Resources/blank.jpg");
+        star1.setImage(starBlank);
+        star2.setImage(starBlank);
+        star3.setImage(starBlank);
+        star4.setImage(starBlank);
+        star5.setImage(starBlank);
+        if (product.getAverageOfRates()>0){
+            star1.setImage(starYellow);
+        }
+        if (product.getAverageOfRates()>20 ){
+            star2.setImage(starYellow);
+
+        }if (product.getAverageOfRates()>40 ){
+            star3.setImage(starYellow);
+
+        }if (product.getAverageOfRates()>60 ){
+            star4.setImage(starYellow);
+
+        } if (product.getAverageOfRates()>80){
+            star5.setImage(starYellow);
+
         }
     }
 
     public void filterPublics(MouseEvent mouseEvent) {
-        MusicPlayer.getInstance().playButtonMusic();
+
         if (tableProducts.getItems().isEmpty()){
             problemOfPublicFilter.setText("you need products to filter");
             problemOfPublicFilter.setTextFill(Paint.valueOf("red"));
@@ -123,13 +168,12 @@ public class ProductsPageController implements Initializable {
         productName.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
         price.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
         rate.setCellValueFactory(new PropertyValueFactory<Product, String>("averageOfProduct"));
-        image.setCellValueFactory(new PropertyValueFactory<Product, Image>("image"));
+        imageC.setCellValueFactory(new PropertyValueFactory<Product,ImageView>("imageView"));
         tableProducts.setItems(data);
 
     }
 
     public void filterPrivate(MouseEvent mouseEvent) {
-        MusicPlayer.getInstance().playButtonMusic();
         String[] inputsForFilter = privateAttributes.getText().split("\n");
         String[] fields = new String[category.getSpecialAttributes().size()];
         HashMap<String,String> filterFields = new HashMap<>();
@@ -145,7 +189,7 @@ public class ProductsPageController implements Initializable {
         productName.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
         price.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
         rate.setCellValueFactory(new PropertyValueFactory<Product, String>("averageOfProduct"));
-        image.setCellValueFactory(new PropertyValueFactory<Product, Image>("image"));
+        imageC.setCellValueFactory(new PropertyValueFactory<Product,ImageView>("imageView"));
         tableProducts.setItems(data);
 
     }

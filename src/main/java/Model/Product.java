@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.*;
 
@@ -16,7 +17,9 @@ public class Product {
     private String startDate;
     private String finalDate;
 
+    private Image statusImage;
     private Image productImage;
+    private ImageView imageView;
     private double averageOfProduct;
     private int reviewNumber;
     private String description;
@@ -31,6 +34,7 @@ public class Product {
     private static Product onlineProduct;
     private double priceWithOffEffect;
 
+    private static Product whoWantsPic;
     private String daysRemind;
     private ArrayList<Customer> whoBoughtThisGood;
     private String sellerName;
@@ -62,7 +66,25 @@ public class Product {
         this.priceForTable.set(price);
     }
 
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public static void setWhoWantsPic(Product whoWantsPic) {
+        Product.whoWantsPic = whoWantsPic;
+    }
+
+    public static Product getWhoWantsPic() {
+        return whoWantsPic;
+    }
+
     public void setProductImage(Image productImage) {
+        imageView = new ImageView(productImage);
+        setImageView(imageView);
         this.productImage = productImage;
     }
 
@@ -473,5 +495,20 @@ public class Product {
 
     public void setDaysRemind(String daysRemind) {
         this.daysRemind = daysRemind;
+    }
+    public static Product findProduct(String username,String name,int price,int inventory){
+        for (Product product : getAllProducts()) {
+            if (product.getName().equalsIgnoreCase(name) && product.getSeller().getUsername().equalsIgnoreCase(username) && product.getPrice()==price && product.getInventory()==inventory)
+                return product;
+        }
+        return null;
+    }
+
+    public void setStatusImage(Image statusImage) {
+        this.statusImage = statusImage;
+    }
+
+    public Image getStatusImage() {
+        return statusImage;
     }
 }
