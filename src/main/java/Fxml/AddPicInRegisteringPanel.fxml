@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.AddPicInRegisterPanelController">
+<AnchorPane stylesheets="@../Resources/styles.css" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.AddPicInRegisterPanelController">
     <children>
         <ImageView fx:id="image1" fitHeight="150.0" fitWidth="200.0" layoutX="58.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
         <ImageView fx:id="image3" fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />

@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ManagerAccountPage">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@../Resources/styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ManagerAccountPage">
    <children>
       <TextField fx:id="nameField" layoutX="231.0" layoutY="142.0" promptText="Name" />
       <TextField fx:id="lastNameField" layoutX="231.0" layoutY="193.0" promptText="LastName" />
@@ -24,10 +24,9 @@
       <Button layoutX="587.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#goToRequestsPage" prefHeight="26.0" prefWidth="192.0" text="Requests Managing" />
       <Button layoutX="589.0" layoutY="92.0" mnemonicParsing="false" onMouseClicked="#goToUsersPage" prefHeight="26.0" prefWidth="192.0" text="Users Managing" />
       <Button layoutX="590.0" layoutY="141.0" mnemonicParsing="false" onMouseClicked="#goToProductsManagingPage" prefHeight="26.0" prefWidth="192.0" text="Products Managing" />
-      <Button layoutX="590.0" layoutY="192.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="192.0" text="Discount Codes Managing" />
       <Button layoutX="590.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#goToCreateNewManagerPage" prefHeight="26.0" prefWidth="192.0" text="Create New Manager" />
       <Button layoutX="591.0" layoutY="307.0" mnemonicParsing="false" onMouseClicked="#goToManageCategoriesPage" prefHeight="26.0" prefWidth="192.0" text="Categories Managing" />
-      <Button layoutX="593.0" layoutY="368.0" mnemonicParsing="false" onMouseClicked="#goToCreateDiscountCodePage" prefHeight="26.0" prefWidth="192.0" text="Create Discount Code" />
+      <Button layoutX="590.0" layoutY="196.0" mnemonicParsing="false" onMouseClicked="#goToCreateDiscountCodePage" prefHeight="26.0" prefWidth="192.0" text="Discount Codes Managing" />
       <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="877.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
 
    </children>

@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ViewBalance">
+<AnchorPane  stylesheets="@../Resources/styles.css"  prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ViewBalance">
    <children>
       <TextArea layoutX="375.0" layoutY="280.0" prefHeight="38.0" prefWidth="150.0" text="Your account balance is:" />
       <Label  layoutX="436.0" layoutY="329.0" text="x" />

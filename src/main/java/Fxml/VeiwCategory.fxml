@@ -4,7 +4,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableView?>
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ViewCategoryController">
+<GridPane  stylesheets="@../Resources/styles.css"  alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ViewCategoryController">
     <TableView fx:id="table" GridPane.rowIndex="0"/>
     <Button GridPane.rowIndex="1" text="back" onMouseClicked="#back"></Button>
 </GridPane>

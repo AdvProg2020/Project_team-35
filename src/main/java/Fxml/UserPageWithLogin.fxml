@@ -3,6 +3,6 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.control.Button?>
-<GridPane alignment="center" hgap="10"  vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.UserPageWithLoginController">
+<GridPane  stylesheets="@../Resources/styles.css"  alignment="center" hgap="10"  vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.UserPageWithLoginController">
     <Button text=""></Button>
 </GridPane>

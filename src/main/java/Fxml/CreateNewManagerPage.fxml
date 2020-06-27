@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CreateNewManagerPage">
+<AnchorPane stylesheets="@../Resources/styles.css"  prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CreateNewManagerPage">
    <children>
       <TextField fx:id="username" layoutX="426.0" layoutY="113.0" promptText="Username" />
       <TextField fx:id="firstName" layoutX="426.0" layoutY="213.0" promptText="Firstname" />
