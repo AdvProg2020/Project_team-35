@@ -114,6 +114,7 @@ public class ProductsPageController implements Initializable {
         Product product = Product.productFinder(object);
         if (product != null) {
             Product.setOnlineProduct(product);
+            System.out.println(imageLabel.isVisible());
            if (imageLabel.isVisible()) {
                Main.setRoot("ProductPage", "product page", false);
            }else {

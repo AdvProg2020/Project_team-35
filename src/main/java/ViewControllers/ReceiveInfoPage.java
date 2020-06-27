@@ -18,6 +18,10 @@ public class ReceiveInfoPage {
             setActionErrorInfo("Invalid Phone Number Format!");
             return false;
         }
+        else if (!address.getText().matches("^(\\.+)$")) {
+            setActionErrorInfo("Invalid Address Format!");
+            return false;
+        }
         else return true;
     }
 
@@ -26,11 +30,12 @@ public class ReceiveInfoPage {
         actionInfo.setTextFill(Color.RED);
     }
 
-    public void confirmButtonClick(MouseEvent mouseEvent) {
-        MusicPlayer.getInstance().playButtonMusic();
+    public void confirmButtonClick(MouseEvent mouseEvent) throws IOException{
         if (checkValidityOfInputs()) {
+            MusicPlayer.getInstance().playButtonMusic();
             actionInfo.setTextFill(Color.GREEN);
             actionInfo.setText("Successful :)");
+            Main.setRoot("CheckDiscountCodePage", "Check Discount Code", false);
         }
     }
 
