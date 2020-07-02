@@ -41,6 +41,6 @@ public class PaymentPage implements Initializable {
     }
 
     public void goToParentPageButtonClick(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("CustomerCart", "Customer Cart", false);
+        Main.setRoot("CustomerPage", "Customer Page", false);
     }
 }

@@ -30,13 +30,12 @@ public class CheckDiscountCodePage {
     }
 
     public void doneButtonClick(MouseEvent mouseEvent) throws IOException{
-        while (true) {
             if (discountCode.getText().matches("^(\\d+)$")) {
                 try {
                     CustomerBoss.useDiscountCode((Customer) Account.getOnlineAccount(), discountCode.getText());
                 } catch (DiscountNotExist | DiscountIsNotForYou | DontHaveMinimumPriceOfCartForDiscount discountException) {
                     setActionErrorInfo(discountException.getMessage());
-                    break;
+                    Main.setRoot("CheckDiscountCodePage", "Check Discount Code", false);
                 }
                 Main.setRoot("PaymentPage", "Payment", false);
             }
@@ -44,6 +43,8 @@ public class CheckDiscountCodePage {
                 CustomerBoss.dontUseDiscountCode((Customer) Account.getOnlineAccount());
                 Main.setRoot("PaymentPage", "Payment", false);
             }
-        }
+            else if (discountCode.getText().isEmpty()) {
+                setActionErrorInfo("Invalid discount code!");
+            }
     }
 }

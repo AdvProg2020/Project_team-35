@@ -18,7 +18,7 @@ public class ReceiveInfoPage {
             setActionErrorInfo("Invalid Phone Number Format!");
             return false;
         }
-        else if (!address.getText().matches("^(\\.+)$")) {
+        else if (!address.getText().matches("^(\\w+)$")) {
             setActionErrorInfo("Invalid Address Format!");
             return false;
         }

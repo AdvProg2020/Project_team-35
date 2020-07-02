@@ -36,7 +36,7 @@ public class Main extends Application {
         Main.stage = primaryStage;
         tree.push("FirstPage");
         primaryStage.show();
-        MusicPlayer.getInstance().playBGMusic();
+        //MusicPlayer.getInstance().playBGMusic();
     }
 
     public static void setRoot(String fxml, String newTitle ,boolean isForBack) throws IOException {
@@ -46,7 +46,7 @@ public class Main extends Application {
         if (!isForBack) {
             tree.push(fxml);
         }
-        MusicPlayer.getInstance().changeBGMusic();
+        //MusicPlayer.getInstance().changeBGMusic();
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
