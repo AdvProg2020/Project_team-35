@@ -9,7 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
@@ -18,8 +19,19 @@ public class Main extends Application {
     public static Scene scene;
     public static Stage stage;
     public static Stack<String> tree = new Stack<>();
+    private static Socket socket;
+    private static DataOutputStream dataOutputStream;
+    private static DataInputStream dataInputStream;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        try {
+            socket = new Socket("localhost", 8888);
+        } catch (IOException e) {
+            System.out.println("Socket creation failed.");
+        }
+        System.out.println("Connected to server successfully.");
+        dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+        dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         launch(args);
 //        Scanner scanner = new Scanner(System.in);
 //        MainPage mainPage = new MainPage();
@@ -63,4 +75,18 @@ public class Main extends Application {
         Main.tree.pop();
         Main.setRoot(Main.tree.peek(), Main.tree.peek(), true);
     }
+    public static String sendAndGetMessage(String message) throws IOException {
+        sendMessageToServer(message);
+        return getMessageFromServer();
+
+    }
+    private static void sendMessageToServer(String message) throws IOException {
+        dataOutputStream.writeUTF(message);
+        dataOutputStream.flush();
+    }
+
+    private static String getMessageFromServer() throws IOException {
+        return dataInputStream.readUTF();
+    }
+
 }
