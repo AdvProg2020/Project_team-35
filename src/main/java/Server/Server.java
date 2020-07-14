@@ -1,8 +1,13 @@
 package Server;
 
+import Controller.Exceptions.NotValidRequestIdException;
+import Controller.ManagerBoss;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Server {
 
@@ -33,8 +38,10 @@ public class Server {
             while (true) {
                 try {
                     input = dataInputStream.readUTF();
-                    if (input.startsWith("M")) {
-                        handleManagerRequests(input);
+                    if (input.charAt(0) == 'M') {
+                        if (input.startsWith("MRequests")) {
+                            handleManagerRequestsRequests(input);
+                        }
                     }
                     else if (input.startsWith("S")) {
                         handleSellerRequests(input);
@@ -48,8 +55,32 @@ public class Server {
             }
         }
 
-        private void handleManagerRequests(String input) {
+        private void handleManagerRequestsRequests(String input) {
             //should send response to client
+            String requestText = input.substring(9);
+            if (requestText.startsWith("acceptRequest")) {
+                try {
+                    acceptRequestWithId(requestText);
+                    sendMessageToClient("Successful :)");
+                } catch (InvalidRequestException | NotValidRequestIdException e) {
+                    sendMessageToClient(e.getMessage());
+                }
+            }
+            else if (requestText.startsWith("declineRequest")) {
+                try {
+                    declineRequestWithId(requestText);
+                    sendMessageToClient("Successful :)");
+                } catch (InvalidRequestException | NotValidRequestIdException e) {
+                    sendMessageToClient(e.getMessage());
+                }
+            }
+            else if (requestText.equalsIgnoreCase("getCheckedRequests")) {
+
+            }
+            else if (requestText.equalsIgnoreCase("getUncheckedRequests")) {
+
+            }
+
         }
 
         private void handleCustomerRequests(String input) {
@@ -68,6 +99,29 @@ public class Server {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    public static Matcher getMatcher(String input , String regex){
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(input);
+    }
+
+    private static void acceptRequestWithId(String command) throws InvalidRequestException, NotValidRequestIdException {
+        Matcher matcher = getMatcher(command, "^acceptRequest(\\d+)$");
+        if (matcher.matches()) {
+            ManagerBoss.acceptRequestWithId(Integer.parseInt(matcher.group(1)));
+        }
+        else {
+            throw new InvalidRequestException("Invalid Request Format: " + command);
+        }
+    }
+    private static void declineRequestWithId(String command) throws InvalidRequestException, NotValidRequestIdException {
+        Matcher matcher = getMatcher(command, "^declineRequest(\\d+)$");
+        if (matcher.matches()) {
+            ManagerBoss.declineRequestWithId(Integer.parseInt(matcher.group(1)));
+        }
+        else {
+            throw new InvalidRequestException("Invalid Request Format: " + command);
         }
     }
 }

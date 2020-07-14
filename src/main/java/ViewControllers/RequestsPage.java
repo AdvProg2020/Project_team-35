@@ -19,6 +19,8 @@ import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RequestsPage implements Initializable {
     public TableView<Request> requestsTable;
@@ -114,7 +116,6 @@ public class RequestsPage implements Initializable {
         situationCol.setCellValueFactory(new PropertyValueFactory<>("Situation"));
         observableList.addAll(Manager.getNewRequests());
         requestsTable.setItems(observableList);
-
     }
 
     private void updateCheckedRequestsTableScreen() {
@@ -137,5 +138,9 @@ public class RequestsPage implements Initializable {
     public void backClick(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
         Main.doBack();
+    }
+    public static Matcher getMatcher(String input , String regex){
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(input);
     }
 }
