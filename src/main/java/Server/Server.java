@@ -1,8 +1,10 @@
 package Server;
 
 import Controller.AccountBoss;
+import Controller.Exceptions.MoreThanOneManagerException;
 import Controller.Exceptions.NotValidRequestIdException;
 import Controller.Exceptions.RepeatedUserName;
+import Controller.Exceptions.RequestProblemNotExistManager;
 import Controller.ManagerBoss;
 
 import java.io.*;
@@ -57,11 +59,35 @@ public class Server {
                     }
                     else if (input.startsWith("C")) {
                         handleCustomerRequests(input);
+                    }else if (input.startsWith("R")){
+                        register(input);
                     }
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private void register(String input) throws IOException {
+            Matcher matcher = getMatcher(input,"\\["+"(\\w*),(\\w*)"+"\\]");
+            String username = input.substring(input.indexOf(",")+1,input.indexOf("-"));
+            String type = input.substring(input.indexOf("-")+1,input.indexOf("+"));
+            HashMap<String,String> allPersonalInfo = new HashMap<>();
+            while (matcher.find()){
+                System.out.println(matcher.group(1)+"-----"+matcher.group(2));
+                allPersonalInfo.put(matcher.group(1),matcher.group(2));
+            }
+            try {
+                AccountBoss.firstStepOfRegistering(type,username);
+                AccountBoss.makeAccount(allPersonalInfo);
+                dataOutputStream.writeUTF("S");
+                dataOutputStream.flush();
+            } catch (MoreThanOneManagerException | RepeatedUserName | RequestProblemNotExistManager e) {
+                dataOutputStream.writeUTF(e.getMessage());
+                dataOutputStream.flush();
+            }
+
+
         }
 
         private void handleManagerRequestsRequests(String input) {

@@ -73,7 +73,7 @@ public class AccountBoss {
 
             }
         }
-        if (type.equals("manager")) {
+        if (type.equalsIgnoreCase("manager")) {
             Manager manager = new Manager(username, name, family, email, phone, password);
         }
         if (type.equals("seller")) {
