@@ -10,18 +10,18 @@ import java.time.LocalDateTime;
 
 public class Boss {
     public static boolean removeExpiredOffsAndDiscountCodes() {
-        Image offImage = new Image("./Resources/off.jpg");
-        Image notImage = new Image("./Resources/not.jpg");
-        for (Product product : Product.getAllProducts()) {
-            if (product.getInventory()==0){
-                product.setStatusImage(notImage);
-            }
-           else if (Off.isThereProduct(product)){
-                product.setStatusImage(offImage);
-            }else {
-               product.setStatusImage(product.getProductImage());
-            }
-        }
+//        Image offImage = new Image("./Resources/off.jpg");
+//        Image notImage = new Image("./Resources/not.jpg");
+//        for (Product product : Product.getAllProducts()) {
+//            if (product.getInventory()==0){
+//                product.setStatusImage(notImage);
+//            }
+//           else if (Off.isThereProduct(product)){
+//                product.setStatusImage(offImage);
+//            }else {
+//               product.setStatusImage(product.getProductImage());
+//            }
+//        }
 
 
 
