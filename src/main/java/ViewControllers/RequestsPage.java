@@ -66,19 +66,24 @@ public class RequestsPage implements Initializable {
         checkedRequestsInfo.setTextFill(Color.GREEN);
     }
 
-    public void acceptRequest(MouseEvent mouseEvent) {
+    public void acceptRequest(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
         if (selectedRequest != null) {
-            try {
-                ManagerBoss.acceptRequestWithId(selectedRequest.getRequestId());
-                actionInfo.setText("Successful :)");
-                actionInfo.setTextFill(Color.GREEN);
-                selectedRequest = null;
-                updateScreenTables();
-            } catch (NotValidRequestIdException e) {
-                newRequestsInfo.setText(e.getMessage());
-                newRequestsInfo.setTextFill(Color.RED);
-            }
+            Main.sendMessageToServer("MRequestsAcceptRequest" + selectedRequest.getRequestId());
+            String result = Main.getMessageFromServer();
+            actionInfo.setText(result);
+            updateScreenTables();
+            selectedRequest = null;
+//            try {
+//                ManagerBoss.acceptRequestWithId(selectedRequest.getRequestId());
+//                actionInfo.setText("Successful :)");
+//                actionInfo.setTextFill(Color.GREEN);
+//                selectedRequest = null;
+//                updateScreenTables();
+//            } catch (NotValidRequestIdException e) {
+//                newRequestsInfo.setText(e.getMessage());
+//                newRequestsInfo.setTextFill(Color.RED);
+//            }
         }
         else {
             actionInfo.setTextFill(Color.RED);
@@ -86,19 +91,24 @@ public class RequestsPage implements Initializable {
         }
     }
 
-    public void declineRequest(MouseEvent mouseEvent) {
+    public void declineRequest(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
         if (selectedRequest != null) {
-            try {
-                ManagerBoss.declineRequestWithId(selectedRequest.getRequestId());
-                newRequestsInfo.setText("Successful :)");
-                newRequestsInfo.setTextFill(Color.GREEN);
-                selectedRequest = null;
-                updateScreenTables();
-            } catch (NotValidRequestIdException e) {
-                newRequestsInfo.setText(e.getMessage());
-                newRequestsInfo.setTextFill(Color.RED);
-            }
+            Main.sendMessageToServer("MRequestsDeclineRequest" + selectedRequest.getRequestId());
+            String result = Main.getMessageFromServer();
+            actionInfo.setText(result);
+            updateScreenTables();
+            selectedRequest = null;
+//            try {
+//                ManagerBoss.declineRequestWithId(selectedRequest.getRequestId());
+//                newRequestsInfo.setText("Successful :)");
+//                newRequestsInfo.setTextFill(Color.GREEN);
+//                selectedRequest = null;
+//                updateScreenTables();
+//            } catch (NotValidRequestIdException e) {
+//                newRequestsInfo.setText(e.getMessage());
+//                newRequestsInfo.setTextFill(Color.RED);
+//            }
         }
         else {
             actionInfo.setTextFill(Color.RED);

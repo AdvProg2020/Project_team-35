@@ -1,11 +1,14 @@
 package Server;
 
+import Controller.AccountBoss;
 import Controller.Exceptions.NotValidRequestIdException;
+import Controller.Exceptions.RepeatedUserName;
 import Controller.ManagerBoss;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +21,7 @@ public class Server {
             socket = serverSocket.accept();
             System.out.println("new client connected to server");
             new handle(new DataInputStream(new BufferedInputStream(socket.getInputStream()))
-                    , new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()))).start();
+                    , new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())), socket).start();
         }
     }
 
@@ -26,10 +29,12 @@ public class Server {
     static class handle extends Thread {
         private DataInputStream dataInputStream;
         private DataOutputStream dataOutputStream;
+        private Socket socket;
 
-        public handle(DataInputStream dataInputStream, DataOutputStream dataOutputStream) {
+        public handle(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket) {
             this.dataInputStream = dataInputStream;
             this.dataOutputStream = dataOutputStream;
+            this.socket = socket;
         }
 
         @Override
@@ -38,9 +43,13 @@ public class Server {
             while (true) {
                 try {
                     input = dataInputStream.readUTF();
+                    System.out.println("from client:" + input);
                     if (input.charAt(0) == 'M') {
                         if (input.startsWith("MRequests")) {
                             handleManagerRequestsRequests(input);
+                        }
+                        else if (input.startsWith("MNewManager")) {
+                            handleManagerRequestsNewManager(input);
                         }
                     }
                     else if (input.startsWith("S")) {
@@ -58,26 +67,49 @@ public class Server {
         private void handleManagerRequestsRequests(String input) {
             //should send response to client
             String requestText = input.substring(9);
-            if (requestText.startsWith("acceptRequest")) {
+            if (requestText.startsWith("AcceptRequest")) {
                 try {
-                    acceptRequestWithId(requestText);
+                    startAcceptRequestWithId(requestText);
                     sendMessageToClient("Successful :)");
                 } catch (InvalidRequestException | NotValidRequestIdException e) {
                     sendMessageToClient(e.getMessage());
                 }
             }
-            else if (requestText.startsWith("declineRequest")) {
+            else if (requestText.startsWith("DeclineRequest")) {
                 try {
-                    declineRequestWithId(requestText);
+                    startDeclineRequestWithId(requestText);
                     sendMessageToClient("Successful :)");
                 } catch (InvalidRequestException | NotValidRequestIdException e) {
                     sendMessageToClient(e.getMessage());
                 }
             }
-            else if (requestText.equalsIgnoreCase("getCheckedRequests")) {
+            else if (requestText.equalsIgnoreCase("GetCheckedRequests")) {
 
             }
-            else if (requestText.equalsIgnoreCase("getUncheckedRequests")) {
+            else if (requestText.equalsIgnoreCase("GetUncheckedRequests")) {
+
+            }
+
+        }
+        private void handleManagerRequestsNewManager(String input) throws IOException, ClassNotFoundException {
+            String request = input.substring(11);
+            if (request.startsWith("create")) {
+                Matcher matcher = getMatcher(request, "^create(\\S+)$");
+                if (matcher.matches()) {
+                    try {
+                        ManagerBoss.checkNewManagerUserName(matcher.group(1));
+                    } catch (RepeatedUserName repeatedUserName) {
+                        sendMessageToClient(repeatedUserName.getMessage());
+                        return;
+                    }
+                    sendMessageToClient("Successful");
+                    HashMap<String, String> data = (HashMap<String, String>) readObjectFromClient();
+                    AccountBoss.makeAccount(data);
+                    sendMessageToClient("Successful");
+                }
+                else {
+                    sendMessageToClient("Invalid Username Format");
+                }
 
             }
 
@@ -100,23 +132,29 @@ public class Server {
                 e.printStackTrace();
             }
         }
+
+        private Object readObjectFromClient() throws IOException, ClassNotFoundException {
+            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+            return objectInputStream.readObject();
+        }
     }
     public static Matcher getMatcher(String input , String regex){
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input);
     }
 
-    private static void acceptRequestWithId(String command) throws InvalidRequestException, NotValidRequestIdException {
-        Matcher matcher = getMatcher(command, "^acceptRequest(\\d+)$");
+    private static void startAcceptRequestWithId(String command) throws InvalidRequestException, NotValidRequestIdException {
+        Matcher matcher = getMatcher(command, "^AcceptRequest(\\d+)$");
         if (matcher.matches()) {
+            System.out.println("rid: " + Integer.parseInt(matcher.group(1)));
             ManagerBoss.acceptRequestWithId(Integer.parseInt(matcher.group(1)));
         }
         else {
             throw new InvalidRequestException("Invalid Request Format: " + command);
         }
     }
-    private static void declineRequestWithId(String command) throws InvalidRequestException, NotValidRequestIdException {
-        Matcher matcher = getMatcher(command, "^declineRequest(\\d+)$");
+    private static void startDeclineRequestWithId(String command) throws InvalidRequestException, NotValidRequestIdException {
+        Matcher matcher = getMatcher(command, "^DeclineRequest(\\d+)$");
         if (matcher.matches()) {
             ManagerBoss.declineRequestWithId(Integer.parseInt(matcher.group(1)));
         }
@@ -124,4 +162,5 @@ public class Server {
             throw new InvalidRequestException("Invalid Request Format: " + command);
         }
     }
+
 }

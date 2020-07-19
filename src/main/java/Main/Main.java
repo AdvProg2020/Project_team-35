@@ -80,15 +80,20 @@ public class Main extends Application {
     public static String sendAndGetMessage(String message) throws IOException {
         sendMessageToServer(message);
         return getMessageFromServer();
-
     }
-    private static void sendMessageToServer(String message) throws IOException {
+    public static void sendMessageToServer(String message) throws IOException {
         dataOutputStream.writeUTF(message);
         dataOutputStream.flush();
     }
 
-    private static String getMessageFromServer() throws IOException {
+    public static String getMessageFromServer() throws IOException {
         return dataInputStream.readUTF();
+    }
+
+    public static void sendObjectToServer(Serializable toSend) throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+        objectOutputStream.writeObject(toSend);
+        objectOutputStream.flush();
     }
 
 }
