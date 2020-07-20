@@ -113,11 +113,15 @@ public class AccountBoss {
      *
      * @param username
      */
-    public static boolean checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername, LoginWithoutLogout {
+    public static void  checkLoginWithLogOut(String username) throws LoginWithoutLogout {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (Account.isIsThereOnlineUser()) {
             throw new LoginWithoutLogout("first you should logout", 1);
         }
+    }
+    public static boolean checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername{
+        Boss.removeExpiredOffsAndDiscountCodes();
+
         if (!Account.isThereAccountWithUserName(username)) {
             throw new ExistenceOfUserWithUsername("this username doesn't exist.", 2);
         }

@@ -143,7 +143,7 @@ public class Server {
                     dataOutputStream.writeUTF("goToMainMenu");
                     dataOutputStream.flush();
                 }
-            } catch ( ExistenceOfUserWithUsername | LoginWithoutLogout | PasswordValidity existenceOfUserWithUsername) {
+            } catch ( ExistenceOfUserWithUsername  | PasswordValidity existenceOfUserWithUsername) {
                     dataOutputStream.writeUTF(existenceOfUserWithUsername.getMessage());
                     dataOutputStream.flush();
 

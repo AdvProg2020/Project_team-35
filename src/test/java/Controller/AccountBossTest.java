@@ -61,15 +61,11 @@ public class AccountBossTest {
            Assert.assertTrue(AccountBoss.checkUsernameExistenceInLogin("rezazza"));
         } catch (ExistenceOfUserWithUsername existenceOfUserWithUsername) {
             Assert.assertEquals(existenceOfUserWithUsername.getId(),2,0);
-        } catch (LoginWithoutLogout loginWithoutLogout) {
-            Assert.assertEquals(loginWithoutLogout.getId(),1,0);
         }
         try {
         Assert.assertTrue(AccountBoss.checkUsernameExistenceInLogin("rezazza"));
     } catch (ExistenceOfUserWithUsername existenceOfUserWithUsername) {
         Assert.assertEquals(existenceOfUserWithUsername.getId(),2,0);
-    } catch (LoginWithoutLogout loginWithoutLogout) {
-        Assert.assertEquals(loginWithoutLogout.getId(),1,0);
     }
 
 
@@ -78,16 +74,12 @@ public class AccountBossTest {
             Assert.assertTrue(AccountBoss.checkUsernameExistenceInLogin("ali"));
         } catch (ExistenceOfUserWithUsername existenceOfUserWithUsername) {
             Assert.assertEquals(existenceOfUserWithUsername.getId(),2,0);
-        } catch (LoginWithoutLogout loginWithoutLogout) {
-            Assert.assertEquals(loginWithoutLogout.getId(),1,0);
         }
 
         try {
             Assert.assertTrue(AccountBoss.checkUsernameExistenceInLogin("asd"));
         } catch (ExistenceOfUserWithUsername existenceOfUserWithUsername) {
             Assert.assertEquals(existenceOfUserWithUsername.getId(),2,0);
-        } catch (LoginWithoutLogout loginWithoutLogout) {
-            Assert.assertEquals(loginWithoutLogout.getId(),1,0);
         }
 
     }

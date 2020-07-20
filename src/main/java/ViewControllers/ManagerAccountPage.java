@@ -48,7 +48,7 @@ public class ManagerAccountPage implements Initializable {
     }
 
     private void updateValuesOnScreen() throws IOException, ClassNotFoundException {
-       // Account onlineAccount  = Account.getOnlineAccount();
+
         Account onlineAccount = (Account) Main.sendAndGetObjectFromServer("GetOnlineAccount");
         usernameLabel.setText(onlineAccount.getUsername());
         nameField.setText(onlineAccount.getFirstName());
@@ -89,8 +89,9 @@ public class ManagerAccountPage implements Initializable {
 
     public void logoutClick(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
-        Main.doBack();
+
         AccountBoss.logout(Account.getOnlineAccount());
+        Main.doBack();
     }
 
     public void goToRequestsPage(MouseEvent mouseEvent) throws IOException {
