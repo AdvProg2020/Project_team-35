@@ -31,24 +31,26 @@ public class RegisterPageController {
     public void confirm(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
         HashMap<String,String> allPersonalInfo = new HashMap<>();
-        try {
-            AccountBoss.firstStepOfRegistering(type.getText(),username.getText());
-        } catch ( RequestProblemNotExistManager | RepeatedUserName | MoreThanOneManagerException e) {
-            problem.setText(e.getMessage());
-            problem.setTextFill(Paint.valueOf("red"));
-            return;
-        }
-        if (!type.getText().matches("^(customer|seller)$")){
-            problem.setTextFill(Paint.valueOf("red"));
-            problem.setText("invalid type");
-            return;
-        }
+        String typeOfUser = type.getText() ;
+        String usernameOfUser = username.getText();
+        String request = "R";
+        request+=","+typeOfUser+"-"+usernameOfUser+"+";
+
         createAllPersonalInfo(allPersonalInfo);
         if (checkValidityOfData(allPersonalInfo)) {
-            AccountBoss.makeAccount(allPersonalInfo);
-            Account.setWhoWantsToHavePic(Account.getAccountWithUsername(username.getText()));
-            Main.setRoot("AddPicInRegisteringPanel","add pic", false);
+            for (String s : allPersonalInfo.keySet()) {
+                request+="["+s+","+allPersonalInfo.get(s)+"]";
+            }
+            String response =  Main.sendAndGetMessage(request);
+            if (response.equalsIgnoreCase("S")) {
+                Main.setRoot("MainMenu","main menu",false);
+            }else {
+                problem.setTextFill(Paint.valueOf("red"));
+                problem.setText(response);
+                return;
+            }
         }
+
     }
     public boolean checkValidityOfData(HashMap<String , String> allPersonalInfo){
         for (String s : allPersonalInfo.keySet()) {

@@ -6,6 +6,7 @@ import Controller.Exceptions.NotValidRequestIdException;
 import Controller.Exceptions.RepeatedUserName;
 import Controller.Exceptions.RequestProblemNotExistManager;
 import Controller.ManagerBoss;
+import Model.Account;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -70,14 +71,14 @@ public class Server {
 
         private void register(String input) throws IOException {
             Matcher matcher = getMatcher(input,"\\["+"(\\w*),(\\w*)"+"\\]");
-            String username = input.substring(input.indexOf(",")+1,input.indexOf("-"));
-            String type = input.substring(input.indexOf("-")+1,input.indexOf("+"));
+            String type = input.substring(input.indexOf(",")+1,input.indexOf("-"));
+            String username = input.substring(input.indexOf("-")+1,input.indexOf("+"));
             HashMap<String,String> allPersonalInfo = new HashMap<>();
             while (matcher.find()){
-                System.out.println(matcher.group(1)+"-----"+matcher.group(2));
                 allPersonalInfo.put(matcher.group(1),matcher.group(2));
             }
             try {
+                System.out.println(username);
                 AccountBoss.firstStepOfRegistering(type,username);
                 AccountBoss.makeAccount(allPersonalInfo);
                 dataOutputStream.writeUTF("S");
