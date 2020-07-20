@@ -3,6 +3,7 @@ package Server;
 import Controller.AccountBoss;
 import Controller.Exceptions.*;
 import Controller.ManagerBoss;
+import Controller.SellerBoss;
 import Model.Account;
 import Model.Customer;
 import Model.Manager;
@@ -11,6 +12,9 @@ import Model.Seller;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,11 +69,39 @@ public class Server {
                         beginning();
                     }else if (input.equalsIgnoreCase("GetOnlineAccount")){
                         getOnlineAccount();
+                    }else if (input.startsWith("AddOff")){
+                        addOff(input);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private void addOff(String input) throws  IOException {
+            String max = input.substring(input.indexOf(",")+1,input.indexOf("-"));
+            String percent = input.substring(input.indexOf("-")+1,input.indexOf("+"));
+            String productsId = input.substring(input.indexOf("+")+1,input.indexOf("!"));
+            String startDate = input.substring(input.indexOf("!")+1,input.indexOf("$"));
+            String finalDate = input.substring(input.indexOf("$")+1);
+
+            /// there is a pot which i must check it later
+            String [] array =    productsId.split("\n");
+            //this is the end of suspected piece
+            ArrayList<String> ids = new ArrayList<String>(Arrays.asList(array));
+            ArrayList<Integer> arrayOfProductsOfOffIds = new ArrayList<>();
+            for (String id : ids) {
+                arrayOfProductsOfOffIds.add(Integer.parseInt(id));
+            }
+            try {
+                SellerBoss.addOff(arrayOfProductsOfOffIds,(Seller) Account.getOnlineAccount(),startDate,finalDate,percent,max);
+                dataOutputStream.writeUTF("S");
+                dataOutputStream.flush();
+            } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber | InputStringExceptNumber | NullProduct | JustOneOffForEveryProduct e) {
+                dataOutputStream.writeUTF(e.getMessage());
+                dataOutputStream.flush();
+            }
+
         }
 
         private void getOnlineAccount() throws IOException {
