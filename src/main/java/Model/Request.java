@@ -3,11 +3,14 @@ package Model;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public abstract class Request {
+import java.io.Serializable;
+
+public abstract class Request implements Serializable {
     protected Seller seller;
     public Request(Seller seller, String type) {
         requestIdNumber++;
-        requestId = new SimpleIntegerProperty(requestIdNumber);
+//        requestId = new SimpleIntegerProperty(requestIdNumber);
+        requestId = new WriteableObjectProperty<Integer>(requestIdNumber);
         this.seller = seller;
         Manager.newRequests.add(this);
         Request.setCurrentSort("Nothing");
@@ -18,10 +21,14 @@ public abstract class Request {
 
 
     protected boolean isDone;
-    public SimpleStringProperty requesterUsername = new SimpleStringProperty();
-    public SimpleIntegerProperty requestId;
-    public SimpleStringProperty requestType = new SimpleStringProperty();
-    public SimpleStringProperty situation = new SimpleStringProperty();
+    public WriteableObjectProperty<String> requesterUsername = new WriteableObjectProperty<>();
+//    public SimpleStringProperty requesterUsername = new SimpleStringProperty();
+    public WriteableObjectProperty<Integer> requestId;
+//    public SimpleIntegerProperty requestId;
+    public WriteableObjectProperty<String> requestType = new WriteableObjectProperty<>();
+//    public SimpleStringProperty requestType = new SimpleStringProperty();
+    public WriteableObjectProperty<String> situation = new WriteableObjectProperty<>();
+//    public SimpleStringProperty situation = new SimpleStringProperty();
 
     public String getRequesterUsername() {
         return requesterUsername.get();

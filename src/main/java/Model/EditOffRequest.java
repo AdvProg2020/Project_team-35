@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class EditOffRequest extends Request {
+public class EditOffRequest extends Request implements Serializable {
     private Off toEdit;
     private double newMaximumAmountOfOff;
     private double newOffPercent;

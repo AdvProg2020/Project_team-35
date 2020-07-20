@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class EditProductRequest extends Request {
+public class EditProductRequest extends Request implements Serializable {
     private Product toEdit;
 
     private String newName;

@@ -1,6 +1,8 @@
 package Model;
 
-public class AddOffRequest extends Request {
+import java.io.Serializable;
+
+public class AddOffRequest extends Request implements Serializable {
    private Off off;
 
     public AddOffRequest(Seller seller, Off off) {
