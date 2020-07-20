@@ -34,7 +34,7 @@ public class CustomerPage implements Initializable {
     public TextField emailField;
     public PasswordField passwordField;
     public Label information;
-    public ImageView image;
+   // public ImageView image;
     public Label balanceLabel;
 
     @Override
@@ -52,9 +52,9 @@ public class CustomerPage implements Initializable {
         passwordField.setText(onlineAccount.getPassword());
         Customer customer = (Customer) Account.getOnlineAccount();
         balanceLabel.setText(String.valueOf(customer.getMoney()));
-        if (onlineAccount.getAccountImage()!=null){
-            image.setImage(onlineAccount.getAccountImage());
-        }
+      //  if (onlineAccount.getAccountImage()!=null){
+         //   image.setImage(onlineAccount.getAccountImage());
+       // }
     }
 
     public void updateProfileDate(MouseEvent mouseEvent) {

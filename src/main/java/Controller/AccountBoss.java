@@ -153,7 +153,7 @@ public class AccountBoss {
         Account account = Account.getAccountWithUsername(username);
         account.setThisAccountLogged(true);
         Account.getAllLoggedAccounts().add(account);
-        account.setIsThereOnlineUser(true);
+        Account.setIsThereOnlineUser(true);
         Account.setOnlineAccount(account);
         return true;
     }

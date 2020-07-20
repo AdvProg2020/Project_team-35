@@ -5,19 +5,20 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Account {
+public abstract class Account implements Serializable {
     public static ArrayList<Account> allAccounts = new ArrayList<Account>();
     private static ArrayList<Account> allLoggedAccounts = new ArrayList<>();
-    private SimpleStringProperty username = new SimpleStringProperty();
+    private WriteableObjectProperty<String> username = new WriteableObjectProperty<String>();
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
-    protected Image accountImage;
-    private SimpleStringProperty password = new SimpleStringProperty();
-    private SimpleStringProperty type = new SimpleStringProperty();
+
+    private WriteableObjectProperty<String> password = new WriteableObjectProperty<>();
+    private WriteableObjectProperty<String> type = new WriteableObjectProperty<>();
     private static Account onlineAccount;
     private static Account whoWantsToHavePic;
     private static boolean isThereOnlineUser;
@@ -28,11 +29,6 @@ public abstract class Account {
     public static Account getWhoWantsToHavePic() {
         return whoWantsToHavePic;
     }
-
-    public static void setWhoWantsToHavePic(Account whoWantsToHavePic) {
-        Account.whoWantsToHavePic = whoWantsToHavePic;
-    }
-
     /**
      * account constructor
      * @param username
@@ -48,18 +44,23 @@ public abstract class Account {
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.password.set(password);
+        this.password.set((password));
         this.typeOfAccount = typeOfAccount;
         allAccounts.add(this);
         Account.setCurrentSort("Nothing");
         if (this instanceof Manager){
-            type.set("Manager");
+          //  type.set("Manager");
+            type.set(("Manager"));
         }
         else if (this instanceof Seller){
-            type.set("Seller");
+            //type.set("Seller");
+            type.set(("Seller"));
+
         }
         else if (this instanceof Customer){
-            type.set("Customer");
+           // type.set("Customer");
+            type.set(("Customer"));
+
         }
     }
 
@@ -72,13 +73,7 @@ public abstract class Account {
         return true;
     }
 
-    public void setAccountImage(Image accountImage) {
-        this.accountImage = accountImage;
-    }
 
-    public Image getAccountImage() {
-        return accountImage;
-    }
 
     /**
      * this is added i think we need it.
@@ -105,11 +100,7 @@ public abstract class Account {
         return allLoggedAccounts;
     }
 
-/*    public static void setAllLoggedAccounts(ArrayList<Account> allLoggedAccounts) {
-        Account.allLoggedAccounts = allLoggedAccounts;
-    }
 
- */
     public static int getTypeOfAccount(Account account) {
         return account.typeOfAccount;
     }
@@ -204,7 +195,7 @@ public abstract class Account {
     }
 
     public void setPassword(String password) {
-        this.password.set(password);
+        this.password.set((password));
     }
 
     public static boolean isThereActiveAccountWithUserName(String username) {
@@ -271,7 +262,7 @@ public abstract class Account {
         return type.get();
     }
 
-    public SimpleStringProperty typeProperty() {
+    public WriteableObjectProperty typeProperty() {
         return type;
     }
 }

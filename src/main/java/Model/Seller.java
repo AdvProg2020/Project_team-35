@@ -1,9 +1,10 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Seller extends Account {
+public class Seller extends Account implements Serializable {
     public static ArrayList<Seller> allSellers = new ArrayList<Seller>();
     private ArrayList<Off> sellerOffs;
     private ArrayList<SellLog> sellLogs;

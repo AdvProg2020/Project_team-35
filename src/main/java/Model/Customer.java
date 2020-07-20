@@ -2,10 +2,11 @@ package Model;
 
 import Controller.Exceptions.InventoryException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Customer extends Account {
+public class Customer extends Account implements Serializable {
     public static ArrayList<Customer> allCustomers = new ArrayList<Customer>();
     public ArrayList<DiscountCode> discountCodes;
     private double money;

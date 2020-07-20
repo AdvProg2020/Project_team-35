@@ -1,3 +1,4 @@
+/*
 package ViewControllers;
 
 import Main.Main;
@@ -84,3 +85,5 @@ public class AddPicController implements Initializable {
 
     }
 }
+
+ */

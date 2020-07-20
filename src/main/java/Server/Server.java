@@ -1,12 +1,12 @@
 package Server;
 
 import Controller.AccountBoss;
-import Controller.Exceptions.MoreThanOneManagerException;
-import Controller.Exceptions.NotValidRequestIdException;
-import Controller.Exceptions.RepeatedUserName;
-import Controller.Exceptions.RequestProblemNotExistManager;
+import Controller.Exceptions.*;
 import Controller.ManagerBoss;
 import Model.Account;
+import Model.Customer;
+import Model.Manager;
+import Model.Seller;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -50,37 +50,88 @@ public class Server {
                     if (input.charAt(0) == 'M') {
                         if (input.startsWith("MRequests")) {
                             handleManagerRequestsRequests(input);
-                        }
-                        else if (input.startsWith("MNewManager")) {
+                        } else if (input.startsWith("MNewManager")) {
                             handleManagerRequestsNewManager(input);
                         }
-                    }
-                    else if (input.startsWith("S")) {
+                    } else if (input.startsWith("S")) {
                         handleSellerRequests(input);
-                    }
-                    else if (input.startsWith("C")) {
+                    } else if (input.startsWith("C")) {
                         handleCustomerRequests(input);
-                    }else if (input.startsWith("R")){
+                    } else if (input.startsWith("R")) {
                         register(input);
+                    } else if (input.startsWith("L")) {
+                        login(input);
+                    }else if (input.startsWith("B")){
+                        beginning();
+                    }else if (input.equalsIgnoreCase("GetOnlineAccount")){
+                        getOnlineAccount();
                     }
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
 
+        private void getOnlineAccount() throws IOException {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            Account account = Account.getOnlineAccount();
+            System.out.println(account.getEmail());
+            objectOutputStream.writeObject( account);
+            objectOutputStream.flush();
+        }
+
+        private void beginning() throws IOException {
+            if (ManagerBoss.weHaveManagerOrNot()){
+                dataOutputStream.writeUTF("S");
+                dataOutputStream.flush();
+            }else {
+                dataOutputStream.writeUTF("F");
+                dataOutputStream.flush();
+            }
+        }
+
+        private void login(String input) throws IOException {
+            String username = input.substring(input.indexOf(",") + 1, input.indexOf("-"));
+            String password = input.substring(input.indexOf("-") + 1, input.indexOf("+"));
+            try {
+
+                AccountBoss.checkUsernameExistenceInLogin(username);
+                AccountBoss.checkPasswordValidity(username, password);
+                AccountBoss.startLogin(username, password);
+                if (Account.getAccountWithUsername(username) instanceof Manager) {
+                    dataOutputStream.writeUTF("goToManagerAccountPage");
+                    dataOutputStream.flush();
+                } else if (Account.getAccountWithUsername(username) instanceof Seller) {
+                    dataOutputStream.writeUTF("goToSellerPage");
+                    dataOutputStream.flush();
+                } else if (Account.getAccountWithUsername(username) instanceof Customer) {
+                    dataOutputStream.writeUTF("goToCustomerPage");
+                    dataOutputStream.flush();
+                } else {
+                    dataOutputStream.writeUTF("goToMainMenu");
+                    dataOutputStream.flush();
+                }
+            } catch ( ExistenceOfUserWithUsername | LoginWithoutLogout | PasswordValidity existenceOfUserWithUsername) {
+                    dataOutputStream.writeUTF(existenceOfUserWithUsername.getMessage());
+                    dataOutputStream.flush();
+
+            }
+        }
+
         private void register(String input) throws IOException {
-            Matcher matcher = getMatcher(input,"\\["+"(\\w*),(\\w*)"+"\\]");
-            String type = input.substring(input.indexOf(",")+1,input.indexOf("-"));
-            String username = input.substring(input.indexOf("-")+1,input.indexOf("+"));
-            HashMap<String,String> allPersonalInfo = new HashMap<>();
-            while (matcher.find()){
-                allPersonalInfo.put(matcher.group(1),matcher.group(2));
+            Matcher matcher = getMatcher(input, "\\[" + "(\\w*|email address|phone number),(\\w*|(\\w+)@(\\w+).(\\w+))" + "\\]");
+            String type = input.substring(input.indexOf(",") + 1, input.indexOf("-"));
+            String username = input.substring(input.indexOf("-") + 1, input.indexOf("+"));
+            HashMap<String, String> allPersonalInfo = new HashMap<>();
+            while (matcher.find()) {
+                System.out.println(matcher.group(1)+"       "+matcher.group(2));
+                allPersonalInfo.put(matcher.group(1), matcher.group(2));
             }
             try {
                 System.out.println(username);
-                AccountBoss.firstStepOfRegistering(type,username);
+                AccountBoss.firstStepOfRegistering(type, username);
                 AccountBoss.makeAccount(allPersonalInfo);
+                System.out.println(    Account.getAccountWithUsername(username).getUsername());
                 dataOutputStream.writeUTF("S");
                 dataOutputStream.flush();
             } catch (MoreThanOneManagerException | RepeatedUserName | RequestProblemNotExistManager e) {
@@ -101,23 +152,21 @@ public class Server {
                 } catch (InvalidRequestException | NotValidRequestIdException e) {
                     sendMessageToClient(e.getMessage());
                 }
-            }
-            else if (requestText.startsWith("DeclineRequest")) {
+            } else if (requestText.startsWith("DeclineRequest")) {
                 try {
                     startDeclineRequestWithId(requestText);
                     sendMessageToClient("Successful :)");
                 } catch (InvalidRequestException | NotValidRequestIdException e) {
                     sendMessageToClient(e.getMessage());
                 }
-            }
-            else if (requestText.equalsIgnoreCase("GetCheckedRequests")) {
+            } else if (requestText.equalsIgnoreCase("GetCheckedRequests")) {
 
-            }
-            else if (requestText.equalsIgnoreCase("GetUncheckedRequests")) {
+            } else if (requestText.equalsIgnoreCase("GetUncheckedRequests")) {
 
             }
 
         }
+
         private void handleManagerRequestsNewManager(String input) throws IOException, ClassNotFoundException {
             String request = input.substring(11);
             if (request.startsWith("create")) {
@@ -133,8 +182,7 @@ public class Server {
                     HashMap<String, String> data = (HashMap<String, String>) readObjectFromClient();
                     AccountBoss.makeAccount(data);
                     sendMessageToClient("Successful");
-                }
-                else {
+                } else {
                     sendMessageToClient("Invalid Username Format");
                 }
 
@@ -145,10 +193,10 @@ public class Server {
         private void handleCustomerRequests(String input) {
             //should send response to client
         }
+
         private void handleSellerRequests(String input) {
             //should send response to client
         }
-
 
 
         private void sendMessageToClient(String message) {
@@ -165,7 +213,8 @@ public class Server {
             return objectInputStream.readObject();
         }
     }
-    public static Matcher getMatcher(String input , String regex){
+
+    public static Matcher getMatcher(String input, String regex) {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input);
     }
@@ -175,17 +224,16 @@ public class Server {
         if (matcher.matches()) {
             System.out.println("rid: " + Integer.parseInt(matcher.group(1)));
             ManagerBoss.acceptRequestWithId(Integer.parseInt(matcher.group(1)));
-        }
-        else {
+        } else {
             throw new InvalidRequestException("Invalid Request Format: " + command);
         }
     }
+
     private static void startDeclineRequestWithId(String command) throws InvalidRequestException, NotValidRequestIdException {
         Matcher matcher = getMatcher(command, "^DeclineRequest(\\d+)$");
         if (matcher.matches()) {
             ManagerBoss.declineRequestWithId(Integer.parseInt(matcher.group(1)));
-        }
-        else {
+        } else {
             throw new InvalidRequestException("Invalid Request Format: " + command);
         }
     }

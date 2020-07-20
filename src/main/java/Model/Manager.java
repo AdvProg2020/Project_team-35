@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Manager extends Account {
+public class Manager extends Account implements Serializable {
     public static ArrayList<Manager> allManagers = new ArrayList<Manager>();
     public static ArrayList<Request> newRequests = new ArrayList<>();
     public static ArrayList<Request> checkedRequests = new ArrayList<>();

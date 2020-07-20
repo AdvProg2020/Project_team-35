@@ -42,7 +42,7 @@ public class SellerPageController implements Initializable {
     public Label errorLabel;
     public TextField productIdForRemoveThat;
     public Label problemOfRemovingProduct;
-    public ImageView image;
+
 
 
     @Override
@@ -62,9 +62,7 @@ public class SellerPageController implements Initializable {
         passwordField.setText(onlineAccount.getPassword());
         Seller seller = (Seller) Account.getOnlineAccount();
         company.setText(seller.getCompanyName());
-        if (Account.getOnlineAccount().getAccountImage()!=null){
-            image.setImage(Account.getOnlineAccount().getAccountImage());
-        }
+
     }
 
     public boolean checkValidity(String type, String input) {
