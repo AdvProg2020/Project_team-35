@@ -5,7 +5,9 @@ import Controller.Exceptions.*;
 import Controller.ManagerBoss;
 import Controller.ProductBoss;
 import Controller.SellerBoss;
+import Main.Main;
 import Model.*;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -78,10 +80,53 @@ public class Server {
                         logout(input);
                     } else if (input.startsWith("makeAuction")) {
                         createAuction(input);
+                    } else if (input.startsWith("AddProduct")){
+                        addProduct(input);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        }
+
+        private void addProduct(String input) throws IOException {
+            Matcher matcher = getMatcher(input,"\\{"+"(\\w*),(\\w*)"+"\\}");
+            while (matcher.find()){
+                System.out.println(matcher.group(1));
+                System.out.println(matcher.group(2));
+                System.out.println("salam");
+                String key =  matcher.group(1);
+                String value = matcher.group(2);
+                String name = "";
+                String price ="";
+                String inventory ="";
+                String company = "";
+                String description ="";
+                String category = "";
+                if (key.equalsIgnoreCase("name")){
+                    name = value;
+                }else if (key.equalsIgnoreCase("price")){
+                    price = value;
+                }else if (key.equalsIgnoreCase("inventory")){
+                    inventory = value;
+                }else if (key.equalsIgnoreCase("company")){
+                    company = value;
+                }else if (key.equalsIgnoreCase("description")){
+                    description = value;
+                }else if (key.equalsIgnoreCase("category")){
+                    category = value;
+                }
+                Matcher matcher1 = getMatcher(input,"\\["+"(\\w*),(\\w*)"+"\\]");
+                HashMap<String , String> attributes = new HashMap<>();
+                while (matcher1.find()){
+                    String key1 = matcher1.group(1);
+                    String value1 = matcher1.group(2);
+                    attributes.put(key1,value1);
+                }
+                Seller seller = (Seller) onlineAccounts.get(socket);
+                SellerBoss.addRequestProduct(name,price,inventory,attributes,company,category,seller,description);
+                dataOutputStream.writeUTF("S");
+                dataOutputStream.flush();
             }
         }
 

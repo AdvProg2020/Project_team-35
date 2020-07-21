@@ -46,11 +46,26 @@ public class AddProductController  {
         if (!checkValidityOfInputs()){
             return;
         }
-
         HashMap<String , String> attributesOfProduct = getSpecialInputs();
-        SellerBoss.addRequestProduct(name.getText(),price.getText(),inventory.getText(),attributesOfProduct,company.getText(),categoryName.getText(),(Seller)Account.getOnlineAccount(),decription.getText());
-        Product.setWhoWantsPic(Product.findProduct(Account.getOnlineAccount().getUsername(),name.getText(),Integer.parseInt(price.getText()),Integer.parseInt(inventory.getText())));
-        Main.setRoot("AddPicForProduct","add pic", false);
+        String request = "AddProduct,";
+        String nameOfProduct = name.getText();
+        String inventoryOfProduct = inventory.getText();;
+        String priceOfProduct = problem.getText();
+        String companyOfProduct = company.getText();
+        String description = decription.getText();
+        String categoryOfProductsName = categoryName.getText();
+        request+="{name,"+nameOfProduct+"}"+"{inventory,"+inventoryOfProduct+"}"+"{price,"+priceOfProduct+"}"+"{company,"+companyOfProduct+"}"+"{description,"+description+"}{category,"+categoryOfProductsName+"}";
+        for (String s : attributesOfProduct.keySet()) {
+            request+="["+s+","+attributesOfProduct.get(s)+"]";
+        }
+        String response = Main.sendAndGetMessage(request);
+        if (response.equalsIgnoreCase("S")){
+            Main.setRoot("SellerPage","seller page",true);
+        }
+        else {
+            problem.setTextFill(Paint.valueOf("red"));
+            problem.setText(response);
+        }
 
     }
     private HashMap<String,String> getSpecialInputs(){
