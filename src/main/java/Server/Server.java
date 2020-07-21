@@ -88,6 +88,8 @@ public class Server {
                         updateCompanyOfSeller(input);
                     }else if (input.startsWith("sellerEditPersonalInfo")){
                         editSellerProfile(input);
+                    }else if (input.startsWith("GetProducts")){
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
