@@ -25,7 +25,7 @@ public class LoginPage {
 
     public void confirm(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
-        String request = "L," + username.getText() + "-" + password.getText() + "+";
+        String request = "Login," + username.getText() + "-" + password.getText() + "+";
 
         Account account = Account.getAccountWithUsername(username.getText());
         try {
@@ -40,15 +40,10 @@ public class LoginPage {
         String response = Main.sendAndGetMessage(request);
 
         if (response.equalsIgnoreCase("goToManagerAccountPage")) {
-            Account.setOnlineAccount(Account.getAccountWithUsername(username.getText()));
-            Account.setIsThereOnlineUser(true);
            Main.setRoot("ManagerAccountPage", "Manager Account Page", false);
-           // Main.setRoot("MainMenu","main",false);
         } else if (response.equalsIgnoreCase("goToSellerPage")) {
             Main.setRoot("SellerPage", "seller page", false);
         } else if (response.equalsIgnoreCase("goToCustomerPage")) {
-            Account.setIsThereOnlineUser(true);
-            Account.setOnlineAccount(Account.getAccountWithUsername(username.getText()));
             Main.setRoot("CustomerPage", "customer page", false);
         } else if (response.equalsIgnoreCase("goToMainMenu"))
             Main.setRoot("MainMenu", "main menu", false);

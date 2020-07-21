@@ -3,29 +3,32 @@ package Server;
 import Controller.AccountBoss;
 import Controller.Exceptions.*;
 import Controller.ManagerBoss;
+import Controller.ProductBoss;
 import Controller.SellerBoss;
-import Model.Account;
-import Model.Customer;
-import Model.Manager;
-import Model.Seller;
+import Model.*;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Server {
 
+    private static HashMap<Socket, Account> onlineAccounts = new HashMap<>();
+
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8888);
         Socket socket;
         while (true) {
             socket = serverSocket.accept();
+            onlineAccounts.put(socket, null);
             System.out.println("new client connected to server");
             new handle(new DataInputStream(new BufferedInputStream(socket.getInputStream()))
                     , new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())), socket).start();
@@ -63,14 +66,18 @@ public class Server {
                         handleCustomerRequests(input);
                     } else if (input.startsWith("R")) {
                         register(input);
-                    } else if (input.startsWith("L")) {
+                    } else if (input.startsWith("Login")) {
                         login(input);
-                    }else if (input.startsWith("B")){
+                    } else if (input.startsWith("B")) {
                         beginning();
-                    }else if (input.equalsIgnoreCase("GetOnlineAccount")){
+                    } else if (input.startsWith("GetOnlineAccount")) {
                         getOnlineAccount();
-                    }else if (input.startsWith("AddOff")){
+                    } else if (input.startsWith("AddOff")) {
                         addOff(input);
+                    } else if (input.startsWith("logout")) {
+                        logout(input);
+                    } else if (input.startsWith("makeAuction")) {
+                        createAuction(input);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -78,15 +85,45 @@ public class Server {
             }
         }
 
-        private void addOff(String input) throws  IOException {
-            String max = input.substring(input.indexOf(",")+1,input.indexOf("-"));
-            String percent = input.substring(input.indexOf("-")+1,input.indexOf("+"));
-            String productsId = input.substring(input.indexOf("+")+1,input.indexOf("!"));
-            String startDate = input.substring(input.indexOf("!")+1,input.indexOf("$"));
-            String finalDate = input.substring(input.indexOf("$")+1);
+        private void createAuction(String input) throws ParseException, IOException {
+            String username = input.substring(input.indexOf(",") + 1, input.indexOf("-"));
+            String startTime = input.substring(input.indexOf("-") + 1, input.indexOf("+"));
+            String finalTime = input.substring(input.indexOf("+") + 1, input.indexOf("#"));
+            int productId = Integer.parseInt(input.substring(input.indexOf("#") + 1));
+            Date start = new SimpleDateFormat("yyyy-MM-dd").parse(startTime);
+            Date last = new SimpleDateFormat("yyyy-MM-dd").parse(finalTime);
+            Seller seller = (Seller) Account.getAccountWithUsername(username);
+            try {
+                ProductBoss.makeAuction(seller, Product.getProductWithId(productId), start, last);
+                dataOutputStream.writeUTF("S");
+                dataOutputStream.flush();
+            } catch (ProductIsFinished | DateException | ThisIsNotYours productIsFinished) {
+                dataOutputStream.writeUTF(productIsFinished.getMessage());
+                dataOutputStream.flush();
+            }
+
+        }
+
+        private void logout(String input) throws IOException {
+            String username = input.substring(input.indexOf(",") + 1);
+            Account account = Account.getAccountWithUsername(username);
+            System.out.println(account.getUsername());
+            AccountBoss.logout(account);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            onlineAccounts.replace(socket, null);
+            objectOutputStream.writeObject(account);
+            objectOutputStream.flush();
+        }
+
+        private void addOff(String input) throws IOException {
+            String max = input.substring(input.indexOf(",") + 1, input.indexOf("-"));
+            String percent = input.substring(input.indexOf("-") + 1, input.indexOf("+"));
+            String productsId = input.substring(input.indexOf("+") + 1, input.indexOf("!"));
+            String startDate = input.substring(input.indexOf("!") + 1, input.indexOf("$"));
+            String finalDate = input.substring(input.indexOf("$") + 1);
 
             /// there is a pot which i must check it later
-            String [] array =    productsId.split("\n");
+            String[] array = productsId.split("\n");
             //this is the end of suspected piece
             ArrayList<String> ids = new ArrayList<String>(Arrays.asList(array));
             ArrayList<Integer> arrayOfProductsOfOffIds = new ArrayList<>();
@@ -94,7 +131,7 @@ public class Server {
                 arrayOfProductsOfOffIds.add(Integer.parseInt(id));
             }
             try {
-                SellerBoss.addOff(arrayOfProductsOfOffIds,(Seller) Account.getOnlineAccount(),startDate,finalDate,percent,max);
+                SellerBoss.addOff(arrayOfProductsOfOffIds, (Seller) Account.getOnlineAccount(), startDate, finalDate, percent, max);
                 dataOutputStream.writeUTF("S");
                 dataOutputStream.flush();
             } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber | InputStringExceptNumber | NullProduct | JustOneOffForEveryProduct e) {
@@ -105,18 +142,21 @@ public class Server {
         }
 
         private void getOnlineAccount() throws IOException {
+            for (Socket socket1 : onlineAccounts.keySet()) {
+                System.out.println(socket1.getPort());
+                System.out.println(onlineAccounts.get(socket1));
+            }
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-            Account account = Account.getOnlineAccount();
-            System.out.println(account.getEmail());
+            Account account = onlineAccounts.get(socket);
             objectOutputStream.writeObject(account);
             objectOutputStream.flush();
         }
 
         private void beginning() throws IOException {
-            if (ManagerBoss.weHaveManagerOrNot()){
+            if (ManagerBoss.weHaveManagerOrNot()) {
                 dataOutputStream.writeUTF("S");
                 dataOutputStream.flush();
-            }else {
+            } else {
                 dataOutputStream.writeUTF("F");
                 dataOutputStream.flush();
             }
@@ -130,6 +170,8 @@ public class Server {
                 AccountBoss.checkUsernameExistenceInLogin(username);
                 AccountBoss.checkPasswordValidity(username, password);
                 AccountBoss.startLogin(username, password);
+                Account account = Account.getAccountWithUsername(username);
+                onlineAccounts.replace(socket, account);
                 if (Account.getAccountWithUsername(username) instanceof Manager) {
                     dataOutputStream.writeUTF("goToManagerAccountPage");
                     dataOutputStream.flush();
@@ -143,9 +185,9 @@ public class Server {
                     dataOutputStream.writeUTF("goToMainMenu");
                     dataOutputStream.flush();
                 }
-            } catch ( ExistenceOfUserWithUsername  | PasswordValidity existenceOfUserWithUsername) {
-                    dataOutputStream.writeUTF(existenceOfUserWithUsername.getMessage());
-                    dataOutputStream.flush();
+            } catch (ExistenceOfUserWithUsername | PasswordValidity | LoginWithoutLogout existenceOfUserWithUsername) {
+                dataOutputStream.writeUTF(existenceOfUserWithUsername.getMessage());
+                dataOutputStream.flush();
 
             }
         }
@@ -156,14 +198,14 @@ public class Server {
             String username = input.substring(input.indexOf("-") + 1, input.indexOf("+"));
             HashMap<String, String> allPersonalInfo = new HashMap<>();
             while (matcher.find()) {
-                System.out.println(matcher.group(1)+"       "+matcher.group(2));
+                System.out.println(matcher.group(1) + "       " + matcher.group(2));
                 allPersonalInfo.put(matcher.group(1), matcher.group(2));
             }
             try {
                 System.out.println(username);
                 AccountBoss.firstStepOfRegistering(type, username);
                 AccountBoss.makeAccount(allPersonalInfo);
-                System.out.println(    Account.getAccountWithUsername(username).getUsername());
+                System.out.println(Account.getAccountWithUsername(username).getUsername());
                 dataOutputStream.writeUTF("S");
                 dataOutputStream.flush();
             } catch (MoreThanOneManagerException | RepeatedUserName | RequestProblemNotExistManager e) {
@@ -244,6 +286,7 @@ public class Server {
             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
             return objectInputStream.readObject();
         }
+
         private void sendObjectToClient(Serializable toSend) throws IOException {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectOutputStream.writeObject(toSend);
@@ -275,4 +318,7 @@ public class Server {
         }
     }
 
+    public static HashMap<Socket, Account> getOnlineAccounts() {
+        return onlineAccounts;
+    }
 }

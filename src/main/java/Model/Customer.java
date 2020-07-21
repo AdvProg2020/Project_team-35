@@ -31,6 +31,7 @@ public class Customer extends Account implements Serializable {
         buyLogs = new ArrayList<BuyLog>();
         cart = new HashMap<>();
         allCustomers.add(this);
+        money =0;
     }
 
     public boolean isThereProductWithIdInCart(int id) {

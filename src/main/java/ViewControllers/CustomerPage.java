@@ -1,25 +1,19 @@
 package ViewControllers;
 
 import Controller.AccountBoss;
-import Controller.Exceptions.InvalidNumber;
-import Controller.Exceptions.NotValidFieldException;
 import Main.Main;
 import Model.Account;
 import Model.Customer;
 import MusicPlayer.MusicPlayer;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -34,30 +28,31 @@ public class CustomerPage implements Initializable {
     public TextField emailField;
     public PasswordField passwordField;
     public Label information;
-   // public ImageView image;
     public Label balanceLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.updateValuesOnScreen();
+        try {
+            this.updateValuesOnScreen();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void updateValuesOnScreen() {
-        Account onlineAccount  = Account.getOnlineAccount();
+    private void updateValuesOnScreen() throws IOException, ClassNotFoundException {
+        Customer onlineAccount = (Customer) Main.sendAndGetObjectFromServer("GetOnlineAccount");
         usernameLabel.setText(onlineAccount.getUsername());
         nameField.setText(onlineAccount.getFirstName());
         lastNameField.setText(onlineAccount.getLastName());
         phoneNumberField.setText(onlineAccount.getPhoneNumber());
         emailField.setText(onlineAccount.getEmail());
         passwordField.setText(onlineAccount.getPassword());
-        Customer customer = (Customer) Account.getOnlineAccount();
-        balanceLabel.setText(String.valueOf(customer.getMoney()));
-      //  if (onlineAccount.getAccountImage()!=null){
-         //   image.setImage(onlineAccount.getAccountImage());
-       // }
+
+        balanceLabel.setText(String.valueOf(onlineAccount.getMoney()));
+
     }
 
-    public void updateProfileDate(MouseEvent mouseEvent) {
+    public void updateProfileDate(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
         if (!checkEmailAlphabet(emailField.getText())) {
             information.setText("Invalid Email Form.");
@@ -85,10 +80,12 @@ public class CustomerPage implements Initializable {
         this.updateValuesOnScreen();
     }
 
-    public void logoutClick(MouseEvent mouseEvent) throws IOException {
+    public void logoutClick(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
+        String usernameOfOnlineUser = usernameLabel.getText();
+        Account account = (Account) Main.sendAndGetObjectFromServer("logout," + usernameOfOnlineUser);
+        AccountBoss.logout(account);
         Main.doBack();
-        AccountBoss.logout(Account.getOnlineAccount());
     }
 
     public void goToCustomerDiscountCodes(MouseEvent mouseEvent) throws IOException {

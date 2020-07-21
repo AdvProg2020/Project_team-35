@@ -119,9 +119,12 @@ public class AccountBoss {
             throw new LoginWithoutLogout("first you should logout", 1);
         }
     }
-    public static boolean checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername{
+    public static boolean checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername, LoginWithoutLogout {
         Boss.removeExpiredOffsAndDiscountCodes();
 
+        if (Account.getAccountWithUsername(username).isThisAccountLogged()){
+            throw new LoginWithoutLogout("first logout",12);
+        }
         if (!Account.isThereAccountWithUserName(username)) {
             throw new ExistenceOfUserWithUsername("this username doesn't exist.", 2);
         }
@@ -198,8 +201,10 @@ public class AccountBoss {
 
     public static boolean logout(Account account) {
         Boss.removeExpiredOffsAndDiscountCodes();
-        //  Account.setIsThereOnlineUser(false);
+          Account.setIsThereOnlineUser(false);
         Account.setOnlineAccount(null);
+        account.setThisAccountLogged(false);
+        Account.getAllLoggedAccounts().remove(account);
         return true;
     }
 }

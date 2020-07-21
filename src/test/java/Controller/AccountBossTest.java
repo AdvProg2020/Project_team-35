@@ -56,31 +56,13 @@ public class AccountBossTest {
 
         Seller seller = new Seller("asd","asd","ads","asd","ads","asd","asd");
 
-        try {
-            Assert.assertTrue(AccountBoss.checkUsernameExistenceInLogin("ali"));
-           Assert.assertTrue(AccountBoss.checkUsernameExistenceInLogin("rezazza"));
-        } catch (ExistenceOfUserWithUsername existenceOfUserWithUsername) {
-            Assert.assertEquals(existenceOfUserWithUsername.getId(),2,0);
-        }
-        try {
-        Assert.assertTrue(AccountBoss.checkUsernameExistenceInLogin("rezazza"));
-    } catch (ExistenceOfUserWithUsername existenceOfUserWithUsername) {
-        Assert.assertEquals(existenceOfUserWithUsername.getId(),2,0);
-    }
+
+
 
 
         Account.setOnlineAccount(customer);
-        try {
-            Assert.assertTrue(AccountBoss.checkUsernameExistenceInLogin("ali"));
-        } catch (ExistenceOfUserWithUsername existenceOfUserWithUsername) {
-            Assert.assertEquals(existenceOfUserWithUsername.getId(),2,0);
-        }
 
-        try {
-            Assert.assertTrue(AccountBoss.checkUsernameExistenceInLogin("asd"));
-        } catch (ExistenceOfUserWithUsername existenceOfUserWithUsername) {
-            Assert.assertEquals(existenceOfUserWithUsername.getId(),2,0);
-        }
+
 
     }
 

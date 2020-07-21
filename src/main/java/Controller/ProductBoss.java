@@ -1,16 +1,12 @@
 package Controller;
 
-import Controller.Exceptions.NullProduct;
-import Controller.Exceptions.ProductIsFinished;
-import Controller.Exceptions.ProductsCompareNotSameCategories;
-import Model.Comment;
-import Model.Customer;
-import Model.Product;
-import Model.ProductAndOffStatus;
+import Controller.Exceptions.*;
+import Model.*;
 import Model.ProductFilters.ProductPrivateFilter;
 import Views.GoodPage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class ProductBoss {
@@ -115,5 +111,17 @@ public class ProductBoss {
             newProducts = ProductPrivateFilter.filter(newProducts,s,filterFields.get(s));
         }
         return newProducts;
+    }
+    public static void makeAuction(Seller seller , Product product , Date start , Date finalT) throws ProductIsFinished, DateException, ThisIsNotYours {
+        if (!product.getSeller().equals(seller)){
+            throw new ThisIsNotYours("this is not for you",2);
+        }
+        if (start.after(finalT)){
+            throw new DateException("start date is after final date");
+        }
+        if (!seller.getSalableProducts().contains(product)){
+            throw new ProductIsFinished(1,"product is finished");
+        }
+        Auction auction = new Auction(seller,product,product.getPrice(),start,finalT);
     }
 }

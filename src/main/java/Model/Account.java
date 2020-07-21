@@ -26,6 +26,7 @@ public abstract class Account implements Serializable {
     protected int typeOfAccount;
     private static String currentSort = "Nothing";
 
+
     public static Account getWhoWantsToHavePic() {
         return whoWantsToHavePic;
     }
@@ -118,6 +119,7 @@ public abstract class Account implements Serializable {
         return null;
     }
 
+
     /**
      * this method check the allAccounts list and identify that we have an account with that username or not.
      * @param username
@@ -134,6 +136,10 @@ public abstract class Account implements Serializable {
 
     public void setThisAccountLogged(boolean thisAccountLogged) {
         isThisAccountLogged = thisAccountLogged;
+    }
+
+    public boolean isThisAccountLogged() {
+        return isThisAccountLogged;
     }
 
     /**

@@ -126,7 +126,7 @@ public class RegisteringPanel extends Page {
                             AccountBoss.checkUsernameExistenceInLogin(matcher.group(1));
                             usernameAndPassword.put("username", matcher.group(1));
                           nextPage =  loginGetPassword();
-                        } catch (ExistenceOfUserWithUsername  e) {
+                        } catch (ExistenceOfUserWithUsername | LoginWithoutLogout e) {
                             System.out.println(e.getMessage());
                             nextPage = this;
                         }

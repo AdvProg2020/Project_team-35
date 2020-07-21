@@ -37,7 +37,6 @@ public class ManagerAccountPage implements Initializable {
     public Label information;
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -87,10 +86,11 @@ public class ManagerAccountPage implements Initializable {
         this.updateValuesOnScreen();
     }
 
-    public void logoutClick(MouseEvent mouseEvent) throws IOException {
+    public void logoutClick(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
-
-        AccountBoss.logout(Account.getOnlineAccount());
+        String usernameOfOnlineUser = usernameLabel.getText();
+        Account account = (Account) Main.sendAndGetObjectFromServer("logout," + usernameOfOnlineUser);
+        AccountBoss.logout(account);
         Main.doBack();
     }
 
@@ -134,7 +134,7 @@ public class ManagerAccountPage implements Initializable {
     }
 
 
-    protected static Matcher getMatcher(String input , String regex){
+    protected static Matcher getMatcher(String input, String regex) {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input);
     }
