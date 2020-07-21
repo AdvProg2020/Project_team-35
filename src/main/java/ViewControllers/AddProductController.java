@@ -18,13 +18,12 @@ import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
-public class AddProductController  {
+public class AddProductController {
     public Label problem;
-    
     public TextField categoryName;
-   
     public TextArea attributes;
     public ListView listOfAttributesName;
     public TextArea decription;
@@ -35,60 +34,61 @@ public class AddProductController  {
     public ImageView image;
     private boolean userSawCategoriesAttributesList;
 
-
     public void confirm(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
-        if (!userSawCategoriesAttributesList){
+        if (!userSawCategoriesAttributesList) {
             problem.setTextFill(Paint.valueOf("red"));
             problem.setText("you should have a true category");
             return;
         }
-        if (!checkValidityOfInputs()){
+        if (!checkValidityOfInputs()) {
             return;
         }
-        HashMap<String , String> attributesOfProduct = getSpecialInputs();
+        HashMap<String, String> attributesOfProduct = getSpecialInputs();
         String request = "AddProduct,";
         String nameOfProduct = name.getText();
-        String inventoryOfProduct = inventory.getText();;
+        String inventoryOfProduct = inventory.getText();
+        ;
         String priceOfProduct = problem.getText();
         String companyOfProduct = company.getText();
         String description = decription.getText();
         String categoryOfProductsName = categoryName.getText();
-        request+="{name,"+nameOfProduct+"}"+"{inventory,"+inventoryOfProduct+"}"+"{price,"+priceOfProduct+"}"+"{company,"+companyOfProduct+"}"+"{description,"+description+"}{category,"+categoryOfProductsName+"}";
+        request += "{name," + nameOfProduct + "}" + "{inventory," + inventoryOfProduct + "}" + "{price," + priceOfProduct + "}" + "{company," + companyOfProduct + "}" + "{description," + description + "}{category," + categoryOfProductsName + "}";
         for (String s : attributesOfProduct.keySet()) {
-            request+="["+s+","+attributesOfProduct.get(s)+"]";
+            request += "[" + s + "," + attributesOfProduct.get(s) + "]";
         }
         String response = Main.sendAndGetMessage(request);
-        if (response.equalsIgnoreCase("S")){
-            Main.setRoot("SellerPage","seller page",true);
-        }
-        else {
+        if (response.equalsIgnoreCase("S")) {
+            Main.setRoot("SellerPage", "seller page", true);
+        } else {
             problem.setTextFill(Paint.valueOf("red"));
             problem.setText(response);
         }
 
     }
-    private HashMap<String,String> getSpecialInputs(){
+
+    private HashMap<String, String> getSpecialInputs() {
         String input = attributes.getText();
         String[] arrayOfInputs = input.split("\n");
-        HashMap<String,String> result = new HashMap<>();
+        HashMap<String, String> result = new HashMap<>();
         int numberOfAttributes = listOfAttributesName.getItems().size();
         for (int i = 0; i < arrayOfInputs.length; i++) {
-            if (i==numberOfAttributes)
+            if (i == numberOfAttributes)
                 break;
             String type = (String) listOfAttributesName.getItems().get(i);
-            result.put(type,arrayOfInputs[i]);
+            result.put(type, arrayOfInputs[i]);
         }
         return result;
 
     }
-    private boolean checkValidityOfInputs(){
-        if (!price.getText().matches("^(\\d+)(.?)(\\d*)$")){
+
+    private boolean checkValidityOfInputs() {
+        if (!price.getText().matches("^(\\d+)(.?)(\\d*)$")) {
             problem.setTextFill(Paint.valueOf("red"));
 
             problem.setText("invalid format of price");
             return false;
-        }else if (!inventory.getText().matches("^(\\d+)(.?)(\\d*)$")){
+        } else if (!inventory.getText().matches("^(\\d+)(.?)(\\d*)$")) {
             problem.setTextFill(Paint.valueOf("red"));
 
             problem.setText("invalid format of inventory");
@@ -97,23 +97,28 @@ public class AddProductController  {
         return true;
     }
 
-    public void showAttributes(ActionEvent actionEvent) {
+    public void showAttributes(ActionEvent actionEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
-        try {
-           ArrayList<String> specials =  SellerBoss.getWithNameOfCategoryItsSpecials(categoryName.getText());
-            listOfAttributesName.getItems().addAll(specials);
-            userSawCategoriesAttributesList = true;
-            problem.setText("");
-        } catch (ThereIsNotCategoryWithNameException e) {
-            problem.setText(e.getMessage());
+        String request = "ShowAttributes," + categoryName.getText();
+        String response = Main.sendAndGetMessage(request);
+        if (response.equalsIgnoreCase("F")) {
+            problem.setText(response);
             problem.setTextFill(Paint.valueOf("red"));
             listOfAttributesName.getItems().clear();
             userSawCategoriesAttributesList = false;
             return;
+        } else {
+            String[] array = response.split("\n");
+            ArrayList<String> specials = new ArrayList<String>(Arrays.asList(array));
+            listOfAttributesName.getItems().addAll(specials);
+            userSawCategoriesAttributesList = true;
+            problem.setText("");
         }
+
+
     }
 
     public void back(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("SellerPage","seller page",true);
+        Main.setRoot("SellerPage", "seller page", true);
     }
 }

@@ -82,11 +82,56 @@ public class Server {
                         createAuction(input);
                     } else if (input.startsWith("AddProduct")){
                         addProduct(input);
+                    } else if (input.startsWith("ShowAttributes")){
+                        showAttributes(input);
+                    }else if (input.startsWith("updateCompany")){
+                        updateCompanyOfSeller(input);
+                    }else if (input.startsWith("sellerEditPersonalInfo")){
+                        editSellerProfile(input);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private void editSellerProfile(String input) throws IOException {
+            String parameter = input.substring(input.indexOf(",")+1,input.indexOf("+"));
+            String value = input.substring(input.indexOf("+")+1);
+            Account account = onlineAccounts.get(socket);
+            try {
+                AccountBoss.startEditPersonalField(parameter, value,account);
+                dataOutputStream.writeUTF("S");
+                dataOutputStream.flush();
+            } catch (NotValidFieldException | InvalidNumber e) {
+                dataOutputStream.writeUTF(e.getMessage());
+                dataOutputStream.flush();
+            }
+        }
+
+        private void updateCompanyOfSeller(String input) {
+            String companyName = input.substring(input.indexOf(",")+1);
+            Seller seller = (Seller) onlineAccounts.get(socket);
+            seller.setCompanyName(companyName);
+        }
+
+        private void showAttributes(String input) throws  IOException {
+            String category = input.substring(input.indexOf(",")+1);
+            try {
+                ArrayList<String> specials =  SellerBoss.getWithNameOfCategoryItsSpecials(category);
+                String response = "";
+                for (String special : specials) {
+                    response+=special+"\n";
+                }
+                dataOutputStream.writeUTF(response);
+                dataOutputStream.flush();
+            } catch (ThereIsNotCategoryWithNameException e) {
+                dataOutputStream.writeUTF(e.getMessage());
+                dataOutputStream.flush();
+            }
+
+
+
         }
 
         private void addProduct(String input) throws IOException {

@@ -90,12 +90,13 @@ public class SellerPageController implements Initializable {
 
     public void updateProfileDate(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
-        Seller seller = (Seller) Account.getOnlineAccount();
-        seller.setCompanyName(company.getText());
+        Seller seller = (Seller) Main.sendAndGetObjectFromServer("GetOnlineAccount");
+        String companyName = company.getText();
+        Main.sendMessageToServer("updateCompany,"+companyName);
         List<String> parameters = Arrays.asList("firstName", "lastName", "email", "phoneNumber", "password");
         List<String> values = Arrays.asList(nameField.getText(), lastNameField.getText(), emailField.getText(), phoneNumberField.getText(), passwordField.getText());
         for (int i = 0; i < 5; i++) {
-            try {
+
                 if (parameters.get(i).equalsIgnoreCase("email") && !values.get(i).matches("^(\\w+)@(\\w+).(\\w+)$")) {
                     information.setText("email invalid format");
                     information.setTextFill(Color.RED);
@@ -105,17 +106,20 @@ public class SellerPageController implements Initializable {
                     information.setTextFill(Color.RED);
                     return;
                 } else {
-                    AccountBoss.startEditPersonalField(parameters.get(i), values.get(i), Account.getOnlineAccount());
+                    String response = Main.sendAndGetMessage("sellerEditPersonalInfo,"+parameters.get(i)+"+"+values.get(i));
+                    if (response.equalsIgnoreCase("S")){
+                        information.setTextFill(Color.GREEN);
+                        information.setText("Successful :)");
+                        this.updateValuesOnScreen();
+                    }else {
+                        information.setText(response);
+                        information.setTextFill(Color.RED);
+                        return;
+                    }
                 }
-            } catch (Exception e) {
-                information.setText(e.getMessage());
-                information.setTextFill(Color.RED);
-                return;
-            }
+
         }
-        information.setTextFill(Color.GREEN);
-        information.setText("Successful :)");
-        this.updateValuesOnScreen();
+
     }
 
     public void logoutClick(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
