@@ -95,5 +95,13 @@ public class Main extends Application {
         objectOutputStream.writeObject(toSend);
         objectOutputStream.flush();
     }
+    public static Object getObjectFromServer() throws IOException, ClassNotFoundException {
+        ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+        return objectInputStream.readObject();
+    }
+    public static Object sendAndGetObjectFromServer(String toSend) throws IOException, ClassNotFoundException {
+       sendMessageToServer(toSend);
+        return getObjectFromServer();
+    }
 
 }

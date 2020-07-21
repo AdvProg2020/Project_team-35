@@ -25,35 +25,36 @@ public class LoginPage {
 
     public void confirm(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
+        String request = "Login," + username.getText() + "-" + password.getText() + "+";
+
+        Account account = Account.getAccountWithUsername(username.getText());
         try {
-            AccountBoss.checkUsernameExistenceInLogin(username.getText());
-        } catch (ExistenceOfUserWithUsername | LoginWithoutLogout existenceOfUserWithUsername) {
-           problem.setText(existenceOfUserWithUsername.getMessage());
-           problem.setTextFill(Paint.valueOf("red"));
-           return;
-        }
-        try {
-            AccountBoss.checkPasswordValidity(username.getText(),password.getText());
-        } catch (PasswordValidity passwordValidity) {
+            AccountBoss.checkLoginWithLogOut(username.getText());
+            Account.setOnlineAccount(account);
+            Account.setIsThereOnlineUser(true);
+        } catch (LoginWithoutLogout existenceOfUserWithUsername) {
+            problem.setText(existenceOfUserWithUsername.getMessage());
             problem.setTextFill(Paint.valueOf("red"));
-            problem.setText(passwordValidity.getMessage());
             return;
         }
-        AccountBoss.startLogin(username.getText(),password.getText());
-        if (Account.getAccountWithUsername(username.getText()) instanceof Manager) {
-            Main.setRoot("ManagerAccountPage", "Manager Account Page", false);
+        String response = Main.sendAndGetMessage(request);
+
+        if (response.equalsIgnoreCase("goToManagerAccountPage")) {
+           Main.setRoot("ManagerAccountPage", "Manager Account Page", false);
+        } else if (response.equalsIgnoreCase("goToSellerPage")) {
+            Main.setRoot("SellerPage", "seller page", false);
+        } else if (response.equalsIgnoreCase("goToCustomerPage")) {
+            Main.setRoot("CustomerPage", "customer page", false);
+        } else if (response.equalsIgnoreCase("goToMainMenu"))
+            Main.setRoot("MainMenu", "main menu", false);
+        else {
+            problem.setText(response);
+            problem.setTextFill(Paint.valueOf("red"));
         }
-        else if (Account.getAccountWithUsername(username.getText()) instanceof Seller){
-            Main.setRoot("SellerPage","seller page", false);
-        }else if (Account.getAccountWithUsername(username.getText()) instanceof Customer){
-            Main.setRoot("CustomerPage","customer page",false);
-        }
-        else
-        Main.setRoot("MainMenu","main menu", false);
     }
 
     public void backClick(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
-        Main.setRoot("MainMenu","main menu",false);
+        Main.setRoot("MainMenu", "main menu", false);
     }
 }

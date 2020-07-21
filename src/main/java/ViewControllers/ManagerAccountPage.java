@@ -35,28 +35,30 @@ public class ManagerAccountPage implements Initializable {
     public TextField emailField;
     public PasswordField passwordField;
     public Label information;
-    public ImageView image;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.updateValuesOnScreen();
+        try {
+            this.updateValuesOnScreen();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void updateValuesOnScreen() {
-        Account onlineAccount  = Account.getOnlineAccount();
+    private void updateValuesOnScreen() throws IOException, ClassNotFoundException {
+
+        Account onlineAccount = (Account) Main.sendAndGetObjectFromServer("GetOnlineAccount");
         usernameLabel.setText(onlineAccount.getUsername());
         nameField.setText(onlineAccount.getFirstName());
         lastNameField.setText(onlineAccount.getLastName());
         phoneNumberField.setText(onlineAccount.getPhoneNumber());
         emailField.setText(onlineAccount.getEmail());
         passwordField.setText(onlineAccount.getPassword());
-        if (onlineAccount.getAccountImage()!=null){
-            image.setImage(onlineAccount.getAccountImage());
-        }
+
     }
 
-    public void updateProfileDate(MouseEvent mouseEvent) {
+    public void updateProfileDate(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
         if (!checkEmailAlphabet(emailField.getText())) {
             information.setText("Invalid Email Form.");
@@ -84,10 +86,12 @@ public class ManagerAccountPage implements Initializable {
         this.updateValuesOnScreen();
     }
 
-    public void logoutClick(MouseEvent mouseEvent) throws IOException {
+    public void logoutClick(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
+        String usernameOfOnlineUser = usernameLabel.getText();
+        Account account = (Account) Main.sendAndGetObjectFromServer("logout," + usernameOfOnlineUser);
+        AccountBoss.logout(account);
         Main.doBack();
-        AccountBoss.logout(Account.getOnlineAccount());
     }
 
     public void goToRequestsPage(MouseEvent mouseEvent) throws IOException {
@@ -130,7 +134,7 @@ public class ManagerAccountPage implements Initializable {
     }
 
 
-    protected static Matcher getMatcher(String input , String regex){
+    protected static Matcher getMatcher(String input, String regex) {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input);
     }

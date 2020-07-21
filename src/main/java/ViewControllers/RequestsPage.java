@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,7 +48,13 @@ public class RequestsPage implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
 
-        updateScreenTables();
+        try {
+            updateScreenTables();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -66,7 +73,7 @@ public class RequestsPage implements Initializable {
         checkedRequestsInfo.setTextFill(Color.GREEN);
     }
 
-    public void acceptRequest(MouseEvent mouseEvent) throws IOException {
+    public void acceptRequest(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
         if (selectedRequest != null) {
             Main.sendMessageToServer("MRequestsAcceptRequest" + selectedRequest.getRequestId());
@@ -91,7 +98,7 @@ public class RequestsPage implements Initializable {
         }
     }
 
-    public void declineRequest(MouseEvent mouseEvent) throws IOException {
+    public void declineRequest(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
         if (selectedRequest != null) {
             Main.sendMessageToServer("MRequestsDeclineRequest" + selectedRequest.getRequestId());
@@ -119,24 +126,30 @@ public class RequestsPage implements Initializable {
 
 
 
-    private void updateNewRequestsTableScreen() {
+    private void updateNewRequestsTableScreen() throws IOException, ClassNotFoundException {
         requestIdCol.setCellValueFactory(new PropertyValueFactory<>("RequestId"));
         requesterUsernameCol.setCellValueFactory(new PropertyValueFactory<>("RequesterUsername"));
         typeOfRequestCol.setCellValueFactory(new PropertyValueFactory<>("RequestType"));
         situationCol.setCellValueFactory(new PropertyValueFactory<>("Situation"));
-        observableList.addAll(Manager.getNewRequests());
+//        observableList.addAll(Manager.getNewRequests());
+        Main.sendMessageToServer("MRequestsGetUncheckedRequests");
+        ArrayList<Request> list = (ArrayList<Request>) Main.getObjectFromServer();
+        observableList.addAll(list);
         requestsTable.setItems(observableList);
     }
 
-    private void updateCheckedRequestsTableScreen() {
+    private void updateCheckedRequestsTableScreen() throws IOException, ClassNotFoundException {
         checkedRequestIdCol.setCellValueFactory(new PropertyValueFactory<>("RequestId"));
         checkedRequesterUsernameCol.setCellValueFactory(new PropertyValueFactory<>("RequesterUsername"));
         checkedTypeOfRequestCol.setCellValueFactory(new PropertyValueFactory<>("RequestType"));
         checkedSituationCol.setCellValueFactory(new PropertyValueFactory<>("Situation"));
-        checkedObservableList.addAll(Manager.getCheckedRequests());
+        Main.sendMessageToServer("MRequestsGetCheckedRequests");
+        ArrayList<Request> list = (ArrayList<Request>) Main.getObjectFromServer();
+//        checkedObservableList.addAll(Manager.getCheckedRequests());
+        checkedObservableList.addAll(list);
         checkedTable.setItems(checkedObservableList);
     }
-    private void updateScreenTables() {
+    private void updateScreenTables() throws IOException, ClassNotFoundException {
         newRequestsInfo.setText("");
         checkedRequestsInfo.setText("");
         observableList.clear();

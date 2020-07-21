@@ -73,7 +73,7 @@ public class AccountBoss {
 
             }
         }
-        if (type.equals("manager")) {
+        if (type.equalsIgnoreCase("manager")) {
             Manager manager = new Manager(username, name, family, email, phone, password);
         }
         if (type.equals("seller")) {
@@ -113,10 +113,17 @@ public class AccountBoss {
      *
      * @param username
      */
-    public static boolean checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername, LoginWithoutLogout {
+    public static void  checkLoginWithLogOut(String username) throws LoginWithoutLogout {
         Boss.removeExpiredOffsAndDiscountCodes();
         if (Account.isIsThereOnlineUser()) {
             throw new LoginWithoutLogout("first you should logout", 1);
+        }
+    }
+    public static boolean checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername, LoginWithoutLogout {
+        Boss.removeExpiredOffsAndDiscountCodes();
+
+        if (Account.getAccountWithUsername(username).isThisAccountLogged()){
+            throw new LoginWithoutLogout("first logout",12);
         }
         if (!Account.isThereAccountWithUserName(username)) {
             throw new ExistenceOfUserWithUsername("this username doesn't exist.", 2);
@@ -153,7 +160,7 @@ public class AccountBoss {
         Account account = Account.getAccountWithUsername(username);
         account.setThisAccountLogged(true);
         Account.getAllLoggedAccounts().add(account);
-        account.setIsThereOnlineUser(true);
+        Account.setIsThereOnlineUser(true);
         Account.setOnlineAccount(account);
         return true;
     }
@@ -194,8 +201,10 @@ public class AccountBoss {
 
     public static boolean logout(Account account) {
         Boss.removeExpiredOffsAndDiscountCodes();
-        //  Account.setIsThereOnlineUser(false);
+          Account.setIsThereOnlineUser(false);
         Account.setOnlineAccount(null);
+        account.setThisAccountLogged(false);
+        Account.getAllLoggedAccounts().remove(account);
         return true;
     }
 }

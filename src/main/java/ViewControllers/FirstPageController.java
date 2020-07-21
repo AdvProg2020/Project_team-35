@@ -10,9 +10,10 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 
 public class FirstPageController {
-    public void start(MouseEvent mouseEvent) {
+    public void start(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
-        if (ManagerBoss.weHaveManagerOrNot()){
+        String response = Main.sendAndGetMessage("B");
+        if (response.equalsIgnoreCase("S")){
             String fxml = "MainMenu";
             try {
                 Main.setRoot(fxml,"main menu", false);

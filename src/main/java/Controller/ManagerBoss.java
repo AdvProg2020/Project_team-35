@@ -433,6 +433,7 @@ public class ManagerBoss {
     }
 
     public static boolean weHaveManagerOrNot(){
+        System.out.println(Manager.getAllManagers().size());
         if (Manager.getAllManagers().size()==0){
             return false;
 

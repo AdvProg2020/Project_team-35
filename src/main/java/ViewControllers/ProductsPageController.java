@@ -61,10 +61,15 @@ public class ProductsPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        update();
+        try {
+            update();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void update() {
+    public void update() throws IOException, ClassNotFoundException {
+        ArrayList<Category> array = (ArrayList<Category>) Main.sendAndGetObjectFromServer("GetProducts");
         final ObservableList<Category> data = FXCollections.observableArrayList(Category.getAllCategories());
         categoryName.setCellValueFactory(new PropertyValueFactory<Category, String>("categoryName"));
         categoryProductsNum.setCellValueFactory(new PropertyValueFactory<Category, String>("size"));

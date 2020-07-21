@@ -1,6 +1,8 @@
 package Model;
 
-public class AddProductRequest extends Request {
+import java.io.Serializable;
+
+public class AddProductRequest extends Request implements Serializable {
    private Product product;
 
     public AddProductRequest(Seller seller, Product product) {

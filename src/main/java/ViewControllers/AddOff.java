@@ -1,10 +1,6 @@
 package ViewControllers;
 
-import Controller.Exceptions.*;
-import Controller.SellerBoss;
 import Main.Main;
-import Model.Account;
-import Model.Seller;
 import MusicPlayer.MusicPlayer;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -13,10 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AddOff {
     public TextField startDate;
@@ -30,11 +23,8 @@ public class AddOff {
     public void confirm(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
         ArrayList<Integer> ids = new ArrayList<>();
-        if (checkProductsId()){
-            for (String s : productsIds.getText().split(" ")) {
-                ids.add(Integer.parseInt(s));
-            }
-        }else {
+        if (!checkProductsId()){
+
             problem.setTextFill(Paint.valueOf("red"));
             problem.setText("invalid format of product id");
             return;
@@ -45,13 +35,20 @@ public class AddOff {
             return;
         }
 
-        try {
-            SellerBoss.addOff(ids,(Seller) Account.getOnlineAccount(),startDate.getText(),finalDate.getText(),percentage.getText(),maximum.getText());
+        String idOfProducts = productsIds.getText();
+        String startDataTime  = startDate.getText();
+        String finalDateTime = finalDate.getText();
+        String max = maximum.getText();
+        String percent = percentage.getText()  ;
+        String request = "AddOff,"+max+"-"+percent+"+"+idOfProducts+"!"+startDataTime+"$"+finalDateTime;
+        String response = Main.sendAndGetMessage(request);
+
+       if (response.equalsIgnoreCase("S"))
             Main.setRoot("SellerPage","seller page", false);
-        } catch (ParseException | ThisIsNotYours | TimeLimit | InvalidNumber | InputStringExceptNumber | NullProduct | JustOneOffForEveryProduct e) {
-            problem.setText(e.getMessage());
-            problem.setTextFill(Paint.valueOf("red"));
-        }
+       else {
+           problem.setTextFill(Paint.valueOf("red"));
+           problem.setText(response);
+       }
     }
     private boolean checkProductsId(){
         for (String s : productsIds.getText().split(" ")) {

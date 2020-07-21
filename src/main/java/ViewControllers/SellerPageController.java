@@ -4,6 +4,7 @@ import Controller.AccountBoss;
 import Controller.Exceptions.NullProduct;
 import Controller.Exceptions.SoldProductsCanNotHaveChange;
 import Controller.Exceptions.ThisIsNotYours;
+import Controller.ProductBoss;
 import Controller.SellerBoss;
 import Main.Main;
 import Model.Account;
@@ -12,10 +13,7 @@ import Model.Product;
 import Model.Seller;
 import MusicPlayer.MusicPlayer;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -23,7 +21,10 @@ import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -42,29 +43,32 @@ public class SellerPageController implements Initializable {
     public Label errorLabel;
     public TextField productIdForRemoveThat;
     public Label problemOfRemovingProduct;
-    public ImageView image;
+    public DatePicker startDateOfAuction;
+    public DatePicker finalDateOfAuction;
+    public Label auctionProblem;
+    public TextField auctionProductId;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.updateValuesOnScreen();
+        try {
+            this.updateValuesOnScreen();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void updateValuesOnScreen() {
+    private void updateValuesOnScreen() throws IOException, ClassNotFoundException {
         typeLabel.setTextFill(Paint.valueOf("green"));
-        Account onlineAccount = Account.getOnlineAccount();
+        Seller onlineAccount = (Seller) Main.sendAndGetObjectFromServer("GetOnlineAccount");
         usernameLabel.setText(onlineAccount.getUsername());
         nameField.setText(onlineAccount.getFirstName());
         lastNameField.setText(onlineAccount.getLastName());
-
         phoneNumberField.setText(onlineAccount.getPhoneNumber());
         emailField.setText(onlineAccount.getEmail());
         passwordField.setText(onlineAccount.getPassword());
-        Seller seller = (Seller) Account.getOnlineAccount();
-        company.setText(seller.getCompanyName());
-        if (Account.getOnlineAccount().getAccountImage()!=null){
-            image.setImage(Account.getOnlineAccount().getAccountImage());
-        }
+        company.setText(onlineAccount.getCompanyName());
+
     }
 
     public boolean checkValidity(String type, String input) {
@@ -84,14 +88,15 @@ public class SellerPageController implements Initializable {
         return true;
     }
 
-    public void updateProfileDate(MouseEvent mouseEvent) {
+    public void updateProfileDate(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
-        Seller seller = (Seller) Account.getOnlineAccount();
-        seller.setCompanyName(company.getText());
+        Seller seller = (Seller) Main.sendAndGetObjectFromServer("GetOnlineAccount");
+        String companyName = company.getText();
+        Main.sendMessageToServer("updateCompany,"+companyName);
         List<String> parameters = Arrays.asList("firstName", "lastName", "email", "phoneNumber", "password");
         List<String> values = Arrays.asList(nameField.getText(), lastNameField.getText(), emailField.getText(), phoneNumberField.getText(), passwordField.getText());
         for (int i = 0; i < 5; i++) {
-            try {
+
                 if (parameters.get(i).equalsIgnoreCase("email") && !values.get(i).matches("^(\\w+)@(\\w+).(\\w+)$")) {
                     information.setText("email invalid format");
                     information.setTextFill(Color.RED);
@@ -101,23 +106,28 @@ public class SellerPageController implements Initializable {
                     information.setTextFill(Color.RED);
                     return;
                 } else {
-                    AccountBoss.startEditPersonalField(parameters.get(i), values.get(i), Account.getOnlineAccount());
+                    String response = Main.sendAndGetMessage("sellerEditPersonalInfo,"+parameters.get(i)+"+"+values.get(i));
+                    if (response.equalsIgnoreCase("S")){
+                        information.setTextFill(Color.GREEN);
+                        information.setText("Successful :)");
+                        this.updateValuesOnScreen();
+                    }else {
+                        information.setText(response);
+                        information.setTextFill(Color.RED);
+                        return;
+                    }
                 }
-            } catch (Exception e) {
-                information.setText(e.getMessage());
-                information.setTextFill(Color.RED);
-                return;
-            }
+
         }
-        information.setTextFill(Color.GREEN);
-        information.setText("Successful :)");
-        this.updateValuesOnScreen();
+
     }
 
-    public void logoutClick(MouseEvent mouseEvent) throws IOException {
+    public void logoutClick(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
-        AccountBoss.logout(Account.getOnlineAccount());
-        Main.setRoot("LoginPage","login page",false);
+        String usernameOfOnlineUser = usernameLabel.getText();
+        Account account = (Account) Main.sendAndGetObjectFromServer("logout," + usernameOfOnlineUser);
+        AccountBoss.logout(account);
+        Main.doBack();
     }
 
     public void viewSalesHistory(MouseEvent mouseEvent) throws IOException {
@@ -230,4 +240,26 @@ public class SellerPageController implements Initializable {
     }
 
 
+    public void createAuction(MouseEvent mouseEvent) throws IOException {
+       Date start = new Date(startDateOfAuction.getValue().toEpochDay());
+       Date finalTime = new Date(finalDateOfAuction.getValue().toEpochDay());
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String startTime = dateFormat.format(start);
+        String finalTimeString = dateFormat.format(finalTime);
+       String username = usernameLabel.getText();
+       String productId = auctionProductId.getText();
+       if (!productId.matches("^\\d+$")){
+           auctionProblem.setText("invalid format of id");
+           auctionProblem.setTextFill(Paint.valueOf("red"));
+           return;
+       }
+       String response = Main.sendAndGetMessage("makeAuction,"+username+"-"+startTime+"+"+finalTimeString+"#"+auctionProblem);
+       if (response.equalsIgnoreCase("S")){
+           auctionProblem.setTextFill(Paint.valueOf("green"));
+           auctionProblem.setText("successfully made");
+       }else {
+           auctionProblem.setTextFill(Paint.valueOf("red"));
+           auctionProblem.setText("unsuccessfully");
+       }
+    }
 }
