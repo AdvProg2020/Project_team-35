@@ -4,8 +4,10 @@ import Controller.AccountBoss;
 import Main.Main;
 import Model.Account;
 import Model.Customer;
+import Model.Seller;
 import MusicPlayer.MusicPlayer;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -125,5 +127,14 @@ public class CustomerPage implements Initializable {
     public void goToProductsPage(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("ProductsPage", "Products Page", false);
+    }
+
+    public void showAuctions(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
+        String response = Main.sendAndGetMessage("showAuctions");
+        Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
+        errorAlert.setHeaderText("auction info");
+        errorAlert.setContentText(response);
+        errorAlert.showAndWait();
     }
 }

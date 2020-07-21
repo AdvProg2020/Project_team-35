@@ -70,6 +70,7 @@ public class Auction implements Serializable {
     }
     public void addCustomerToAuction(Customer customer , Double offeredMoney){
         moneyWhichAreOffered.put(customer,offeredMoney);
+        listOfCustomersWhoAreInAuction.add(customer);
     }
     public Customer finishAuction(){
         int numberOfMaximum = 0;
@@ -97,5 +98,16 @@ public class Auction implements Serializable {
 
     public static ArrayList<Auction> getAllActiveAuction() {
         return allActiveAuction;
+    }
+    public String showInfo(){
+        String result = "id:"+id+"\nname of seller:"+seller.getUsername()+"\nname of product:"+product.getName()+"\nbase price:"+basicPrice+"\nnumber of participator:"+listOfCustomersWhoAreInAuction.size()+"\n";
+        return result;
+    }
+    public static String showAllAuctionsInfo(){
+        String result = "";
+        for (Auction auction : Auction.getAllActiveAuction()) {
+            result+=auction.showInfo();
+        }
+        return result;
     }
 }

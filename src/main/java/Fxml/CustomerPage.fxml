@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@../Resources/styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CustomerPage">
@@ -27,6 +26,7 @@
 
       <Label layoutX="105.0" layoutY="426.0" prefHeight="18.0" prefWidth="54.0" text="Balance" />
       <Label fx:id="balanceLabel" layoutX="237.0" layoutY="419.0" prefHeight="26.0" prefWidth="95.0" text="Label" />
-      <Button onMouseClicked="#goToProductsPage" layoutX="587.0" layoutY="197.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="202.0" text="Products Page" />
+      <Button layoutX="587.0" layoutY="197.0" mnemonicParsing="false" onMouseClicked="#goToProductsPage" prefHeight="38.0" prefWidth="202.0" text="Products Page" />
+      <Button onMouseClicked="#showAuctions" layoutX="688.0" layoutY="493.0" mnemonicParsing="false" text="show Auctions" />
     </children>
 </AnchorPane>

@@ -91,6 +91,10 @@ public class Server {
                         editSellerProfile(input);
                     }else if (input.startsWith("GetProducts")){
 
+                    }else if (input.equalsIgnoreCase("showAuctions")){
+                        String response = Auction.showAllAuctionsInfo();
+                        dataOutputStream.writeUTF(response);
+                        dataOutputStream.flush();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
