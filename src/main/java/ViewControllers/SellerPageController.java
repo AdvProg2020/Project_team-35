@@ -67,8 +67,7 @@ public class SellerPageController implements Initializable {
         phoneNumberField.setText(onlineAccount.getPhoneNumber());
         emailField.setText(onlineAccount.getEmail());
         passwordField.setText(onlineAccount.getPassword());
-        Seller seller = (Seller) Account.getOnlineAccount();
-        company.setText(seller.getCompanyName());
+        company.setText(onlineAccount.getCompanyName());
 
     }
 

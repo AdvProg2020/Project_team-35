@@ -47,7 +47,6 @@ public class CustomerPage implements Initializable {
         phoneNumberField.setText(onlineAccount.getPhoneNumber());
         emailField.setText(onlineAccount.getEmail());
         passwordField.setText(onlineAccount.getPassword());
-
         balanceLabel.setText(String.valueOf(onlineAccount.getMoney()));
 
     }
