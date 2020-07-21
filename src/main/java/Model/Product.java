@@ -7,9 +7,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Product {
+public class Product implements Serializable {
     public static ArrayList<Product> allProducts = new ArrayList<>();
     private int productId;
     private static int productNumber;
@@ -72,13 +73,7 @@ public class Product {
         this.imageView = imageView;
     }
 
-    public ImageView getImageView() {
-        return imageView;
-    }
 
-    public static void setWhoWantsPic(Product whoWantsPic) {
-        Product.whoWantsPic = whoWantsPic;
-    }
 
     public static Product getWhoWantsPic() {
         return whoWantsPic;

@@ -1,6 +1,8 @@
 package Model;
 
-public class Rate {
+import java.io.Serializable;
+
+public class Rate implements Serializable {
     private int rateId;
     private Customer rater;
     private int rate;

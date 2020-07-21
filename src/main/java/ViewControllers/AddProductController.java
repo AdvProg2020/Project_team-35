@@ -48,8 +48,7 @@ public class AddProductController {
         String request = "AddProduct,";
         String nameOfProduct = name.getText();
         String inventoryOfProduct = inventory.getText();
-        ;
-        String priceOfProduct = problem.getText();
+        String priceOfProduct = price.getText();
         String companyOfProduct = company.getText();
         String description = decription.getText();
         String categoryOfProductsName = categoryName.getText();

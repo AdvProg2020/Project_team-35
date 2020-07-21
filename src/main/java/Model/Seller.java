@@ -9,7 +9,7 @@ public class Seller extends Account implements Serializable {
     private ArrayList<Off> sellerOffs;
     private ArrayList<SellLog> sellLogs;
     private String companyName;
-    private double money;
+    private Double money;
     private ArrayList<Product> salableProducts;
 
     /**

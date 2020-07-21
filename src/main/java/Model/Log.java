@@ -2,9 +2,10 @@ package Model;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public abstract class Log {
+public abstract class Log implements Serializable {
     public static int numberOfLogs;
     protected SimpleIntegerProperty logId = new SimpleIntegerProperty();
     protected LocalDateTime dateAndTime;

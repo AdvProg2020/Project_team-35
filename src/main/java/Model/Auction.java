@@ -1,10 +1,11 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Auction {
+public class Auction implements Serializable {
     private static ArrayList<Auction> allActiveAuction = new ArrayList<>();
     private Seller seller;
     private Date startTime;
@@ -82,6 +83,7 @@ public class Auction {
                 numberOfMaximum++;
             }
         }
+        Auction.getAllActiveAuction().remove(this);
         if (numberOfMaximum==1){
             payment(customerOfMax,moneyWhichAreOffered.get(customerOfMax));
             return customerOfMax;
@@ -91,5 +93,9 @@ public class Auction {
     }
     public void payment(Customer customer , Double money){
 
+    }
+
+    public static ArrayList<Auction> getAllActiveAuction() {
+        return allActiveAuction;
     }
 }

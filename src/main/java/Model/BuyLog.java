@@ -1,9 +1,10 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class BuyLog extends Log{
+public class BuyLog extends Log implements Serializable {
     private double purchaseAmount;
     private double OffDiscountMoney;
     public ArrayList<Product> boughtProducts;

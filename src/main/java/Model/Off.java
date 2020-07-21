@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-public class Off {
+public class Off implements Serializable {
     public static ArrayList<Off> allActiveOffs = new ArrayList<>();
     private static int offIdNumber;
     private int offId;

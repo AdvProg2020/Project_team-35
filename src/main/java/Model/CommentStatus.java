@@ -1,5 +1,7 @@
 package Model;
 
-public enum CommentStatus {
+import java.io.Serializable;
+
+public enum CommentStatus implements Serializable {
     WAITFORCONFIRM, CONFIRMED, NOTCONFIRMED;
 }

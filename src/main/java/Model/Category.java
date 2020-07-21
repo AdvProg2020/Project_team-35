@@ -1,16 +1,18 @@
 package Model;
 
-import javafx.beans.property.SimpleStringProperty;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 
-import java.util.*;
-
-public class Category {
+public class Category implements Serializable {
     public static ArrayList<Category> allCategories = new ArrayList<>();
-    private SimpleStringProperty categoryName = new SimpleStringProperty();
+    private WriteableObjectProperty<String> categoryName = new WriteableObjectProperty<String>();
     public ArrayList<Product> categoryProducts;
     public ArrayList<String> specialAttributes;
     private static String currentSort = "Nothing";
-    private int size;
+
 
     public Category(String categoryName, ArrayList<String> specialAttributes) {
         this.categoryName.set(categoryName);
@@ -18,7 +20,6 @@ public class Category {
         categoryProducts = new ArrayList<>();
         Category.setCurrentSort("Nothing");
         allCategories.add(this);
-        size=0;
     }
 
 
@@ -76,7 +77,7 @@ public class Category {
         return true;
     }
     public int getSize() {
-        size = this.categoryProducts.size();
+
         return this.categoryProducts.size();
     }
     public void setCategoryName(String categoryName) {

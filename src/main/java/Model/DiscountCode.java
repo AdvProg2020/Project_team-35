@@ -3,11 +3,12 @@ package Model;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DiscountCode {
+public class DiscountCode implements Serializable {
     public static ArrayList<DiscountCode> allDiscountCodes = new ArrayList<>();
     private SimpleStringProperty code = new SimpleStringProperty();
     private LocalDateTime finalDate;

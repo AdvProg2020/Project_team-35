@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SellLog extends Log {
+public class SellLog extends Log implements Serializable {
 
     private double receivedAmount;
     private double offDiscountAmount;

@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Auction;
 import Model.DiscountCode;
 import Model.Off;
 import Model.Product;
@@ -7,6 +8,7 @@ import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Boss {
     public static boolean removeExpiredOffsAndDiscountCodes() {
@@ -24,6 +26,14 @@ public class Boss {
 //        }
 
 
+        Date date = new Date();
+        for (int i = 0; i < Auction.getAllActiveAuction().size(); i++) {
+            Auction auction = Auction.getAllActiveAuction().get(i);
+            if (auction.getFinalTime().equals(date)){
+                auction.finishAuction();
+                i--;
+            }
+        }
 
 
         LocalDateTime now = LocalDateTime.now();

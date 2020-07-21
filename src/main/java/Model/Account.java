@@ -1,10 +1,7 @@
 package Model;
 
 import Controller.ManagerBoss;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.image.Image;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
