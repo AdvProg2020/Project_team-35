@@ -2,14 +2,17 @@ package Model;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class SellerRegisterRequest extends Request {
+import java.io.Serializable;
+
+public class SellerRegisterRequest extends Request implements Serializable {
 
 
     public SellerRegisterRequest(Seller seller) {
         super(seller, "Seller Register");
     }
 
-    public static SimpleStringProperty requestType = new SimpleStringProperty("Seller Register");
+//    public static SimpleStringProperty requestType = new SimpleStringProperty("Seller Register");
+    public static WriteableObjectProperty<String> requestType = new WriteableObjectProperty<>("Seller Register");
     public String getRequestInfo () {
         return "  Seller Register Request --- username: "+seller.getUsername()+" --- RQId: " + this.getRequestId();
     }

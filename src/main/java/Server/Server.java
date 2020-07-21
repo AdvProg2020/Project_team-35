@@ -76,7 +76,7 @@ public class Server {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             Account account = Account.getOnlineAccount();
             System.out.println(account.getEmail());
-            objectOutputStream.writeObject( account);
+            objectOutputStream.writeObject(account);
             objectOutputStream.flush();
         }
 
@@ -142,7 +142,7 @@ public class Server {
 
         }
 
-        private void handleManagerRequestsRequests(String input) {
+        private void handleManagerRequestsRequests(String input) throws IOException {
             //should send response to client
             String requestText = input.substring(9);
             if (requestText.startsWith("AcceptRequest")) {
@@ -160,9 +160,9 @@ public class Server {
                     sendMessageToClient(e.getMessage());
                 }
             } else if (requestText.equalsIgnoreCase("GetCheckedRequests")) {
-
+                sendObjectToClient(Manager.getCheckedRequests());
             } else if (requestText.equalsIgnoreCase("GetUncheckedRequests")) {
-
+                sendObjectToClient(Manager.getNewRequests());
             }
 
         }
@@ -211,6 +211,11 @@ public class Server {
         private Object readObjectFromClient() throws IOException, ClassNotFoundException {
             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
             return objectInputStream.readObject();
+        }
+        private void sendObjectToClient(Serializable toSend) throws IOException {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream.writeObject(toSend);
+            objectOutputStream.flush();
         }
     }
 
