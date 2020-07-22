@@ -39,6 +39,12 @@ public class BankWorksController implements Initializable {
 
     public void getTransaction(MouseEvent mouseEvent) throws IOException {
         String response = Main.sendAndGetMessage("transactionResult,"+transactionToken);
+        if (response.equalsIgnoreCase("database error") ||response.equalsIgnoreCase("invalid input") ||response.equalsIgnoreCase("token is invalid") || response.equalsIgnoreCase("token expired")){
+            resultOfTransaction.setTextFill(Paint.valueOf("red"));
+        }else {
+            resultOfTransaction.setTextFill(Paint.valueOf("green"));
+        }
+        resultOfTransaction.setText(response);
 
     }
 

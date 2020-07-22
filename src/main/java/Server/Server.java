@@ -123,6 +123,10 @@ public class Server {
                         purchase(input);
                     }else if (input.startsWith("getToken")){
                         getTokenFromBankAndGiveItToClient(input);
+                    }else if (input.startsWith("transactionResult")){
+                        String result = getBalanceOfBankAccount(input.substring(input.indexOf(",")+1));
+                        dataOutputStream.writeUTF(result);
+                        dataOutputStream.flush();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
