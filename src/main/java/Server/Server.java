@@ -440,7 +440,7 @@ public class Server {
             address = matcher.group(1);
             phoneNumber = matcher.group(2);
             try {
-                CustomerBoss.doPayment((Customer) Account.getOnlineAccount())
+                CustomerBoss.doPayment((Customer) Account.getOnlineAccount());
             } catch (NoMoneyInCustomerPocket noMoneyInCustomerPocket) {
                 noMoneyInCustomerPocket.printStackTrace();
             }
