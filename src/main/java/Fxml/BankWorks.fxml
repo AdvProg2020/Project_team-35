@@ -9,10 +9,22 @@
       <TextField fx:id="usernameForToken" layoutX="182.0" layoutY="120.0" promptText="username for Token" />
       <TextField fx:id="passwordForToken" layoutX="182.0" layoutY="175.0" promptText="password for Token" />
       <Label fx:id="problemOfToken" layoutX="242.0" layoutY="231.0" />
-      <Button layoutX="475.0" layoutY="69.0" mnemonicParsing="false" onMouseClicked="#exit" text="exit" fx:id="exitButton" />
-      <Button layoutX="663.0" layoutY="69.0" mnemonicParsing="false" onMouseDragged="#getTransaction" text="transaction" />
+      <Button fx:id="exitButton" layoutX="475.0" layoutY="69.0" mnemonicParsing="false" onMouseClicked="#exit" text="exit" />
+      <Button layoutX="663.0" layoutY="69.0" mnemonicParsing="false" onMouseDragged="#getTransaction" text="Balance" />
       <TextField fx:id="transactionToken" layoutX="647.0" layoutY="120.0" promptText="token" />
       <Label fx:id="resultOfTransaction" layoutX="707.0" layoutY="179.0" />
       <Button layoutX="466.0" layoutY="330.0" mnemonicParsing="false" onMouseClicked="#back" text="Back" />
+      <Button layoutX="947.0" layoutY="69.0" mnemonicParsing="false" onMouseClicked="#transfer" text="Transfer" />
+      <VBox layoutX="892.0" layoutY="131.0" prefHeight="154.0" prefWidth="278.0">
+         <children>
+            <TextField fx:id="transferToken" promptText="token" />
+            <TextField fx:id="receiptType" promptText="receiptType" />
+            <TextField fx:id="money" promptText="money" />
+            <TextField fx:id="sourceID" promptText="source ID" />
+            <TextField fx:id="destID" promptText="destID" />
+            <TextField fx:id="description" promptText="description" />
+         </children>
+      </VBox>
+      <Label fx:id="transferResult" layoutX="893.0" layoutY="313.0" prefHeight="18.0" prefWidth="278.0" />
    </children>
 </AnchorPane>

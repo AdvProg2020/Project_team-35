@@ -21,6 +21,13 @@ public class BankWorksController implements Initializable {
     public TextField transactionToken;
     public Label resultOfTransaction;
     public Button exitButton;
+    public TextField transferToken;
+    public TextField receiptType;
+    public TextField money;
+    public TextField sourceID;
+    public TextField destID;
+    public TextField description;
+    public Label transferResult;
 
     public void getToken(MouseEvent mouseEvent) throws IOException {
         String response = Main.sendAndGetMessage("getToken,"+usernameForToken.getText()+"-"+passwordForToken.getText());
@@ -66,5 +73,16 @@ public class BankWorksController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    public void transfer(MouseEvent mouseEvent) throws IOException {
+        String request = "transfer,"+"{token,"+transactionToken.getText()+"}{receiptType,"+receiptType.getText()+"}{money,"+money.getText()+"}{sourceID,"+sourceID.getText()+"}{destID,"+destID.getText()+"}{description,"+description.getText()+"}";
+        String response = Main.sendAndGetMessage(request);
+        if (response.matches("^\\d+$")){
+            transferResult.setTextFill(Paint.valueOf("green"));
+        }else {
+            transferResult.setTextFill(Paint.valueOf("red"));
+        }
+        transferResult.setText(response);
     }
 }

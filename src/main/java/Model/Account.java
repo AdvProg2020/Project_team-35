@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.ManagerBoss;
+import com.sun.corba.se.impl.ior.ObjectIdImpl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public abstract class Account implements Serializable {
     protected boolean isThisAccountLogged;
     protected int typeOfAccount;
     private static String currentSort = "Nothing";
-
+    protected ArrayList<String> bills;
 
     public static Account getWhoWantsToHavePic() {
         return whoWantsToHavePic;
@@ -46,6 +47,7 @@ public abstract class Account implements Serializable {
         this.password.set((password));
         this.typeOfAccount = typeOfAccount;
         allAccounts.add(this);
+        bills = new ArrayList<>();
         Account.setCurrentSort("Nothing");
         if (this instanceof Manager){
           //  type.set("Manager");
@@ -284,5 +286,13 @@ public abstract class Account implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public ArrayList<String> getBills() {
+        return bills;
+    }
+
+    public void setBills(ArrayList<String> bills) {
+        this.bills = bills;
     }
 }
