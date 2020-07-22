@@ -121,6 +121,8 @@ public class Server {
                     }
                     else if (input.startsWith("purchase")) {
                         purchase(input);
+                    }else if (input.startsWith("getToken")){
+                        getTokenFromBankAndGiveItToClient(input);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -128,6 +130,52 @@ public class Server {
             }
         }
 
+        private void getTokenFromBankAndGiveItToClient(String input) throws IOException {
+            String username = input.substring(input.indexOf(",")+1,input.indexOf("-"));
+            String password = input.substring(input.indexOf("-")+1);
+            String response = getTokenFromBank(username,password);
+            if (!response.equalsIgnoreCase("invalid username or password")){
+                Account account = Account.getAccountWithUsername(username);
+                account.setToken(response);
+            }
+            dataOutputStream.writeUTF(response);
+            dataOutputStream.flush();
+        }
+
+        private String getTokenFromBank(String username,String password) throws IOException {
+            String request = "get_token "+username+" "+password;
+            dataOutputStreamBank.writeUTF(request);
+            dataOutputStreamBank.flush();
+            return dataInputStreamBank.readUTF();
+        }
+        private String createBill(String token , String receiptType , String money , String sourceId , String destId ,String description ) throws IOException {
+            String request = "create_receipt "+token+" "+receiptType+" "+money+" "+sourceId+" "+destId+" "+description;
+            dataOutputStreamBank.writeUTF(request);
+            dataOutputStreamBank.flush();
+            return (dataInputStreamBank.readUTF());
+        }
+        private String getHistoryOfBills(String token , String type) throws IOException {
+            String request = "get_transaction "+token+" "+type;
+            dataOutputStreamBank.writeUTF(request);
+            dataOutputStreamBank.flush();
+            return dataInputStreamBank.readUTF();
+        }
+        private String pay(String receiptID) throws IOException {
+            String request = "pay "+receiptID;
+            dataOutputStreamBank.writeUTF(request);
+            dataOutputStreamBank.flush();
+            return dataInputStreamBank.readUTF();
+        }
+        private String getBalanceOfBankAccount(String token) throws IOException {
+            String request = "get_balance "+token;
+            dataOutputStreamBank.writeUTF(request);
+            dataOutputStreamBank.flush();
+            return dataInputStreamBank.readUTF();
+        }
+        private void exitFromBank() throws IOException {
+            dataOutputStreamBank.writeUTF("exit");
+            dataOutputStreamBank.flush();
+        }
         private void editSellerProfile(String input) throws IOException {
             String parameter = input.substring(input.indexOf(",")+1,input.indexOf("+"));
             String value = input.substring(input.indexOf("+")+1);

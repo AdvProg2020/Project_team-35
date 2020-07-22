@@ -9,6 +9,8 @@
   <Button onMouseClicked="#offsEntrance" text="Offs" GridPane.rowIndex="2" />
   <Button onMouseClicked="#back" text="back" GridPane.rowIndex="3" />
    <Button mnemonicParsing="false" onMouseClicked="#startPage" text="start page" GridPane.rowIndex="4" />
+    <Button text="bank works" GridPane.rowIndex="5" onMouseClicked="#bankWorksEnterance"/>
+    <Label fx:id="problem" GridPane.rowIndex="6"/>
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>

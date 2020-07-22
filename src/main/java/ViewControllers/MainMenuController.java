@@ -4,11 +4,15 @@ import Main.Main;
 import Model.Account;
 import Model.Seller;
 import MusicPlayer.MusicPlayer;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 
 public class MainMenuController {
+    public Label problem;
+
     public void userPageEntrance(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
         if (Account.isIsThereOnlineUser()) {
@@ -39,5 +43,15 @@ public class MainMenuController {
 
     public void startPage(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("FirstPage","first page",false);
+    }
+
+    public void bankWorksEnterance(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
+        Account account = (Account) Main.sendAndGetObjectFromServer("GetOnlineAccount");
+        if (account==null){
+            problem.setText("you need login for this part");
+            problem.setTextFill(Paint.valueOf("red"));
+        }else {
+            Main.setRoot("BankWorks","bank option" , false);
+        }
     }
 }

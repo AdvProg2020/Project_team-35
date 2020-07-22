@@ -14,7 +14,7 @@ public abstract class Account implements Serializable {
     private String email;
     private String phoneNumber;
     protected String numberOfBankAccount;
-
+    protected String token;
     private WriteableObjectProperty<String> password = new WriteableObjectProperty<>();
     private WriteableObjectProperty<String> type = new WriteableObjectProperty<>();
     private static Account onlineAccount;
@@ -276,5 +276,13 @@ public abstract class Account implements Serializable {
 
     public void setNumberOfBankAccount(String numberOfBankAccount) {
         this.numberOfBankAccount = numberOfBankAccount;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
