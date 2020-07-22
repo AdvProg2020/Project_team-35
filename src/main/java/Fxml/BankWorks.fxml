@@ -9,5 +9,10 @@
       <TextField fx:id="usernameForToken" layoutX="182.0" layoutY="120.0" promptText="username for Token" />
       <TextField fx:id="passwordForToken" layoutX="182.0" layoutY="175.0" promptText="password for Token" />
       <Label fx:id="problemOfToken" layoutX="242.0" layoutY="231.0" />
+      <Button layoutX="475.0" layoutY="69.0" mnemonicParsing="false" onMouseClicked="#exit" text="exit" fx:id="exitButton" />
+      <Button layoutX="663.0" layoutY="69.0" mnemonicParsing="false" onMouseDragged="#getTransaction" text="transaction" />
+      <TextField fx:id="transactionToken" layoutX="647.0" layoutY="120.0" promptText="token" />
+      <Label fx:id="resultOfTransaction" layoutX="707.0" layoutY="179.0" />
+      <Button layoutX="466.0" layoutY="330.0" mnemonicParsing="false" onMouseClicked="#back" text="Back" />
    </children>
 </AnchorPane>
