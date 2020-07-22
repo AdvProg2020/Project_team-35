@@ -128,46 +128,58 @@ public class Server {
                         dataOutputStream.writeUTF(result);
                         dataOutputStream.flush();
                     }else if (input.startsWith("transfer")){
-                        String token = "";
-                        String money="";
-                        String sourceID="";
-                        String destID="";
-                        String description="";
-                        String receiptType = "";
-                        Matcher matcher = getMatcher(input,"\\{(\\w+),(\\.+))\\}");
-                        while (matcher.find()){
-                            String key = matcher.group(1);
-                            String value = matcher.group(2);
-                            if (key.equalsIgnoreCase("token")){
-
-                                token = value;
-                            }else if (key.equalsIgnoreCase("receiptType")){
-
-                                receiptType = value;
-                            }else if (key.equalsIgnoreCase("money")){
-
-                                money = value;
-                            }else if (key.equalsIgnoreCase("sourceID")){
-
-                                sourceID = value;
-                            }else if (key.equalsIgnoreCase("destID")){
-
-                                destID = value;
-                            }else if (key.equalsIgnoreCase("description")){
-                                description = value;
-                            }
+                        sendRequestAndGetBillID(input);
+                    }else if (input.startsWith("ThisIsOUrBill")){
+                        Account account = onlineAccounts.get(socket);
+                        String billID = input.substring(input.indexOf(",")+1);
+                        String response = pay(billID);
+                        if (response.equalsIgnoreCase("done successfully")){
+                            account.getBills().remove(billID);
                         }
-                      String billID  =   createBill(token,receiptType,money,sourceID,destID,description);
-                        Account account = (Account) onlineAccounts.get(socket);
-                        account.getBills().add(billID);
-                        dataOutputStream.writeUTF(billID);
+                        dataOutputStream.writeUTF(response);
                         dataOutputStream.flush();
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private void sendRequestAndGetBillID(String input) throws IOException {
+            String token = "";
+            String money="";
+            String sourceID="";
+            String destID="";
+            String description="";
+            String receiptType = "";
+            Matcher matcher = getMatcher(input,"\\{(\\w+),(\\.+))\\}");
+            while (matcher.find()){
+                String key = matcher.group(1);
+                String value = matcher.group(2);
+                if (key.equalsIgnoreCase("token")){
+
+                    token = value;
+                }else if (key.equalsIgnoreCase("receiptType")){
+
+                    receiptType = value;
+                }else if (key.equalsIgnoreCase("money")){
+
+                    money = value;
+                }else if (key.equalsIgnoreCase("sourceID")){
+
+                    sourceID = value;
+                }else if (key.equalsIgnoreCase("destID")){
+
+                    destID = value;
+                }else if (key.equalsIgnoreCase("description")){
+                    description = value;
+                }
+            }
+            String billID  =   createBill(token,receiptType,money,sourceID,destID,description);
+            Account account = (Account) onlineAccounts.get(socket);
+            account.getBills().add(billID);
+            dataOutputStream.writeUTF(billID);
+            dataOutputStream.flush();
         }
 
         private void getTokenFromBankAndGiveItToClient(String input) throws IOException {

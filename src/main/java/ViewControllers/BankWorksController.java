@@ -28,6 +28,8 @@ public class BankWorksController implements Initializable {
     public TextField destID;
     public TextField description;
     public Label transferResult;
+    public TextField billID;
+    public Label paymentResult;
 
     public void getToken(MouseEvent mouseEvent) throws IOException {
         String response = Main.sendAndGetMessage("getToken,"+usernameForToken.getText()+"-"+passwordForToken.getText());
@@ -84,5 +86,15 @@ public class BankWorksController implements Initializable {
             transferResult.setTextFill(Paint.valueOf("red"));
         }
         transferResult.setText(response);
+    }
+
+    public void pay(MouseEvent mouseEvent) throws IOException {
+        String checkThisIsOurBill = Main.sendAndGetMessage("ThisIsOUrBill,"+billID.getText());
+        if (checkThisIsOurBill.equalsIgnoreCase("done successfully")){
+            paymentResult.setTextFill(Paint.valueOf("green"));
+        }else {
+            paymentResult.setTextFill(Paint.valueOf("red"));
+        }
+        paymentResult.setText(checkThisIsOurBill);
     }
 }
