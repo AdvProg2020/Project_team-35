@@ -12,7 +12,7 @@ public class Seller extends Account implements Serializable {
     private Double money;
     private ArrayList<Product> salableProducts;
     private Pocket pocket;
-    private String numberOfBankAccount;
+
 
     /**
      * a constructor for seller
@@ -167,11 +167,5 @@ public class Seller extends Account implements Serializable {
     }
 
 
-    public String getNumberOfBankAccount() {
-        return numberOfBankAccount;
-    }
 
-    public void setNumberOfBankAccount(String numberOfBankAccount) {
-        this.numberOfBankAccount = numberOfBankAccount;
-    }
 }

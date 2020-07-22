@@ -13,6 +13,7 @@ public abstract class Account implements Serializable {
     private String lastName;
     private String email;
     private String phoneNumber;
+    protected String numberOfBankAccount;
 
     private WriteableObjectProperty<String> password = new WriteableObjectProperty<>();
     private WriteableObjectProperty<String> type = new WriteableObjectProperty<>();
@@ -267,5 +268,13 @@ public abstract class Account implements Serializable {
 
     public WriteableObjectProperty typeProperty() {
         return type;
+    }
+
+    public String getNumberOfBankAccount() {
+        return numberOfBankAccount;
+    }
+
+    public void setNumberOfBankAccount(String numberOfBankAccount) {
+        this.numberOfBankAccount = numberOfBankAccount;
     }
 }

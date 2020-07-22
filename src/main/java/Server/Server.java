@@ -348,7 +348,7 @@ public class Server {
                 System.out.println(Account.getAccountWithUsername(username).getUsername());
                 dataOutputStream.writeUTF("S");
                 dataOutputStream.flush();
-                if (type.equalsIgnoreCase("seller") || type.equalsIgnoreCase("customer")){
+                if (type.equalsIgnoreCase("seller") || type.equalsIgnoreCase("customer") || (type.equalsIgnoreCase("manager") && Manager.getAllManagers().size()==1)){
                     dataOutputStreamBank.writeUTF("create_account "+firstName+" "+lastName+" "+username+" "+password+" "+password);
                     dataOutputStreamBank.flush();
                     String numberOfAccount = dataInputStreamBank.readUTF();
@@ -358,6 +358,9 @@ public class Server {
                     }else if (type.equalsIgnoreCase("customer")){
                         Customer customer = (Customer)Account.getAccountWithUsername(username);
                         customer.setNumberOfBankAccount(numberOfAccount);
+                    }else if (type.equalsIgnoreCase("manager")){
+                        Manager manager = (Manager) Account.getAccountWithUsername(username);
+                        manager.setNumberOfBankAccount(numberOfAccount);
                     }
                 }
             } catch (MoreThanOneManagerException | RepeatedUserName | RequestProblemNotExistManager e) {
