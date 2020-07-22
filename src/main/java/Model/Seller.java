@@ -11,6 +11,8 @@ public class Seller extends Account implements Serializable {
     private String companyName;
     private Double money;
     private ArrayList<Product> salableProducts;
+    private Pocket pocket;
+    private BankAccount bankAccount;
 
     /**
      * a constructor for seller
@@ -29,6 +31,7 @@ public class Seller extends Account implements Serializable {
         sellLogs = new ArrayList<SellLog>();
         money = 0.0;
         salableProducts = new ArrayList<Product>();
+        pocket = new Pocket(0.0);
     }
 
     public HashMap<Product, Integer> getSalesHistory(){
@@ -160,5 +163,13 @@ public class Seller extends Account implements Serializable {
                 return log;
         }
         return null;
+    }
+
+    public BankAccount getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
     }
 }

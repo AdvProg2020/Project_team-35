@@ -7,6 +7,7 @@ import Controller.ProductBoss;
 import Controller.SellerBoss;
 import Model.*;
 
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,30 +23,50 @@ import java.util.regex.Pattern;
 public class Server {
 
     private static HashMap<Socket, Account> onlineAccounts = new HashMap<>();
+    private static DataInputStream dataInputStreamBank;
+    private static DataOutputStream dataOutputStreamBank;
 
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8888);
         Socket socket;
+
+        connectToBankServer();
         while (true) {
             socket = serverSocket.accept();
             onlineAccounts.put(socket, null);
             System.out.println("new client connected to server");
             new handle(new DataInputStream(new BufferedInputStream(socket.getInputStream()))
-                    , new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())), socket).start();
+                    , new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())), socket,dataOutputStreamBank,dataInputStreamBank).start();
+        }
+    }
+    public static void connectToBankServer() throws IOException {
+        try {
+            Socket socket = new Socket("localHost", 8080);
+            dataOutputStreamBank  = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            dataInputStreamBank = new DataInputStream(socket.getInputStream());
+            System.out.println("connected to BankApI");
+        } catch (IOException e) {
+            throw new IOException("Exception while initiating connection:");
         }
     }
 
 
+
     static class handle extends Thread {
+        private static DataInputStream dataInputStreamBank;
+        private static DataOutputStream dataOutputStreamBank;
         private DataInputStream dataInputStream;
         private DataOutputStream dataOutputStream;
         private Socket socket;
 
-        public handle(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket) {
+        public handle(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket,DataOutputStream dataOutputStreamBank1,DataInputStream dataInputStreamBank1) {
             this.dataInputStream = dataInputStream;
             this.dataOutputStream = dataOutputStream;
             this.socket = socket;
+            dataInputStreamBank = dataInputStreamBank1;
+            dataOutputStreamBank  = dataOutputStreamBank1;
         }
+
 
         @Override
         public void run() {
@@ -93,6 +114,10 @@ public class Server {
 
                     }else if (input.equalsIgnoreCase("showAuctions")){
                         String response = Auction.showAllAuctionsInfo();
+                        dataOutputStream.writeUTF(response);
+                        dataOutputStream.flush();
+                    }else if (input.startsWith("API")){
+                        String response = sendAndGetMessageFromBankAPI(input.substring(input.indexOf(",")+1));
                         dataOutputStream.writeUTF(response);
                         dataOutputStream.flush();
                     }
@@ -403,6 +428,17 @@ public class Server {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectOutputStream.writeObject(toSend);
             objectOutputStream.flush();
+        }
+        private void sendRequestToBankAPI(String request) throws IOException {
+            dataOutputStreamBank.writeUTF(request);
+            dataOutputStreamBank.flush();
+        }
+        private String getResponseFromBankAPI() throws IOException {
+            return dataInputStreamBank.readUTF();
+        }
+        private String sendAndGetMessageFromBankAPI(String request) throws IOException {
+            sendRequestToBankAPI(request);
+            return getResponseFromBankAPI();
         }
     }
 

@@ -27,6 +27,10 @@
       <Label layoutX="105.0" layoutY="426.0" prefHeight="18.0" prefWidth="54.0" text="Balance" />
       <Label fx:id="balanceLabel" layoutX="237.0" layoutY="419.0" prefHeight="26.0" prefWidth="95.0" text="Label" />
       <Button layoutX="587.0" layoutY="197.0" mnemonicParsing="false" onMouseClicked="#goToProductsPage" prefHeight="38.0" prefWidth="202.0" text="Products Page" />
-      <Button onMouseClicked="#showAuctions" layoutX="688.0" layoutY="493.0" mnemonicParsing="false" text="show Auctions" />
+      <Button layoutX="587.0" layoutY="499.0" mnemonicParsing="false" onMouseClicked="#showAuctions" text="show Auctions" />
+      <Button layoutX="584.0" layoutY="426.0" mnemonicParsing="false" onMouseClicked="#addToAnAuction" text="add to an Auction" />
+      <TextField fx:id="auctionId" layoutX="751.0" layoutY="433.0" promptText="auction id" />
+      <Button layoutX="587.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#enterToAnAuction" text="enter to an auction" />
+      <TextField fx:id="EnteranceAuctionId" layoutX="761.0" layoutY="361.0" promptText="auction id" />
     </children>
 </AnchorPane>

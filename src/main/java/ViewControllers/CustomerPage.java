@@ -31,6 +31,8 @@ public class CustomerPage implements Initializable {
     public PasswordField passwordField;
     public Label information;
     public Label balanceLabel;
+    public TextField auctionId;
+    public TextField EnteranceAuctionId;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -136,5 +138,11 @@ public class CustomerPage implements Initializable {
         errorAlert.setHeaderText("auction info");
         errorAlert.setContentText(response);
         errorAlert.showAndWait();
+    }
+
+    public void addToAnAuction(MouseEvent mouseEvent) {
+    }
+
+    public void enterToAnAuction(MouseEvent mouseEvent) {
     }
 }
