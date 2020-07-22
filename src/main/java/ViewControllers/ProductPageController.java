@@ -80,7 +80,6 @@ public class ProductPageController implements Initializable {
             result+= s+"            -->         "+attri.get(s)+"\n";
         }
         attributes.setText(result);
-        imageView.setImage(product.getProductImage());
         if (ProductBoss.showSameProducts(product)!=null) {
             ArrayList<Product> sameProducts = ProductBoss.showSameProducts(product);
             String result2 = "";
@@ -89,8 +88,8 @@ public class ProductPageController implements Initializable {
             }
             same.setText(result2);
         }
-        MediaPlayer mediaPlayer = new MediaPlayer(product.getMedia());
-        mediaView.setMediaPlayer(mediaPlayer);
+
+
 
     }
 

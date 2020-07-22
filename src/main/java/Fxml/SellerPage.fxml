@@ -37,7 +37,6 @@
       <TextField fx:id="productIdForRemoveThat" layoutX="768.0" layoutY="360.0" promptText="product id" visible="false" />
       <Label fx:id="problemOfRemovingProduct" layoutX="411.0" layoutY="372.0" prefHeight="17.0" prefWidth="164.0" />
       <Button layoutX="392.0" layoutY="537.0" mnemonicParsing="false" onMouseClicked="#changePic" text="change pic" />
-      <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="871.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="986.0" layoutY="332.0" mnemonicParsing="false" onMouseClicked="#createAuction" text="Create Auction" />
       <DatePicker fx:id="startDateOfAuction" layoutX="950.0" layoutY="392.0" promptText="start" />
       <DatePicker fx:id="finalDateOfAuction" layoutX="950.0" layoutY="439.0" promptText="final" />

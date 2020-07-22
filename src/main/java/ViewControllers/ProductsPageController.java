@@ -125,7 +125,6 @@ public class ProductsPageController implements Initializable {
            }else {
                imageLabel.setVisible(true);
                imageLabel.setText("image of product status");
-               imageView.setImage(product.getStatusImage());
                prepareScoresGraphicMode(product);
            }
         }

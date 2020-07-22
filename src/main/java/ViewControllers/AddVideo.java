@@ -35,7 +35,6 @@ public class AddVideo implements Initializable {
             Media video = new Media(address);
             MediaPlayer mediaPlayer = new MediaPlayer(video);
             media.setMediaPlayer(mediaPlayer);
-            Product.getWhoWantsPic().setMedia(video);
             return;
         }else {
             media.getMediaPlayer().stop();

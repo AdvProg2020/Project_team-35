@@ -1,14 +1,10 @@
 package Model;
 
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.media.Media;
-
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 
 public class Product implements Serializable {
     public static ArrayList<Product> allProducts = new ArrayList<>();
@@ -19,10 +15,7 @@ public class Product implements Serializable {
     private String startDate;
     private String finalDate;
 
-    private Media media;
-    private Image statusImage;
-    private Image productImage;
-    private ImageView imageView;
+
     private double averageOfProduct;
     private int reviewNumber;
     private String description;
@@ -65,13 +58,10 @@ public class Product implements Serializable {
         allProducts.add(this);
         seller.getSalableProducts().add(this);
         this.nameForTable.set(name);
-        this.idForTable.set(productId);
-        this.priceForTable.set(price);
+        this.idForTable.set(String.valueOf(productId));
+        this.priceForTable.set(String.valueOf(price));
     }
 
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
-    }
 
 
 
@@ -79,19 +69,11 @@ public class Product implements Serializable {
         return whoWantsPic;
     }
 
-    public void setProductImage(Image productImage) {
-        imageView = new ImageView(productImage);
-        setImageView(imageView);
-        this.productImage = productImage;
-    }
 
-    public Image getProductImage() {
-        return productImage;
-    }
 
-    private SimpleStringProperty nameForTable = new SimpleStringProperty();
-    private SimpleIntegerProperty idForTable = new SimpleIntegerProperty();
-    private SimpleDoubleProperty priceForTable = new SimpleDoubleProperty();
+    private WriteableObjectProperty<String> nameForTable = new WriteableObjectProperty<String>();
+    private WriteableObjectProperty<String> idForTable = new WriteableObjectProperty<String>();
+    private WriteableObjectProperty<String> priceForTable = new WriteableObjectProperty<String>();
 
     public ArrayList<Customer> getWhoBoughtThisGood() {
         return whoBoughtThisGood;
@@ -471,23 +453,10 @@ public class Product implements Serializable {
         return null;
     }
 
-    public void setStatusImage(Image statusImage) {
-        this.statusImage = statusImage;
-    }
-
-    public Image getStatusImage() {
-        return statusImage;
-    }
 
     public String getProductShortInfo() {
 return null;
     }
 
-    public Media getMedia() {
-        return media;
-    }
 
-    public void setMedia(Media media) {
-        this.media = media;
-    }
 }

@@ -1,7 +1,5 @@
 package Model;
 
-import javafx.beans.property.SimpleStringProperty;
-
 import java.io.Serializable;
 
 public class SellerRegisterRequest extends Request implements Serializable {

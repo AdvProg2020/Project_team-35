@@ -1,15 +1,11 @@
 package Model;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-
 import java.io.Serializable;
 
 public abstract class Request implements Serializable {
     protected Seller seller;
     public Request(Seller seller, String type) {
         requestIdNumber++;
-//        requestId = new SimpleIntegerProperty(requestIdNumber);
         requestId = new WriteableObjectProperty<Integer>(requestIdNumber);
         this.seller = seller;
         Manager.newRequests.add(this);

@@ -40,7 +40,6 @@ public class AddPicForProduct implements Initializable {
                 problem.setTextFill(Paint.valueOf("green"));
                 problem.setText("successfully put image for product");
                 Product product = Product.getWhoWantsPic();
-                product.setProductImage(image);
             }catch (IOException e){
                 problem.setText("invalid url for image");
                 problem.setTextFill(Paint.valueOf("red"));

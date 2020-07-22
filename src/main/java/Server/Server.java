@@ -2,13 +2,8 @@ package Server;
 
 import Controller.*;
 import Controller.Exceptions.*;
-import Controller.ManagerBoss;
-import Controller.ProductBoss;
-import Controller.SellerBoss;
 import Model.*;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
-import javax.xml.crypto.Data;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -237,7 +232,7 @@ public class Server {
             System.out.println(account.getUsername());
             AccountBoss.logout(account);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-            onlineAccounts.replace(socket, null);
+            onlineAccounts.put(socket, null);
             objectOutputStream.writeObject(account);
             objectOutputStream.flush();
         }
@@ -269,12 +264,10 @@ public class Server {
         }
 
         private void getOnlineAccount() throws IOException {
-            for (Socket socket1 : onlineAccounts.keySet()) {
-                System.out.println(socket1.getPort());
-                System.out.println(onlineAccounts.get(socket1));
-            }
+
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             Account account = onlineAccounts.get(socket);
+
             objectOutputStream.writeObject(account);
             objectOutputStream.flush();
         }
@@ -298,7 +291,7 @@ public class Server {
                 AccountBoss.checkPasswordValidity(username, password);
                 AccountBoss.startLogin(username, password);
                 Account account = Account.getAccountWithUsername(username);
-                onlineAccounts.replace(socket, account);
+                onlineAccounts.put(socket, account);
                 if (Account.getAccountWithUsername(username) instanceof Manager) {
                     dataOutputStream.writeUTF("goToManagerAccountPage");
                     dataOutputStream.flush();
@@ -320,7 +313,7 @@ public class Server {
         }
 
         private void register(String input) throws IOException {
-            Matcher matcher = getMatcher(input, "\\[" + "(\\w*|email address|phone number),(\\w*|(\\w+)@(\\w+).(\\w+))" + "\\]");
+            Matcher matcher = getMatcher(input, "\\[" + "(\\w*|email address|phone number|company name),(\\w*|(\\w+)@(\\w+).(\\w+))" + "\\]");
             String type = input.substring(input.indexOf(",") + 1, input.indexOf("-"));
             String username = input.substring(input.indexOf("-") + 1, input.indexOf("+"));
             String firstName ="";
@@ -496,9 +489,6 @@ public class Server {
         }
     }
 
-    public static HashMap<Socket, Account> getOnlineAccounts() {
-        return onlineAccounts;
-    }
 
     public static void purchase (String input) throws InvalidRequestException {
         String address;
