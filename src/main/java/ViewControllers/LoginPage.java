@@ -28,15 +28,6 @@ public class LoginPage {
         String request = "Login," + username.getText() + "-" + password.getText() + "+";
 
         Account account = Account.getAccountWithUsername(username.getText());
-        try {
-            AccountBoss.checkLoginWithLogOut(username.getText());
-            Account.setOnlineAccount(account);
-            Account.setIsThereOnlineUser(true);
-        } catch (LoginWithoutLogout existenceOfUserWithUsername) {
-            problem.setText(existenceOfUserWithUsername.getMessage());
-            problem.setTextFill(Paint.valueOf("red"));
-            return;
-        }
         String response = Main.sendAndGetMessage(request);
 
         if (response.equalsIgnoreCase("goToManagerAccountPage")) {

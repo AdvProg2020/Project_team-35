@@ -3,9 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane onMouseClicked="#goToParentPageButtonClick" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.PaymentPage">
+<AnchorPane stylesheets="@../Resources/styles.css"  prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.PaymentPage">
    <children>
       <Label fx:id="actionInfo" layoutX="277.0" layoutY="240.0" prefHeight="139.0" prefWidth="290.0" />
-      <Button layoutX="366.0" layoutY="498.0" mnemonicParsing="false" text="Go to Parent Page" />
+      <Button onMouseClicked="#goToParentPageButtonClick" layoutX="366.0" layoutY="498.0" mnemonicParsing="false" text="Go to Parent Page" />
    </children>
 </AnchorPane>

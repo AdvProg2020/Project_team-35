@@ -88,9 +88,7 @@ public class ManagerAccountPage implements Initializable {
 
     public void logoutClick(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
-        String usernameOfOnlineUser = usernameLabel.getText();
-        Account account = (Account) Main.sendAndGetObjectFromServer("logout," + usernameOfOnlineUser);
-        AccountBoss.logout(account);
+    String response =     Main.sendAndGetMessage("logout");
         Main.doBack();
     }
 

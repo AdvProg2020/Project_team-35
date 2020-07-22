@@ -227,14 +227,11 @@ public class Server {
         }
 
         private void logout(String input) throws IOException {
-            String username = input.substring(input.indexOf(",") + 1);
-            Account account = Account.getAccountWithUsername(username);
-            System.out.println(account.getUsername());
+            Account account = onlineAccounts.get(socket);
             AccountBoss.logout(account);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             onlineAccounts.put(socket, null);
-            objectOutputStream.writeObject(account);
-            objectOutputStream.flush();
+            dataOutputStream.writeUTF("S");
+            dataOutputStream.flush();
         }
 
         private void addOff(String input) throws IOException {

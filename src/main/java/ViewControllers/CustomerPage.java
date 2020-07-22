@@ -4,7 +4,6 @@ import Controller.AccountBoss;
 import Main.Main;
 import Model.Account;
 import Model.Customer;
-import Model.Seller;
 import MusicPlayer.MusicPlayer;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -85,10 +84,10 @@ public class CustomerPage implements Initializable {
 
     public void logoutClick(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
-        String usernameOfOnlineUser = usernameLabel.getText();
-        Account account = (Account) Main.sendAndGetObjectFromServer("logout," + usernameOfOnlineUser);
-        AccountBoss.logout(account);
-        Main.doBack();
+
+      String response =  Main.sendAndGetMessage("logout");
+
+        Main.setRoot("MainMenu","main menu",false);
     }
 
     public void goToCustomerDiscountCodes(MouseEvent mouseEvent) throws IOException {
