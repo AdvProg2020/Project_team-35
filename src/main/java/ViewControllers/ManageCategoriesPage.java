@@ -42,6 +42,7 @@ public class ManageCategoriesPage implements Initializable {
     private Category selectedCategory;
 
 
+
     private void freeTextFields() {
 
         attributeNewNameForRename.setText("");
@@ -85,18 +86,23 @@ public class ManageCategoriesPage implements Initializable {
         Main.doBack();
     }
 
-    public void addCategoryClick(MouseEvent mouseEvent) {
+    public void addCategoryClick(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
         ArrayList<String> attributes = new ArrayList<>();
         Collections.addAll(attributes, addCategoryAttributes.getText().split("\\n"));
-        try {
-            ManagerBoss.addNewCategory(categoryAddDeleteName.getText(), attributes);
-            setActionInfo("Category Successfully Added :)", false);
-            updateScreen();
-            freeTextFields();
-        } catch (RepeatedCategoryNameException e) {
-            setActionInfo(e.getMessage(), true);
-        }
+        Main.sendMessageToServer("MCategoryCreate" + categoryAddDeleteName.getText());
+        Main.sendObjectToServer(attributes);
+        String response = Main.getMessageFromServer();
+        setActionInfo(response, false);
+        freeTextFields();
+//        try {
+//            ManagerBoss.addNewCategory(categoryAddDeleteName.getText(), attributes);
+//            setActionInfo("Category Successfully Added :)", false);
+//            updateScreen();
+//            freeTextFields();
+//        } catch (RepeatedCategoryNameException e) {
+//            setActionInfo(e.getMessage(), true);
+//        }
     }
 
     public void deleteCategoryClick(MouseEvent mouseEvent) {

@@ -57,9 +57,14 @@ public class Server {
                     if (input.charAt(0) == 'M') {
                         if (input.startsWith("MRequests")) {
                             handleManagerRequestsRequests(input);
-                        } else if (input.startsWith("MNewManager")) {
+                        }
+                        else if (input.startsWith("MCategory")) {
+                            handleManagerRequestsCategory(input);
+                        }
+                        else if (input.startsWith("MNewManager")) {
                             handleManagerRequestsNewManager(input);
                         }
+
                     } else if (input.startsWith("S")) {
                         handleSellerRequests(input);
                     } else if (input.startsWith("C")) {
@@ -84,6 +89,7 @@ public class Server {
                 }
             }
         }
+
 
         private void createAuction(String input) throws ParseException, IOException {
             String username = input.substring(input.indexOf(",") + 1, input.indexOf("-"));
@@ -262,6 +268,19 @@ public class Server {
 
             }
 
+        }
+        public void handleManagerRequestsCategory(String input) throws IOException, ClassNotFoundException {
+            String request = input.substring(9);
+            if (request.startsWith("Create")) {
+                String categoryName = request.substring(6);
+                ArrayList<String> attributes = (ArrayList<String>) readObjectFromClient();
+                try {
+                    ManagerBoss.addNewCategory(categoryName, attributes);
+                    sendMessageToClient("Successful :)");
+                } catch (RepeatedCategoryNameException e) {
+                    sendMessageToClient("Error! Repeated Name :(");
+                }
+            }
         }
 
         private void handleCustomerRequests(String input) {
