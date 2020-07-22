@@ -1,11 +1,12 @@
 package Server;
 
-import Controller.AccountBoss;
+import Controller.*;
 import Controller.Exceptions.*;
 import Controller.ManagerBoss;
 import Controller.ProductBoss;
 import Controller.SellerBoss;
 import Model.*;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import javax.xml.crypto.Data;
 import java.io.*;
@@ -120,6 +121,9 @@ public class Server {
                         String response = sendAndGetMessageFromBankAPI(input.substring(input.indexOf(",")+1));
                         dataOutputStream.writeUTF(response);
                         dataOutputStream.flush();
+                    }
+                    else if (input.startsWith("purchase")) {
+                        purchase(input);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -468,5 +472,21 @@ public class Server {
 
     public static HashMap<Socket, Account> getOnlineAccounts() {
         return onlineAccounts;
+    }
+
+    public static void purchase (String input) throws InvalidRequestException {
+        String address;
+        String phoneNumber;
+        Matcher matcher = getMatcher(input, "^purchase (.+), (\\d+)$");
+        if (matcher.find()) {
+            address = matcher.group(1);
+            phoneNumber = matcher.group(2);
+            try {
+                CustomerBoss.doPayment((Customer) Account.getOnlineAccount());
+            } catch (NoMoneyInCustomerPocket noMoneyInCustomerPocket) {
+                noMoneyInCustomerPocket.printStackTrace();
+            }
+        }
+        else throw new InvalidRequestException("Invalid Request Format");
     }
 }
