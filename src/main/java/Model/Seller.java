@@ -12,7 +12,7 @@ public class Seller extends Account implements Serializable {
     private Double money;
     private ArrayList<Product> salableProducts;
     private Pocket pocket;
-    private BankAccount bankAccount;
+    private String numberOfBankAccount;
 
     /**
      * a constructor for seller
@@ -33,6 +33,7 @@ public class Seller extends Account implements Serializable {
         salableProducts = new ArrayList<Product>();
         pocket = new Pocket(0.0);
     }
+
 
     public HashMap<Product, Integer> getSalesHistory(){
         HashMap<Product,Integer> history = new HashMap<>();
@@ -165,11 +166,12 @@ public class Seller extends Account implements Serializable {
         return null;
     }
 
-    public BankAccount getBankAccount() {
-        return bankAccount;
+
+    public String getNumberOfBankAccount() {
+        return numberOfBankAccount;
     }
 
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
+    public void setNumberOfBankAccount(String numberOfBankAccount) {
+        this.numberOfBankAccount = numberOfBankAccount;
     }
 }

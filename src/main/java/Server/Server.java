@@ -67,7 +67,9 @@ public class Server {
             dataInputStreamBank = dataInputStreamBank1;
             dataOutputStreamBank  = dataOutputStreamBank1;
         }
-
+//name
+// family
+// password
 
         @Override
         public void run() {
@@ -324,8 +326,18 @@ public class Server {
             Matcher matcher = getMatcher(input, "\\[" + "(\\w*|email address|phone number),(\\w*|(\\w+)@(\\w+).(\\w+))" + "\\]");
             String type = input.substring(input.indexOf(",") + 1, input.indexOf("-"));
             String username = input.substring(input.indexOf("-") + 1, input.indexOf("+"));
+            String firstName ="";
+            String lastName = "";
+            String password = "";
             HashMap<String, String> allPersonalInfo = new HashMap<>();
             while (matcher.find()) {
+                if (matcher.group(1).equalsIgnoreCase("name")){
+                    firstName = matcher.group(2);
+                }else if (matcher.group(1).equalsIgnoreCase("family")){
+                    lastName = matcher.group(2);
+                }else if (matcher.group(1).equalsIgnoreCase("password")){
+                    password = matcher.group(2);
+                }
                 System.out.println(matcher.group(1) + "       " + matcher.group(2));
                 allPersonalInfo.put(matcher.group(1), matcher.group(2));
             }
@@ -336,10 +348,24 @@ public class Server {
                 System.out.println(Account.getAccountWithUsername(username).getUsername());
                 dataOutputStream.writeUTF("S");
                 dataOutputStream.flush();
+                if (type.equalsIgnoreCase("seller") || type.equalsIgnoreCase("customer")){
+                    dataOutputStreamBank.writeUTF("create_account "+firstName+" "+lastName+" "+username+" "+password+" "+password);
+                    dataOutputStreamBank.flush();
+                    String numberOfAccount = dataInputStreamBank.readUTF();
+                    if (type.equalsIgnoreCase("seller")){
+                        Seller seller = (Seller) Account.getAccountWithUsername(username);
+                        seller.setNumberOfBankAccount(numberOfAccount);
+                    }else if (type.equalsIgnoreCase("customer")){
+                        Customer customer = (Customer)Account.getAccountWithUsername(username);
+                        customer.setNumberOfBankAccount(numberOfAccount);
+                    }
+                }
             } catch (MoreThanOneManagerException | RepeatedUserName | RequestProblemNotExistManager e) {
                 dataOutputStream.writeUTF(e.getMessage());
                 dataOutputStream.flush();
             }
+
+
 
 
         }

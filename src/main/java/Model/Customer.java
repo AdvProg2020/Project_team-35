@@ -16,7 +16,7 @@ public class Customer extends Account implements Serializable {
     private double paymentAmount = 0;
     private ArrayList<Auction> auctions;
     private Pocket pocket;
-    private BankAccount bankAccount;
+    private String numberOfBankAccount;
 
     /**
      * a constructor for customer is equal to accounts but it has some lists new.
@@ -186,12 +186,12 @@ public class Customer extends Account implements Serializable {
         return cart;
     }
 
-    public BankAccount getBankAccount() {
-        return bankAccount;
+    public String getNumberOfBankAccount() {
+        return numberOfBankAccount;
     }
 
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
+    public void setNumberOfBankAccount(String numberOfBankAccount) {
+        this.numberOfBankAccount = numberOfBankAccount;
     }
 }
 

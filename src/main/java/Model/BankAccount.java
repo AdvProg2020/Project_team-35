@@ -2,9 +2,18 @@ package Model;
 
 public class BankAccount {
     private Double money;
+    private String numberOfAccount;
 
-    public BankAccount(Double money) {
-        this.money = money;
+    public BankAccount(String numberOfAccount) {
+        this.numberOfAccount= numberOfAccount;
+    }
+
+    public String getNumberOfAccount() {
+        return numberOfAccount;
+    }
+
+    public void setNumberOfAccount(String numberOfAccount) {
+        this.numberOfAccount = numberOfAccount;
     }
 
     public Double getMoney() {
