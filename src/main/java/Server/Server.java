@@ -181,9 +181,6 @@ public class Server {
             String category = "";
             Matcher matcher = getMatcher(input,"\\{"+"(\\w*),(\\w*)"+"\\}");
             while (matcher.find()){
-                System.out.println(matcher.group(1));
-                System.out.println(matcher.group(2));
-                System.out.println("salam");
                 String key =  matcher.group(1);
                 String value = matcher.group(2);
 
@@ -345,9 +342,6 @@ public class Server {
                 System.out.println(username);
                 AccountBoss.firstStepOfRegistering(type, username);
                 AccountBoss.makeAccount(allPersonalInfo);
-                System.out.println(Account.getAccountWithUsername(username).getUsername());
-                dataOutputStream.writeUTF("S");
-                dataOutputStream.flush();
                 if (type.equalsIgnoreCase("seller") || type.equalsIgnoreCase("customer") || (type.equalsIgnoreCase("manager") && Manager.getAllManagers().size()==1)){
                     dataOutputStreamBank.writeUTF("create_account "+firstName+" "+lastName+" "+username+" "+password+" "+password);
                     dataOutputStreamBank.flush();
@@ -363,6 +357,9 @@ public class Server {
                         manager.setNumberOfBankAccount(numberOfAccount);
                     }
                 }
+                dataOutputStream.writeUTF("S");
+                dataOutputStream.flush();
+
             } catch (MoreThanOneManagerException | RepeatedUserName | RequestProblemNotExistManager e) {
                 dataOutputStream.writeUTF(e.getMessage());
                 dataOutputStream.flush();
