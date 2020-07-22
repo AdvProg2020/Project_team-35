@@ -15,7 +15,7 @@ public class Customer extends Account implements Serializable {
     public static int newOrderNumber = 0;
     private double paymentAmount = 0;
     private ArrayList<Auction> auctions;
-    private Pocket pocket;
+
 
     /**
      * a constructor for customer is equal to accounts but it has some lists new.
@@ -35,7 +35,7 @@ public class Customer extends Account implements Serializable {
         allCustomers.add(this);
         money =0;
         auctions = new ArrayList<>();
-        pocket = new Pocket(0.0);
+
     }
 
     public boolean isThereProductWithIdInCart(int id) {

@@ -11,7 +11,7 @@ public class Seller extends Account implements Serializable {
     private String companyName;
     private Double money;
     private ArrayList<Product> salableProducts;
-    private Pocket pocket;
+
 
 
     /**
@@ -31,7 +31,7 @@ public class Seller extends Account implements Serializable {
         sellLogs = new ArrayList<SellLog>();
         money = 0.0;
         salableProducts = new ArrayList<Product>();
-        pocket = new Pocket(0.0);
+
     }
 
 
