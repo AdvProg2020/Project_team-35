@@ -19,8 +19,10 @@ public class Auction implements Serializable {
     private ArrayList<Customer> listOfCustomersWhoAreInAuction;
     private Double basicPrice;
     private Product product;
+    private ArrayList<String> listOfMessages;
     public Auction(Seller seller,Product product,Double basicPrice, Date startTime, Date finalTime) {
         this.seller = seller;
+        listOfMessages = new ArrayList<>();
         this.startTime = startTime;
         this.finalTime = finalTime;
         this.product = product;
@@ -129,5 +131,13 @@ public class Auction implements Serializable {
                 return auction;
         }
         return null;
+    }
+
+    public ArrayList<String> getListOfMessages() {
+        return listOfMessages;
+    }
+
+    public void setListOfMessages(ArrayList<String> listOfMessages) {
+        this.listOfMessages = listOfMessages;
     }
 }

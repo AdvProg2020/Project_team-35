@@ -2,6 +2,7 @@ package Server;
 
 import Controller.*;
 import Controller.Exceptions.*;
+import Main.Main;
 import Model.*;
 
 import java.io.*;
@@ -146,12 +147,32 @@ public class Server {
                         enterToAnAuction(input);
                     }else if (input.startsWith("addMoneyToAuction")){
                         addAmountOfMoneyInAuction(input);
-
+                    }else if (input.startsWith("GetListOfMessagesInAuctionChatRoom")){
+                        getListOfAuctionChatRoomMessages();
+                    }else if (input.startsWith("sendMessageInAuctionChatRoom")){
+                        sendMessageFromClientToAuction(input);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private void sendMessageFromClientToAuction(String input) throws IOException {
+            String text = input.substring(input.indexOf(",")+1);
+            String username = onlineAccounts.get(socket).getUsername();
+            String completeText = username+"  :  "+text;
+            Auction auction = onlineAuction.get(socket);
+            auction.getListOfMessages().add(completeText);
+            dataOutputStream.writeUTF("S");
+            dataOutputStream.flush();
+        }
+
+        private void getListOfAuctionChatRoomMessages() throws IOException {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            Auction auction = onlineAuction.get(socket);
+            objectOutputStream.writeObject(auction.getListOfMessages());
+            objectOutputStream.flush();
         }
 
         private void addAmountOfMoneyInAuction(String input) throws IOException {

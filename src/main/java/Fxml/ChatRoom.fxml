@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Fxml.ChatRoom"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ChatRoomController">
+   <children>
+      <ListView fx:id="list" layoutY="7.0" prefHeight="466.0" prefWidth="574.0" />
+      <Button layoutX="574.0" layoutY="447.0" mnemonicParsing="false" onMouseClicked="#send" text="send" />
+      <TextField fx:id="text" layoutX="643.0" layoutY="447.0" promptText="text" />
+      <Button layoutX="574.0" layoutY="401.0" mnemonicParsing="false" onMouseClicked="#back" text="Back" />
+      <Button layoutX="644.0" layoutY="401.0" mnemonicParsing="false" onMouseClicked="#refresh" prefHeight="25.0" prefWidth="149.0" text="refresh" />
+   </children>
 </AnchorPane>
