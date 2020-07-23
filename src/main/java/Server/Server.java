@@ -138,10 +138,27 @@ public class Server {
                         }
                         dataOutputStream.writeUTF(response);
                         dataOutputStream.flush();
+                    }else if (input.startsWith("addMeToAuction")){
+                        addCustomerToAuction(input);
+
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        }
+
+        private void addCustomerToAuction(String input) throws IOException {
+            int auctionID = Integer.parseInt( input.substring(input.indexOf(",")+1,input.indexOf("-")));
+            double basePrice = Double.parseDouble(input.substring(input.indexOf("-")+1));
+            try {
+                ProductBoss.addACustomerToAuction(auctionID,(Customer)onlineAccounts.get(socket),basePrice);
+                dataOutputStream.writeUTF("S");
+                dataOutputStream.flush();
+            } catch (NotEnoughMoney | NullAuction | YouAreInThisAuction notEnoughMoney) {
+                dataOutputStream.writeUTF(notEnoughMoney.getMessage());
+                dataOutputStream.flush();
             }
         }
 
@@ -319,7 +336,7 @@ public class Server {
                 ProductBoss.makeAuction(seller, Product.getProductWithId(productId), start, last);
                 dataOutputStream.writeUTF("S");
                 dataOutputStream.flush();
-            } catch (ProductIsFinished | DateException | ThisIsNotYours productIsFinished) {
+            } catch (ProductIsFinished | DateException | ThisIsNotYours | WeHaveAuctionWithThisProduct productIsFinished) {
                 dataOutputStream.writeUTF(productIsFinished.getMessage());
                 dataOutputStream.flush();
             }

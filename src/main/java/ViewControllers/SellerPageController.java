@@ -251,7 +251,7 @@ public class SellerPageController implements Initializable {
            auctionProblem.setTextFill(Paint.valueOf("red"));
            return;
        }
-       String response = Main.sendAndGetMessage("makeAuction,"+username+"-"+startTime+"+"+finalTimeString+"#"+auctionProblem);
+       String response = Main.sendAndGetMessage("makeAuction,"+username+"-"+startTime+"+"+finalTimeString+"#"+auctionProductId.getText());
        if (response.equalsIgnoreCase("S")){
            auctionProblem.setTextFill(Paint.valueOf("green"));
            auctionProblem.setText("successfully made");

@@ -12,6 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +33,8 @@ public class CustomerPage implements Initializable {
     public Label balanceLabel;
     public TextField auctionId;
     public TextField EnteranceAuctionId;
+    public Label addToAuctionProblem;
+    public TextField basicPrice;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -139,7 +142,25 @@ public class CustomerPage implements Initializable {
         errorAlert.showAndWait();
     }
 
-    public void addToAnAuction(MouseEvent mouseEvent) {
+    public void addToAnAuction(MouseEvent mouseEvent) throws IOException {
+        if (!auctionId.getText().matches("^\\d+$")){
+            addToAuctionProblem.setText("invalid auction id");
+            addToAuctionProblem.setTextFill(Paint.valueOf("red"));
+            return;
+        }else if (!basicPrice.getText().matches("^\\d+\\.?\\d*$")){
+            addToAuctionProblem.setText("invalid basic price");
+            addToAuctionProblem.setTextFill(Paint.valueOf("red"));
+            return;
+        }
+        String response = Main.sendAndGetMessage("addMeToAuction,"+auctionId.getText()+"-"+basicPrice.getText());
+        if (response.equalsIgnoreCase("S")){
+            addToAuctionProblem.setTextFill(Paint.valueOf("green"));
+            addToAuctionProblem.setText("successfully:)");
+        }else {
+            addToAuctionProblem.setTextFill(Paint.valueOf("red"));
+            addToAuctionProblem.setText(response);
+        }
+
     }
 
     public void enterToAnAuction(MouseEvent mouseEvent) {

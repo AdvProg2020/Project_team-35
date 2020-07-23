@@ -7,8 +7,10 @@ import Model.Customer;
 import Model.NoMoneyInCustomerPocket;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,13 +18,29 @@ import java.util.ResourceBundle;
 
 public class PaymentPage implements Initializable {
     public Label actionInfo;
+    public RadioButton pocket;
+    public RadioButton bank;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        updateScreen();
+        try {
+            updateScreen();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void updateScreen() {
+    public void updateScreen() throws IOException, ClassNotFoundException {
+        if (bank.isSelected() && pocket.isSelected()){
+            actionInfo.setTextFill(Paint.valueOf("red"));
+            actionInfo.setText("you cant select both");
+            return;
+        }else if (!bank.isSelected() && !pocket.isSelected()){
+            actionInfo.setText("no way is selected");
+            actionInfo.setTextFill(Paint.valueOf("red"));
+            return;
+        }
+        Customer customer = (Customer) Main.sendAndGetObjectFromServer("GetOnlineAccount");
         try {
             if (!CustomerBoss.doPayment((Customer) Account.getOnlineAccount()))
                 setActionErrorInfo("your money is not enough! the purchase wasn't successful.");

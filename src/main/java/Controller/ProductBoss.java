@@ -112,7 +112,7 @@ public class ProductBoss {
         }
         return newProducts;
     }
-    public static void makeAuction(Seller seller , Product product , Date start , Date finalT) throws ProductIsFinished, DateException, ThisIsNotYours {
+    public static void makeAuction(Seller seller , Product product , Date start , Date finalT) throws ProductIsFinished, DateException, ThisIsNotYours, WeHaveAuctionWithThisProduct {
         if (!product.getSeller().equals(seller)){
             throw new ThisIsNotYours("this is not for you",2);
         }
@@ -122,6 +122,22 @@ public class ProductBoss {
         if (!seller.getSalableProducts().contains(product)){
             throw new ProductIsFinished(1,"product is finished");
         }
+        if (Auction.isThereAuctionWithThisProduct(product)){
+            throw new WeHaveAuctionWithThisProduct("we have this auction.");
+        }
         Auction auction = new Auction(seller,product,product.getPrice(),start,finalT);
+    }
+    public static void addACustomerToAuction(int auctionID , Customer customer,double basicMoney) throws NotEnoughMoney, NullAuction, YouAreInThisAuction {
+        Auction auction = Auction.getAuctionByID(auctionID);
+        if (auction==null){
+            throw new NullAuction("this id of auction is invalid");
+        }
+        if (auction.getBasicPrice()>basicMoney){
+            throw new NotEnoughMoney("your offer should be more than basic price");
+        }
+        if (auction.getListOfCustomersWhoAreInAuction().contains(customer)){
+            throw new YouAreInThisAuction("you are already in this auction");
+        }
+        auction.addCustomerToAuction(customer,basicMoney);
     }
 }

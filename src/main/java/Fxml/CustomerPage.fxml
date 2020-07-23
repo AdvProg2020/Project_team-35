@@ -32,5 +32,7 @@
       <TextField fx:id="auctionId" layoutX="751.0" layoutY="433.0" promptText="auction id" />
       <Button layoutX="587.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#enterToAnAuction" text="enter to an auction" />
       <TextField fx:id="EnteranceAuctionId" layoutX="761.0" layoutY="361.0" promptText="auction id" />
+      <Label fx:id="addToAuctionProblem" layoutX="973.0" layoutY="435.0" prefHeight="18.0" prefWidth="123.0" />
+      <TextField fx:id="basicPrice" layoutX="751.0" layoutY="459.0" promptText="basic price" />
     </children>
 </AnchorPane>

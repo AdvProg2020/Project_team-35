@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

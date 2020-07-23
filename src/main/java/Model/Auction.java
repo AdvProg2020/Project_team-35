@@ -110,4 +110,18 @@ public class Auction implements Serializable {
         }
         return result;
     }
+    public static boolean isThereAuctionWithThisProduct(Product product){
+        for (Auction auction : allActiveAuction) {
+            if (auction.getProduct().equals(product))
+                return true;
+        }
+        return false;
+    }
+    public static Auction getAuctionByID(int ID){
+        for (Auction auction : allActiveAuction) {
+            if (auction.getId()==ID)
+                return auction;
+        }
+        return null;
+    }
 }
