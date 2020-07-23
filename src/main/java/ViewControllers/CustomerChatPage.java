@@ -22,13 +22,15 @@ public class CustomerChatPage implements Initializable {
 
     public void sendClick(MouseEvent mouseEvent) throws IOException {
         Main.sendMessageToServer("MRequestsClientChat:" + sendArea.getText());
-        String response = Main.getMessageFromServer();
-        actionInfo.setText(response);
+        receiveArea.setText(receiveArea.getText() + "\n    " + sendArea.getText());
+//        String response = Main.getMessageFromServer();
+//        actionInfo.setText(response);
     }
 
     public void disconnectClick(MouseEvent mouseEvent) throws IOException {
         Main.sendMessageToServer("MRequestsCustomerDisconnect");
-        String response = Main.getMessageFromServer();
+    //should close the thread
+//        String response = Main.getMessageFromServer();
         Main.doBack();
     }
 

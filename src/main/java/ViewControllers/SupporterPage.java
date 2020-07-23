@@ -25,11 +25,12 @@ public class SupporterPage implements Initializable {
 
     public void sendClick(MouseEvent mouseEvent) throws IOException {
         Main.sendMessageToServer("MRequestsSupporterChat:" + destUsername.getText() + "`" + sendArea.getText());
-        String response = Main.getMessageFromServer();
-        actionInfo.setText(response);
-        if (response.equalsIgnoreCase("Successful")) {
-            receiveArea.setText(receiveArea.getText() + "\n      " + sendArea.getText());
-        }
+        receiveArea.setText(receiveArea.getText() + "\n   " + sendArea.getText());
+//        String response = Main.getMessageFromServer();
+//        actionInfo.setText(response);
+//        if (response.equalsIgnoreCase("Successful")) {
+//            receiveArea.setText(receiveArea.getText() + "\n      " + sendArea.getText());
+//        }
 
     }
 
@@ -41,7 +42,8 @@ public class SupporterPage implements Initializable {
 
     public void logoutClick(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
-        String response =  Main.sendAndGetMessage("logout");
+        Main.sendMessageToServer("logoutS");
+        //should close the thread
         Main.doBack();
     }
 
