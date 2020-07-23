@@ -35,18 +35,26 @@ public class CreateSupporterPage {
 
         if (username.getText().matches("^(\\w+)$")) {
             try {
-                ManagerBoss.checkNewManagerUserName(username.getText());
-                if (checkValidityOfInputs()) {
-                    data.put("password", password.getText());
-                    data.put("name", firstName.getText());
-                    data.put("family", lastName.getText());
-                    data.put("email address", email.getText());
-                    data.put("phone number", phoneNumber.getText());
-                    AccountBoss.makeAccount(data);
-                    actionInfo.setTextFill(Color.GREEN);
-                    actionInfo.setText("Successful :)");
+                Main.sendMessageToServer("MRequestsCheckSupporterUserName-" + username.getText());
+                String response = Main.getMessageFromServer();
+                if (response.equalsIgnoreCase("Ok")) {
+                    if (checkValidityOfInputs()) {
+                        data.put("password", password.getText());
+                        data.put("name", firstName.getText());
+                        data.put("family", lastName.getText());
+                        data.put("email address", email.getText());
+                        data.put("phone number", phoneNumber.getText());
+                        Main.sendMessageToServer("MRequestsRegisterSupporter");
+                        Main.sendObjectToServer(data);
+                        actionInfo.setTextFill(Color.GREEN);
+                        actionInfo.setText("Successful :)");
+                    }
                 }
-            } catch (RepeatedUserName repeatedUserName) {
+                else {
+                    setActionErrorInfo("Repeated Username :(");
+                }
+
+            } catch (IOException repeatedUserName) {
                 setActionErrorInfo(repeatedUserName.getMessage());
             }
         }

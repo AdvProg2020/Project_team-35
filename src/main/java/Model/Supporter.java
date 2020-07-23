@@ -18,10 +18,9 @@ public class Supporter extends Account implements Serializable {
      * @param email
      * @param phoneNumber
      * @param password
-     * @param typeOfAccount
      */
-    public Supporter(String username, String firstName, String lastName, String email, String phoneNumber, String password, int typeOfAccount) {
-        super(username, firstName, lastName, email, phoneNumber, password, typeOfAccount);
+    public Supporter(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
+        super(username, firstName, lastName, email, phoneNumber, password, 5);
         allSupporters.add(this);
     }
 
@@ -34,7 +33,7 @@ public class Supporter extends Account implements Serializable {
     public String getShortInfo() {
         return null;
     }
-    public boolean isThereSupporterWithUsername(String username) {
+    public static boolean isThereSupporterWithUsername(String username) {
         for (Supporter supporter : allSupporters) {
             if (supporter.getUsername().equals(username)) {
                 return true;
@@ -42,7 +41,7 @@ public class Supporter extends Account implements Serializable {
         }
         return false;
     }
-    public Supporter getSupporterWithUsername(String username) {
+    public static Supporter getSupporterWithUsername(String username) {
         for (Supporter supporter : allSupporters) {
             if (supporter.getUsername().equals(username)) {
                 return supporter;
