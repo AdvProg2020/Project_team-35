@@ -36,7 +36,10 @@ public class CustomerCart implements Initializable {
     public Label totalPrice;
     public Label number;
 
-    Customer customer = (Customer) Account.getOnlineAccount();
+    Customer customer = (Customer) Main.sendAndGetObjectFromServer("GetOnlineAccount");
+
+    public CustomerCart() throws IOException, ClassNotFoundException {
+    }
 
     public void clickTable(MouseEvent mouseEvent) {
         MusicPlayer.getInstance().playButtonMusic();
