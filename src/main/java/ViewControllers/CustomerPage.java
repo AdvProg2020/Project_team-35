@@ -180,4 +180,8 @@ public class CustomerPage implements Initializable {
         }
 
     }
+
+    public void goToSupportPage(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("CustomerSupportPage", "Online Chat", false);
+    }
 }
