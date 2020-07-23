@@ -35,7 +35,7 @@ public class ReceiveInfoPage {
             MusicPlayer.getInstance().playButtonMusic();
             actionInfo.setTextFill(Color.GREEN);
             actionInfo.setText("Successful :)");
-            Main.setRoot("CheckDiscountCodePage", "Check Discount Code", false);
+            Main.setRoot("PaymentPage", "Payment", false);
         }
     }
 

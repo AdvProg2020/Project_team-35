@@ -21,7 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="22a8972d-0158-477b-901a-9c04baa7ad15" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ViewControllers/CustomerCart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ViewControllers/CustomerCart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ViewControllers/ReceiveInfoPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ViewControllers/ReceiveInfoPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +80,20 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
-  <component name="RunManager" selected="Application.Server">
+  <component name="RunManager" selected="Application.BankAPI">
+    <configuration name="BankAPI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Bank.BankAPI" />
+      <module name="Project Phase 1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Bank.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.Main" />
       <module name="Project Phase 1" />
@@ -103,22 +116,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CustomerBossTest.showDiscountCodes" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project Phase 1" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Controller" />
-      <option name="MAIN_CLASS_NAME" value="Controller.CustomerBossTest" />
-      <option name="METHOD_NAME" value="showDiscountCodes" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -158,17 +155,17 @@
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.Server" />
-      <item itemvalue="JUnit.CustomerBossTest.showDiscountCodes" />
+      <item itemvalue="Application.BankAPI" />
       <item itemvalue="JUnit.CustomerBossTest.testShowMoney" />
       <item itemvalue="JUnit.CustomerBossTest.testIncreaseNumber" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.BankAPI" />
         <item itemvalue="Application.Server" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.CustomerBossTest.testIncreaseNumber" />
         <item itemvalue="JUnit.CustomerBossTest.testShowMoney" />
-        <item itemvalue="JUnit.CustomerBossTest.showDiscountCodes" />
       </list>
     </recent_temporary>
   </component>
@@ -233,14 +230,9 @@
       <workItem from="1595193018872" duration="665000" />
       <workItem from="1595364396842" duration="3135000" />
       <workItem from="1595424545688" duration="5226000" />
-      <workItem from="1595454622704" duration="1071000" />
-    </task>
-    <task id="LOCAL-00008" summary="add view info to view&#10;Manager.getPersonalInfo is correct should change this method in all rules">
-      <created>1587713880140</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1587713880140</updated>
+      <workItem from="1595454622704" duration="1990000" />
+      <workItem from="1595513142775" duration="2714000" />
+      <workItem from="1595536658146" duration="1660000" />
     </task>
     <task id="LOCAL-00009" summary="add company info show process">
       <created>1587715205462</created>
@@ -578,7 +570,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595427236885</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="connecting CustomerCart to server">
+      <created>1595455992991</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1595455992991</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -599,7 +598,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add BuyerPage and CustomerBoss basics and showBalance command" />
     <MESSAGE value="add isThereProductWithIdInCart and getTotalPriceOfCart methods" />
     <MESSAGE value="add some methods in DiscountCode class in models" />
     <MESSAGE value="add some getters in DiscountCode class in models and showDiscountCodes method" />
@@ -624,7 +622,8 @@
     <MESSAGE value="correcting some bugs" />
     <MESSAGE value="add purchase method to Server" />
     <MESSAGE value="correcting a bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="correcting a bug" />
+    <MESSAGE value="connecting CustomerCart to server" />
+    <option name="LAST_COMMIT_MESSAGE" value="connecting CustomerCart to server" />
   </component>
   <component name="WindowStateProjectService">
     <state x="485" y="75" width="617" height="680" key="#Main" timestamp="1588105443782">
@@ -664,10 +663,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="618" y="306" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.834@0.0.1536.834" timestamp="1589209601277" />
-    <state x="452" y="342" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1593096112288">
+    <state x="452" y="342" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1595538201678">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="452" y="342" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1536.834@0.0.1536.834" timestamp="1593096112288" />
+    <state x="452" y="342" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1536.834@0.0.1536.834" timestamp="1595538201678" />
     <state x="566" y="272" width="403" height="287" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1587404316578">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -681,11 +680,11 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="321" y="0" key="#com.intellij.unscramble.UnscrambleDialog/0.0.1280.680@0.0.1280.680" timestamp="1587735909805" />
-    <state x="474" y="0" key="CommitChangelistDialog2" timestamp="1595427234853">
+    <state x="474" y="0" key="CommitChangelistDialog2" timestamp="1595455991327">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="320" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1587566123059" />
-    <state x="474" y="0" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1595427234853" />
+    <state x="474" y="0" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1595455991327" />
     <state width="344" height="438" key="DebuggerActiveHint" timestamp="1587712767245">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -705,7 +704,7 @@
     <state x="458" y="138" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1587807560696" />
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1587392620904" />
     <state x="550" y="169" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1593776091459" />
-    <state width="1493" height="213" key="GridCell.Tab.0.bottom" timestamp="1595455780450">
+    <state width="1493" height="213" key="GridCell.Tab.0.bottom" timestamp="1595517015371">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1237" height="183" key="GridCell.Tab.0.bottom.inPresentationMode" timestamp="1587997176308">
@@ -714,8 +713,8 @@
     <state width="1237" height="183" key="GridCell.Tab.0.bottom.inPresentationMode/0.0.1280.680@0.0.1280.680" timestamp="1587997176308" />
     <state width="1237" height="183" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1588064773998" />
     <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1587567094406" />
-    <state width="1493" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1595455780450" />
-    <state width="1493" height="213" key="GridCell.Tab.0.center" timestamp="1595455780450">
+    <state width="1493" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1595517015371" />
+    <state width="1493" height="213" key="GridCell.Tab.0.center" timestamp="1595517015371">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1237" height="183" key="GridCell.Tab.0.center.inPresentationMode" timestamp="1587997176307">
@@ -724,8 +723,8 @@
     <state width="1237" height="183" key="GridCell.Tab.0.center.inPresentationMode/0.0.1280.680@0.0.1280.680" timestamp="1587997176307" />
     <state width="1237" height="183" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1588064773997" />
     <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1587567094405" />
-    <state width="1493" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1595455780450" />
-    <state width="1493" height="213" key="GridCell.Tab.0.left" timestamp="1595455780450">
+    <state width="1493" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1595517015371" />
+    <state width="1493" height="213" key="GridCell.Tab.0.left" timestamp="1595517015371">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1237" height="183" key="GridCell.Tab.0.left.inPresentationMode" timestamp="1587997176307">
@@ -734,8 +733,8 @@
     <state width="1237" height="183" key="GridCell.Tab.0.left.inPresentationMode/0.0.1280.680@0.0.1280.680" timestamp="1587997176307" />
     <state width="1237" height="183" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1588064773996" />
     <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1587567094405" />
-    <state width="1493" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1595455780450" />
-    <state width="1493" height="213" key="GridCell.Tab.0.right" timestamp="1595455780450">
+    <state width="1493" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1595517015371" />
+    <state width="1493" height="213" key="GridCell.Tab.0.right" timestamp="1595517015371">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1237" height="183" key="GridCell.Tab.0.right.inPresentationMode" timestamp="1587997176308">
@@ -744,7 +743,7 @@
     <state width="1237" height="183" key="GridCell.Tab.0.right.inPresentationMode/0.0.1280.680@0.0.1280.680" timestamp="1587997176308" />
     <state width="1237" height="183" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1588064773997" />
     <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1587567094406" />
-    <state width="1493" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1595455780450" />
+    <state width="1493" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1595517015371" />
     <state width="1237" height="204" key="GridCell.Tab.1.bottom" timestamp="1587750732227">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -785,12 +784,12 @@
     <state x="231" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1588064315832" />
     <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1587490385288" />
     <state x="277" y="0" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1593042143192" />
-    <state x="361" y="147" key="Vcs.Push.Dialog.v2" timestamp="1595427242807">
+    <state x="361" y="147" key="Vcs.Push.Dialog.v2" timestamp="1595456008336">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="301" y="120" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1587999987522" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1587566134427" />
-    <state x="361" y="147" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1595427242807" />
+    <state x="361" y="147" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1595456008336" />
     <state x="450" y="75" key="VcsDiffUtil.ChangesDialog" timestamp="1587808399852">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -808,12 +807,12 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1587578704067" />
-    <state x="476" y="206" key="git4idea.merge.GitPullDialog" timestamp="1595454697457">
+    <state x="476" y="206" key="git4idea.merge.GitPullDialog" timestamp="1595536745487">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="397" y="168" key="git4idea.merge.GitPullDialog/0.0.1280.680@0.0.1280.680" timestamp="1587999972959" />
     <state x="476" y="204" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1587578711739" />
-    <state x="476" y="206" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1595454697457" />
+    <state x="476" y="206" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1595536745487" />
     <state x="91" y="2" key="new project wizard" timestamp="1587996498862">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
