@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 public class Server {
 
     private static HashMap<Socket, Account> onlineAccounts = new HashMap<>();
+    private static HashMap<Socket,Auction> onlineAuction = new HashMap<>();
     private static DataInputStream dataInputStreamBank;
     private static DataOutputStream dataOutputStreamBank;
 
@@ -30,6 +31,7 @@ public class Server {
         while (true) {
             socket = serverSocket.accept();
             onlineAccounts.put(socket, null);
+            onlineAuction.put(socket,null);
             System.out.println("new client connected to server");
             new handle(new DataInputStream(new BufferedInputStream(socket.getInputStream()))
                     , new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())), socket,dataOutputStreamBank,dataInputStreamBank).start();
@@ -140,13 +142,42 @@ public class Server {
                         dataOutputStream.flush();
                     }else if (input.startsWith("addMeToAuction")){
                         addCustomerToAuction(input);
-
+                    }else if (input.startsWith("enterToAuction")){
+                        enterToAnAuction(input);
+                    }else if (input.startsWith("addMoneyToAuction")){
+                        addAmountOfMoneyInAuction(input);
 
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private void addAmountOfMoneyInAuction(String input) throws IOException {
+            double extra = Double.parseDouble(input.substring(input.indexOf(",")+1));
+            Auction auction = onlineAuction.get(socket);
+            try {
+                auction.addAmountOfOfferedMoney((Customer)onlineAccounts.get(socket),extra);
+                dataOutputStream.writeUTF("S");
+            } catch (NotEnoughMoney notEnoughMoney) {
+                dataOutputStream.writeUTF(notEnoughMoney.getMessage());
+            }finally {
+                dataOutputStream.flush();
+            }
+        }
+
+        private void enterToAnAuction(String input) throws IOException {
+            int auctionID = Integer.parseInt(input.substring(input.indexOf(",")+1));
+            Customer customer = (Customer) onlineAccounts.get(socket);
+            if (ProductBoss.isThisCustomerInThisAuction(auctionID,customer)){
+                dataOutputStream.writeUTF("S");
+                Auction auction = Auction.getAuctionByID(auctionID);
+                onlineAuction.put(socket,auction);
+            }else {
+                dataOutputStream.writeUTF("this is not available");
+            }
+            dataOutputStream.flush();
         }
 
         private void addCustomerToAuction(String input) throws IOException {

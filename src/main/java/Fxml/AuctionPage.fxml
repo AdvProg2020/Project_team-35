@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ViewControllers.AuctionPageController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.AuctionPageController">
+   <children>
+      <Button layoutX="114.0" layoutY="95.0" mnemonicParsing="false" onMouseClicked="#enterToChatRoom" text="enter to chat room" />
+      <Button layoutX="110.0" layoutY="155.0" mnemonicParsing="false" onMouseClicked="#addAmountOfOffer" text="add amount of offer" />
+      <TextField fx:id="extraAmount" layoutX="281.0" layoutY="155.0" promptText="extra amount" />
+      <Label fx:id="problem" layoutX="493.0" layoutY="159.0" prefHeight="17.0" prefWidth="116.0" />
+   </children>
 </AnchorPane>

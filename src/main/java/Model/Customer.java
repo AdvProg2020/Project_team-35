@@ -15,6 +15,7 @@ public class Customer extends Account implements Serializable {
     public static int newOrderNumber = 0;
     private double paymentAmount = 0;
     private ArrayList<Auction> auctions;
+    private double pocket;
 
 
     /**
@@ -34,8 +35,17 @@ public class Customer extends Account implements Serializable {
         cart = new HashMap<>();
         allCustomers.add(this);
         money =0;
+        pocket = 0;
         auctions = new ArrayList<>();
 
+    }
+
+    public double getPocket() {
+        return pocket;
+    }
+
+    public void setPocket(double pocket) {
+        this.pocket = pocket;
     }
 
     public boolean isThereProductWithIdInCart(int id) {
