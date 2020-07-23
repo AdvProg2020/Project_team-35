@@ -36,6 +36,8 @@ public class CustomerPage implements Initializable {
     public Label addToAuctionProblem;
     public TextField basicPrice;
     public Label enterToAuctionProblem;
+    public Label chargePocketProblem;
+    public TextField amount;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -184,4 +186,10 @@ public class CustomerPage implements Initializable {
     public void goToSupportPage(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("CustomerSupportPage", "Online Chat", false);
     }
+
+    public void mainMenu(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("MainMenu","main menu",false);
+    }
+
+
 }

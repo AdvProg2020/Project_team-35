@@ -35,6 +35,8 @@
       <Label fx:id="addToAuctionProblem" layoutX="973.0" layoutY="435.0" prefHeight="18.0" prefWidth="123.0" />
       <TextField fx:id="basicPrice" layoutX="751.0" layoutY="459.0" promptText="basic price" />
       <Label fx:id="enterToAuctionProblem" layoutX="963.0" layoutY="365.0" prefHeight="18.0" prefWidth="133.0" />
-      <Button onMouseClicked="#goToSupportPage" layoutX="587.0" layoutY="257.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="202.0" text="Support" />
+      <Button layoutX="587.0" layoutY="257.0" mnemonicParsing="false" onMouseClicked="#goToSupportPage" prefHeight="38.0" prefWidth="202.0" text="Support" />
+      <Button layoutX="933.0" layoutY="199.0" mnemonicParsing="false" onMouseClicked="#mainMenu" text="MAin menu" />
+
     </children>
 </AnchorPane>

@@ -8,10 +8,7 @@ import Model.Product;
 import Model.Seller;
 import MusicPlayer.MusicPlayer;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
@@ -32,6 +29,7 @@ public class AddProductController {
     public TextField price;
     public TextField company;
     public ImageView image;
+    public CheckBox isItFile;
     private boolean userSawCategoriesAttributesList;
 
     public void confirm(MouseEvent mouseEvent) throws IOException {
@@ -58,7 +56,11 @@ public class AddProductController {
         }
         String response = Main.sendAndGetMessage(request);
         if (response.equalsIgnoreCase("S")) {
-            Main.setRoot("SellerPage", "seller page", true);
+            if (!isItFile.isSelected()) {
+                Main.setRoot("SellerPage", "seller page", true);
+            }else {
+                Main.setRoot("AddFile","add file",false);
+            }
         } else {
             problem.setTextFill(Paint.valueOf("red"));
             problem.setText(response);

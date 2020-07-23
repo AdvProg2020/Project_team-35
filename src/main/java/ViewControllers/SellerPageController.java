@@ -239,6 +239,7 @@ public class SellerPageController implements Initializable {
 
 
     public void createAuction(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
        Date start = new Date(startDateOfAuction.getValue().toEpochDay());
        Date finalTime = new Date(finalDateOfAuction.getValue().toEpochDay());
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -259,5 +260,10 @@ public class SellerPageController implements Initializable {
            auctionProblem.setTextFill(Paint.valueOf("red"));
            auctionProblem.setText("unsuccessfully");
        }
+    }
+
+    public void addFile(MouseEvent mouseEvent) throws IOException {
+        MusicPlayer.getInstance().playButtonMusic();
+        Main.setRoot("AddProduct","add product",false);
     }
 }
