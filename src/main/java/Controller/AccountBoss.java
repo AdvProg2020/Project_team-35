@@ -122,12 +122,10 @@ public class AccountBoss {
             throw new LoginWithoutLogout("first you should logout", 1);
         }
     }
-    public static boolean checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername, LoginWithoutLogout {
+    public static boolean checkUsernameExistenceInLogin(String username) throws ExistenceOfUserWithUsername {
         Boss.removeExpiredOffsAndDiscountCodes();
 
-        if (Account.getAccountWithUsername(username).isThisAccountLogged()){
-            throw new LoginWithoutLogout("first logout",12);
-        }
+
         if (!Account.isThereAccountWithUserName(username)) {
             throw new ExistenceOfUserWithUsername("this username doesn't exist.", 2);
         }

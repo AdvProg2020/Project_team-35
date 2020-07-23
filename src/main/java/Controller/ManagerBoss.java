@@ -129,6 +129,7 @@ public class ManagerBoss {
         if (Category.isThereCategoryWithName(categoryName)) {
             throw new RepeatedCategoryNameException("This name is repeated. Use another.");
         } else {
+            System.out.println("category is made*************************");
             Category category = new Category(categoryName, specialAttributes);
             return 0;
         }

@@ -70,7 +70,7 @@ public class ProductsPageController implements Initializable {
 
     public void update() throws IOException, ClassNotFoundException {
         ArrayList<Category> array = (ArrayList<Category>) Main.sendAndGetObjectFromServer("GetProducts");
-        final ObservableList<Category> data = FXCollections.observableArrayList(Category.getAllCategories());
+        final ObservableList<Category> data = FXCollections.observableArrayList(array);
         categoryName.setCellValueFactory(new PropertyValueFactory<Category, String>("categoryName"));
         categoryProductsNum.setCellValueFactory(new PropertyValueFactory<Category, String>("size"));
         table.setItems(data);

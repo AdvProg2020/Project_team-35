@@ -117,7 +117,12 @@ public class Server {
                     }else if (input.startsWith("sellerEditPersonalInfo")){
                         editSellerProfile(input);
                     }else if (input.startsWith("GetProducts")){
-
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                        objectOutputStream.writeObject(Category.getAllCategories());
+                        for (Category category : Category.getAllCategories()) {
+                            System.out.println(category.getCategoryName());
+                        }
+                        objectOutputStream.flush();
                     }else if (input.equalsIgnoreCase("showAuctions")){
                         String response = Auction.showAllAuctionsInfo();
                         dataOutputStream.writeUTF(response);
@@ -479,6 +484,22 @@ public class Server {
         private void login(String input) throws IOException {
             String username = input.substring(input.indexOf(",") + 1, input.indexOf("-"));
             String password = input.substring(input.indexOf("-") + 1, input.indexOf("+"));
+            Account account1 = onlineAccounts.get(socket);
+            if (account1 !=null){
+                dataOutputStream.writeUTF("first logout");
+                dataOutputStream.flush();
+                return;
+            }
+            int i =0;
+            for (Account value : onlineAccounts.values()) {
+                if (value.equals(account1))
+                    i++;
+            }
+            if (i>1){
+                dataOutputStream.writeUTF("first logout");
+                dataOutputStream.flush();
+                return;
+            }
             try {
 
                 AccountBoss.checkUsernameExistenceInLogin(username);
@@ -502,7 +523,7 @@ public class Server {
                     dataOutputStream.writeUTF("goToMainMenu");
                     dataOutputStream.flush();
                 }
-            } catch (ExistenceOfUserWithUsername | PasswordValidity | LoginWithoutLogout existenceOfUserWithUsername) {
+            } catch (ExistenceOfUserWithUsername | PasswordValidity  existenceOfUserWithUsername) {
                 dataOutputStream.writeUTF(existenceOfUserWithUsername.getMessage());
                 dataOutputStream.flush();
 
