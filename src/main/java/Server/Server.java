@@ -33,9 +33,9 @@ public class Server {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8888);
         Socket socket;
-//        new Manager("a", "a", "a", "a@a.a", "0", "a");
-//        new Supporter("s", "a", "a", "a@a.a", "0", "s");
-//        new Customer("c", "a", "a", "a@a.a", "0", "c");
+        new Manager("a", "a", "a", "a@a.a", "0", "a");
+        new Supporter("s", "a", "a", "a@a.a", "0", "s");
+        new Customer("c", "a", "a", "a@a.a", "0", "c");
 
 
         connectToBankServer();
@@ -772,6 +772,30 @@ public class Server {
                 activeChats.remove(onlineAccounts.get(socket));
                 sendMessageToClient("endThread");
             }
+            else if (requestText.equalsIgnoreCase("GetAllAccounts")) {
+                sendObjectToClient(Account.getAllAccounts());
+            }
+            else if (requestText.startsWith("RemoveUser:")) {
+                String username = requestText.substring(requestText.indexOf(':') + 1);
+                try {
+                    ManagerBoss.deleteAccountWithUsername(username);
+                    sendMessageToClient("successful");
+                } catch (Exception e) {
+                    if (e.getMessage() != null) {
+                        sendMessageToClient(e.getMessage());
+                    }
+                    else {
+                        sendMessageToClient("Unknown Error :(");
+                    }
+                }
+            }
+            else if (requestText.equalsIgnoreCase("GetOnlineAccounts")) {
+                sendObjectToClient(getOnlineAccounts());
+            }
+        }
+
+        private ArrayList<Account> getOnlineAccounts() {
+            return new ArrayList<>(onlineAccounts.values());
         }
 
         private Socket getSocketWithSupporter(Supporter supporter) {

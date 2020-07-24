@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane  stylesheets="@../Resources/styles.css"  prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.UsersManagingPage">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@../Resources/styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.UsersManagingPage">
    <children>
       <TableView fx:id="usersTable" layoutX="36.0" layoutY="30.0" onMouseClicked="#clickUsersTable" prefHeight="200.0" prefWidth="513.0">
         <columns>
@@ -17,5 +17,6 @@
       <Button layoutX="613.0" layoutY="90.0" mnemonicParsing="false" onMouseClicked="#removeUserClick" prefHeight="38.0" prefWidth="148.0" text="Remove User" />
       <Label fx:id="actionInfo" layoutX="616.0" layoutY="176.0" prefHeight="38.0" prefWidth="272.0" text="Action Info" />
       <Button layoutX="54.0" layoutY="537.0" mnemonicParsing="false" onMouseClicked="#backClick" prefHeight="26.0" prefWidth="103.0" text="Back" />
+      <Label fx:id="isOnline" layoutX="602.0" layoutY="333.0" prefHeight="179.0" prefWidth="208.0" text="IsOnline?" />
    </children>
 </AnchorPane>

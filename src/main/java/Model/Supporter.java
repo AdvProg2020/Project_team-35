@@ -49,4 +49,8 @@ public class Supporter extends Account implements Serializable {
         }
         return null;
     }
+
+    public static ArrayList<Supporter> getAllSupporters() {
+        return allSupporters;
+    }
 }

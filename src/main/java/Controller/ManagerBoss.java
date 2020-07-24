@@ -84,6 +84,7 @@ public class ManagerBoss {
         allUsers.addAll(Manager.getAllManagers());
         allUsers.addAll(Customer.getAllCustomers());
         allUsers.addAll(Seller.getAllSellers());
+        allUsers.addAll((Supporter.getAllSupporters()));
         return allUsers;
     }
 
@@ -101,6 +102,8 @@ public class ManagerBoss {
                     Seller.getAllSellers().remove(toRemove);
                 } else if (toRemove instanceof Customer) {
                     Customer.getAllCustomers().remove(toRemove);
+                } else if (toRemove instanceof Supporter) {
+                    Supporter.getAllSupporters().remove(toRemove);
                 }
                 return 0;
             }
