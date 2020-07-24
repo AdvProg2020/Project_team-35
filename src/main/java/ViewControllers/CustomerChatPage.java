@@ -29,6 +29,7 @@ public class CustomerChatPage implements Initializable {
 
     public void disconnectClick(MouseEvent mouseEvent) throws IOException {
         Main.sendMessageToServer("MRequestsCustomerDisconnect");
+    //should close the thread
 //        String response = Main.getMessageFromServer();
         Main.doBack();
     }
