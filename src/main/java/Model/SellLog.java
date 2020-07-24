@@ -12,11 +12,13 @@ public class SellLog extends Log implements Serializable {
     private Seller seller;
     private Customer buyer;
     private boolean isReceived;
+    private boolean isByPocket;
 
-    public SellLog(ArrayList<Product> soldProducts, Customer buyer,Seller seller) {
+    public SellLog(ArrayList<Product> soldProducts, Customer buyer,Seller seller, boolean isByPocket) {
         this.soldProducts = soldProducts;
         this.buyer = buyer;
         this.seller = seller;
+        this.isByPocket = isByPocket;
         seller.getSellLogs().add(this);
         offDiscountAmount = 0;
         addMoneyToSeller();
@@ -24,18 +26,20 @@ public class SellLog extends Log implements Serializable {
 
     }
     public void addMoneyToSeller(){
-        for (Product product : soldProducts) {
-            if (Off.isThereProduct(product)){
-                if (seller.getSalableProducts().contains(product)){
-                    Off off = seller.findOffWithAProduct(product);
-                    offDiscountAmount+= off.countOff(product);
-                    seller.setMoney(seller.getMoney()+off.countOff(product));
+        if (isByPocket) {
+            for (Product product : soldProducts) {
+                if (Off.isThereProduct(product)){
+                    if (seller.getSalableProducts().contains(product)){
+                        Off off = seller.findOffWithAProduct(product);
+                        offDiscountAmount+= off.countOff(product);
+                        seller.setMoney(seller.getMoney()+off.countOff(product));
+                    }
                 }
-            }
-            else {
-                if (seller.getSalableProducts().contains(product)){
-                    offDiscountAmount+=product.getPrice();
-                    seller.setMoney(seller.getMoney()+product.getPrice());
+                else {
+                    if (seller.getSalableProducts().contains(product)){
+                        offDiscountAmount+=product.getPrice();
+                        seller.setMoney(seller.getMoney()+product.getPrice());
+                    }
                 }
             }
         }

@@ -139,7 +139,7 @@ public class Server {
                         dataOutputStream.writeUTF(response);
                         dataOutputStream.flush();
                     } else if (input.startsWith("purchase")) {
-                        purchase(input);
+                        //purchase(input);
                     } else if (input.startsWith("getToken")) {
                         getTokenFromBankAndGiveItToClient(input);
                     } else if (input.startsWith("transactionResult")) {
@@ -207,9 +207,11 @@ public class Server {
                         customer.getListOFProductsAtCart().put(product, numberOfAdding);
                         dataOutputStream.writeUTF("s");
                         dataOutputStream.flush();
-                    } else if (input.startsWith("doPayment")) {
-                        doPayment();
-                    } else if (input.equalsIgnoreCase("makeEmptyCustomerCart")) {
+                    } else if (input.startsWith("doPayment1")) {
+                        doPayment(true);
+                    }else if (input.startsWith("doPayment2")) {
+                        doPayment(false);
+                    }else if (input.equalsIgnoreCase("makeEmptyCustomerCart")) {
                         productsWhichAreSold.put(socket, null);
                         dataOutputStream.writeUTF("S");
                         dataOutputStream.flush();
@@ -262,11 +264,11 @@ public class Server {
             return list;
         }
 
-        private void doPayment() throws IOException {
+        private void doPayment(boolean isByPocket) throws IOException {
             Customer customer = (Customer) onlineAccounts.get(socket);
             boolean response = false;
             try {
-                response = CustomerBoss.doPayment(customer);
+                response = CustomerBoss.doPayment(customer, isByPocket);
 
                 dataOutputStream.writeUTF(String.valueOf(response));
 
@@ -917,7 +919,7 @@ public class Server {
     }
 
 
-    public static void purchase(String input) throws InvalidRequestException {
+    /*public static void purchase(String input) throws InvalidRequestException {
         String address;
         String phoneNumber;
         Matcher matcher = getMatcher(input, "^purchase (.+), (\\d+)$");
@@ -930,5 +932,5 @@ public class Server {
                 noMoneyInCustomerPocket.printStackTrace();
             }
         } else throw new InvalidRequestException("Invalid Request Format");
-    }
+    }*/
 }

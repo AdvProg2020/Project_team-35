@@ -101,14 +101,13 @@ public class CustomerBoss {
         customer.setPaymentAmount(customer.getTotalPriceOFCart());
     }
 
-    public static boolean doPayment(Customer customer) throws NoMoneyInCustomerPocket {
+    public static boolean doPayment(Customer customer, boolean isByPocket) throws NoMoneyInCustomerPocket {
         Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<Product> products = new ArrayList<>();
         Set <Seller> sellersOfCart = new HashSet<>();
-        if (customer.getMoney() < customer.getPaymentAmount())
+        if (customer.getPocket() < customer.getPaymentAmount() + Manager.getMinimumMoneyInPocket())
             return false;
         else {
-            customer.setMoney(customer.getMoney() - customer.getPaymentAmount());
             for (Seller seller : Seller.getAllSellers()) {
                 for (Product product : customer.cart.keySet()) {
                     if (product.getSeller() == seller) {
@@ -120,8 +119,8 @@ public class CustomerBoss {
             for (Seller seller : sellersOfCart) {
               Product[] productsOfSpecialSeller =  customer.cart.keySet().stream().filter(product ->  product.getSeller().equals(seller)).toArray(Product[]::new);
               ArrayList<Product> listOfCartProductsWhichIsForSpecialSeller = new ArrayList<Product>(Arrays.asList(productsOfSpecialSeller));
-                SellLog sellLog = new SellLog(listOfCartProductsWhichIsForSpecialSeller,customer,seller);
-                BuyLog buyLog = new BuyLog(customer.getPaymentAmount(),listOfCartProductsWhichIsForSpecialSeller,seller,customer);
+                SellLog sellLog = new SellLog(listOfCartProductsWhichIsForSpecialSeller,customer,seller, isByPocket);
+                BuyLog buyLog = new BuyLog(customer.getPaymentAmount(),listOfCartProductsWhichIsForSpecialSeller,seller,customer, isByPocket);
                 sellLog.setOrderNumber(Log.numberOfLogs);
             }
             return true;

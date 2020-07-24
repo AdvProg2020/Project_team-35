@@ -31,6 +31,8 @@ public class PaymentPage implements Initializable {
     }
 
     public void updateScreen() throws IOException, ClassNotFoundException {
+        Customer customer = (Customer) Main.sendAndGetObjectFromServer("GetOnlineAccount");
+
         if (bank.isSelected() && pocket.isSelected()){
             actionInfo.setTextFill(Paint.valueOf("red"));
             actionInfo.setText("you cant select both");
@@ -38,10 +40,9 @@ public class PaymentPage implements Initializable {
         }else if (!bank.isSelected() && !pocket.isSelected()){
             actionInfo.setText("no way is selected");
             actionInfo.setTextFill(Paint.valueOf("red"));
-            return;
-        }
-        Customer customer = (Customer) Main.sendAndGetObjectFromServer("GetOnlineAccount");
-        String isMoneyEnough = (Main.sendAndGetMessage("doPayment"));
+            return;}
+        else if (pocket.isSelected()) {
+            String isMoneyEnough = (Main.sendAndGetMessage("doPayment1"));
 
             if (isMoneyEnough.equalsIgnoreCase("false")) {
                 setActionErrorInfo("your money is not enough! the purchase wasn't successful.");
@@ -53,7 +54,8 @@ public class PaymentPage implements Initializable {
                 actionInfo.setTextFill(Color.RED);
                 actionInfo.setText(isMoneyEnough);
             }
-
+        }
+        else Main.sendAndGetMessage("doPayment2");
     }
 
     public void setActionErrorInfo(String message) {
