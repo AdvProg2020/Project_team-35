@@ -8,6 +8,8 @@
       <TextArea fx:id="receiveArea" layoutX="215.0" layoutY="54.0" prefHeight="246.0" prefWidth="513.0" />
       <Button layoutX="430.0" layoutY="458.0" mnemonicParsing="false" onMouseClicked="#sendClick" prefHeight="26.0" prefWidth="113.0" text="Send" />
       <TextArea fx:id="sendArea" layoutX="294.0" layoutY="366.0" prefHeight="55.0" prefWidth="389.0" />
-      <Button onMouseClicked="#logoutClick" layoutX="52.0" layoutY="513.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="114.0" text="Logout" />
+      <Button layoutX="52.0" layoutY="513.0" mnemonicParsing="false" onMouseClicked="#logoutClick" prefHeight="38.0" prefWidth="114.0" text="Logout" />
+      <TextField fx:id="destUsername" layoutX="92.0" layoutY="381.0" promptText="Username" />
+      <Label fx:id="actionInfo" layoutX="319.0" layoutY="523.0" prefHeight="38.0" prefWidth="462.0" text="Label" />
    </children>
 </AnchorPane>

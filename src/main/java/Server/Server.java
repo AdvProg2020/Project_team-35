@@ -36,6 +36,10 @@ public class Server {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8888);
         Socket socket;
+        new Manager("a", "a", "a", "a@a.a", "0", "a");
+        new Supporter("s", "a", "a", "a@a.a", "0", "s");
+        new Customer("c", "a", "a", "a@a.a", "0", "c");
+
 
         connectToBankServer();
         while (true) {
@@ -114,9 +118,12 @@ public class Server {
                         getOnlineAccount();
                     } else if (input.startsWith("AddOff")) {
                         addOff(input);
+                    } else if (input.startsWith("logoutSSSSS")) {
+                        logoutS(input);
                     } else if (input.startsWith("logout")) {
                         logout(input);
-                    } else if (input.startsWith("makeAuction")) {
+                    }
+                    else if (input.startsWith("makeAuction")) {
                         createAuction(input);
                     } else if (input.startsWith("AddProduct")){
                         addProduct(input);
@@ -223,6 +230,39 @@ public class Server {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private void logoutS(String input) throws IOException {
+            Account account = onlineAccounts.get(socket);
+            if (account instanceof Supporter) {
+                onlineSupporters.remove(account);
+                removeSupporterActiveChat((Supporter) account);
+                sendMessageToClient("endThread");
+                System.out.println("command send");
+            }
+            AccountBoss.logout(account);
+            onlineAccounts.put(socket, null);
+        }
+
+        private void removeSupporterActiveChat(Supporter supporter) throws IOException {
+            ArrayList<Account> actives = getActiveAccountChatsWithSupporter(supporter);
+            for (Account active : actives) {
+                Socket socket = getSocketWithAccount(active);
+                DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                stream.writeUTF("endThread1");
+                stream.flush();
+                activeChats.remove(active);
+            }
+        }
+
+        private ArrayList<Account> getActiveAccountChatsWithSupporter(Supporter supporter) {
+            ArrayList<Account> list = new ArrayList<>();
+            for (Account account : activeChats.keySet()) {
+                if (activeChats.get(account).equals(supporter)) {
+                    list.add(account);
+                }
+            }
+            return list;
         }
 
         private void doPayment() throws IOException {
@@ -688,7 +728,7 @@ public class Server {
                 HashMap<String, String> data = (HashMap<String, String>) readObjectFromClient();
                 AccountBoss.makeAccount(data);
             }
-            else if (requestText.startsWith("Chat:")) {
+            else if (requestText.startsWith("ClientChat:")) {
                 String message = requestText.substring(requestText.indexOf(':') + 1);
                 Account sender = onlineAccounts.get(socket);
                 if (activeChats.containsKey(sender)) {
@@ -697,10 +737,24 @@ public class Server {
                     DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(supporterSocket.getOutputStream()));
                     stream.writeUTF(sender.getUsername() + " : " + message);
                     stream.flush();
-                    sendMessageToClient("Successful :)");
+//                    sendMessageToClient("Successful :)");
                 }
                 else {
-                    sendMessageToClient("Error :( Not Connected");
+//                    sendMessageToClient("Error :( Not Connected");
+                }
+            }
+            else if (requestText.startsWith("SupporterChat:")) {
+                String destinationUsername = requestText.substring(requestText.indexOf(':') + 1, requestText.indexOf('`'));
+                String message = requestText.substring(requestText.indexOf('`') + 1);
+                if (activeChats.containsKey(Account.getAccountWithUsername(destinationUsername))) {
+                    Socket destSocket = getSocketWithAccount(Account.getAccountWithUsername(destinationUsername));
+                    DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(destSocket.getOutputStream()));
+                    stream.writeUTF(message);
+                    stream.flush();
+//                    sendMessageToClient("Successful");
+                }
+                else {
+//                    sendMessageToClient("Username is Not active.");
                 }
             }
             else if (requestText.startsWith("StartChatWith:")) {
@@ -719,11 +773,23 @@ public class Server {
                     sendMessageToClient("Supporter is not available now :(");
                 }
             }
+            else if (requestText.equalsIgnoreCase("CustomerDisconnect")) {
+                activeChats.remove(onlineAccounts.get(socket));
+                sendMessageToClient("endThread");
+            }
         }
 
         private Socket getSocketWithSupporter(Supporter supporter) {
             for (Socket socket1 : onlineAccounts.keySet()) {
                 if (onlineAccounts.get(socket1).equals(supporter)) {
+                    return socket1;
+                }
+            }
+            return null;
+        }
+        private Socket getSocketWithAccount(Account account) {
+            for (Socket socket1 : onlineAccounts.keySet()) {
+                if (onlineAccounts.get(socket1).equals(account)) {
                     return socket1;
                 }
             }

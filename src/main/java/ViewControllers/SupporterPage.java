@@ -3,7 +3,9 @@ package ViewControllers;
 import Main.Main;
 import MusicPlayer.MusicPlayer;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.io.BufferedInputStream;
@@ -16,10 +18,19 @@ import java.util.ResourceBundle;
 public class SupporterPage implements Initializable {
     public TextArea receiveArea;
     public TextArea sendArea;
+    public TextField destUsername;
+    public Label actionInfo;
 
     private Receiver receiver;
 
-    public void sendClick(MouseEvent mouseEvent) {
+    public void sendClick(MouseEvent mouseEvent) throws IOException {
+        Main.sendMessageToServer("MRequestsSupporterChat:" + destUsername.getText() + "`" + sendArea.getText());
+        receiveArea.setText(receiveArea.getText() + "\n   " + sendArea.getText());
+//        String response = Main.getMessageFromServer();
+//        actionInfo.setText(response);
+//        if (response.equalsIgnoreCase("Successful")) {
+//            receiveArea.setText(receiveArea.getText() + "\n      " + sendArea.getText());
+//        }
 
     }
 
@@ -31,7 +42,8 @@ public class SupporterPage implements Initializable {
 
     public void logoutClick(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
-        String response =  Main.sendAndGetMessage("logout");
+        Main.sendMessageToServer("logoutSSSSS");
+        //should close the thread
         Main.doBack();
     }
 
@@ -51,11 +63,16 @@ public class SupporterPage implements Initializable {
             while (true) {
                 try {
                     String message = dataInputStream.readUTF();
+                    if (message.equalsIgnoreCase("endThread")) {
+                        break;
+                    }
                     receiveArea.setText(receiveArea.getText() + '\n' + message);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+            System.out.println("supporter thread ended");
+
         }
     }
 }
