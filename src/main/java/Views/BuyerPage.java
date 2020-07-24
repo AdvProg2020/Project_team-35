@@ -132,7 +132,7 @@ public class BuyerPage extends Page {
                     public void setSubPages(HashMap<String, Page> subPages) {
                         subPages.put("receive", receiveInfo());
                         subPages.put("discount", discountCodeCheck());
-                        subPages.put("payment", payment());
+                        //subPages.put("payment", payment());
                     }
 
                     @Override
@@ -333,7 +333,7 @@ public class BuyerPage extends Page {
                             discountException.printStackTrace();
                             continue;
                         }
-                        nextPage = payment();
+                        //nextPage = payment();
                         break;
                     }
                     else if (command.equalsIgnoreCase("back")) {
@@ -342,7 +342,7 @@ public class BuyerPage extends Page {
                     }
                     else if (command.equalsIgnoreCase("end")) {
                         CustomerBoss.dontUseDiscountCode((Customer) Account.getOnlineAccount());
-                        nextPage = payment();
+                        //nextPage = payment();
                     }
                     else System.err.println("invalid command");
                 }
@@ -351,7 +351,7 @@ public class BuyerPage extends Page {
         };
     }
 
-    private Page payment() {
+    /*private Page payment() {
         return new Page("payment", this) {
             @Override
             public void execute() {
@@ -366,7 +366,7 @@ public class BuyerPage extends Page {
                 parentPage.execute();
             }
         };
-    }
+    }*/
 
     @Override
     public boolean show() {

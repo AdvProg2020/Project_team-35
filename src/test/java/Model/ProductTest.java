@@ -319,9 +319,9 @@ public class ProductTest {
         b.add(product);
         b.add(product);
         b.add(product);
-       BuyLog buyLog = new BuyLog(233,b,seller,customer);
-       buyLog.setDelivered(true);
-        customer1.getBuyLogs().add(buyLog);
+       //BuyLog buyLog = new BuyLog(233,b,seller,customer);
+       //buyLog.setDelivered(true);
+        //customer1.getBuyLogs().add(buyLog);
 
 
        product.getWhoBoughtThisGood().add(customer1);
@@ -339,12 +339,12 @@ public class ProductTest {
         n.add(product);
         n.add(product);
 
-      BuyLog buyLog1 = new BuyLog(213,n,seller,customer1);
-      customer2.getBuyLogs().add(buyLog1);
+      //BuyLog buyLog1 = new BuyLog(213,n,seller,customer1);
+      //customer2.getBuyLogs().add(buyLog1);
         a.remove(customer1);
         a.remove(customer2);
         a.remove(customer);
-        buyLog1.setDelivered(true);
+        //buyLog1.setDelivered(true);
         a.add(customer1);
         a.add(customer2);
         a.add(customer);

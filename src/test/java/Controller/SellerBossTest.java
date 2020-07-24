@@ -474,16 +474,16 @@ public class SellerBossTest {
         a.add(product2);
         a.add(product);
         Product product1 = new Product("asd","ads",34,seller,4,new Category("asd",null),null,null);
-        SellLog sellLog = new SellLog(a,customer,seller);
-        seller.getSellLogs().add(sellLog);
+        //SellLog sellLog = new SellLog(a,customer,seller);
+        //seller.getSellLogs().add(sellLog);
         ArrayList<String >b = new ArrayList<>();
         for (Product product3 : a) {
             b.add(product3.getName());
         }
         Assert.assertEquals(SellerBoss.showHistoryOfSales(seller),b);
         a.add(product1);
-        SellLog sellLog1 = new SellLog(a,customer,seller);
-       seller.getSellLogs().add(sellLog1);
+        //SellLog sellLog1 = new SellLog(a,customer,seller);
+       //seller.getSellLogs().add(sellLog1);
        b.clear();
         for (SellLog log : seller.getSellLogs()) {
             for (Product soldProduct : log.getSoldProducts()) {
@@ -590,9 +590,9 @@ public class SellerBossTest {
         Customer customer2 = new Customer( "asd3","sad","asd","asd","ASd","dsa");
 ArrayList<Product> a = new ArrayList<>();
 a.add(product);
-        BuyLog buyLog = new BuyLog(233,a,seller,customer);
-        BuyLog buyLog1 = new BuyLog(233,a,seller,customer1);
-        BuyLog buyLog2 = new BuyLog(233,a,seller,customer2);
+        //BuyLog buyLog = new BuyLog(233,a,seller,customer);
+        //BuyLog buyLog1 = new BuyLog(233,a,seller,customer1);
+        //BuyLog buyLog2 = new BuyLog(233,a,seller,customer2);
 
         product.getWhoBoughtThisGood().add(customer);
         product.getWhoBoughtThisGood().add(customer1);
