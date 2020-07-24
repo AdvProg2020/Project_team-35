@@ -9,6 +9,7 @@ public class Manager extends Account implements Serializable {
     public static ArrayList<Request> checkedRequests = new ArrayList<>();
     private static double commission;
     private static double minimumMoneyInPocket;
+    private static Manager firstManager;
     /**
      * a constructor for manager
      *
@@ -22,6 +23,9 @@ public class Manager extends Account implements Serializable {
     public Manager(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
         super(username, firstName, lastName, email, phoneNumber, password, 1);
         allManagers.add(this);
+        if (allManagers.size()==1){
+            firstManager = this;
+        }
     }
 
     public static ArrayList<Request> getNewRequests() {
@@ -102,5 +106,9 @@ public class Manager extends Account implements Serializable {
 
     public static void setMinimumMoneyInPocket(double minimumMoneyInPocket) {
         Manager.minimumMoneyInPocket = minimumMoneyInPocket;
+    }
+
+    public static Manager getFirstManager() {
+        return firstManager;
     }
 }

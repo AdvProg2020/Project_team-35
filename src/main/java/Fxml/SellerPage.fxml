@@ -41,5 +41,7 @@
       <DatePicker fx:id="finalDateOfAuction" layoutX="950.0" layoutY="439.0" promptText="final" />
       <Label fx:id="auctionProblem" layoutX="950.0" layoutY="282.0" prefHeight="18.0" prefWidth="164.0" />
       <TextField fx:id="auctionProductId" layoutX="950.0" layoutY="487.0" promptText="productId" />
+      <Button layoutX="609.0" layoutY="555.0" mnemonicParsing="false" onMouseClicked="#withDraw" text="withDraw" />
+      <TextField layoutX="753.0" layoutY="561.0" promptText="amount" fx:id="amountOfWithDraw" />
     </children>
 </AnchorPane>
