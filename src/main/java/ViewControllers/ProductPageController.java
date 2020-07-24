@@ -52,21 +52,29 @@ public class ProductPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        update();
+        try {
+            update();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
-    private void update(){
-        if (Account.isIsThereOnlineUser()) {
+    private void update() throws IOException, ClassNotFoundException {
+        Account account = (Account) Main.sendAndGetObjectFromServer("GetOnlineAccount");
+        if (account!=null) {
             loginButton.setDisable(true);
             loginButton.setVisible(false);
         }
-        product = Product.getOnlineProduct();
-        if (Account.getOnlineAccount() instanceof Customer){
-            customer = (Customer) Account.getOnlineAccount();
+       // product = Product.getOnlineProduct();
+        product = (Product) Main.sendAndGetObjectFromServer("GetProductForProductPage");
+        if (account instanceof Customer){
+            customer = (Customer) account;
             if (CustomerBoss.findOutSpecialProductThatIsForACustomerOrNot(product,customer)){
                 score.setVisible(true);
             }
         }
-        Product product = Product.getOnlineProduct();
+    //    Product product = Product.getOnlineProduct();
         productNameLabel.setText(product.getName());
         if (product.getPriceWithOffEffect()!= -1) {
             offPriceOfProduct.setText(String.valueOf(product.getPriceWithOffEffect()));
@@ -93,7 +101,7 @@ public class ProductPageController implements Initializable {
 
     }
 
-    public void addToCart(MouseEvent mouseEvent) {
+    public void addToCart(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
         if (!numberOfAddingtoCart.isVisible()){
             numberOfAddingtoCart.setVisible(true);
@@ -105,19 +113,21 @@ public class ProductPageController implements Initializable {
                 return;
             }
 
-            if (Account.getOnlineAccount()==null){
+            Account account = (Account) Main.sendAndGetObjectFromServer("GetOnlineAccount");
+            if (account == null){
                 System.err.println("first login");
                 problem.setTextFill(Paint.valueOf("blue"));
                 problem.setText("first login");
                 return;
-            }else if (!(Account.getOnlineAccount() instanceof Customer)){
+            }else if (!(account instanceof Customer)){
                 problem.setTextFill(Paint.valueOf("blue"));
                 problem.setText("process is for customer");
                 return;
             }
             else if (product.getInventory()!=0){
-                Customer customer = (Customer) Account.getOnlineAccount();
-                customer.getListOFProductsAtCart().put(product,Integer.parseInt(numberOfAddingtoCart.getText()));
+              //  Customer customer = (Customer) account;
+               // customer.getListOFProductsAtCart().put(product,Integer.parseInt(numberOfAddingtoCart.getText()));
+                String response = (String) Main.sendAndGetObjectFromServer("AddToCart,"+product.getProductId()+"-"+numberOfAddingtoCart.getText()) ;
                 problem.setText("successfully added to cart");
                 problem.setTextFill(Paint.valueOf("green"));
             }else{
@@ -153,25 +163,23 @@ public class ProductPageController implements Initializable {
         reviewsList.setText(result);
     }
 
-    public void compare(MouseEvent mouseEvent) {
+    public void compare(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
         if (!compareProductId.isVisible()){
             compareProductId.setVisible(true);
             compareResult.clear();
             return;
         }else {
-            try {
                 if (!compareProductId.getText().matches("\\d+")){
                     problem.setTextFill(Paint.valueOf("red"));
                     problem.setText("invalid format of id");
                     return;
                 }
-            StringBuilder text =     ProductBoss.compare(compareProductId.getText(),product);
-            compareResult.setText(String.valueOf(text));
-            } catch (ProductsCompareNotSameCategories | ProductIsFinished | NullProduct productsCompareNotSameCategories) {
-                problem.setText(productsCompareNotSameCategories.getMessage());
-                problem.setTextFill(Paint.valueOf("red"));
-            }
+                String text = Main.sendAndGetMessage("compare,"+product.getProductId()+"-"+compareProductId.getText());
+          //  StringBuilder text =     ProductBoss.compare(compareProductId.getText(),product);
+            compareResult.setText((text));
+
+
         }
     }
 

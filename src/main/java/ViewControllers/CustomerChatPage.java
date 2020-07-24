@@ -17,6 +17,7 @@ public class CustomerChatPage implements Initializable {
     public TextArea receiveArea;
     public TextArea sendArea;
     public Label actionInfo;
+    private static boolean isSupporterAlreadyActive = true;
 
     private Receiver receiver;
 
@@ -28,14 +29,17 @@ public class CustomerChatPage implements Initializable {
     }
 
     public void disconnectClick(MouseEvent mouseEvent) throws IOException {
-        Main.sendMessageToServer("MRequestsCustomerDisconnect");
-    //should close the thread
-//        String response = Main.getMessageFromServer();
+        if (isSupporterAlreadyActive) {
+            Main.sendMessageToServer("MRequestsCustomerDisconnect");
+        }
+        //should close the thread
+        //String response = Main.getMessageFromServer();
         Main.doBack();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        isSupporterAlreadyActive = true;
         receiver = new Receiver();
         receiver.start();
     }
@@ -58,11 +62,21 @@ public class CustomerChatPage implements Initializable {
             while (true) {
                 try {
                     String message = dataInputStream.readUTF();
+                    if (message.startsWith("endThread")) {
+                        receiveArea.setDisable(true);
+                        sendArea.setDisable(true);
+                        if (message.equalsIgnoreCase("endThread1")) {
+                            isSupporterAlreadyActive = false;
+                        }
+                        break;
+                    }
                     receiveArea.setText(receiveArea.getText() + '\n' + message);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+            System.out.println("customer thread ended");
+
         }
     }
 }

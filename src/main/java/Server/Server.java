@@ -4,6 +4,7 @@ import Controller.*;
 import Controller.Exceptions.*;
 import Main.Main;
 import Model.*;
+import sun.misc.Queue;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -24,6 +25,10 @@ public class Server {
     private static HashMap<Account, Supporter> activeChats = new HashMap<>();
     private static ArrayList<Supporter> onlineSupporters = new ArrayList<>();
     private static HashMap<Socket,Product> onlineProducts = new HashMap<>();
+    private static HashMap<Socket,Product> productsPageOnlineProduct = new HashMap<>();
+    private static HashMap<Socket,ArrayList<Product>> productsWhichAreSold = new HashMap<>();
+    private static Queue<String> listOfIds = new Queue<>();
+    private static boolean isBeforeACart;
     private static DataInputStream dataInputStreamBank;
     private static DataOutputStream dataOutputStreamBank;
     private static String bankAccountID;
@@ -31,13 +36,22 @@ public class Server {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8888);
         Socket socket;
+//        new Manager("a", "a", "a", "a@a.a", "0", "a");
+//        new Supporter("s", "a", "a", "a@a.a", "0", "s");
+//        new Customer("c", "a", "a", "a@a.a", "0", "c");
+
 
         connectToBankServer();
         while (true) {
+
             socket = serverSocket.accept();
             onlineAccounts.put(socket, null);
+            isBeforeACart = false;
             onlineAuction.put(socket,null);
             onlineProducts.put(socket,null);
+            productsPageOnlineProduct.put(socket,null);
+            productsWhichAreSold.put(socket,null);
+
             System.out.println("new client connected to server");
             new handle(new DataInputStream(new BufferedInputStream(socket.getInputStream()))
                     , new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())), socket,dataOutputStreamBank,dataInputStreamBank).start();
@@ -104,11 +118,10 @@ public class Server {
                         getOnlineAccount();
                     } else if (input.startsWith("AddOff")) {
                         addOff(input);
+                    } else if (input.startsWith("logoutSSSSS")) {
+                        logoutS(input);
                     } else if (input.startsWith("logout")) {
                         logout(input);
-                    }
-                    else if (input.startsWith("logoutS")) {
-                        logoutS(input);
                     }
                     else if (input.startsWith("makeAuction")) {
                         createAuction(input);
@@ -121,7 +134,12 @@ public class Server {
                     }else if (input.startsWith("sellerEditPersonalInfo")){
                         editSellerProfile(input);
                     }else if (input.startsWith("GetProducts")){
-
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                        objectOutputStream.writeObject(Category.getAllCategories());
+                        for (Category category : Category.getAllCategories()) {
+                            System.out.println(category.getCategoryName());
+                        }
+                        objectOutputStream.flush();
                     }else if (input.equalsIgnoreCase("showAuctions")){
                         String response = Auction.showAllAuctionsInfo();
                         dataOutputStream.writeUTF(response);
@@ -129,11 +147,6 @@ public class Server {
                     }else if (input.startsWith("API")){
                         String response = sendAndGetMessageFromBankAPI(input.substring(input.indexOf(",")+1));
                         Account account = onlineAccounts.get(socket);
-                        System.out.println(account.getUsername());
-                        System.out.println(Manager.getAllManagers().size());
-                        if (account instanceof Manager && Manager.getAllManagers().size()==1){
-                            bankAccountID = response;
-                        }
                         dataOutputStream.writeUTF(response);
                         dataOutputStream.flush();
                     }
@@ -171,6 +184,47 @@ public class Server {
                     }else if (input.startsWith("getShopAccountID")){
                        dataOutputStream.writeUTF(bankAccountID);
                        dataOutputStream.flush();
+                    }else if (input.startsWith("GetOnlineProductOfProductsPage")){
+                        int id = Integer.parseInt(input.substring(input.indexOf(",")+1));
+                        Product product = Product.getProductWithId(id);
+                        productsPageOnlineProduct.put(socket,product);
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream()) ;
+                        objectOutputStream.writeObject("S");
+                        objectOutputStream.flush();
+                    }else if (input.startsWith("GetProductForProductPage")){
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                        objectOutputStream.writeObject(productsPageOnlineProduct.get(socket));
+                        objectOutputStream.flush();
+                    }else if (input.startsWith("compare")){
+                        String id = input.substring(input.indexOf("-")+1);
+                        String productID = input.substring(input.indexOf(",")+1,input.indexOf("-"));
+                        Product product = Product.getProductWithId(Integer.parseInt(productID));
+                        StringBuilder text = ProductBoss.compare(id,product);
+                        dataOutputStream.writeUTF(String.valueOf(text));
+                        dataOutputStream.flush();
+                    }else if (input.startsWith("AddToCart")){
+                        int productID = Integer.parseInt(input.substring(input.indexOf(",")+1),input.indexOf("-"));
+                        int numberOfAdding = Integer.parseInt(input.substring(input.indexOf("-")+1));
+                        Customer customer = (Customer) onlineAccounts.get(socket);
+                        Product product = Product.getProductWithId(productID);
+                        customer.getListOFProductsAtCart().put(product,numberOfAdding);
+                        dataOutputStream.writeUTF("s");
+                        dataOutputStream.flush();
+                    }else if (input.startsWith("doPayment")){
+                        doPayment();
+                    }else if (input.equalsIgnoreCase("makeEmptyCustomerCart")){
+                        productsWhichAreSold.put(socket,null);
+                        dataOutputStream.writeUTF("S");
+                        dataOutputStream.flush();
+                    }else if (input.startsWith("giveMeSeller")){
+                        int productID = Integer.parseInt(input.substring(input.indexOf(",")+1));
+                        Product product = Product.getProductWithId(productID);
+                        Seller seller = product.getSeller();
+                        for (Account value : onlineAccounts.values()) {
+                            if (value.equals(seller)){
+
+                            }
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -178,13 +232,53 @@ public class Server {
             }
         }
 
-        private void logoutS(String input) {
+        private void logoutS(String input) throws IOException {
             Account account = onlineAccounts.get(socket);
-            AccountBoss.logout(account);
             if (account instanceof Supporter) {
                 onlineSupporters.remove(account);
+                removeSupporterActiveChat((Supporter) account);
+                sendMessageToClient("endThread");
+                System.out.println("command send");
             }
+            AccountBoss.logout(account);
             onlineAccounts.put(socket, null);
+        }
+
+        private void removeSupporterActiveChat(Supporter supporter) throws IOException {
+            ArrayList<Account> actives = getActiveAccountChatsWithSupporter(supporter);
+            for (Account active : actives) {
+                Socket socket = getSocketWithAccount(active);
+                DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                stream.writeUTF("endThread1");
+                stream.flush();
+                activeChats.remove(active);
+            }
+        }
+
+        private ArrayList<Account> getActiveAccountChatsWithSupporter(Supporter supporter) {
+            ArrayList<Account> list = new ArrayList<>();
+            for (Account account : activeChats.keySet()) {
+                if (activeChats.get(account).equals(supporter)) {
+                    list.add(account);
+                }
+            }
+            return list;
+        }
+
+        private void doPayment() throws IOException {
+            Customer customer = (Customer) onlineAccounts.get(socket);
+            boolean response = false;
+            try {
+                response = CustomerBoss.doPayment(customer);
+                dataOutputStream.writeUTF(String.valueOf(response));
+
+            } catch (NoMoneyInCustomerPocket noMoneyInCustomerPocket) {
+                dataOutputStream.writeUTF(noMoneyInCustomerPocket.getMessage());
+
+            }finally {
+                dataOutputStream.flush();
+            }
+
         }
 
         private void addFile(String input) throws IOException {
@@ -259,10 +353,12 @@ public class Server {
             String destID="";
             String description="";
             String receiptType = "";
-            Matcher matcher = getMatcher(input,"\\{(\\w+),(\\.+))\\}");
+            Matcher matcher = getMatcher(input,"\\{"+"(\\w+),(\\w+|-\\d+|\\w+\\s*\\w*)"+"\\}");
             while (matcher.find()){
                 String key = matcher.group(1);
                 String value = matcher.group(2);
+                System.out.println(key);
+                System.out.println(value);
                 if (key.equalsIgnoreCase("token")){
 
                     token = value;
@@ -492,6 +588,24 @@ public class Server {
         private void login(String input) throws IOException {
             String username = input.substring(input.indexOf(",") + 1, input.indexOf("-"));
             String password = input.substring(input.indexOf("-") + 1, input.indexOf("+"));
+            Account account1 = onlineAccounts.get(socket);
+            if (account1 !=null){
+                dataOutputStream.writeUTF("first logout");
+                dataOutputStream.flush();
+                return;
+            }
+            int i =0;
+            if (onlineAccounts.size()!=0 && account1!=null) {
+                for (Account value : onlineAccounts.values()) {
+                    if (value.getUsername().equalsIgnoreCase(account1.getUsername()))
+                        i++;
+                }
+            }
+            if (i>1){
+                dataOutputStream.writeUTF("first logout");
+                dataOutputStream.flush();
+                return;
+            }
             try {
 
                 AccountBoss.checkUsernameExistenceInLogin(username);
@@ -515,7 +629,7 @@ public class Server {
                     dataOutputStream.writeUTF("goToMainMenu");
                     dataOutputStream.flush();
                 }
-            } catch (ExistenceOfUserWithUsername | PasswordValidity | LoginWithoutLogout existenceOfUserWithUsername) {
+            } catch (ExistenceOfUserWithUsername | PasswordValidity  existenceOfUserWithUsername) {
                 dataOutputStream.writeUTF(existenceOfUserWithUsername.getMessage());
                 dataOutputStream.flush();
 
@@ -558,6 +672,9 @@ public class Server {
                     }else if (type.equalsIgnoreCase("manager")){
                         Manager manager = (Manager) Account.getAccountWithUsername(username);
                         manager.setNumberOfBankAccount(numberOfAccount);
+                        if (Manager.getAllManagers().size()==1){
+                            bankAccountID = numberOfAccount;
+                        }
                     }
                 }
                 dataOutputStream.writeUTF("S");
@@ -658,7 +775,7 @@ public class Server {
             }
             else if (requestText.equalsIgnoreCase("CustomerDisconnect")) {
                 activeChats.remove(onlineAccounts.get(socket));
-//                sendMessageToClient("Successful");
+                sendMessageToClient("endThread");
             }
         }
 

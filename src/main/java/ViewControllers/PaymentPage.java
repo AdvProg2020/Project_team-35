@@ -41,16 +41,19 @@ public class PaymentPage implements Initializable {
             return;
         }
         Customer customer = (Customer) Main.sendAndGetObjectFromServer("GetOnlineAccount");
-        try {
-            if (!CustomerBoss.doPayment((Customer) Account.getOnlineAccount()))
+        String isMoneyEnough = (Main.sendAndGetMessage("doPayment"));
+
+            if (isMoneyEnough.equalsIgnoreCase("false")) {
                 setActionErrorInfo("your money is not enough! the purchase wasn't successful.");
-            else {
+            }
+            else if (isMoneyEnough.equalsIgnoreCase("true")){
                 actionInfo.setTextFill(Color.GREEN);
                 actionInfo.setText("purchase successfully done!");
+            }else {
+                actionInfo.setTextFill(Color.RED);
+                actionInfo.setText(isMoneyEnough);
             }
-        } catch (NoMoneyInCustomerPocket noMoneyInCustomerPocket) {
-            setActionErrorInfo(noMoneyInCustomerPocket.getMessage());
-        }
+
     }
 
     public void setActionErrorInfo(String message) {

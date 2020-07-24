@@ -1,14 +1,10 @@
 package ViewControllers;
 
 import Controller.Exceptions.InventoryException;
-import Controller.ProductBoss;
 import Main.Main;
-import Model.Account;
-import Model.Category;
 import Model.Customer;
 import Model.Product;
 import MusicPlayer.MusicPlayer;
-import com.sun.org.apache.xml.internal.security.Init;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -22,7 +18,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class CustomerCart implements Initializable {
@@ -37,6 +33,7 @@ public class CustomerCart implements Initializable {
     public Label number;
 
     Customer customer = (Customer) Main.sendAndGetObjectFromServer("GetOnlineAccount");
+    private ArrayList<Product> products = new ArrayList<>();
 
     public CustomerCart() throws IOException, ClassNotFoundException {
     }
@@ -49,7 +46,6 @@ public class CustomerCart implements Initializable {
             return;
         }
         Product product = tableProducts.getSelectionModel().getSelectedItem();
-
         productInfo.setText(product.toString());
         int first = customer.getCart().get(product);
         number.setText(String.valueOf(first));
@@ -58,7 +54,7 @@ public class CustomerCart implements Initializable {
 
 
 
-    public void increase(MouseEvent mouseEvent) {
+    public void increase(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
 
         if (tableProducts.getSelectionModel().getSelectedItem() == null) {
@@ -77,7 +73,7 @@ public class CustomerCart implements Initializable {
 
     }
 
-    public void decrease(MouseEvent mouseEvent) {
+    public void decrease(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
 
         if (tableProducts.getSelectionModel().getSelectedItem() == null) {
@@ -90,7 +86,9 @@ public class CustomerCart implements Initializable {
 
     }
 
-    private void updateTable() {
+    private void updateTable() throws IOException {
+        String response = Main.sendAndGetMessage("makeEmptyCustomerCart");
+        products = (ArrayList<Product>) customer.getCart().keySet();
         final ObservableList<Product> data = FXCollections.observableArrayList(customer.getCart().keySet());
         productName.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
         price.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
@@ -104,7 +102,7 @@ public class CustomerCart implements Initializable {
 
     }
 
-    public void goToPaymentPage(MouseEvent mouseEvent) throws IOException {
+    public void goToPaymentPage(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("ReceiveInfoPage", "Receive Info Page", false);
 
@@ -122,9 +120,14 @@ public class CustomerCart implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        updateTable();
+        try {
+            updateTable();
+            totalPrice.setText(String.valueOf(customer.getTotalPriceOFCart()));
 
-        totalPrice.setText(String.valueOf(customer.getTotalPriceOFCart()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void back(MouseEvent mouseEvent) throws IOException {

@@ -53,6 +53,8 @@ public class ProductsPageController implements Initializable {
     public ImageView star5;
     public ListView listOfFilterSubs;
     private Category category;
+    private static ArrayList<Category> categories = new ArrayList<>();
+    private static ArrayList<Product> products = new ArrayList<>();
 
     public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
@@ -70,7 +72,8 @@ public class ProductsPageController implements Initializable {
 
     public void update() throws IOException, ClassNotFoundException {
         ArrayList<Category> array = (ArrayList<Category>) Main.sendAndGetObjectFromServer("GetProducts");
-        final ObservableList<Category> data = FXCollections.observableArrayList(Category.getAllCategories());
+        categories = array;
+        final ObservableList<Category> data = FXCollections.observableArrayList(array);
         categoryName.setCellValueFactory(new PropertyValueFactory<Category, String>("categoryName"));
         categoryProductsNum.setCellValueFactory(new PropertyValueFactory<Category, String>("size"));
         table.setItems(data);
@@ -82,7 +85,11 @@ public class ProductsPageController implements Initializable {
         MusicPlayer.getInstance().playButtonMusic();
         Object object = table.getSelectionModel().selectedItemProperty().get();
         int index = table.getSelectionModel().selectedIndexProperty().get();
-         category = Category.categoryFinder(object);
+        for (Category category1 : categories) {
+            if (category1.equals(object))
+                category = category1;
+        }
+        // category = Category.categoryFinder(object);
          if (category == null) return;
         Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
         errorAlert.setHeaderText(category.getCategoryName() + " information");
@@ -104,7 +111,8 @@ public class ProductsPageController implements Initializable {
     }
 
     public void createProductsTable(Category category) {
-        final ObservableList<Product> data = FXCollections.observableArrayList(category.getCategoryProducts());
+        products = category.getCategoryProducts();
+        final ObservableList<Product> data = FXCollections.observableArrayList(products);
         productName.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
         price.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
         rate.setCellValueFactory(new PropertyValueFactory<Product, String>("averageOfProduct"));
@@ -112,21 +120,27 @@ public class ProductsPageController implements Initializable {
         tableProducts.setItems(data);
     }
 
-    public void productPage(MouseEvent mouseEvent) throws IOException {
+    public void productPage(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
         Object object = tableProducts.getSelectionModel().selectedItemProperty().get();
         int index = tableProducts.getSelectionModel().selectedIndexProperty().get();
-        Product product = Product.productFinder(object);
+        Product product=null;
+        for (Product product1 : products) {
+            if (product1.equals(object))
+                product = product1;
+        }
+       // Product product = Product.productFinder(object);
         if (product != null) {
             Product.setOnlineProduct(product);
-            System.out.println(imageLabel.isVisible());
-           if (imageLabel.isVisible()) {
+            String response = (String) Main.sendAndGetObjectFromServer("GetOnlineProductOfProductsPage,"+product.getProductId());
+          //  System.out.println(imageLabel.isVisible());
+       //    if (imageLabel.isVisible()) {
                Main.setRoot("ProductPage", "product page", false);
-           }else {
-               imageLabel.setVisible(true);
-               imageLabel.setText("image of product status");
-               prepareScoresGraphicMode(product);
-           }
+         //  }else {
+           //    imageLabel.setVisible(true);
+             //  imageLabel.setText("image of product status");
+              // prepareScoresGraphicMode(product);
+           //}
         }
     }
     private void prepareScoresGraphicMode(Product product){
