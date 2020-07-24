@@ -7,10 +7,7 @@ import Controller.Exceptions.ThisIsNotYours;
 import Controller.ProductBoss;
 import Controller.SellerBoss;
 import Main.Main;
-import Model.Account;
-import Model.Category;
-import Model.Product;
-import Model.Seller;
+import Model.*;
 import MusicPlayer.MusicPlayer;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -47,6 +44,7 @@ public class SellerPageController implements Initializable {
     public DatePicker finalDateOfAuction;
     public Label auctionProblem;
     public TextField auctionProductId;
+    public TextField amountOfWithDraw;
 
 
     @Override
@@ -265,5 +263,21 @@ public class SellerPageController implements Initializable {
     public void addFile(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("AddProduct","add product",false);
+    }
+
+    public void withDraw(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
+        if (!amountOfWithDraw.getText().matches("^\\d+\\.?\\d*$")){
+            return;
+        }
+
+        Manager manager = Manager.getFirstManager();
+        Seller seller = (Seller) Main.sendAndGetObjectFromServer("GetOnlineAccount");
+        if (seller.getPocket()-Double.parseDouble(amountOfWithDraw.getText())<Manager.getMinimumMoneyInPocket()){
+            return;
+        }
+        String token = Main.sendAndGetMessage("getToken,"+manager.getUsername()+"-"+manager.getPassword());
+        String sourceID = Main.sendAndGetMessage("getShopAccountID");
+        String billID = Main.sendAndGetMessage("transfer,"+"{token,"+token+"}{receiptType,"+"move"+"}{money,"+amountOfWithDraw+"}{sourceID,"+sourceID+"}{destID,"+seller.getNumberOfBankAccount()+"}{description,"+"a"+"}");
+        seller.setPocket(seller.getPocket()-Double.parseDouble(amountOfWithDraw.getText()));
     }
 }
