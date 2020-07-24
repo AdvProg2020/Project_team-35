@@ -20,18 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="22a8972d-0158-477b-901a-9c04baa7ad15" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Bill.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Boss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Boss.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Auction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Auction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Manager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Seller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/CustomerBoss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/CustomerBoss.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/BuyLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/BuyLog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/SellLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/SellLog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ViewControllers/AuctionPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ViewControllers/AuctionPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ViewControllers/ChatRoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ViewControllers/ChatRoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ViewControllers/CustomerPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ViewControllers/CustomerPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ViewControllers/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ViewControllers/MainMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ViewControllers/PaymentPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ViewControllers/PaymentPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,14 +238,7 @@
       <workItem from="1595513142775" duration="2714000" />
       <workItem from="1595536658146" duration="6553000" />
       <workItem from="1595603570409" duration="4122000" />
-      <workItem from="1595609789605" duration="1278000" />
-    </task>
-    <task id="LOCAL-00014" summary="add view credit for Seller">
-      <created>1587748170126</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1587748170126</updated>
+      <workItem from="1595609789605" duration="5372000" />
     </task>
     <task id="LOCAL-00015" summary="this is complete user page">
       <created>1587750107590</created>
@@ -589,7 +576,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595605568414</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="correcting a bug">
+      <created>1595611325595</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1595611325595</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -627,7 +621,6 @@
     <MESSAGE value="PaymentPage added and purchase process completed" />
     <MESSAGE value="correcting some bugs" />
     <MESSAGE value="add purchase method to Server" />
-    <MESSAGE value="correcting a bug" />
     <MESSAGE value="connecting CustomerCart to server" />
     <MESSAGE value="remove using discount code from purchase process" />
     <MESSAGE value="charging pocket feature added" />
@@ -635,7 +628,8 @@
     <MESSAGE value="add minimumMoneyInBank field" />
     <MESSAGE value="SetMinimumMoneyInPocketPage added" />
     <MESSAGE value="Merge branch 'develop' of https://github.com/AdvProg2020/Project_team-35 into develop&#10;&#10; Conflicts:&#10;&#9;src/main/java/Model/Manager.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'develop' of https://github.com/AdvProg2020/Project_team-35 into develop&#10;&#10; Conflicts:&#10;&#9;src/main/java/Model/Manager.java" />
+    <MESSAGE value="correcting a bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="correcting a bug" />
   </component>
   <component name="WindowStateProjectService">
     <state x="485" y="75" width="617" height="680" key="#Main" timestamp="1588105443782">
@@ -692,11 +686,11 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="321" y="0" key="#com.intellij.unscramble.UnscrambleDialog/0.0.1280.680@0.0.1280.680" timestamp="1587735909805" />
-    <state x="474" y="0" key="CommitChangelistDialog2" timestamp="1595610382484">
+    <state x="474" y="0" key="CommitChangelistDialog2" timestamp="1595611324157">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="320" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1587566123059" />
-    <state x="474" y="0" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1595610382484" />
+    <state x="474" y="0" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1595611324157" />
     <state width="344" height="438" key="DebuggerActiveHint" timestamp="1587712767245">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -823,12 +817,12 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1595610200791" />
-    <state x="476" y="206" key="git4idea.merge.GitPullDialog" timestamp="1595610408444">
+    <state x="476" y="206" key="git4idea.merge.GitPullDialog" timestamp="1595611752801">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="397" y="168" key="git4idea.merge.GitPullDialog/0.0.1280.680@0.0.1280.680" timestamp="1587999972959" />
     <state x="476" y="204" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1587578711739" />
-    <state x="476" y="206" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1595610408444" />
+    <state x="476" y="206" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1595611752801" />
     <state x="91" y="2" key="new project wizard" timestamp="1587996498862">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

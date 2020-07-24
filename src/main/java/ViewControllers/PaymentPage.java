@@ -40,9 +40,9 @@ public class PaymentPage implements Initializable {
         }else if (!bank.isSelected() && !pocket.isSelected()){
             actionInfo.setText("no way is selected");
             actionInfo.setTextFill(Paint.valueOf("red"));
-            return;
-        } else if (pocket.isSelected()) {
-            String isMoneyEnough = (Main.sendAndGetMessage("doPayment"));
+            return;}
+        else if (pocket.isSelected()) {
+            String isMoneyEnough = (Main.sendAndGetMessage("doPayment1"));
 
             if (isMoneyEnough.equalsIgnoreCase("false")) {
                 setActionErrorInfo("your money is not enough! the purchase wasn't successful.");
@@ -55,6 +55,7 @@ public class PaymentPage implements Initializable {
                 actionInfo.setText(isMoneyEnough);
             }
         }
+        else Main.sendAndGetMessage("doPayment2");
     }
 
     public void setActionErrorInfo(String message) {
