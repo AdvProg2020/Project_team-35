@@ -3,6 +3,7 @@ package Controller;
 import Controller.Exceptions.*;
 import Model.*;
 
+import java.io.IOException;
 import java.util.*;
 
 public class CustomerBoss {
@@ -101,7 +102,7 @@ public class CustomerBoss {
         customer.setPaymentAmount(customer.getTotalPriceOFCart());
     }
 
-    public static boolean doPayment(Customer customer, boolean isByPocket) throws NoMoneyInCustomerPocket {
+    public static boolean doPayment(Customer customer, boolean isByPocket) throws NoMoneyInCustomerPocket, IOException {
         Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<Product> products = new ArrayList<>();
         Set <Seller> sellersOfCart = new HashSet<>();

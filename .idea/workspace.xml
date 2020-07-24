@@ -21,11 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="22a8972d-0158-477b-901a-9c04baa7ad15" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/CustomerBoss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/CustomerBoss.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/BuyLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/BuyLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/SellLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/SellLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ViewControllers/PaymentPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ViewControllers/PaymentPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +79,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
-  <component name="RunManager" selected="Application.BankAPI">
+  <component name="RunManager" selected="Application.Server">
     <configuration name="BankAPI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Bank.BankAPI" />
       <module name="Project Phase 1" />
@@ -165,8 +160,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.BankAPI" />
         <item itemvalue="Application.Server" />
+        <item itemvalue="Application.BankAPI" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.CustomerBossTest.testIncreaseNumber" />
         <item itemvalue="JUnit.CustomerBossTest.testShowMoney" />
@@ -238,14 +233,7 @@
       <workItem from="1595513142775" duration="2714000" />
       <workItem from="1595536658146" duration="6553000" />
       <workItem from="1595603570409" duration="4122000" />
-      <workItem from="1595609789605" duration="5372000" />
-    </task>
-    <task id="LOCAL-00015" summary="this is complete user page">
-      <created>1587750107590</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1587750107590</updated>
+      <workItem from="1595609789605" duration="5793000" />
     </task>
     <task id="LOCAL-00016" summary="add view sales history to SellerPage.java.">
       <created>1587750726104</created>
@@ -583,7 +571,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595611325595</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="payment process done">
+      <created>1595615735959</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1595615735959</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -604,7 +599,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add BuyLog and SellLog constructors" />
     <MESSAGE value="add setMoney" />
     <MESSAGE value="add some tests for Customer" />
     <MESSAGE value="add rate method and a feature and some exceptions in discount code check method" />
@@ -629,7 +623,8 @@
     <MESSAGE value="SetMinimumMoneyInPocketPage added" />
     <MESSAGE value="Merge branch 'develop' of https://github.com/AdvProg2020/Project_team-35 into develop&#10;&#10; Conflicts:&#10;&#9;src/main/java/Model/Manager.java" />
     <MESSAGE value="correcting a bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="correcting a bug" />
+    <MESSAGE value="payment process done" />
+    <option name="LAST_COMMIT_MESSAGE" value="payment process done" />
   </component>
   <component name="WindowStateProjectService">
     <state x="485" y="75" width="617" height="680" key="#Main" timestamp="1588105443782">
@@ -686,11 +681,11 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="321" y="0" key="#com.intellij.unscramble.UnscrambleDialog/0.0.1280.680@0.0.1280.680" timestamp="1587735909805" />
-    <state x="474" y="0" key="CommitChangelistDialog2" timestamp="1595611324157">
+    <state x="474" y="0" key="CommitChangelistDialog2" timestamp="1595615734568">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="320" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1587566123059" />
-    <state x="474" y="0" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1595611324157" />
+    <state x="474" y="0" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1595615734568" />
     <state width="344" height="438" key="DebuggerActiveHint" timestamp="1587712767245">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -790,12 +785,12 @@
     <state x="231" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1588064315832" />
     <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1587490385288" />
     <state x="277" y="0" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1593042143192" />
-    <state x="361" y="147" key="Vcs.Push.Dialog.v2" timestamp="1595610559293">
+    <state x="361" y="147" key="Vcs.Push.Dialog.v2" timestamp="1595615751903">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="301" y="120" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1587999987522" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1587566134427" />
-    <state x="361" y="147" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1595610559293" />
+    <state x="361" y="147" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1595615751903" />
     <state x="450" y="75" key="VcsDiffUtil.ChangesDialog" timestamp="1587808399852">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -817,12 +812,12 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="578" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1595610200791" />
-    <state x="476" y="206" key="git4idea.merge.GitPullDialog" timestamp="1595611752801">
+    <state x="476" y="206" key="git4idea.merge.GitPullDialog" timestamp="1595615742632">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="397" y="168" key="git4idea.merge.GitPullDialog/0.0.1280.680@0.0.1280.680" timestamp="1587999972959" />
     <state x="476" y="204" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1587578711739" />
-    <state x="476" y="206" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1595611752801" />
+    <state x="476" y="206" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1595615742632" />
     <state x="91" y="2" key="new project wizard" timestamp="1587996498862">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
