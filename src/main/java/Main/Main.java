@@ -104,4 +104,7 @@ public class Main extends Application {
         return getObjectFromServer();
     }
 
+    public static Socket getSocket() {
+        return socket;
+    }
 }

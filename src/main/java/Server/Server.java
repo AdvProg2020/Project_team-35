@@ -348,6 +348,9 @@ public class Server {
         private void logout(String input) throws IOException {
             Account account = onlineAccounts.get(socket);
             AccountBoss.logout(account);
+            if (account instanceof Supporter) {
+                onlineSupporters.remove(account);
+            }
             onlineAccounts.put(socket, null);
             dataOutputStream.writeUTF("S");
             dataOutputStream.flush();
@@ -380,10 +383,8 @@ public class Server {
         }
 
         private void getOnlineAccount() throws IOException {
-
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             Account account = onlineAccounts.get(socket);
-
             objectOutputStream.writeObject(account);
             objectOutputStream.flush();
         }
@@ -520,6 +521,46 @@ public class Server {
                 HashMap<String, String> data = (HashMap<String, String>) readObjectFromClient();
                 AccountBoss.makeAccount(data);
             }
+            else if (requestText.startsWith("Chat:")) {
+                String message = requestText.substring(requestText.indexOf(':') + 1);
+                Account sender = onlineAccounts.get(socket);
+                if (activeChats.containsKey(sender)) {
+                    Supporter supporter = activeChats.get(sender);
+                    Socket supporterSocket = getSocketWithSupporter(supporter);
+                    DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                    stream.writeUTF(supporter.getUsername() + " : " + message);
+                    stream.flush();
+                    sendMessageToClient("Successful :)");
+                }
+                else {
+                    sendMessageToClient("Error :( Not Connected");
+                }
+            }
+            else if (requestText.startsWith("StartChatWith:")) {
+                String supporterUsername = requestText.substring(requestText.indexOf(':') + 1);
+                if (Supporter.isThereSupporterWithUsername(supporterUsername)) {
+                    Supporter supporter = Supporter.getSupporterWithUsername(supporterUsername);
+                    if (onlineSupporters.contains(supporter)) {
+                        activeChats.put(onlineAccounts.get(socket), supporter);
+                        sendMessageToClient("Successful :)");
+                    }
+                    else {
+                        sendMessageToClient("Supporter is not online :(");
+                    }
+                }
+                else {
+                    sendMessageToClient("Supporter is not available now :(");
+                }
+            }
+        }
+
+        private Socket getSocketWithSupporter(Supporter supporter) {
+            for (Socket socket1 : onlineAccounts.keySet()) {
+                if (onlineAccounts.get(socket1).equals(supporter)) {
+                    return socket1;
+                }
+            }
+            return null;
         }
 
         private void handleManagerRequestsNewManager(String input) throws IOException, ClassNotFoundException {

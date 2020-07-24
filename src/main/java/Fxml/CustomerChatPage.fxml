@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@../Resources/styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CustomerChatPage">
+   <children>
+      <Button layoutX="450.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#sendClick" prefHeight="38.0" prefWidth="125.0" text="send" />
+      <TextArea fx:id="receiveArea" layoutX="291.0" layoutY="41.0" prefHeight="200.0" prefWidth="420.0" promptText="Receive area" />
+      <TextArea fx:id="sendArea" layoutX="314.0" layoutY="278.0" prefHeight="60.0" prefWidth="374.0" promptText="send area" />
+      <Button layoutX="52.0" layoutY="524.0" mnemonicParsing="false" onMouseClicked="#disconnectClick" prefHeight="38.0" prefWidth="126.0" text="Disconnect" />
+      <Label fx:id="actionInfo" layoutX="337.0" layoutY="479.0" prefHeight="38.0" prefWidth="354.0" text="Action Info" />
+   </children>
+</AnchorPane>

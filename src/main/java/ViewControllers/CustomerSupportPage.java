@@ -45,13 +45,20 @@ public class CustomerSupportPage implements Initializable {
         Main.doBack();
     }
 
-    public void startChat(MouseEvent mouseEvent) {
+    public void startChat(MouseEvent mouseEvent) throws IOException {
         Supporter selected = onlineSupportersTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            
+            actionInfo.setText("Not selected any supporter.");
         }
         else {
-            actionInfo.setText("Not selected any supporter.");
+            Main.sendMessageToServer("MRequestsStartChatWith:" + selected.getUsername());
+            String response = Main.getMessageFromServer();
+            if (response.equalsIgnoreCase("Successful :)")) {
+                Main.setRoot("CustomerChatPage", "Chat Page", false);
+            }
+            else {
+                actionInfo.setText(response);
+            }
         }
     }
 }
