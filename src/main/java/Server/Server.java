@@ -106,7 +106,11 @@ public class Server {
                         addOff(input);
                     } else if (input.startsWith("logout")) {
                         logout(input);
-                    } else if (input.startsWith("makeAuction")) {
+                    }
+                    else if (input.startsWith("logoutS")) {
+                        logoutS(input);
+                    }
+                    else if (input.startsWith("makeAuction")) {
                         createAuction(input);
                     } else if (input.startsWith("AddProduct")){
                         addProduct(input);
@@ -172,6 +176,15 @@ public class Server {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private void logoutS(String input) {
+            Account account = onlineAccounts.get(socket);
+            AccountBoss.logout(account);
+            if (account instanceof Supporter) {
+                onlineSupporters.remove(account);
+            }
+            onlineAccounts.put(socket, null);
         }
 
         private void addFile(String input) throws IOException {
