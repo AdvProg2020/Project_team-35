@@ -645,7 +645,7 @@ public class Server {
             }
             else if (requestText.equalsIgnoreCase("CustomerDisconnect")) {
                 activeChats.remove(onlineAccounts.get(socket));
-                sendMessageToClient("Successful");
+//                sendMessageToClient("Successful");
             }
         }
 

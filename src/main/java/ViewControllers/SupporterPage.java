@@ -42,7 +42,7 @@ public class SupporterPage implements Initializable {
 
     public void logoutClick(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
-        String response =  Main.sendAndGetMessage("logout");
+        String response = Main.sendAndGetMessage("logout");
         Main.doBack();
     }
 

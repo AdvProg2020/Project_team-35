@@ -29,7 +29,7 @@ public class CustomerChatPage implements Initializable {
 
     public void disconnectClick(MouseEvent mouseEvent) throws IOException {
         Main.sendMessageToServer("MRequestsCustomerDisconnect");
-        String response = Main.getMessageFromServer();
+//        String response = Main.getMessageFromServer();
         Main.doBack();
     }
 
