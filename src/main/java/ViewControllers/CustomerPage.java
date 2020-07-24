@@ -190,8 +190,4 @@ public class CustomerPage implements Initializable {
     public void mainMenu(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("MainMenu","main menu",false);
     }
-
-    public void chargePocketClick(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("ChargePocketPage", "Charge Pocket", false);
-    }
 }
