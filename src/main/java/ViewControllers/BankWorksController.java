@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 public class BankWorksController implements Initializable {
     public TextField usernameForToken;
     public TextField passwordForToken;
-    public Label problemOfToken;
+    public TextField problemOfToken;
     public TextField transactionToken;
     public Label resultOfTransaction;
     public Button exitButton;
@@ -30,14 +30,10 @@ public class BankWorksController implements Initializable {
     public TextField billID;
     public Label paymentResult;
     public Label shopAccountID;
+    public TextField ID;
 
     public void getToken(MouseEvent mouseEvent) throws IOException {
         String response = Main.sendAndGetMessage("getToken,"+usernameForToken.getText()+"-"+passwordForToken.getText());
-        if (response.equalsIgnoreCase("invalid username or password")){
-            problemOfToken.setTextFill(Paint.valueOf("red"));
-        }else {
-            problemOfToken.setTextFill(Paint.valueOf("green"));
-        }
         problemOfToken.setText(response);
     }
 
@@ -47,7 +43,7 @@ public class BankWorksController implements Initializable {
     }
 
     public void getTransaction(MouseEvent mouseEvent) throws IOException {
-        String response = Main.sendAndGetMessage("transactionResult,"+transactionToken);
+        String response = Main.sendAndGetMessage("transactionResult,"+transactionToken.getText());
         if (response.equalsIgnoreCase("database error") ||response.equalsIgnoreCase("invalid input") ||response.equalsIgnoreCase("token is invalid") || response.equalsIgnoreCase("token expired")){
             resultOfTransaction.setTextFill(Paint.valueOf("red"));
         }else {
@@ -78,7 +74,7 @@ public class BankWorksController implements Initializable {
     }
 
     public void transfer(MouseEvent mouseEvent) throws IOException {
-        String request = "transfer,"+"{token,"+transactionToken.getText()+"}{receiptType,"+receiptType.getText()+"}{money,"+money.getText()+"}{sourceID,"+sourceID.getText()+"}{destID,"+destID.getText()+"}{description,"+description.getText()+"}";
+        String request = "transfer,"+"{token,"+transferToken.getText()+"}{receiptType,"+receiptType.getText()+"}{money,"+money.getText()+"}{sourceID,"+sourceID.getText()+"}{destID,"+destID.getText()+"}{description,"+description.getText()+"}";
         String response = Main.sendAndGetMessage(request);
         if (response.matches("^\\d+$")){
             transferResult.setTextFill(Paint.valueOf("green"));
@@ -101,5 +97,10 @@ public class BankWorksController implements Initializable {
     public void getShopAccountID(MouseEvent mouseEvent) throws IOException {
         String response = Main.sendAndGetMessage("getShopAccountID");
         shopAccountID.setText(response);
+    }
+
+    public void showMyID(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
+        Account account = (Account) Main.sendAndGetObjectFromServer("GetOnlineAccount");
+        ID.setText(account.getNumberOfBankAccount());
     }
 }

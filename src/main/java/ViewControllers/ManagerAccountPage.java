@@ -145,4 +145,8 @@ public class ManagerAccountPage implements Initializable {
     public void goToCreateSupporterPage(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("CreateSupporterPage", "create new Supporter", false);
     }
+
+    public void bankWorks(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("BankWorks","bank",false);
+    }
 }

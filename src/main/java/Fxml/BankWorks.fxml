@@ -8,9 +8,9 @@
       <Button layoutX="220.0" layoutY="69.0" mnemonicParsing="false" onMouseClicked="#getToken" text="token" />
       <TextField fx:id="usernameForToken" layoutX="182.0" layoutY="120.0" promptText="username for Token" />
       <TextField fx:id="passwordForToken" layoutX="182.0" layoutY="175.0" promptText="password for Token" />
-      <Label fx:id="problemOfToken" layoutX="242.0" layoutY="231.0" />
+      <TextField fx:id="problemOfToken" layoutX="242.0" layoutY="231.0" text="" />
       <Button fx:id="exitButton" layoutX="475.0" layoutY="69.0" mnemonicParsing="false" onMouseClicked="#exit" text="exit" />
-      <Button layoutX="663.0" layoutY="69.0" mnemonicParsing="false" onMouseDragged="#getTransaction" text="Balance" />
+      <Button layoutX="663.0" layoutY="69.0" mnemonicParsing="false" onMouseClicked="#getTransaction" text="Balance" />
       <TextField fx:id="transactionToken" layoutX="647.0" layoutY="120.0" promptText="token" />
       <Label fx:id="resultOfTransaction" layoutX="707.0" layoutY="179.0" />
       <Button layoutX="466.0" layoutY="330.0" mnemonicParsing="false" onMouseClicked="#back" text="Back" />
@@ -31,5 +31,7 @@
       <Label fx:id="paymentResult" layoutX="631.0" layoutY="437.0" prefHeight="18.0" prefWidth="149.0" />
       <Button layoutX="947.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#getShopAccountID" text="shop account" />
       <Label fx:id="shopAccountID" layoutX="804.0" layoutY="411.0" prefHeight="18.0" prefWidth="618.0" />
+      <Button layoutX="130.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#showMyID" text="show my id" />
+      <TextField fx:id="ID" layoutX="101.0" layoutY="373.0" />
    </children>
 </AnchorPane>

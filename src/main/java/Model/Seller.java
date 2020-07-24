@@ -1,6 +1,9 @@
 package Model;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -166,6 +169,14 @@ public class Seller extends Account implements Serializable {
         return null;
     }
 
+    public void runSellerServer() throws IOException {
+        ServerSocket serverSocket = new ServerSocket(0);
+        int port = serverSocket.getLocalPort();
+        Socket socket = null;
+        while (true){
+            socket = serverSocket.accept();
+        }
+    }
 
 
 }

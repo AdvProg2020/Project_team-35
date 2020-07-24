@@ -3,6 +3,7 @@ package Main;
 
 import Model.*;
 import MusicPlayer.MusicPlayer;
+import com.sun.corba.se.impl.ior.OldJIDLObjectKeyTemplate;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -106,5 +107,9 @@ public class Main extends Application {
 
     public static Socket getSocket() {
         return socket;
+    }
+    public static Object sendAndGetObjectSerializable(Object object) throws IOException, ClassNotFoundException {
+        sendObjectToServer((Serializable) object);
+        return getObjectFromServer();
     }
 }

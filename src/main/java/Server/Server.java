@@ -26,7 +26,9 @@ public class Server {
     private static ArrayList<Supporter> onlineSupporters = new ArrayList<>();
     private static HashMap<Socket,Product> onlineProducts = new HashMap<>();
     private static HashMap<Socket,Product> productsPageOnlineProduct = new HashMap<>();
+    private static HashMap<Socket,ArrayList<Product>> productsWhichAreSold = new HashMap<>();
     private static Queue<String> listOfIds = new Queue<>();
+    private static boolean isBeforeACart;
     private static DataInputStream dataInputStreamBank;
     private static DataOutputStream dataOutputStreamBank;
     private static String bankAccountID;
@@ -37,11 +39,15 @@ public class Server {
 
         connectToBankServer();
         while (true) {
+
             socket = serverSocket.accept();
             onlineAccounts.put(socket, null);
+            isBeforeACart = false;
             onlineAuction.put(socket,null);
             onlineProducts.put(socket,null);
             productsPageOnlineProduct.put(socket,null);
+            productsWhichAreSold.put(socket,null);
+
             System.out.println("new client connected to server");
             new handle(new DataInputStream(new BufferedInputStream(socket.getInputStream()))
                     , new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())), socket,dataOutputStreamBank,dataInputStreamBank).start();
@@ -197,11 +203,42 @@ public class Server {
                         customer.getListOFProductsAtCart().put(product,numberOfAdding);
                         dataOutputStream.writeUTF("s");
                         dataOutputStream.flush();
+                    }else if (input.startsWith("doPayment")){
+                        doPayment();
+                    }else if (input.equalsIgnoreCase("makeEmptyCustomerCart")){
+                        productsWhichAreSold.put(socket,null);
+                        dataOutputStream.writeUTF("S");
+                        dataOutputStream.flush();
+                    }else if (input.startsWith("giveMeSeller")){
+                        int productID = Integer.parseInt(input.substring(input.indexOf(",")+1));
+                        Product product = Product.getProductWithId(productID);
+                        Seller seller = product.getSeller();
+                        for (Account value : onlineAccounts.values()) {
+                            if (value.equals(seller)){
+
+                            }
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private void doPayment() throws IOException {
+            Customer customer = (Customer) onlineAccounts.get(socket);
+            boolean response = false;
+            try {
+                response = CustomerBoss.doPayment(customer);
+                dataOutputStream.writeUTF(String.valueOf(response));
+
+            } catch (NoMoneyInCustomerPocket noMoneyInCustomerPocket) {
+                dataOutputStream.writeUTF(noMoneyInCustomerPocket.getMessage());
+
+            }finally {
+                dataOutputStream.flush();
+            }
+
         }
 
         private void addFile(String input) throws IOException {
@@ -276,10 +313,12 @@ public class Server {
             String destID="";
             String description="";
             String receiptType = "";
-            Matcher matcher = getMatcher(input,"\\{(\\w+),(\\w+))\\}");
+            Matcher matcher = getMatcher(input,"\\{"+"(\\w+),(\\w+|-\\d+|\\w+\\s*\\w*)"+"\\}");
             while (matcher.find()){
                 String key = matcher.group(1);
                 String value = matcher.group(2);
+                System.out.println(key);
+                System.out.println(value);
                 if (key.equalsIgnoreCase("token")){
 
                     token = value;
