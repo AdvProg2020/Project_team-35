@@ -3,11 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane stylesheets="@../Resources/styles.css" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.SupporterPage">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@../Resources/styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.SupporterPage">
    <children>
       <TextArea fx:id="receiveArea" layoutX="215.0" layoutY="54.0" prefHeight="246.0" prefWidth="513.0" />
-      <Button onMouseClicked="#sendClick" layoutX="430.0" layoutY="458.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" text="Send" />
+      <Button layoutX="430.0" layoutY="458.0" mnemonicParsing="false" onMouseClicked="#sendClick" prefHeight="26.0" prefWidth="113.0" text="Send" />
       <TextArea fx:id="sendArea" layoutX="294.0" layoutY="366.0" prefHeight="55.0" prefWidth="389.0" />
+      <Button onMouseClicked="#logoutClick" layoutX="52.0" layoutY="513.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="114.0" text="Logout" />
    </children>
 </AnchorPane>

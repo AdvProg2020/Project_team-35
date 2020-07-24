@@ -38,6 +38,9 @@ public class LoginPage {
             Main.setRoot("CustomerPage", "customer page", false);
         } else if (response.equalsIgnoreCase("goToMainMenu"))
             Main.setRoot("MainMenu", "main menu", false);
+        else if (response.equalsIgnoreCase("goToSupportPage")) {
+            Main.setRoot("SupporterPage", "Supporter Page", false);
+        }
         else {
             problem.setText(response);
             problem.setTextFill(Paint.valueOf("red"));

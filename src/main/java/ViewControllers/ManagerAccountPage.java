@@ -141,4 +141,8 @@ public class ManagerAccountPage implements Initializable {
         MusicPlayer.getInstance().playButtonMusic();
         Main.setRoot("ManagerCreateDiscountCode", "Create Discount Code", false);
     }
+
+    public void goToCreateSupporterPage(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("CreateSupporterPage", "create new Supporter", false);
+    }
 }

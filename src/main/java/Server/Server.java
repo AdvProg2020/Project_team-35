@@ -417,6 +417,9 @@ public class Server {
                 } else if (Account.getAccountWithUsername(username) instanceof Customer) {
                     dataOutputStream.writeUTF("goToCustomerPage");
                     dataOutputStream.flush();
+                }else if (account instanceof Supporter) {
+                    sendMessageToClient("goToSupportPage");
+                    onlineSupporters.add((Supporter) account);
                 } else {
                     dataOutputStream.writeUTF("goToMainMenu");
                     dataOutputStream.flush();
@@ -479,7 +482,7 @@ public class Server {
 
         }
 
-        private void handleManagerRequestsRequests(String input) throws IOException {
+        private void handleManagerRequestsRequests(String input) throws IOException, ClassNotFoundException {
             //should send response to client
             String requestText = input.substring(9);
             if (requestText.startsWith("AcceptRequest")) {
@@ -503,6 +506,19 @@ public class Server {
             }
             else if (requestText.equalsIgnoreCase("GetOnlineSupporters")) {
                 sendObjectToClient(onlineSupporters);
+            }
+            else if (requestText.startsWith("CheckSupporterUserName-")) {
+                String username = requestText.substring(requestText.indexOf('-') + 1);
+                if (Account.isThereAccountWithUserName(username)) {
+                    sendMessageToClient("Error");
+                }
+                else {
+                    sendMessageToClient("Ok");
+                }
+            }
+            else if (requestText.equalsIgnoreCase("RegisterSupporter")) {
+                HashMap<String, String> data = (HashMap<String, String>) readObjectFromClient();
+                AccountBoss.makeAccount(data);
             }
         }
 

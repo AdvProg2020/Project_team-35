@@ -84,6 +84,9 @@ public class AccountBoss {
         if (type.equals("customer")) {
             Customer customer = new Customer(username, name, family, email, phone, password);
         }
+        if (type.equalsIgnoreCase("supporter")) {
+            Supporter supporter = new Supporter(username, name, family, email, phone, password);
+        }
 
 
     }

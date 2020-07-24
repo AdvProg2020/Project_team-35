@@ -46,5 +46,12 @@ public class CustomerSupportPage implements Initializable {
     }
 
     public void startChat(MouseEvent mouseEvent) {
+        Supporter selected = onlineSupportersTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            
+        }
+        else {
+            actionInfo.setText("Not selected any supporter.");
+        }
     }
 }
