@@ -22,6 +22,7 @@ public class CustomerChatPage implements Initializable {
 
     public void sendClick(MouseEvent mouseEvent) throws IOException {
         Main.sendMessageToServer("MRequestsClientChat:" + sendArea.getText());
+        receiveArea.setText(receiveArea.getText() + "\n    " + sendArea.getText());
 //        String response = Main.getMessageFromServer();
 //        actionInfo.setText(response);
     }
