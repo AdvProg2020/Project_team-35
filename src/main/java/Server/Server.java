@@ -4,6 +4,7 @@ import Controller.*;
 import Controller.Exceptions.*;
 import Main.Main;
 import Model.*;
+import sun.misc.Queue;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -24,6 +25,8 @@ public class Server {
     private static HashMap<Account, Supporter> activeChats = new HashMap<>();
     private static ArrayList<Supporter> onlineSupporters = new ArrayList<>();
     private static HashMap<Socket,Product> onlineProducts = new HashMap<>();
+    private static HashMap<Socket,Product> productsPageOnlineProduct = new HashMap<>();
+    private static Queue<String> listOfIds = new Queue<>();
     private static DataInputStream dataInputStreamBank;
     private static DataOutputStream dataOutputStreamBank;
     private static String bankAccountID;
@@ -38,6 +41,7 @@ public class Server {
             onlineAccounts.put(socket, null);
             onlineAuction.put(socket,null);
             onlineProducts.put(socket,null);
+            productsPageOnlineProduct.put(socket,null);
             System.out.println("new client connected to server");
             new handle(new DataInputStream(new BufferedInputStream(socket.getInputStream()))
                     , new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())), socket,dataOutputStreamBank,dataInputStreamBank).start();
@@ -130,11 +134,6 @@ public class Server {
                     }else if (input.startsWith("API")){
                         String response = sendAndGetMessageFromBankAPI(input.substring(input.indexOf(",")+1));
                         Account account = onlineAccounts.get(socket);
-                        System.out.println(account.getUsername());
-                        System.out.println(Manager.getAllManagers().size());
-                        if (account instanceof Manager && Manager.getAllManagers().size()==1){
-                            bankAccountID = response;
-                        }
                         dataOutputStream.writeUTF(response);
                         dataOutputStream.flush();
                     }
@@ -172,6 +171,32 @@ public class Server {
                     }else if (input.startsWith("getShopAccountID")){
                        dataOutputStream.writeUTF(bankAccountID);
                        dataOutputStream.flush();
+                    }else if (input.startsWith("GetOnlineProductOfProductsPage")){
+                        int id = Integer.parseInt(input.substring(input.indexOf(",")+1));
+                        Product product = Product.getProductWithId(id);
+                        productsPageOnlineProduct.put(socket,product);
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream()) ;
+                        objectOutputStream.writeObject("S");
+                        objectOutputStream.flush();
+                    }else if (input.startsWith("GetProductForProductPage")){
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                        objectOutputStream.writeObject(productsPageOnlineProduct.get(socket));
+                        objectOutputStream.flush();
+                    }else if (input.startsWith("compare")){
+                        String id = input.substring(input.indexOf("-")+1);
+                        String productID = input.substring(input.indexOf(",")+1,input.indexOf("-"));
+                        Product product = Product.getProductWithId(Integer.parseInt(productID));
+                        StringBuilder text = ProductBoss.compare(id,product);
+                        dataOutputStream.writeUTF(String.valueOf(text));
+                        dataOutputStream.flush();
+                    }else if (input.startsWith("AddToCart")){
+                        int productID = Integer.parseInt(input.substring(input.indexOf(",")+1),input.indexOf("-"));
+                        int numberOfAdding = Integer.parseInt(input.substring(input.indexOf("-")+1));
+                        Customer customer = (Customer) onlineAccounts.get(socket);
+                        Product product = Product.getProductWithId(productID);
+                        customer.getListOFProductsAtCart().put(product,numberOfAdding);
+                        dataOutputStream.writeUTF("s");
+                        dataOutputStream.flush();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -251,7 +276,7 @@ public class Server {
             String destID="";
             String description="";
             String receiptType = "";
-            Matcher matcher = getMatcher(input,"\\{(\\w+),(\\.+))\\}");
+            Matcher matcher = getMatcher(input,"\\{(\\w+),(\\w+))\\}");
             while (matcher.find()){
                 String key = matcher.group(1);
                 String value = matcher.group(2);
@@ -491,9 +516,11 @@ public class Server {
                 return;
             }
             int i =0;
-            for (Account value : onlineAccounts.values()) {
-                if (value.equals(account1))
-                    i++;
+            if (onlineAccounts.size()!=0 && account1!=null) {
+                for (Account value : onlineAccounts.values()) {
+                    if (value.getUsername().equalsIgnoreCase(account1.getUsername()))
+                        i++;
+                }
             }
             if (i>1){
                 dataOutputStream.writeUTF("first logout");
@@ -566,6 +593,9 @@ public class Server {
                     }else if (type.equalsIgnoreCase("manager")){
                         Manager manager = (Manager) Account.getAccountWithUsername(username);
                         manager.setNumberOfBankAccount(numberOfAccount);
+                        if (Manager.getAllManagers().size()==1){
+                            bankAccountID = numberOfAccount;
+                        }
                     }
                 }
                 dataOutputStream.writeUTF("S");
