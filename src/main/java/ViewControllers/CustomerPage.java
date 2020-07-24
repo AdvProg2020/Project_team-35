@@ -165,4 +165,8 @@ public class CustomerPage implements Initializable {
 
     public void enterToAnAuction(MouseEvent mouseEvent) {
     }
+
+    public void goToSupportPage(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("CustomerSupportPage", "Online Chat", false);
+    }
 }

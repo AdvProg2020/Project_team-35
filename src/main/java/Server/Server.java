@@ -19,6 +19,8 @@ import java.util.regex.Pattern;
 public class Server {
 
     private static HashMap<Socket, Account> onlineAccounts = new HashMap<>();
+    private static HashMap<Account, Supporter> activeChats = new HashMap<>();
+    private static ArrayList<Supporter> onlineSupporters = new ArrayList<>();
     private static DataInputStream dataInputStreamBank;
     private static DataOutputStream dataOutputStreamBank;
 
@@ -499,7 +501,9 @@ public class Server {
             } else if (requestText.equalsIgnoreCase("GetUncheckedRequests")) {
                 sendObjectToClient(Manager.getNewRequests());
             }
-
+            else if (requestText.equalsIgnoreCase("GetOnlineSupporters")) {
+                sendObjectToClient(onlineSupporters);
+            }
         }
 
         private void handleManagerRequestsNewManager(String input) throws IOException, ClassNotFoundException {

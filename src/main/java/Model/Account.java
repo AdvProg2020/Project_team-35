@@ -1,7 +1,6 @@
 package Model;
 
 import Controller.ManagerBoss;
-import com.sun.corba.se.impl.ior.ObjectIdImpl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -61,7 +60,9 @@ public abstract class Account implements Serializable {
         else if (this instanceof Customer){
            // type.set("Customer");
             type.set(("Customer"));
-
+        }
+        else if (this instanceof Supporter) {
+            type.set(("Supporter"));
         }
     }
 

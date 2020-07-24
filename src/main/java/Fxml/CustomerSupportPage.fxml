@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane stylesheets="@../Resources/styles.css" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.CustomerSupportPage">
+   <children>
+      <TableView fx:id="onlineSupportersTable" layoutX="59.0" layoutY="48.0" prefHeight="252.0" prefWidth="374.0">
+        <columns>
+          <TableColumn fx:id="supportersUserNames" prefWidth="366.1999816894531" text="username" />
+        </columns>
+      </TableView>
+      <Button onMouseClicked="#back" layoutX="50.0" layoutY="522.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="103.0" text="Back" />
+      <Button onMouseClicked="#startChat" layoutX="511.0" layoutY="404.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="103.0" text="StartChat" />
+      <Label fx:id="actionInfo" layoutX="519.0" layoutY="171.0" prefHeight="39.0" prefWidth="265.0" text="Label" />
+   </children>
+</AnchorPane>
