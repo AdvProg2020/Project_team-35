@@ -527,8 +527,8 @@ public class Server {
                 if (activeChats.containsKey(sender)) {
                     Supporter supporter = activeChats.get(sender);
                     Socket supporterSocket = getSocketWithSupporter(supporter);
-                    DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-                    stream.writeUTF(supporter.getUsername() + " : " + message);
+                    DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(supporterSocket.getOutputStream()));
+                    stream.writeUTF(sender.getUsername() + " : " + message);
                     stream.flush();
                     sendMessageToClient("Successful :)");
                 }
