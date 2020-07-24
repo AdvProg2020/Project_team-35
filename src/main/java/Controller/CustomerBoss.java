@@ -105,10 +105,9 @@ public class CustomerBoss {
         Boss.removeExpiredOffsAndDiscountCodes();
         ArrayList<Product> products = new ArrayList<>();
         Set <Seller> sellersOfCart = new HashSet<>();
-        if (customer.getMoney() < customer.getPaymentAmount())
+        if (customer.getPocket() < customer.getPaymentAmount())
             return false;
         else {
-            customer.setMoney(customer.getMoney() - customer.getPaymentAmount());
             for (Seller seller : Seller.getAllSellers()) {
                 for (Product product : customer.cart.keySet()) {
                     if (product.getSeller() == seller) {

@@ -24,9 +24,9 @@ public class BuyLog extends Log implements Serializable {
 
     }
     public void reduceMoneyOfCustomerPocket() throws NoMoneyInCustomerPocket {
-        double result = customer.getMoney()- purchaseAmount;
+        double result = customer.getPocket()- purchaseAmount;
         if (result>0)
-        customer.setMoney(result);
+        customer.setPocket(result);
         else {
             throw new NoMoneyInCustomerPocket("no money");
         }
