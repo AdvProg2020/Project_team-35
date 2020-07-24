@@ -607,24 +607,24 @@ public class Server {
                     DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(supporterSocket.getOutputStream()));
                     stream.writeUTF(sender.getUsername() + " : " + message);
                     stream.flush();
-                    sendMessageToClient("Successful :)");
+//                    sendMessageToClient("Successful :)");
                 }
                 else {
-                    sendMessageToClient("Error :( Not Connected");
+//                    sendMessageToClient("Error :( Not Connected");
                 }
             }
             else if (requestText.startsWith("SupporterChat:")) {
                 String destinationUsername = requestText.substring(requestText.indexOf(':') + 1, requestText.indexOf('`'));
-                String message = requestText.substring(requestText.indexOf('`'));
+                String message = requestText.substring(requestText.indexOf('`') + 1);
                 if (activeChats.containsKey(Account.getAccountWithUsername(destinationUsername))) {
                     Socket destSocket = getSocketWithAccount(Account.getAccountWithUsername(destinationUsername));
                     DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(destSocket.getOutputStream()));
                     stream.writeUTF(message);
                     stream.flush();
-                    sendMessageToClient("Successful");
+//                    sendMessageToClient("Successful");
                 }
                 else {
-                    sendMessageToClient("Username is Not active.");
+//                    sendMessageToClient("Username is Not active.");
                 }
             }
             else if (requestText.startsWith("StartChatWith:")) {

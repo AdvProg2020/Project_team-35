@@ -25,11 +25,11 @@ public class SupporterPage implements Initializable {
 
     public void sendClick(MouseEvent mouseEvent) throws IOException {
         Main.sendMessageToServer("MRequestsSupporterChat:" + destUsername.getText() + "`" + sendArea.getText());
-        String response = Main.getMessageFromServer();
-        actionInfo.setText(response);
-        if (response.equalsIgnoreCase("Successful")) {
-            receiveArea.setText(receiveArea.getText() + "\n      " + sendArea.getText());
-        }
+//        String response = Main.getMessageFromServer();
+//        actionInfo.setText(response);
+//        if (response.equalsIgnoreCase("Successful")) {
+//            receiveArea.setText(receiveArea.getText() + "\n      " + sendArea.getText());
+//        }
 
     }
 
