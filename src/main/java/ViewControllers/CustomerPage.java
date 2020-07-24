@@ -174,7 +174,7 @@ public class CustomerPage implements Initializable {
         }
         String request = "enterToAuction,"+entranceAuctionId.getText();
         String response = Main.sendAndGetMessage(request);
-        if (request.equalsIgnoreCase("S")){
+        if (response.equalsIgnoreCase("S")){
             Main.setRoot("AuctionPage","auction page",false);
         }else {
             enterToAuctionProblem.setTextFill(Paint.valueOf("red"));

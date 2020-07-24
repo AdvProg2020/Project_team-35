@@ -315,7 +315,7 @@ public class Server {
             Auction auction = onlineAuction.get(socket);
             try {
                 auction.addAmountOfOfferedMoney((Customer) onlineAccounts.get(socket), extra);
-                dataOutputStream.writeUTF("S");
+                dataOutputStream.writeUTF("S,"+auction.howManyCustomerOffered((Customer) onlineAccounts.get(socket)));
             } catch (NotEnoughMoney notEnoughMoney) {
                 dataOutputStream.writeUTF(notEnoughMoney.getMessage());
             } finally {

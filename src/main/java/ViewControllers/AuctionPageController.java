@@ -29,12 +29,14 @@ public class AuctionPageController  {
         }
         String request = "addMoneyToAuction,"+extraAmount.getText();
         String response = Main.sendAndGetMessage(request);
-        if (response.equalsIgnoreCase("S")){
+        if (response.startsWith("S")){
             problem.setTextFill(Paint.valueOf("green"));
+            problem.setText("successful now you have "+response.substring(response.indexOf(",")+1));
         }else {
             problem.setTextFill(Paint.valueOf("red"));
+            problem.setText(response);
         }
-        problem.setText(response);
+
 
 
     }

@@ -40,7 +40,7 @@ public class ChatRoomController implements Initializable {
     }
     private void update() throws IOException, ClassNotFoundException {
         ArrayList<String> listOfMessages = (ArrayList<String>) Main.sendAndGetObjectFromServer("GetListOfMessagesInAuctionChatRoom");
-
+        list.getItems().clear();
         for (String message : listOfMessages) {
             list.getItems().add(message);
         }

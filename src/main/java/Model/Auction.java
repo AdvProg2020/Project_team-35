@@ -140,4 +140,12 @@ public class Auction implements Serializable {
     public void setListOfMessages(ArrayList<String> listOfMessages) {
         this.listOfMessages = listOfMessages;
     }
+    public double howManyCustomerOffered(Customer customer){
+        for (Customer customer1 : moneyWhichAreOffered.keySet()) {
+            if (customer1.equals(customer)){
+                return moneyWhichAreOffered.get(customer);
+            }
+        }
+        return 0.0;
+    }
 }
