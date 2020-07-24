@@ -1,8 +1,11 @@
 package Model;
 
 import Controller.NotEnoughMoney;
+import Main.Main;
+import javafx.scene.paint.Paint;
 import sun.nio.cs.ext.ISO2022_KR;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,10 +83,11 @@ public class Auction implements Serializable {
         moneyWhichAreOffered.put(customer,offeredMoney);
         listOfCustomersWhoAreInAuction.add(customer);
     }
-    public Customer finishAuction(){
+    public Customer finishAuction() {
         int numberOfMaximum = 0;
         double max = 0;
         Customer customerOfMax = null;
+
         for (Customer customer : moneyWhichAreOffered.keySet()) {
             if (max<moneyWhichAreOffered.get(customer)){
                 max = moneyWhichAreOffered.get(customer);
@@ -92,16 +96,25 @@ public class Auction implements Serializable {
                 numberOfMaximum++;
             }
         }
-        Auction.getAllActiveAuction().remove(this);
         if (numberOfMaximum==1){
             payment(customerOfMax,moneyWhichAreOffered.get(customerOfMax));
             return customerOfMax;
         }else {
             return null;
         }
+
     }
     public void payment(Customer customer , Double money){
-
+        product.setInventory(product.getInventory()-1);
+        if (product.getInventory()==0){
+            seller.getSalableProducts().remove(product);
+        }
+        String sellerBankID = seller.getNumberOfBankAccount();
+        String CustomerBankID = customer.getNumberOfBankAccount();
+        double moneyToSeller = money;
+        seller.setPocket(seller.getPocket()+moneyToSeller);
+        customer.setPocket(customer.getPocket()-moneyToSeller);
+        customer.getAuctionProducts().add(product);
     }
 
     public static ArrayList<Auction> getAllActiveAuction() {

@@ -16,6 +16,7 @@ public class Customer extends Account implements Serializable {
     private double paymentAmount = 0;
     private ArrayList<Auction> auctions;
     private double pocket;
+    private ArrayList<Product> auctionProducts;
 
 
     /**
@@ -37,6 +38,7 @@ public class Customer extends Account implements Serializable {
         money =0;
         pocket = 0;
         auctions = new ArrayList<>();
+        auctionProducts = new ArrayList<>();
 
     }
 
@@ -195,6 +197,8 @@ public class Customer extends Account implements Serializable {
         return cart;
     }
 
-
+    public ArrayList<Product> getAuctionProducts() {
+        return auctionProducts;
+    }
 }
 
