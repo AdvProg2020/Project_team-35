@@ -30,6 +30,8 @@ public class ChargePocketPage {
             else {
                 customer.setMoney(customer.getMoney() - amount);
                 customer.setPocket(customer.getPocket() + amount);
+                actionInfo.setTextFill(Color.GREEN);
+                actionInfo.setText("Pocket Successfully Charged :)");
             }
         }
         else setActionErrorInfo("Invalid Input Format!");
