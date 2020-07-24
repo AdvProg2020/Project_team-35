@@ -7,8 +7,8 @@ public class Manager extends Account implements Serializable {
     public static ArrayList<Manager> allManagers = new ArrayList<Manager>();
     public static ArrayList<Request> newRequests = new ArrayList<>();
     public static ArrayList<Request> checkedRequests = new ArrayList<>();
+    private static double commission;
     private static double minimumMoneyInPocket;
-
     /**
      * a constructor for manager
      *
@@ -86,6 +86,14 @@ public class Manager extends Account implements Serializable {
 
     public static ArrayList<Manager> getAllManagers() {
         return allManagers;
+    }
+
+    public static void setCommission(double commission) {
+        Manager.commission = commission;
+    }
+
+    public static double getCommission() {
+        return commission;
     }
 
     public static double getMinimumMoneyInPocket() {

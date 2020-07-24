@@ -2,6 +2,8 @@ package ViewControllers;
 
 import Main.Main;
 import Model.Account;
+import Model.Customer;
+import Model.Manager;
 import Model.Seller;
 import MusicPlayer.MusicPlayer;
 import javafx.scene.control.Label;
@@ -13,11 +15,16 @@ import java.io.IOException;
 public class MainMenuController {
     public Label problem;
 
-    public void userPageEntrance(MouseEvent mouseEvent) throws IOException {
+    public void userPageEntrance(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
-        if (Account.isIsThereOnlineUser()) {
-          if (Account.getOnlineAccount() instanceof Seller){
+        Account account = (Account) Main.sendAndGetObjectFromServer("GetOnlineAccount");
+        if (account!=null) {
+          if (account instanceof Seller){
               Main.setRoot("SellerPage","seller page", false);
+          }else if (account instanceof Manager){
+              Main.setRoot("ManagerPage","manager page", false);
+          }else if (account instanceof Customer){
+              Main.setRoot("CustomerPage","customer page", false);
           }
         } else {
             Main.setRoot("UserPage", "user page", false);

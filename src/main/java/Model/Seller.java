@@ -14,6 +14,7 @@ public class Seller extends Account implements Serializable {
     private String companyName;
     private Double money;
     private ArrayList<Product> salableProducts;
+    private double pocket;
 
 
 
@@ -34,6 +35,7 @@ public class Seller extends Account implements Serializable {
         sellLogs = new ArrayList<SellLog>();
         money = 0.0;
         salableProducts = new ArrayList<Product>();
+        pocket = 0.0;
 
     }
 
@@ -178,5 +180,11 @@ public class Seller extends Account implements Serializable {
         }
     }
 
+    public double getPocket() {
+        return pocket;
+    }
 
+    public void setPocket(double pocket) {
+        this.pocket = pocket;
+    }
 }

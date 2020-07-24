@@ -1,17 +1,15 @@
 package Controller;
 
-import Model.Auction;
-import Model.DiscountCode;
-import Model.Off;
-import Model.Product;
+import Model.*;
 import javafx.scene.image.Image;
 
 import java.awt.*;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Boss {
-    public static boolean removeExpiredOffsAndDiscountCodes() {
+    public static boolean removeExpiredOffsAndDiscountCodes()  {
 //        Image offImage = new Image("./Resources/off.jpg");
 //        Image notImage = new Image("./Resources/not.jpg");
 //        for (Product product : Product.getAllProducts()) {
@@ -31,6 +29,7 @@ public class Boss {
             Auction auction = Auction.getAllActiveAuction().get(i);
             if (auction.getFinalTime().equals(date)){
                 auction.finishAuction();
+                Auction.getAllActiveAuction().remove(auction);
                 i--;
             }
         }

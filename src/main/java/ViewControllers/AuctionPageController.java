@@ -1,15 +1,12 @@
 package ViewControllers;
 
 import Main.Main;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class AuctionPageController  {
     public TextField extraAmount;
@@ -29,12 +26,14 @@ public class AuctionPageController  {
         }
         String request = "addMoneyToAuction,"+extraAmount.getText();
         String response = Main.sendAndGetMessage(request);
-        if (response.equalsIgnoreCase("S")){
+        if (response.startsWith("S")){
             problem.setTextFill(Paint.valueOf("green"));
+            problem.setText("successful now you have "+response.substring(response.indexOf(",")+1));
         }else {
             problem.setTextFill(Paint.valueOf("red"));
+            problem.setText(response);
         }
-        problem.setText(response);
+
 
 
     }
