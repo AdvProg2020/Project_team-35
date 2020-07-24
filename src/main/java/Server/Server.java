@@ -521,7 +521,7 @@ public class Server {
                 HashMap<String, String> data = (HashMap<String, String>) readObjectFromClient();
                 AccountBoss.makeAccount(data);
             }
-            else if (requestText.startsWith("Chat:")) {
+            else if (requestText.startsWith("ClientChat:")) {
                 String message = requestText.substring(requestText.indexOf(':') + 1);
                 Account sender = onlineAccounts.get(socket);
                 if (activeChats.containsKey(sender)) {
@@ -534,6 +534,20 @@ public class Server {
                 }
                 else {
                     sendMessageToClient("Error :( Not Connected");
+                }
+            }
+            else if (requestText.startsWith("SupporterChat:")) {
+                String destinationUsername = requestText.substring(requestText.indexOf(':') + 1, requestText.indexOf('`'));
+                String message = requestText.substring(requestText.indexOf('`'));
+                if (activeChats.containsKey(Account.getAccountWithUsername(destinationUsername))) {
+                    Socket destSocket = getSocketWithAccount(Account.getAccountWithUsername(destinationUsername));
+                    DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(destSocket.getOutputStream()));
+                    stream.writeUTF(message);
+                    stream.flush();
+                    sendMessageToClient("Successful");
+                }
+                else {
+                    sendMessageToClient("Username is Not active.");
                 }
             }
             else if (requestText.startsWith("StartChatWith:")) {
@@ -552,11 +566,23 @@ public class Server {
                     sendMessageToClient("Supporter is not available now :(");
                 }
             }
+            else if (requestText.equalsIgnoreCase("CustomerDisconnect")) {
+                activeChats.remove(onlineAccounts.get(socket));
+                sendMessageToClient("Successful");
+            }
         }
 
         private Socket getSocketWithSupporter(Supporter supporter) {
             for (Socket socket1 : onlineAccounts.keySet()) {
                 if (onlineAccounts.get(socket1).equals(supporter)) {
+                    return socket1;
+                }
+            }
+            return null;
+        }
+        private Socket getSocketWithAccount(Account account) {
+            for (Socket socket1 : onlineAccounts.keySet()) {
+                if (onlineAccounts.get(socket1).equals(account)) {
                     return socket1;
                 }
             }
