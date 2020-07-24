@@ -32,9 +32,12 @@ public class CustomerPage implements Initializable {
     public Label information;
     public Label balanceLabel;
     public TextField auctionId;
-    public TextField EnteranceAuctionId;
+    public TextField entranceAuctionId;
     public Label addToAuctionProblem;
     public TextField basicPrice;
+    public Label enterToAuctionProblem;
+    public Label chargePocketProblem;
+    public TextField amount;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -163,10 +166,30 @@ public class CustomerPage implements Initializable {
 
     }
 
-    public void enterToAnAuction(MouseEvent mouseEvent) {
+    public void enterToAnAuction(MouseEvent mouseEvent) throws IOException {
+        if (!entranceAuctionId.getText().matches("^\\d+$")){
+            enterToAuctionProblem.setText("invalid format of number");
+            enterToAuctionProblem.setTextFill(Paint.valueOf("red"));
+            return;
+        }
+        String request = "enterToAuction,"+entranceAuctionId.getText();
+        String response = Main.sendAndGetMessage(request);
+        if (request.equalsIgnoreCase("S")){
+            Main.setRoot("AuctionPage","auction page",false);
+        }else {
+            enterToAuctionProblem.setTextFill(Paint.valueOf("red"));
+            enterToAuctionProblem.setText(response);
+        }
+
     }
 
     public void goToSupportPage(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("CustomerSupportPage", "Online Chat", false);
     }
+
+    public void mainMenu(MouseEvent mouseEvent) throws IOException {
+        Main.setRoot("MainMenu","main menu",false);
+    }
+
+
 }

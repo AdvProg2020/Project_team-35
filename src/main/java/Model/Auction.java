@@ -1,5 +1,8 @@
 package Model;
 
+import Controller.NotEnoughMoney;
+import sun.nio.cs.ext.ISO2022_KR;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,8 +19,10 @@ public class Auction implements Serializable {
     private ArrayList<Customer> listOfCustomersWhoAreInAuction;
     private Double basicPrice;
     private Product product;
+    private ArrayList<String> listOfMessages;
     public Auction(Seller seller,Product product,Double basicPrice, Date startTime, Date finalTime) {
         this.seller = seller;
+        listOfMessages = new ArrayList<>();
         this.startTime = startTime;
         this.finalTime = finalTime;
         this.product = product;
@@ -65,7 +70,10 @@ public class Auction implements Serializable {
         return product;
     }
 
-    public void addAmountOfOfferedMoney(Customer customer , Double extraAmount){
+    public void addAmountOfOfferedMoney(Customer customer , Double extraAmount) throws NotEnoughMoney {
+        if (moneyWhichAreOffered.get(customer)+extraAmount>customer.getPocket()){
+            throw new NotEnoughMoney("not enough money");
+        }
         moneyWhichAreOffered.put(customer,moneyWhichAreOffered.get(customer)+extraAmount);
     }
     public void addCustomerToAuction(Customer customer , Double offeredMoney){
@@ -123,5 +131,13 @@ public class Auction implements Serializable {
                 return auction;
         }
         return null;
+    }
+
+    public ArrayList<String> getListOfMessages() {
+        return listOfMessages;
+    }
+
+    public void setListOfMessages(ArrayList<String> listOfMessages) {
+        this.listOfMessages = listOfMessages;
     }
 }

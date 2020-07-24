@@ -138,6 +138,19 @@ public class ProductBoss {
         if (auction.getListOfCustomersWhoAreInAuction().contains(customer)){
             throw new YouAreInThisAuction("you are already in this auction");
         }
+        if (basicMoney> customer.getPocket()){
+            throw new NotEnoughMoney("your pocket is not enough for participate in auction");
+        }
         auction.addCustomerToAuction(customer,basicMoney);
+    }
+    public static boolean isThisCustomerInThisAuction(int auctionID , Customer customer){
+        Auction auction = Auction.getAuctionByID(auctionID);
+        if (auction==null){
+            return false;
+        }
+        if (auction.getListOfCustomersWhoAreInAuction().contains(customer))
+            return true;
+        else
+            return false;
     }
 }

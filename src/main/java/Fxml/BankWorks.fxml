@@ -29,5 +29,7 @@
       <Button layoutX="667.0" layoutY="330.0" mnemonicParsing="false" onMouseClicked="#pay" text="pay" />
       <TextField fx:id="billID" layoutX="633.0" layoutY="386.0" promptText="bill id" />
       <Label fx:id="paymentResult" layoutX="631.0" layoutY="437.0" prefHeight="18.0" prefWidth="149.0" />
+      <Button layoutX="947.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#getShopAccountID" text="shop account" />
+      <Label fx:id="shopAccountID" layoutX="804.0" layoutY="411.0" prefHeight="18.0" prefWidth="618.0" />
    </children>
 </AnchorPane>

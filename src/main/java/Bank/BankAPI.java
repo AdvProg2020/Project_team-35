@@ -48,7 +48,7 @@ public class BankAPI {
                 try {
                     String response = inputStream.readUTF();
                     System.out.println(response);
-                    if (request.startsWith("create_account")){
+                    if (request.startsWith("create_account") || request.startsWith("get_token") || request.startsWith("create_receipt") || request.startsWith("pay") || request.startsWith("get_balance")){
                         dataOutputStream.writeUTF(response);
                         dataOutputStream.flush();
                     }

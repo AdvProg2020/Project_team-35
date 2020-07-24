@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,8 +15,6 @@ public class Product implements Serializable {
     private String name;
     private String startDate;
     private String finalDate;
-
-
     private double averageOfProduct;
     private int reviewNumber;
     private String description;
@@ -29,11 +28,11 @@ public class Product implements Serializable {
     private HashMap<String, String> specialAttributes;
     private static Product onlineProduct;
     private double priceWithOffEffect;
-
     private static Product whoWantsPic;
     private String daysRemind;
     private ArrayList<Customer> whoBoughtThisGood;
     private String sellerName;
+    private File file;
 
 
 
@@ -458,5 +457,11 @@ public class Product implements Serializable {
 return null;
     }
 
+    public File getFile() {
+        return file;
+    }
 
+    public void setFile(File file) {
+        this.file = file;
+    }
 }

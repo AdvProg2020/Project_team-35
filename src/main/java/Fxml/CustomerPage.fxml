@@ -31,9 +31,12 @@
       <Button layoutX="584.0" layoutY="426.0" mnemonicParsing="false" onMouseClicked="#addToAnAuction" text="add to an Auction" />
       <TextField fx:id="auctionId" layoutX="751.0" layoutY="433.0" promptText="auction id" />
       <Button layoutX="587.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#enterToAnAuction" text="enter to an auction" />
-      <TextField fx:id="EnteranceAuctionId" layoutX="761.0" layoutY="361.0" promptText="auction id" />
+      <TextField fx:id="entranceAuctionId" layoutX="761.0" layoutY="361.0" promptText="auction id" />
       <Label fx:id="addToAuctionProblem" layoutX="973.0" layoutY="435.0" prefHeight="18.0" prefWidth="123.0" />
       <TextField fx:id="basicPrice" layoutX="751.0" layoutY="459.0" promptText="basic price" />
-      <Button onMouseClicked="#goToSupportPage" layoutX="587.0" layoutY="257.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="202.0" text="Support" />
+      <Label fx:id="enterToAuctionProblem" layoutX="963.0" layoutY="365.0" prefHeight="18.0" prefWidth="133.0" />
+      <Button layoutX="587.0" layoutY="257.0" mnemonicParsing="false" onMouseClicked="#goToSupportPage" prefHeight="38.0" prefWidth="202.0" text="Support" />
+      <Button layoutX="933.0" layoutY="199.0" mnemonicParsing="false" onMouseClicked="#mainMenu" text="MAin menu" />
+
     </children>
 </AnchorPane>

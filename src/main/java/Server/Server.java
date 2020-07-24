@@ -2,6 +2,7 @@ package Server;
 
 import Controller.*;
 import Controller.Exceptions.*;
+import Main.Main;
 import Model.*;
 
 import java.io.*;
@@ -19,10 +20,13 @@ import java.util.regex.Pattern;
 public class Server {
 
     private static HashMap<Socket, Account> onlineAccounts = new HashMap<>();
+    private static HashMap<Socket,Auction> onlineAuction = new HashMap<>();
     private static HashMap<Account, Supporter> activeChats = new HashMap<>();
     private static ArrayList<Supporter> onlineSupporters = new ArrayList<>();
+    private static HashMap<Socket,Product> onlineProducts = new HashMap<>();
     private static DataInputStream dataInputStreamBank;
     private static DataOutputStream dataOutputStreamBank;
+    private static String bankAccountID;
 
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8888);
@@ -32,6 +36,8 @@ public class Server {
         while (true) {
             socket = serverSocket.accept();
             onlineAccounts.put(socket, null);
+            onlineAuction.put(socket,null);
+            onlineProducts.put(socket,null);
             System.out.println("new client connected to server");
             new handle(new DataInputStream(new BufferedInputStream(socket.getInputStream()))
                     , new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())), socket,dataOutputStreamBank,dataInputStreamBank).start();
@@ -118,6 +124,12 @@ public class Server {
                         dataOutputStream.flush();
                     }else if (input.startsWith("API")){
                         String response = sendAndGetMessageFromBankAPI(input.substring(input.indexOf(",")+1));
+                        Account account = onlineAccounts.get(socket);
+                        System.out.println(account.getUsername());
+                        System.out.println(Manager.getAllManagers().size());
+                        if (account instanceof Manager && Manager.getAllManagers().size()==1){
+                            bankAccountID = response;
+                        }
                         dataOutputStream.writeUTF(response);
                         dataOutputStream.flush();
                     }
@@ -142,13 +154,76 @@ public class Server {
                         dataOutputStream.flush();
                     }else if (input.startsWith("addMeToAuction")){
                         addCustomerToAuction(input);
-
-
+                    }else if (input.startsWith("enterToAuction")){
+                        enterToAnAuction(input);
+                    }else if (input.startsWith("addMoneyToAuction")){
+                        addAmountOfMoneyInAuction(input);
+                    }else if (input.startsWith("GetListOfMessagesInAuctionChatRoom")){
+                        getListOfAuctionChatRoomMessages();
+                    }else if (input.startsWith("sendMessageInAuctionChatRoom")){
+                        sendMessageFromClientToAuction(input);
+                    }else if (input.startsWith("addFile")){
+                        addFile(input);
+                    }else if (input.startsWith("getShopAccountID")){
+                       dataOutputStream.writeUTF(bankAccountID);
+                       dataOutputStream.flush();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private void addFile(String input) throws IOException {
+            String address = input.substring(input.indexOf(",")+1);
+            Product product = onlineProducts.get(socket);
+            File file = new File(address);
+            product.setFile(file);
+            dataOutputStream.writeUTF("S");
+            dataOutputStream.flush();
+        }
+
+        private void sendMessageFromClientToAuction(String input) throws IOException {
+            String text = input.substring(input.indexOf(",")+1);
+            String username = onlineAccounts.get(socket).getUsername();
+            String completeText = username+"  :  "+text;
+            Auction auction = onlineAuction.get(socket);
+            auction.getListOfMessages().add(completeText);
+            dataOutputStream.writeUTF("S");
+            dataOutputStream.flush();
+        }
+
+        private void getListOfAuctionChatRoomMessages() throws IOException {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            Auction auction = onlineAuction.get(socket);
+            objectOutputStream.writeObject(auction.getListOfMessages());
+            objectOutputStream.flush();
+        }
+
+        private void addAmountOfMoneyInAuction(String input) throws IOException {
+            double extra = Double.parseDouble(input.substring(input.indexOf(",")+1));
+            Auction auction = onlineAuction.get(socket);
+            try {
+                auction.addAmountOfOfferedMoney((Customer)onlineAccounts.get(socket),extra);
+                dataOutputStream.writeUTF("S");
+            } catch (NotEnoughMoney notEnoughMoney) {
+                dataOutputStream.writeUTF(notEnoughMoney.getMessage());
+            }finally {
+                dataOutputStream.flush();
+            }
+        }
+
+        private void enterToAnAuction(String input) throws IOException {
+            int auctionID = Integer.parseInt(input.substring(input.indexOf(",")+1));
+            Customer customer = (Customer) onlineAccounts.get(socket);
+            if (ProductBoss.isThisCustomerInThisAuction(auctionID,customer)){
+                dataOutputStream.writeUTF("S");
+                Auction auction = Auction.getAuctionByID(auctionID);
+                onlineAuction.put(socket,auction);
+            }else {
+                dataOutputStream.writeUTF("this is not available");
+            }
+            dataOutputStream.flush();
         }
 
         private void addCustomerToAuction(String input) throws IOException {
@@ -209,6 +284,7 @@ public class Server {
                 Account account = Account.getAccountWithUsername(username);
                 account.setToken(response);
             }
+            System.out.println(response);
             dataOutputStream.writeUTF(response);
             dataOutputStream.flush();
         }
@@ -321,7 +397,8 @@ public class Server {
                 attributes.put(key1,value1);
             }
             Seller seller = (Seller) onlineAccounts.get(socket);
-            SellerBoss.addRequestProduct(name,price,inventory,attributes,company,category,seller,description);
+      Product product =  SellerBoss.addRequestProduct(name,price,inventory,attributes,company,category,seller,description);
+            onlineProducts.put(socket,product);
             dataOutputStream.writeUTF("S");
             dataOutputStream.flush();
         }

@@ -68,7 +68,7 @@ public class SellerBoss {
         return category.getSpecialAttributes();
     }
 
-    public static boolean addRequestProduct(String name, String price, String inventory, HashMap<String, String> attributes, String company, String category1, Seller seller, String description) {
+    public static Product addRequestProduct(String name, String price, String inventory, HashMap<String, String> attributes, String company, String category1, Seller seller, String description) {
         Boss.removeExpiredOffsAndDiscountCodes();
         Category category = Category.getCategoryByName(category1);
         double productPrice = Double.parseDouble(price);
@@ -79,7 +79,7 @@ public class SellerBoss {
             category.getCategoryProducts().add(product);
         }
         AddProductRequest addProductRequest = new AddProductRequest(seller, product);
-        return true;
+        return product;
     }
 
     public static ArrayList<String> showBuyers(String id, Seller seller) throws ThisIsNotYours, NullProduct {
