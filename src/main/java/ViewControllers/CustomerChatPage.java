@@ -31,7 +31,7 @@ public class CustomerChatPage implements Initializable {
         Main.sendMessageToServer("MRequestsCustomerDisconnect");
     //should close the thread
         //        String response = Main.getMessageFromServer();
-//        Main.doBack();
+        Main.doBack();
     }
 
     @Override
@@ -69,11 +69,7 @@ public class CustomerChatPage implements Initializable {
                     e.printStackTrace();
                 }
             }
-            try {
-                Main.doBack(); //if gets endTread should be come here
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            System.out.println("customer thread ended");
 
         }
     }
