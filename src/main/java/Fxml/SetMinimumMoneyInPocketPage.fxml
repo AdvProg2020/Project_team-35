@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.SetMinimumMoneyInPocketPage">
+   <children>
+      <TextField fx:id="textField" layoutX="376.0" layoutY="275.0" promptText="MinimumNeededMoneyInPocket" />
+      <Button layoutX="424.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#confirmButtonClick" text="Confirm" />
+      <Button layoutX="434.0" layoutY="560.0" mnemonicParsing="false" onMouseClicked="#backButtonClick" text="Back" />
+      <Label fx:id="actionInfo" layoutX="375.0" layoutY="465.0" prefHeight="26.0" prefWidth="149.0" />
+   </children>
+</AnchorPane>

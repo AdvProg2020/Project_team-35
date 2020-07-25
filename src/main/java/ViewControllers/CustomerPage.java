@@ -56,7 +56,7 @@ public class CustomerPage implements Initializable {
         phoneNumberField.setText(onlineAccount.getPhoneNumber());
         emailField.setText(onlineAccount.getEmail());
         passwordField.setText(onlineAccount.getPassword());
-        balanceLabel.setText(String.valueOf(onlineAccount.getMoney()));
+        balanceLabel.setText(String.valueOf(onlineAccount.getPocket()));
 
     }
 
@@ -174,7 +174,7 @@ public class CustomerPage implements Initializable {
         }
         String request = "enterToAuction,"+entranceAuctionId.getText();
         String response = Main.sendAndGetMessage(request);
-        if (request.equalsIgnoreCase("S")){
+        if (response.equalsIgnoreCase("S")){
             Main.setRoot("AuctionPage","auction page",false);
         }else {
             enterToAuctionProblem.setTextFill(Paint.valueOf("red"));
@@ -189,9 +189,5 @@ public class CustomerPage implements Initializable {
 
     public void mainMenu(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("MainMenu","main menu",false);
-    }
-
-    public void chargePocketClick(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("ChargePocketPage", "Charge Pocket", false);
     }
 }
