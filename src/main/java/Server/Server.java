@@ -197,7 +197,7 @@ public class Server {
             for (Account active : actives) {
                 Socket socket = getSocketWithAccount(active);
                 DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-                stream.writeUTF("endThread");
+                stream.writeUTF("endThread1");
                 stream.flush();
                 activeChats.remove(active);
             }
