@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class UsersManagingPage implements Initializable {
@@ -31,6 +32,9 @@ public class UsersManagingPage implements Initializable {
     public TableColumn<Account, String> usernameCol;
     public TableColumn<Account, String> passwordCol;
     public TableColumn<Account, String> typeCol;
+    public Label isOnline;
+
+    private ArrayList<Account> onlineAccounts;
 
     private Account selectedAccount;
 
@@ -39,24 +43,41 @@ public class UsersManagingPage implements Initializable {
         if(usersTable.getSelectionModel().getSelectedItem() != null) {
             userInfo.setText(usersTable.getSelectionModel().getSelectedItem().getPersonalInfo());
             selectedAccount = usersTable.getSelectionModel().getSelectedItem();
+            if (checkOnline(selectedAccount)) {
+                isOnline.setText("ONLINE :)");
+            }
+            else {
+                isOnline.setText("OFFLINE :(");
+            }
         }
         else {
             userInfo.setText("Not Selected.");
         }
     }
 
-    public void removeUserClick(MouseEvent mouseEvent) {
+    public void removeUserClick(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
         MusicPlayer.getInstance().playButtonMusic();
         if (selectedAccount != null) {
-            try {
-                ManagerBoss.deleteAccountWithUsername(selectedAccount.getUsername());
+            Main.sendMessageToServer("MRequestsRemoveUser:" + selectedAccount.getUsername());
+            String response = Main.getMessageFromServer();
+            if (response.equalsIgnoreCase("successful")) {
                 actionInfo.setText("Successful :)");
                 actionInfo.setTextFill(Color.GREEN);
                 updateDataOnTheScreen();
-            } catch (Exception e) {
-                actionInfo.setTextFill(Color.RED);
-                actionInfo.setText(e.getMessage());
             }
+            else {
+                actionInfo.setText(response);
+                actionInfo.setTextFill(Color.RED);
+            }
+//            try {
+//                ManagerBoss.deleteAccountWithUsername(selectedAccount.getUsername());
+//                actionInfo.setText("Successful :)");
+//                actionInfo.setTextFill(Color.GREEN);
+//                updateDataOnTheScreen();
+//            } catch (Exception e) {
+//                actionInfo.setTextFill(Color.RED);
+//                actionInfo.setText(e.getMessage());
+//            }
         }
         else {
             actionInfo.setTextFill(Color.RED);
@@ -68,24 +89,43 @@ public class UsersManagingPage implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        updateDataOnTheScreen();
+        try {
+            updateDataOnTheScreen();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    private void updateDataOnTheScreen(){
+    private void updateDataOnTheScreen() throws IOException, ClassNotFoundException {
+        Main.sendMessageToServer("MRequestsGetAllAccounts");
+        ArrayList<Account> allAccounts = (ArrayList<Account>) Main.getObjectFromServer();
+        Main.sendMessageToServer("MRequestsGetOnlineAccounts");
+        onlineAccounts = (ArrayList<Account>) Main.getObjectFromServer();
         selectedAccount = null;
         observableList.clear();
         userInfo.setText("");
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("Username"));
         passwordCol.setCellValueFactory(new PropertyValueFactory<>("Password"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        observableList.addAll(Account.getAllAccounts());
+        observableList.addAll(allAccounts);
         usersTable.setItems(observableList);
-
     }
 
     public void backClick(MouseEvent mouseEvent) throws IOException {
         MusicPlayer.getInstance().playButtonMusic();
         Main.doBack();
+    }
+
+    private boolean checkOnline(Account account) {
+        for (Account onlineAccount : onlineAccounts) {
+            if (onlineAccount == null) {
+                continue;
+            }
+            if (account.getUsername().equalsIgnoreCase(onlineAccount.getUsername())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
