@@ -39,6 +39,7 @@ public class CustomerChatPage implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        isSupporterAlreadyActive = true;
         receiver = new Receiver();
         receiver.start();
     }
@@ -61,10 +62,12 @@ public class CustomerChatPage implements Initializable {
             while (true) {
                 try {
                     String message = dataInputStream.readUTF();
-                    if (message.equalsIgnoreCase("endThread")) {
+                    if (message.startsWith("endThread")) {
                         receiveArea.setDisable(true);
                         sendArea.setDisable(true);
-                        isSupporterAlreadyActive = false;
+                        if (message.equalsIgnoreCase("endThread1")) {
+                            isSupporterAlreadyActive = false;
+                        }
                         break;
                     }
                     receiveArea.setText(receiveArea.getText() + '\n' + message);
