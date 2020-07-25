@@ -30,9 +30,9 @@ public class Server {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8888);
         Socket socket;
-        new Manager("a", "a", "a", "a@a.a", "0", "a");
-        new Supporter("s", "a", "a", "a@a.a", "0", "s");
-        new Customer("c", "a", "a", "a@a.a", "0", "c");
+//        new Manager("a", "a", "a", "a@a.a", "0", "a");
+//        new Supporter("s", "a", "a", "a@a.a", "0", "s");
+//        new Customer("c", "a", "a", "a@a.a", "0", "c");
 
 
         connectToBankServer();
