@@ -63,7 +63,7 @@ public class SupporterPage implements Initializable {
             while (true) {
                 try {
                     String message = dataInputStream.readUTF();
-                    if (message.equalsIgnoreCase("endTread")) {
+                    if (message.equalsIgnoreCase("endThread")) {
                         break;
                     }
                     receiveArea.setText(receiveArea.getText() + '\n' + message);

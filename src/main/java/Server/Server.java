@@ -183,8 +183,7 @@ public class Server {
             if (account instanceof Supporter) {
                 onlineSupporters.remove(account);
                 removeSupporterActiveChat((Supporter) account);
-                dataOutputStream.writeUTF("endThread");
-                dataOutputStream.flush();
+                sendMessageToClient("endThread");
             }
             onlineAccounts.put(socket, null);
 
