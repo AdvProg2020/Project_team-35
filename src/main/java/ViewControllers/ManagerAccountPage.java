@@ -152,4 +152,6 @@ public class ManagerAccountPage implements Initializable {
     public void goToSetMinimumMoneyPage(MouseEvent mouseEvent) throws IOException {
         Main.setRoot("SetMinimumMoneyInPocketPage", "Set Minimum Money In Pocket", false);
     }
+
+
 }

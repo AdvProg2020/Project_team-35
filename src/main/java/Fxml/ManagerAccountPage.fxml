@@ -27,7 +27,7 @@
       <Button layoutX="591.0" layoutY="307.0" mnemonicParsing="false" onMouseClicked="#goToManageCategoriesPage" prefHeight="26.0" prefWidth="192.0" text="Categories Managing" />
       <Button layoutX="590.0" layoutY="196.0" mnemonicParsing="false" onMouseClicked="#goToCreateDiscountCodePage" prefHeight="26.0" prefWidth="192.0" text="Discount Codes Managing" />
       <Button layoutX="591.0" layoutY="371.0" mnemonicParsing="false" onMouseClicked="#goToCreateSupporterPage" prefHeight="38.0" prefWidth="192.0" text="Create Supporter" />
-      <Button layoutX="591.0" layoutY="424.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="192.0" text="Set Minimum Needed Money In Pocket" />
+      <Button onMouseClicked="#goToSetMinimumMoneyPage" layoutX="591.0" layoutY="424.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="192.0" text="Set Minimum Needed Money In Pocket" />
 
    </children>
 </AnchorPane>

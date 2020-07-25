@@ -20,6 +20,6 @@ public class SetMinimumMoneyInPocketPage {
     }
 
     public void backButtonClick(MouseEvent mouseEvent) throws IOException {
-        Main.setRoot("ManagerAccountPage", "Manager Account", false);
+        Main.doBack();
     }
 }
