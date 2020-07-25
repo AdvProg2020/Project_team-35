@@ -61,7 +61,6 @@ public class CustomerChatPage implements Initializable {
                     if (message.equalsIgnoreCase("endThread")) {
                         receiveArea.setDisable(true);
                         sendArea.setDisable(true);
-                        actionInfo.setText("Chat Ended");
                         break;
                     }
                     receiveArea.setText(receiveArea.getText() + '\n' + message);
