@@ -30,6 +30,10 @@ public class Server {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8888);
         Socket socket;
+        new Manager("a", "a", "a", "a@a.a", "0", "a");
+        new Supporter("s", "a", "a", "a@a.a", "0", "s");
+        new Customer("c", "a", "a", "a@a.a", "0", "c");
+
 
         connectToBankServer();
         while (true) {
@@ -103,11 +107,10 @@ public class Server {
                         getOnlineAccount();
                     } else if (input.startsWith("AddOff")) {
                         addOff(input);
+                    } else if (input.startsWith("logoutSSSSS")) {
+                        logoutS(input);
                     } else if (input.startsWith("logout")) {
                         logout(input);
-                    }
-                    else if (input.startsWith("logoutS")) {
-                        logoutS(input);
                     }
                     else if (input.startsWith("makeAuction")) {
                         createAuction(input);
@@ -179,14 +182,14 @@ public class Server {
 
         private void logoutS(String input) throws IOException {
             Account account = onlineAccounts.get(socket);
-            AccountBoss.logout(account);
             if (account instanceof Supporter) {
                 onlineSupporters.remove(account);
                 removeSupporterActiveChat((Supporter) account);
                 sendMessageToClient("endThread");
+                System.out.println("command send");
             }
+            AccountBoss.logout(account);
             onlineAccounts.put(socket, null);
-
         }
 
         private void removeSupporterActiveChat(Supporter supporter) throws IOException {
