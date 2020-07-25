@@ -30,8 +30,8 @@ public class CustomerChatPage implements Initializable {
     public void disconnectClick(MouseEvent mouseEvent) throws IOException {
         Main.sendMessageToServer("MRequestsCustomerDisconnect");
     //should close the thread
-//        String response = Main.getMessageFromServer();
-        Main.doBack();
+        //        String response = Main.getMessageFromServer();
+//        Main.doBack();
     }
 
     @Override
@@ -58,11 +58,23 @@ public class CustomerChatPage implements Initializable {
             while (true) {
                 try {
                     String message = dataInputStream.readUTF();
+                    if (message.equalsIgnoreCase("endThread")) {
+                        receiveArea.setDisable(true);
+                        sendArea.setDisable(true);
+                        actionInfo.setText("Chat Ended");
+                        break;
+                    }
                     receiveArea.setText(receiveArea.getText() + '\n' + message);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+            try {
+                Main.doBack(); //if gets endTread should be come here
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 }

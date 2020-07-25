@@ -2,7 +2,6 @@ package Server;
 
 import Controller.*;
 import Controller.Exceptions.*;
-import Main.Main;
 import Model.*;
 
 import java.io.*;
@@ -178,13 +177,38 @@ public class Server {
             }
         }
 
-        private void logoutS(String input) {
+        private void logoutS(String input) throws IOException {
             Account account = onlineAccounts.get(socket);
             AccountBoss.logout(account);
             if (account instanceof Supporter) {
                 onlineSupporters.remove(account);
+                removeSupporterActiveChat((Supporter) account);
+                dataOutputStream.writeUTF("endThread");
+                dataOutputStream.flush();
             }
             onlineAccounts.put(socket, null);
+
+        }
+
+        private void removeSupporterActiveChat(Supporter supporter) throws IOException {
+            ArrayList<Account> actives = getActiveAccountChatsWithSupporter(supporter);
+            for (Account active : actives) {
+                Socket socket = getSocketWithAccount(active);
+                DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                stream.writeUTF("endThread");
+                stream.flush();
+                activeChats.remove(active);
+            }
+        }
+
+        private ArrayList<Account> getActiveAccountChatsWithSupporter(Supporter supporter) {
+            ArrayList<Account> list = new ArrayList<>();
+            for (Account account : activeChats.keySet()) {
+                if (activeChats.get(account).equals(supporter)) {
+                    list.add(account);
+                }
+            }
+            return list;
         }
 
         private void addFile(String input) throws IOException {
@@ -658,7 +682,7 @@ public class Server {
             }
             else if (requestText.equalsIgnoreCase("CustomerDisconnect")) {
                 activeChats.remove(onlineAccounts.get(socket));
-//                sendMessageToClient("Successful");
+                sendMessageToClient("endThread");
             }
         }
 

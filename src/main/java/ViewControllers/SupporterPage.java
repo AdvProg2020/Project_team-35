@@ -44,7 +44,6 @@ public class SupporterPage implements Initializable {
         MusicPlayer.getInstance().playButtonMusic();
         Main.sendMessageToServer("logoutS");
         //should close the thread
-        Main.doBack();
     }
 
     class Receiver extends Thread {
@@ -63,11 +62,20 @@ public class SupporterPage implements Initializable {
             while (true) {
                 try {
                     String message = dataInputStream.readUTF();
+                    if (message.equalsIgnoreCase("endTread")) {
+                        break;
+                    }
                     receiveArea.setText(receiveArea.getText() + '\n' + message);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+            try {
+                Main.doBack(); //if gets endTread should be come here
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 }
