@@ -31,7 +31,7 @@ public class Server {
     private static String bankAccountID;
 
     public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(8888);
+        ServerSocket serverSocket = new ServerSocket(6667);
         Socket socket;
         connectToBankServer();
         while (true) {
@@ -200,7 +200,7 @@ public class Server {
                         dataOutputStream.writeUTF(String.valueOf(text));
                         dataOutputStream.flush();
                     } else if (input.startsWith("AddToCart")) {
-                        int productID = Integer.parseInt(input.substring(input.indexOf(",") + 1), input.indexOf("-"));
+                        int productID = Integer.parseInt(input.substring(input.indexOf(",") + 1, input.indexOf("-")));
                         int numberOfAdding = Integer.parseInt(input.substring(input.indexOf("-") + 1));
                         Customer customer = (Customer) onlineAccounts.get(socket);
                         Product product = Product.getProductWithId(productID);
